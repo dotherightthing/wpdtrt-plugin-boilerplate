@@ -35,13 +35,13 @@ class WPDTRT_Plugin_Template_Loader extends Gamajo_Template_Loader {
       $theme_template_directory = null;
       $plugin_directory = null;
 
+      // extract variables
+      extract( $options, EXTR_IF_EXISTS );
+
       $this->filter_prefix = $filter_prefix;
       $this->plugin_template_directory = $plugin_template_directory;
       $this->theme_template_directory = $theme_template_directory;
       $this->plugin_directory = $plugin_directory;
-
-      // extract variables
-      extract( $options, EXTR_IF_EXISTS );
 
 	}
 
