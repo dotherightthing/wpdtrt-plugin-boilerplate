@@ -8,6 +8,8 @@
  * @todo Convert CONSTANTS into $this->properties
  */
 
+namespace WPDTRT_Plugin;
+
 if ( !class_exists( 'WPDTRT_Plugin' ) ) {
 
   /**

@@ -8,6 +8,8 @@
  * @version 	1.0.0
  */
 
+namespace WPDTRT_Plugin;
+
 /**
  * Template loader sub class
  *

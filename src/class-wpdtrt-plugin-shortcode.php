@@ -8,11 +8,12 @@
  * @todo Convert CONSTANTS into $this->properties
  */
 
+namespace WPDTRT_Plugin;
+
 if ( !class_exists( 'WPDTRT_Plugin_Shortcode' ) ) {
 
-  // load dependencies
+  // TODO: does this support autoloading?
   require_once __DIR__ . '/vendor/gamajo/template-loader/class-gamajo-template-loader.php';
-  require_once 'class-wpdtrt-plugin-template-loader.php';
 
   /**
    * Plugin Shortcode base class
