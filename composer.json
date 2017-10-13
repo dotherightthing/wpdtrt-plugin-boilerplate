@@ -1,5 +1,5 @@
 {
-	"name": "dotherightthingnz/wpdtrt-plugin",
+	"name": "dotherightthing/wpdtrt-plugin",
 	"description": "Base classes for a plugin, plugin shortcode, and plugin widget.",
 	"type": "library",
 	"require-dev": {
