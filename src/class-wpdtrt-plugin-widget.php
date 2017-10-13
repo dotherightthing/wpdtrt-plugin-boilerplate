@@ -28,7 +28,7 @@ if ( !class_exists( 'WPDTRT_Plugin_Widget' ) ) {
    * @version     1.0.0
    */
 
-  class WPDTRT_Plugin_Widget extends WP_Widget {
+  class WPDTRT_Plugin_Widget extends \WP_Widget {
 
     /**
      * Hook the plugin in to WordPress
