@@ -17,8 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "WPDTRT_Plugin\\":"src/"
+            "WPDTRT_Plugin\\": "src/"
         }
     }
-  }
 }
