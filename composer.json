@@ -1,6 +1,6 @@
 {
-	"name": "dotherightthingnz/wpdtrt-attachment-map",
-	"description": "Just another WordPress plugin",
+	"name": "dotherightthingnz/wpdtrt-plugin",
+	"description": "Base classes for a plugin, plugin shortcode, and plugin widget.",
 	"type": "library",
 	"require-dev": {
 		"phpunit/phpunit": "^5.7",
