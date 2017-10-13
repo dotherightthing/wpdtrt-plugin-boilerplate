@@ -13,9 +13,6 @@ namespace WPDTRT_Plugin;
 
 if ( !class_exists( 'WPDTRT_Plugin_Widget' ) ) {
 
-  // TODO: does this support autoloading?
-  require_once __DIR__ . '/vendor/gamajo/template-loader/class-gamajo-template-loader.php';
-
   /**
    * Plugin Widget sub class.
    *
