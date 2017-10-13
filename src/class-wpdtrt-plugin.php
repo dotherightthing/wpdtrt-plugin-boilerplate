@@ -527,7 +527,7 @@ if ( !class_exists( 'WPDTRT_Plugin' ) ) {
        */
       ob_start();
 
-      require($this->get_plugin_directory() . 'views/form-element-' . $type . '.php');
+      require($this->get_plugin_directory() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php');
 
       /**
        * ob_get_clean — Get current buffer contents and delete current output buffer
