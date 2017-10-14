@@ -17,6 +17,8 @@ namespace DoTheRightThing\WPPlugin;
  * Displays templates in the Templates dropdown in the page edit screen.
  * Allows the author to override these from the templates folder in their own theme.
  *
+ * @param 		array $options Template Loader options
+ *
  * @uses 		https://github.com/wpexplorer/page-templater
  * @see 		http://www.wpexplorer.com/wordpress-page-templates-plugin/
  *

@@ -39,7 +39,7 @@ if ( !class_exists( 'Shortcode' ) ) {
      * when it is instantiated,
      * using new Widget
      *
-     * @param     array $options Plugin options
+     * @param     array $options Shortcode options
      *
      * @version   1.1.0
      * @since     1.0.0

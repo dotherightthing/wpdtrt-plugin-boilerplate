@@ -36,7 +36,7 @@ if ( !class_exists( 'Widget' ) ) {
      * when it is instantiated,
      * using new Widget
      *
-     * @param     array $options Plugin options
+     * @param     array $options Widget options
      *
      * @version   1.1.0
      * @since     1.0.0
