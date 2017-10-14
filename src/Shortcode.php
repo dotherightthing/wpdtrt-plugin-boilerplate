@@ -218,7 +218,7 @@ if ( !class_exists( 'Shortcode' ) ) {
 
       // mimic WordPress template loading
       // to allow authors to override loaded templates
-      $templates = new Template_Loader( array(
+      $templates = new TemplateLoader( array(
         'filter_prefix' => $parent_plugin->get_prefix(),
         'plugin_template_directory' => 'template-parts/' . $parent_plugin->get_prefix(),
         'theme_template_directory' => 'template-parts/' . $parent_plugin->get_prefix(),
