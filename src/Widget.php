@@ -267,6 +267,9 @@ if ( !class_exists( 'Widget' ) ) {
        */
       $template_options['title'] = apply_filters( 'widget_title', $instance['title'] );
 
+      // store a reference to the parent plugin
+      $parent_plugin = $this->get_parent_plugin();
+
       // Pass options to template-part as query var
       //set_query_var( $this->get_prefix() . '_options_all', $options_all );
       set_query_var( 'options', $template_options );
