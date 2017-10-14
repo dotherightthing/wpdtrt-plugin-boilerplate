@@ -220,8 +220,8 @@ if ( !class_exists( 'Shortcode' ) ) {
       // to allow authors to override loaded templates
       $templates = new TemplateLoader( array(
         'filter_prefix' => $parent_plugin->get_prefix(),
-        'plugin_template_directory' => 'template-parts/' . $parent_plugin->get_prefix(),
-        'theme_template_directory' => 'template-parts/' . $parent_plugin->get_prefix(),
+        'plugin_template_directory' => 'template-parts/' . $parent_plugin->get_slug(),
+        'theme_template_directory' => 'template-parts/' . $parent_plugin->get_slug(),
         'plugin_directory' => $parent_plugin->get_plugin_directory()
       ));;
 
