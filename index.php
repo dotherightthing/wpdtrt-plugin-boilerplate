@@ -4,11 +4,14 @@
  * @see http://phpenthusiast.com/blog/how-to-autoload-with-composer
  */
 
-	require "vendor/autoload.php";
+	// vendor/autoload.php
+	// composer autoload file used by all vendors
+	require_once dirname( dirname(__DIR__) ) . "/autoload.php";
+	//require __DIR__.'/../vendor/autoload.php';
 
-	use WPDTRT_Plugin\WPDTRT_Plugin;
-	use WPDTRT_Plugin\WPDTRT_Plugin_Template_Loader;
-	use WPDTRT_Plugin\WPDTRT_Plugin_Shortcode;
-	use WPDTRT_Plugin\WPDTRT_Plugin_Widget;
+	use DoTheRightThing\WPPlugin\Plugin;
+	use DoTheRightThing\WPPlugin\TemplateLoader;
+	use DoTheRightThing\WPPlugin\Shortcode;
+	use DoTheRightThing\WPPlugin\Widget;
 
 ?>

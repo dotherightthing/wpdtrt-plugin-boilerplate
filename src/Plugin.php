@@ -2,15 +2,15 @@
 /**
  * Plugin class.
  *
- * @package     WPDTRT_Plugin
+ * @package     WPPlugin
  * @version     1.0.0
  *
  * @todo Convert CONSTANTS into $this->properties
  */
 
-namespace WPDTRT_Plugin;
+namespace DoTheRightThing\WPPlugin;
 
-if ( !class_exists( 'WPDTRT_Plugin' ) ) {
+if ( !class_exists( 'Plugin' ) ) {
 
   /**
    * Plugin base class
@@ -18,8 +18,8 @@ if ( !class_exists( 'WPDTRT_Plugin' ) ) {
    * Boilerplate functions, including
    * options page, field templating, error messaging, CSS, JS.
    *
-   * Use WPDTRT_Plugin_Shortcode for dependent shortcodes.
-   * Use WPDTRT_Plugin_Widget for dependent widgets.
+   * Use Shortcode for dependent shortcodes.
+   * Use Widget for dependent widgets.
    *
    * @param       array $atts Optional shortcode attributes specified by the user
    * @param       string $content Content within the enclosing shortcode tags
@@ -34,7 +34,7 @@ if ( !class_exists( 'WPDTRT_Plugin' ) ) {
    * @since       1.0.0
    * @version     1.0.0
    */
-  class WPDTRT_Plugin {
+  class Plugin {
 
     /**
      * Hook the plugin in to WordPress

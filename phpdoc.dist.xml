@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdoc>
   <parser>
-    <target>docs/php</target>
+    <target>doc</target>
   </parser>
   <transformer>
-    <target>docs/php</target>
+    <target>doc</target>
   </transformer>
   <transformations>
 	<template name="clean" />

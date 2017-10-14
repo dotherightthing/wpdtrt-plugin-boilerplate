@@ -8,7 +8,7 @@
  * @version 	1.0.0
  */
 
-namespace WPDTRT_Plugin;
+namespace DoTheRightThing\WPPlugin;
 
 /**
  * Template loader sub class
@@ -25,7 +25,7 @@ namespace WPDTRT_Plugin;
  *
  * @todo 		See wpdtrt-responsive-nav-shortcodes.php for usage
  */
-class WPDTRT_Plugin_Template_Loader extends \Gamajo_Template_Loader {
+class TemplateLoader extends \Gamajo_Template_Loader {
 
 	public function __construct( $options ) {
 

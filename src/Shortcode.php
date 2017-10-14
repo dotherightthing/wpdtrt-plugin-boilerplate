@@ -2,15 +2,15 @@
 /**
  * Plugin shortcode class.
  *
- * @package     WPDTRT_Plugin
+ * @package     WPPlugin
  * @version     1.0.0
  *
  * @todo Convert CONSTANTS into $this->properties
  */
 
-namespace WPDTRT_Plugin;
+namespace DoTheRightThing\WPPlugin;
 
-if ( !class_exists( 'WPDTRT_Plugin_Shortcode' ) ) {
+if ( !class_exists( 'Shortcode' ) ) {
 
   /**
    * Plugin Shortcode base class
@@ -31,13 +31,13 @@ if ( !class_exists( 'WPDTRT_Plugin_Shortcode' ) ) {
    * @since       1.0.0
    * @version     1.0.0
    */
-  class WPDTRT_Plugin_Shortcode {
+  class Shortcode {
 
     /**
      * Hook the plugin in to WordPress
      * This constructor automatically initialises the object's properties
      * when it is instantiated,
-     * using new WPDTRT_Plugin_Widget
+     * using new Widget
      *
      * @param     array $options Plugin options
      *
@@ -206,7 +206,7 @@ if ( !class_exists( 'WPDTRT_Plugin_Shortcode' ) ) {
 
       // Pass options to template-part as query var
       //set_query_var( $this->get_prefix() . '_options_all', $options_all );
-      set_query_var( 'wpdtrt_plugin_options', $template_options );
+      set_query_var( 'options', $template_options );
 
       /**
        * ob_start — Turn on output buffering
@@ -218,7 +218,7 @@ if ( !class_exists( 'WPDTRT_Plugin_Shortcode' ) ) {
 
       // mimic WordPress template loading
       // to allow authors to override loaded templates
-      $templates = new WPDTRT_Plugin_Template_Loader( array(
+      $templates = new Template_Loader( array(
         'filter_prefix' => $parent_plugin->get_prefix(),
         'plugin_template_directory' => 'template-parts/' . $parent_plugin->get_prefix(),
         'theme_template_directory' => 'template-parts/' . $parent_plugin->get_prefix(),
