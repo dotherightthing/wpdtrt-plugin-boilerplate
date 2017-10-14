@@ -17,8 +17,6 @@ namespace DoTheRightThing\WPPlugin;
  * Displays templates in the Templates dropdown in the page edit screen.
  * Allows the author to override these from the templates folder in their own theme.
  *
- * @param 		array $options Template Loader options
- *
  * @uses 		https://github.com/wpexplorer/page-templater
  * @see 		http://www.wpexplorer.com/wordpress-page-templates-plugin/
  *
@@ -29,6 +27,17 @@ namespace DoTheRightThing\WPPlugin;
  */
 class TemplateLoader extends \Gamajo_Template_Loader {
 
+    /**
+     * Pass options to Gamajo class
+     * This constructor automatically initialises the object's properties
+     * when it is instantiated,
+     * using new TemplateLoader
+     *
+     * @param     array $options Plugin options
+     *
+     * @version   1.1.0
+     * @since     1.0.0
+     */
 	public function __construct( $options ) {
 
       // define variables
