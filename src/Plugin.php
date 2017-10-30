@@ -244,14 +244,14 @@ if ( !class_exists( 'Plugin' ) ) {
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @return       array
+     * @return       string
      */
     public function get_success_message() {
       $messages = $this->get_messages();
 
       $success_message = $messages['success'];
 
-      return $this->success_message;
+      return $success_message;
     }
 
     /**
