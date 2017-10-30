@@ -44,9 +44,9 @@ if ( !class_exists( 'Widget' ) ) {
     function __construct( $options ) {
 
       // define variables
-      $widget_name = null;
-      $widget_title = null;
-      $parent_plugin = null;
+      $name = null;
+      $title = null;
+      $plugin = null;
       $template = null;
       $option_defaults = null;
       //$classname = null;
@@ -57,7 +57,7 @@ if ( !class_exists( 'Widget' ) ) {
 
       // Store a reference to the partner plugin object
       // which stores global plugin options
-      $this->set_parent_plugin( $parent_plugin );
+      $this->set_plugin( $plugin );
       $this->set_template_name( $template );
       $this->set_option_defaults( $option_defaults );
       //$this->set_options();
@@ -68,7 +68,7 @@ if ( !class_exists( 'Widget' ) ) {
       );
 
       // Instantiate the parent object
-      parent::__construct( $widget_name, $widget_title, $widget_options );
+      parent::__construct( $name, $title, $widget_options );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -135,8 +135,8 @@ if ( !class_exists( 'Widget' ) ) {
      *
      * @param object
      */
-    protected function set_parent_plugin( $parent_plugin ) {
-      $this->parent_plugin = $parent_plugin;
+    protected function set_plugin( $plugin ) {
+      $this->plugin = $plugin;
     }
 
     /**
@@ -145,10 +145,10 @@ if ( !class_exists( 'Widget' ) ) {
      * @since 1.0.0
      *
      * @return object
-     * @todo $parent_plugin_options_reduced is weeding out the API data, which shouldn't be in here anyway
+     * @todo $plugin_options_reduced is weeding out the API data, which shouldn't be in here anyway
      */
-    public function get_parent_plugin() {
-      return $this->parent_plugin;
+    public function get_plugin() {
+      return $this->plugin;
     }
 
     //// END GETTERS AND SETTERS \\\\
@@ -214,7 +214,7 @@ if ( !class_exists( 'Widget' ) ) {
         $id = $name;
       endif;
 
-      $parent_plugin = $this->get_parent_plugin();
+      $plugin = $this->get_plugin();
 
       /**
        * Load the HTML template
@@ -229,7 +229,7 @@ if ( !class_exists( 'Widget' ) ) {
        */
       ob_start();
 
-      require($parent_plugin->get_plugin_directory() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php');
+      require($plugin->get_plugin_directory() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php');
 
       /**
        * ob_get_clean — Get current buffer contents and delete current output buffer
@@ -258,17 +258,17 @@ if ( !class_exists( 'Widget' ) ) {
       $template_options = array_merge( $args, $instance );
 
       // store a reference to the parent plugin
-      $template_options['parent_plugin'] = $this->get_parent_plugin();
+      $template_options['plugin'] = $this->get_plugin();
 
       /**
        * apply_filters( $tag, $value );
-       * Apply the 'widget_title' filter to get the title of the instance.
+       * Apply the 'title' filter to get the title of the instance.
        * Display the title of this instance, which the user can optionally customise
        */
-      $template_options['title'] = apply_filters( 'widget_title', $instance['title'] );
+      $template_options['title'] = apply_filters( 'title', $instance['title'] );
 
       // store a reference to the parent plugin
-      $parent_plugin = $this->get_parent_plugin();
+      $plugin = $this->get_plugin();
 
       // Pass options to template-part as query var
       //set_query_var( $this->get_prefix() . '_options_all', $options_all );
@@ -285,10 +285,10 @@ if ( !class_exists( 'Widget' ) ) {
       // mimic WordPress template loading
       // to allow authors to override loaded templates
       $templates = new TemplateLoader( array(
-        'filter_prefix' => $parent_plugin->get_prefix(),
-        'plugin_template_directory' => 'template-parts/' . $parent_plugin->get_slug(),
-        'theme_template_directory' => 'template-parts/' . $parent_plugin->get_slug(),
-        'plugin_directory' => $parent_plugin->get_plugin_directory()
+        'filter_prefix' => $plugin->get_prefix(),
+        'plugin_template_directory' => 'template-parts/' . $plugin->get_slug(),
+        'theme_template_directory' => 'template-parts/' . $plugin->get_slug(),
+        'plugin_directory' => $plugin->get_plugin_directory()
       ));;
 
       // /template-parts/wpdtrt-plugin-name/content/foo.php
@@ -314,7 +314,7 @@ if ( !class_exists( 'Widget' ) ) {
     function update( $new_instance, $old_instance ) {
       // Save user input (widget options)
 
-      $parent_plugin = $this->get_parent_plugin();
+      $plugin = $this->get_plugin();
       $instance = $old_instance;
       $option_defaults = $this->get_option_defaults();
 
@@ -347,7 +347,7 @@ if ( !class_exists( 'Widget' ) ) {
     function form( $instance ) {
 
       // get a reference to the instance
-      $parent_plugin = $this->get_parent_plugin();
+      $plugin = $this->get_plugin();
 
       /**
         * Escape HTML attributes to sanitize the data.
@@ -373,7 +373,7 @@ if ( !class_exists( 'Widget' ) ) {
         }
       }
 
-      $options = $parent_plugin->get_options();
+      $options = $plugin->get_options();
       $data = $options['data'];
 
       /**
@@ -382,7 +382,7 @@ if ( !class_exists( 'Widget' ) ) {
        */
 
       // invoke a method of the instance
-      $plugin_directory = $parent_plugin->get_plugin_directory(); // plugin and shortcode/widget options
+      $plugin_directory = $plugin->get_plugin_directory(); // plugin and shortcode/widget options
 
       require($plugin_directory . 'templates/widget-admin.php');
     }

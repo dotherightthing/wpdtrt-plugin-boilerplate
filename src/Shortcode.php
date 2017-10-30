@@ -47,8 +47,8 @@ if ( !class_exists( 'Shortcode' ) ) {
     function __construct( $options ) {
 
       // define variables
-      $parent_plugin = null;
-      $shortcode_name = null;
+      $plugin = null;
+      $name = null;
       $template = null;
       $option_defaults = null;
 
@@ -57,13 +57,13 @@ if ( !class_exists( 'Shortcode' ) ) {
 
       // Store a reference to the partner plugin object
       // which stores global plugin options
-      $this->set_parent_plugin( $parent_plugin );
-      $this->set_shortcode_name( $shortcode_name );
+      $this->set_plugin( $plugin );
+      $this->set_name( $name );
       $this->set_template_name( $template );
       $this->set_option_defaults( $option_defaults );
       //$this->set_options();
 
-      add_shortcode( $this->get_shortcode_name(), [$this, 'render_shortcode'] );
+      add_shortcode( $this->get_name(), [$this, 'render_shortcode'] );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -93,27 +93,27 @@ if ( !class_exists( 'Shortcode' ) ) {
     }
 
     /**
-     * Get the value of $shortcode_name
+     * Get the value of $name
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @return      string
      */
-    public function get_shortcode_name() {
-      return $this->shortcode_name;
+    public function get_name() {
+      return $this->name;
     }
 
     /**
-     * Set the value of $shortcode_name
+     * Set the value of $name
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @param       string
      */
-    protected function set_shortcode_name( $new_shortcode_name ) {
-      $this->shortcode_name = $new_shortcode_name;
+    protected function set_name( $new_name ) {
+      $this->name = $new_name;
     }
 
     /**
@@ -152,8 +152,8 @@ if ( !class_exists( 'Shortcode' ) ) {
      *
      * @param object
      */
-    protected function set_parent_plugin( $parent_plugin ) {
-      $this->parent_plugin = $parent_plugin;
+    protected function set_plugin( $plugin ) {
+      $this->plugin = $plugin;
     }
 
     /**
@@ -162,10 +162,10 @@ if ( !class_exists( 'Shortcode' ) ) {
      * @since 1.0.0
      *
      * @return object
-     * @todo $parent_plugin_options_reduced is weeding out the API data, which shouldn't be in here anyway
+     * @todo $plugin_options_reduced is weeding out the API data, which shouldn't be in here anyway
      */
-    public function get_parent_plugin() {
-      return $this->parent_plugin;
+    public function get_plugin() {
+      return $this->plugin;
     }
 
     //// END GETTERS AND SETTERS \\\\
@@ -196,13 +196,13 @@ if ( !class_exists( 'Shortcode' ) ) {
       $template_options = shortcode_atts(
         $this->get_option_defaults(),
         $atts,
-        $this->get_shortcode_name()
+        $this->get_name()
       );
 
       // store a reference to the parent plugin
-      $parent_plugin = $this->get_parent_plugin();
+      $plugin = $this->get_plugin();
 
-      $template_options['parent_plugin'] = $parent_plugin;
+      $template_options['plugin'] = $plugin;
 
       // Pass options to template-part as query var
       //set_query_var( $this->get_prefix() . '_options_all', $options_all );
@@ -219,10 +219,10 @@ if ( !class_exists( 'Shortcode' ) ) {
       // mimic WordPress template loading
       // to allow authors to override loaded templates
       $templates = new TemplateLoader( array(
-        'filter_prefix' => $parent_plugin->get_prefix(),
-        'plugin_template_directory' => 'template-parts/' . $parent_plugin->get_slug(),
-        'theme_template_directory' => 'template-parts/' . $parent_plugin->get_slug(),
-        'plugin_directory' => $parent_plugin->get_plugin_directory()
+        'filter_prefix' => $plugin->get_prefix(),
+        'plugin_template_directory' => 'template-parts/' . $plugin->get_slug(),
+        'theme_template_directory' => 'template-parts/' . $plugin->get_slug(),
+        'plugin_directory' => $plugin->get_plugin_directory()
       ));;
 
       // /template-parts/wpdtrt-plugin-name/content/foo.php
