@@ -1,13 +1,12 @@
 # DTRT Plugin Boilerplate
 
 [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/issues)
-[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)](https://github.com/dotherightthing/wpdtrt-plugin/commits/master)
 
 Base classes for a WordPress plugin and associated shortcodes and widgets.
 
 ## Demo usage
 
-wpdtrt-blocks
+[wpdtrt-blocks](https://github.com/dotherightthing/wpdtrt-blocks)
 
 ## Goals
 
