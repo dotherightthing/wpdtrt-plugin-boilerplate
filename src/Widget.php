@@ -373,8 +373,11 @@ if ( !class_exists( 'Widget' ) ) {
         }
       }
 
-      $options = $plugin->get_options();
-      $data = $options['data'];
+      // get the API data here, to avoid overloading the query_var
+      // @todo: is this really necessary?
+      $data = $plugin->get_api_data();
+      //$options = $plugin->get_options();
+      //$data = $options['data'];
 
       /**
        * Load the HTML template
