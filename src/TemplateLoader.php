@@ -52,7 +52,7 @@ class TemplateLoader extends \Gamajo_Template_Loader {
       $this->filter_prefix = $filter_prefix;
       $this->plugin_template_directory = $plugin_template_directory;
       $this->theme_template_directory = $theme_template_directory;
-      $this->path = $path;
+      $this->plugin_directory = $path;
 
 	}
 
