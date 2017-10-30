@@ -1,7 +1,7 @@
 # DTRT Plugin Boilerplate
 
-[![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)]()
-[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)]()
+[![GitHub issues](https://img.shields.io/github/issues/badges/shields.svg)](https://github.com/dotherightthing/wpdtrt-plugin/issues)
+[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)](https://github.com/dotherightthing/wpdtrt-plugin/commits/master)
 
 Base classes for a WordPress plugin and associated shortcodes and widgets.
 
