@@ -222,7 +222,7 @@ if ( !class_exists( 'Shortcode' ) ) {
         'filter_prefix' => $plugin->get_prefix(),
         'plugin_template_directory' => 'template-parts/' . $plugin->get_slug(),
         'theme_template_directory' => 'template-parts/' . $plugin->get_slug(),
-        'plugin_directory' => $plugin->get_plugin_directory()
+        'path' => $plugin->get_path()
       ));;
 
       // /template-parts/wpdtrt-plugin-name/content/foo.php

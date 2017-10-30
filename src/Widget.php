@@ -229,7 +229,7 @@ if ( !class_exists( 'Widget' ) ) {
        */
       ob_start();
 
-      require($plugin->get_plugin_directory() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php');
+      require($plugin->get_path() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php');
 
       /**
        * ob_get_clean — Get current buffer contents and delete current output buffer
@@ -288,7 +288,7 @@ if ( !class_exists( 'Widget' ) ) {
         'filter_prefix' => $plugin->get_prefix(),
         'plugin_template_directory' => 'template-parts/' . $plugin->get_slug(),
         'theme_template_directory' => 'template-parts/' . $plugin->get_slug(),
-        'plugin_directory' => $plugin->get_plugin_directory()
+        'path' => $plugin->get_path()
       ));;
 
       // /template-parts/wpdtrt-plugin-name/content/foo.php
@@ -382,9 +382,9 @@ if ( !class_exists( 'Widget' ) ) {
        */
 
       // invoke a method of the instance
-      $plugin_directory = $plugin->get_plugin_directory(); // plugin and shortcode/widget options
+      $path = $plugin->get_path(); // plugin and shortcode/widget options
 
-      require($plugin_directory . 'templates/widget-admin.php');
+      require($path . 'templates/widget-admin.php');
     }
 
     //// END RENDERERS \\\\

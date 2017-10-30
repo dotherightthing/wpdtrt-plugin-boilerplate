@@ -44,7 +44,7 @@ class TemplateLoader extends \Gamajo_Template_Loader {
       $filter_prefix = null;
       $plugin_template_directory = null;
       $theme_template_directory = null;
-      $plugin_directory = null;
+      $path = null;
 
       // extract variables
       extract( $options, EXTR_IF_EXISTS );
@@ -52,7 +52,7 @@ class TemplateLoader extends \Gamajo_Template_Loader {
       $this->filter_prefix = $filter_prefix;
       $this->plugin_template_directory = $plugin_template_directory;
       $this->theme_template_directory = $theme_template_directory;
-      $this->plugin_directory = $plugin_directory;
+      $this->path = $path;
 
 	}
 
@@ -74,7 +74,7 @@ class TemplateLoader extends \Gamajo_Template_Loader {
 	/**
 	 * Reference to the root directory path of this plugin.
 	 */
-	//protected $plugin_directory = WPDTRT_ATTACHMENT_MAP_PATH;
+	//protected $path = WPDTRT_ATTACHMENT_MAP_PATH;
 
 }
 

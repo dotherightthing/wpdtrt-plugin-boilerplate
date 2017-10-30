@@ -50,22 +50,28 @@ if ( !class_exists( 'Plugin' ) ) {
     function __construct( $options ) {
 
       // define variables
+      $url = null;
       $prefix = null;
       $slug = null;
       $menu_title = null;
       $developer_prefix = null;
-      $plugin_directory = null;
+      $path = null;
+      $messages = null;
       $option_defaults = null;
+      $version = null;
 
       // extract variables
       extract( $options, EXTR_IF_EXISTS );
 
+      $this->set_url( $url );
       $this->set_prefix( $prefix );
       $this->set_slug( $slug );
       $this->set_menu_title( $menu_title );
       $this->set_developer_prefix( $developer_prefix );
-      $this->set_plugin_directory( $plugin_directory );
+      $this->set_path( $path );
+      $this->set_messages( $messages );
       $this->set_option_defaults( $option_defaults );
+      $this->set_version( $version );
 
       $this->set_options();
 
@@ -87,6 +93,30 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     //// START GETTERS AND SETTERS \\\\
+
+    /**
+     * Get the value of $url
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return      string
+     */
+    public function get_url() {
+      return $this->url;
+    }
+
+    /**
+     * Set the value of $url
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       string
+     */
+    protected function set_url( $new_url ) {
+      $this->url = $new_url;
+    }
 
     /**
      * Get the value of $prefix
@@ -185,6 +215,46 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
+     * Get the value of $messages
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_messages() {
+      return $this->messages;
+    }
+
+    /**
+     * Set the value of $messages
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    protected function set_messages( $new_messages ) {
+      $this->messages = $new_messages;
+    }
+
+    /**
+     * Get the value of the $success_message
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_success_message() {
+      $messages = $this->get_messages();
+
+      $success_message = $messages['success'];
+
+      return $this->success_message;
+    }
+
+    /**
      * Get the value of $option_defaults
      *
      * @since       1.0.0
@@ -209,27 +279,27 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $plugin_directory
+     * Get the value of $path
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @return       string
      */
-    public function get_plugin_directory() {
-      return $this->plugin_directory;
+    public function get_path() {
+      return $this->path;
     }
 
     /**
-     * Set the value of $plugin_directory
+     * Set the value of $path
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @param       string
      */
-    protected function set_plugin_directory( $new_plugin_directory ) {
-      $this->plugin_directory = $new_plugin_directory;
+    protected function set_path( $new_path ) {
+      $this->path = $new_path;
     }
 
     /**
@@ -291,6 +361,30 @@ if ( !class_exists( 'Plugin' ) ) {
        * @see https://codex.wordpress.org/Function_Reference/update_option
        */
       update_option( $this->get_prefix(), $options, null );
+    }
+
+    /**
+     * Get the value of $version
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return      string
+     */
+    public function get_version() {
+      return $this->version;
+    }
+
+    /**
+     * Set the value of $url
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       string
+     */
+    protected function set_version( $new_version ) {
+      $this->version = $new_version;
     }
 
     /**
@@ -445,7 +539,7 @@ if ( !class_exists( 'Plugin' ) ) {
        * This function's variables will be available to this template,
        * includng $this
        */
-      require_once($this->get_plugin_directory() . 'templates/options.php');
+      require_once($this->get_path() . 'templates/options.php');
     }
 
     /**
@@ -500,7 +594,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       /**
        * Set the value to the variable with the same name as the $name string
-       * e.g. $name="wpdtrt_attachment_map_toggle_label" => $wpdtrt_attachment_map_toggle_label => ('Open menu', 'wpdtrt-attachment-map')
+       * e.g. $name="wpdtrt_blocks_toggle_label" => $wpdtrt_blocks_toggle_label => ('Open menu', 'wpdtrt-attachment-map')
        * @see http://php.net/manual/en/language.variables.variable.php
        */
 
@@ -527,7 +621,7 @@ if ( !class_exists( 'Plugin' ) ) {
        */
       ob_start();
 
-      require($this->get_plugin_directory() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php');
+      require($this->get_path() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php');
 
       /**
        * ob_get_clean — Get current buffer contents and delete current output buffer
@@ -572,7 +666,7 @@ if ( !class_exists( 'Plugin' ) ) {
             <p><?php echo
               $this->get_developer_prefix() . ' ' .
               $this->get_menu_title() . ' ' .
-              __('settings successfully updated', 'wpdtrt-attachment-map');
+              $this->get_success_message()
             ?></p>
           </div>
     <?php
@@ -590,10 +684,10 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $media = 'all';
 
-      wp_enqueue_style( 'render_css_backend',
-        WPDTRT_ATTACHMENT_MAP_URL . 'css/wpdtrt-attachment-map-admin.css',
+      wp_enqueue_style( $this->get_prefix() . '_backend',
+        $this->get_url() . 'css/' . $this->get_slug() . '-admin.css',
         array(),
-        WPDTRT_ATTACHMENT_MAP_VERSION,
+        $this->get_version() ,
         $media
       );
     }
@@ -608,13 +702,13 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $media = 'all';
 
-      wp_enqueue_style( 'wpdtrt_attachment_map',
-        WPDTRT_ATTACHMENT_MAP_URL . 'css/wpdtrt-attachment-map.css',
+      wp_enqueue_style( $this->get_prefix(),
+        $this->get_url()  . 'css/' . $this->get_slug() . '.css',
         array(
           // load these registered dependencies first:
           //'a_dependency'
         ),
-        WPDTRT_ATTACHMENT_MAP_VERSION,
+        $this->get_version() ,
         $media
       );
     }
@@ -652,7 +746,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       /*
       wp_register_script( 'a_dependency',
-        WPDTRT_ATTACHMENT_MAP_URL . 'vendor/bower_components/a_dependency/a_dependency.js',
+        $this->get_url()  . 'vendor/bower_components/a_dependency/a_dependency.js',
         array(
           'jquery'
         ),
@@ -661,21 +755,21 @@ if ( !class_exists( 'Plugin' ) ) {
       );
       */
 
-      wp_enqueue_script( 'wpdtrt_attachment_map',
-        WPDTRT_ATTACHMENT_MAP_URL . 'js/wpdtrt-attachment-map.js',
+      wp_enqueue_script( $this->get_prefix(),
+        $this->get_url()  . 'js/' . $this->get_slug() . '.js',
         array(
           // load these registered dependencies first:
           'jquery'
           // a_dependency
         ),
-        WPDTRT_ATTACHMENT_MAP_VERSION,
+        $this->get_version() ,
         $attach_to_footer
       );
 
-      wp_localize_script( 'wpdtrt_attachment_map',
-        'wpdtrt_attachment_map_config',
+      wp_localize_script( $this->get_prefix(),
+        $this->get_prefix() . '_config',
         array(
-          'ajax_url' => admin_url( 'admin-ajax.php' ) // wpdtrt_attachment_map_config.ajax_url
+          'ajax_url' => admin_url( 'admin-ajax.php' ) // wpdtrt_blocks_config.ajax_url
         )
       );
     }
