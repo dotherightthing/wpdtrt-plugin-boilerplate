@@ -15,7 +15,7 @@
 
 <?php echo $field_start; ?>
 	<input type="checkbox" name="<?php echo $name; ?>" id="<?php echo $id; ?>" value="1" aria-describedby="<?php echo $name; ?>-tip" <?php checked( $value, '1', true ); ?>>
-	<<?php echo $tip_element; ?> class="description" id="<?php echo $name; ?>-tip">
+	<<?php echo $tip_element; ?> class="description" id="<?php echo $id; ?>-tip">
 		<?php echo $tip; ?>
 	</<?php echo $tip_element; ?>>
 <?php echo $field_end; ?>

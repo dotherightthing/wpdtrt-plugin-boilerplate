@@ -15,7 +15,7 @@
 
 <?php echo $field_start; ?>
 	<input type="text" name="<?php echo $name; ?>" id="<?php echo $id; ?>" value="<?php echo $value; ?>" size="<?php echo $size; ?>" class="<?php echo $classname; ?>" aria-describedby="<?php echo $name; ?>-tip">
-	<<?php echo $tip_element; ?> class="description" id="<?php echo $name; ?>-tip">
+	<<?php echo $tip_element; ?> class="description" id="<?php echo $id; ?>-tip">
 		<?php echo $tip; ?>
 	</<?php echo $tip_element; ?>>
 <?php echo $field_end; ?>

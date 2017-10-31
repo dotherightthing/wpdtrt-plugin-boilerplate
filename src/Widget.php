@@ -170,7 +170,7 @@ if ( !class_exists( 'Widget' ) ) {
     public function render_form_element( $name, $attributes ) {
 
       $default_attributes = array(
-        'type' => 'textfield',
+        'type' => 'text',
         'label' => 'Label',
         'size' => 20,
         'tip' => null,
