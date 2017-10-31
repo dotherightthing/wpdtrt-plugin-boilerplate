@@ -48,7 +48,7 @@ if ( !class_exists( 'Widget' ) ) {
       $title = null;
       $plugin = null;
       $template = null;
-      $option_defaults = null;
+      $user_options = null;
       //$classname = null;
       $description = null;
 
@@ -59,7 +59,7 @@ if ( !class_exists( 'Widget' ) ) {
       // which stores global plugin options
       $this->set_plugin( $plugin );
       $this->set_template_name( $template );
-      $this->set_option_defaults( $option_defaults );
+      $this->set_user_options( $user_options );
       //$this->set_options();
 
       $widget_options = array(
@@ -100,13 +100,13 @@ if ( !class_exists( 'Widget' ) ) {
     /**
      * Set default options
      *
-     * @param array $option_defaults
+     * @param array $user_options
      *
      * @since 1.0.0
      *
      */
-    protected function set_option_defaults( $option_defaults ) {
-      $this->option_defaults = $option_defaults;
+    protected function set_user_options( $user_options ) {
+      $this->user_options = $user_options;
     }
 
     /**
@@ -117,8 +117,8 @@ if ( !class_exists( 'Widget' ) ) {
      * @since 1.0.0
      *
      */
-    protected function get_option_defaults() {
-      return $this->option_defaults;
+    protected function get_user_options() {
+      return $this->user_options;
     }
 
     /**
@@ -174,7 +174,8 @@ if ( !class_exists( 'Widget' ) ) {
         'label' => 'Label',
         'size' => 20,
         'tip' => null,
-        'instance' => null
+        'instance' => null,
+        'options' => null
       );
 
       $type = null;
@@ -183,6 +184,7 @@ if ( !class_exists( 'Widget' ) ) {
       $tip = null;
       $size = null;
       $instance = null;
+      $options = null;
 
       $attributes = array_merge( $default_attributes, $author_attributes );
       extract( $attributes, EXTR_IF_EXISTS );
@@ -316,7 +318,7 @@ if ( !class_exists( 'Widget' ) ) {
 
       $plugin = $this->get_plugin();
       $instance = $old_instance;
-      $option_defaults = $this->get_option_defaults();
+      $user_options = $this->get_user_options();
 
       /**
        * strip_tags — Strip HTML and PHP tags from a string
@@ -327,7 +329,7 @@ if ( !class_exists( 'Widget' ) ) {
         $instance['title'] = strip_tags( $new_instance['title'] );
       }
 
-      foreach( $option_defaults as $key=>$value ) {
+      foreach( $user_options as $key=>$value ) {
 
         // todo: does this check prevent empty values from being saved?
         if ( isset( $new_instance[ $key ] ) ) {
@@ -361,7 +363,7 @@ if ( !class_exists( 'Widget' ) ) {
         $title = null;
       }
 
-      foreach( $this->get_option_defaults() as $key=>$value ) {
+      foreach( $this->get_user_options() as $key=>$value ) {
 
         // evaluate variables to populate the 'value' attribute
         if ( isset( $instance[ $key ] ) ) {

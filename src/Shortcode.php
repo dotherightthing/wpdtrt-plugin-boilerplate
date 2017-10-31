@@ -50,7 +50,7 @@ if ( !class_exists( 'Shortcode' ) ) {
       $plugin = null;
       $name = null;
       $template = null;
-      $option_defaults = null;
+      $user_options = null;
 
       // extract variables
       extract( $options, EXTR_IF_EXISTS );
@@ -60,7 +60,7 @@ if ( !class_exists( 'Shortcode' ) ) {
       $this->set_plugin( $plugin );
       $this->set_name( $name );
       $this->set_template_name( $template );
-      $this->set_option_defaults( $option_defaults );
+      $this->set_user_options( $user_options );
       //$this->set_options();
 
       add_shortcode( $this->get_name(), [$this, 'render_shortcode'] );
@@ -123,8 +123,8 @@ if ( !class_exists( 'Shortcode' ) ) {
      *
      * @return array
      */
-    public function get_option_defaults() {
-      return $this->option_defaults;
+    public function get_user_options() {
+      return $this->user_options;
     }
 
     /**
@@ -134,8 +134,8 @@ if ( !class_exists( 'Shortcode' ) ) {
      *
      * @param array
      */
-    protected function set_option_defaults( $new_option_defaults ) {
-      $this->option_defaults = $new_option_defaults;
+    protected function set_user_options( $new_user_options ) {
+      $this->user_options = $new_user_options;
     }
 
     /**
@@ -194,7 +194,7 @@ if ( !class_exists( 'Shortcode' ) ) {
 
       // merge shortcode options with user's shortcode $atts
       $template_options = shortcode_atts(
-        $this->get_option_defaults(),
+        $this->get_user_options(),
         $atts,
         $this->get_name()
       );

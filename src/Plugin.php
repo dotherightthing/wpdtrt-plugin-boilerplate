@@ -57,7 +57,8 @@ if ( !class_exists( 'Plugin' ) ) {
       $developer_prefix = null;
       $path = null;
       $messages = null;
-      $option_defaults = null;
+      $plugin_options = null;
+      $instance_options = null;
       $version = null;
 
       // extract variables
@@ -70,7 +71,8 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_developer_prefix( $developer_prefix );
       $this->set_path( $path );
       $this->set_messages( $messages );
-      $this->set_option_defaults( $option_defaults );
+      $this->set_plugin_options( $plugin_options );
+      $this->set_instance_options( $instance_options );
       $this->set_version( $version );
 
       $this->set_options();
@@ -255,27 +257,51 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $option_defaults
+     * Get the value of $plugin_options
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @return       array
      */
-    public function get_option_defaults() {
-      return $this->option_defaults;
+    public function get_plugin_options() {
+      return $this->plugin_options;
     }
 
     /**
-     * Set the value of $option_defaults
+     * Set the value of $plugin_options
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @param       array
      */
-    protected function set_option_defaults( $new_option_defaults ) {
-      $this->option_defaults = $new_option_defaults;
+    protected function set_plugin_options( $new_plugin_options ) {
+      $this->plugin_options = $new_plugin_options;
+    }
+
+    /**
+     * Get the value of $instance_options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_instance_options() {
+      return $this->instance_options;
+    }
+
+    /**
+     * Set the value of $instance_options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    protected function set_instance_options( $new_instance_options ) {
+      $this->instance_options = $new_instance_options;
     }
 
     /**
@@ -311,7 +337,7 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function get_options() {
 
-      $defaults = $this->get_option_defaults();
+      $plugin_options = $this->get_plugin_options();
 
       /**
        * Load any existing options, falling back to an empty array if they don't exist yet
@@ -320,10 +346,10 @@ if ( !class_exists( 'Plugin' ) ) {
       $user_settings = get_option( $this->get_prefix(), array() );
 
       /**
-       * Merge defaults with existing options
-       * This overwrites the defaults with any user specified values
+       * Merge plugin_options with existing options
+       * This overwrites the plugin_options with any user specified values
        */
-      $options = array_merge( $defaults, $user_settings );
+      $options = array_merge( $plugin_options, $user_settings );
 
       return $options;
     }
@@ -562,7 +588,8 @@ if ( !class_exists( 'Plugin' ) ) {
         'size' => 20,
         'tip' => null,
         'usage' => 'option', // option | widget
-        'scope' => null
+        'scope' => null,
+        'options' => null
       );
 
       $type = null;
@@ -572,6 +599,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $size = null;
       $usage = null; // option | widget
       $scope = null;
+      $options = null;
 
       $attributes = array_merge( $default_attributes, $author_attributes );
       extract( $attributes, EXTR_IF_EXISTS );
