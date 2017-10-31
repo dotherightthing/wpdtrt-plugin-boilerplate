@@ -346,7 +346,14 @@ if ( !class_exists( 'Plugin' ) ) {
        * Load any plugin user settings, falling back to an empty array if they don't exist yet
        * @see https://developer.wordpress.org/reference/functions/get_option/#parameters
        */
-      $plugin_user_settings = get_option( $this->get_prefix(), array() );
+      $options = get_option( $this->get_prefix(), array() );
+
+      if ( isset( $options['plugin_options'] ) ) {
+        $plugin_user_settings = $options['plugin_options'];
+      }
+      else {
+        $plugin_user_settings = array();
+      }
 
       /**
        * Merge default plugin_options with plugin user settings
@@ -594,18 +601,9 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      * @todo        Add field validation feedback
      */
-    public function render_form_element( $name, $attributes ) {
+    public function render_form_element( $name, $attributes=array() ) {
 
-      $default_attributes = array(
-        'type' => 'text',
-        'label' => 'Label',
-        'size' => 20,
-        'tip' => null,
-        'usage' => 'option', // option | widget
-        'scope' => null,
-        'options' => null
-      );
-
+      // define variables
       $type = null;
       $label = null;
       $size = null;
@@ -614,24 +612,19 @@ if ( !class_exists( 'Plugin' ) ) {
       $scope = null;
       $options = null;
 
-      $attributes = array_merge( $default_attributes, $attributes );
+      // populate variables
       extract( $attributes, EXTR_IF_EXISTS );
 
+      // name as a string
       $nameStr = $name;
 
-      // layout
+      // plugin options page layout
       $label_start = '<tr><th scope="row">';
       $label_end   = '</th>';
       $field_start = '<td>';
       $field_end   = '</td></tr>';
       $tip_element = 'div';
       $classname   = 'regular-text';
-
-      // Load options array
-      $options = get_option( $this->get_prefix() );
-
-      // Assign values to variables
-      extract( $options );
 
       /**
        * Set the value to the variable with the same name as the $name string
