@@ -384,8 +384,7 @@ if ( !class_exists( 'Plugin' ) ) {
        * This overwrites the old values with any new values
        */
       $options = array_merge( $old_options, $new_options );
-      wpdtrt_log('options');
-      wpdtrt_log($options);
+
       /**
        * Save options object to WP Options table in database, as an array
        *
