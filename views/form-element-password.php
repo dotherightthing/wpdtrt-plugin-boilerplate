@@ -2,17 +2,6 @@
 /**
  * Template partial for Password fields.
  *
- * @example
- * 	<?php
- * 	echo $this->render_form_element( array(
- * 	  'type' => 'password',
- * 	  'name' => $this->get_field_name('title'),
- * 	  'size' => 10,
- * 	  'label' => esc_html__('Title', 'text-domain'),
- * 	  'tip' => esc_html__('A helpful tip', 'text-domain'),
- * 	) );
- *  ?>
- *
  * @package     WPPlugin
  * @since 		0.6.0
  * @version 	1.0.0

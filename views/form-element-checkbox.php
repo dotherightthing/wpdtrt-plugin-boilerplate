@@ -2,16 +2,6 @@
 /**
  * Template partial for Checkbox fields.
  *
- * @example
- * 	<?php
- * 	echo $this->render_form_element( array(
- * 	  'type' => 'checkbox',
- * 	  'name' => $this->get_field_name('title'),
- * 	  'label' => esc_html__('Title', 'text-domain'),
- * 	  'tip' => esc_html__('A helpful tip', 'text-domain'),
- * 	) );
- *  ?>
- *
  * @package     WPPlugin
  * @since 		0.6.0
  * @version 	1.0.0

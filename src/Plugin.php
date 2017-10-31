@@ -337,21 +337,35 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function get_options() {
 
+      /**
+       * Get default plugin options, as passed into the plugin constructor
+       */
       $plugin_options = $this->get_plugin_options();
 
       /**
-       * Load any existing options, falling back to an empty array if they don't exist yet
+       * Load any plugin user settings, falling back to an empty array if they don't exist yet
        * @see https://developer.wordpress.org/reference/functions/get_option/#parameters
        */
-      $user_settings = get_option( $this->get_prefix(), array() );
+      $plugin_user_settings = get_option( $this->get_prefix(), array() );
 
       /**
-       * Merge plugin_options with existing options
-       * This overwrites the plugin_options with any user specified values
+       * Merge default plugin_options with plugin user settings
+       * This overwrites the plugin options with any user specified values
        */
-      $options = array_merge( $plugin_options, $user_settings );
+      $plugin_options_updated = array_merge( $plugin_options, $plugin_user_settings );
 
-      return $options;
+      /**
+       * Get default instance options, as passed into the plugin constructor
+       * These are variously retrieved and manipulated in widgets & shortcodes
+       * But defaults are stored with the plugin as a single point of reference
+       * @todo If this works..
+       */
+      $instance_options = $this->get_instance_options();
+
+      return array(
+        'plugin_options' => $plugin_options_updated,
+        'instance_options' => $instance_options
+      );
     }
 
     /**
@@ -370,11 +384,12 @@ if ( !class_exists( 'Plugin' ) ) {
        * This overwrites the old values with any new values
        */
       $options = array_merge( $old_options, $new_options );
-
+      wpdtrt_log('options');
+      wpdtrt_log($options);
       /**
        * Save options object to WP Options table in database, as an array
        *
-       * So that we only use have to consume one row in the WP Options table
+       * So that we only have to consume one row in the WP Options table
        * WordPress automatically serializes this (into a string)
        * because MySQL does not support arrays as a data type
        *
