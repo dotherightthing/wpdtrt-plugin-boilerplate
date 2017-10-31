@@ -14,7 +14,7 @@
 <?php echo $label_end; ?>
 
 <?php echo $field_start; ?>
-	<input type="password" name="<?php echo $name; ?>" id="<?php echo $id; ?>" value="<?php echo $value; ?>" size="<?php echo $size; ?>" class="<?php echo $classname; ?>" aria-describedby="<?php echo $name; ?>-tip">
+	<input type="password" name="<?php echo $name; ?>" id="<?php echo $id; ?>" value="<?php echo $value; ?>" size="<?php echo $size; ?>" class="<?php echo $classname; ?>" aria-describedby="<?php echo $id; ?>-tip">
 	<<?php echo $tip_element; ?> class="description" id="<?php echo $id; ?>-tip">
 		<?php echo $tip; ?>
 	</<?php echo $tip_element; ?>>

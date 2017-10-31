@@ -14,7 +14,7 @@
 <?php echo $label_end; ?>
 
 <?php echo $field_start; ?>
-	<select name="<?php echo $name; ?>" id="<?php echo $id; ?>" id="<?php echo $name; ?>" class="regular-text" aria-describedby="<?php echo $name; ?>-tip">
+	<select name="<?php echo $name; ?>" id="<?php echo $id; ?>" id="<?php echo $name; ?>" class="regular-text" aria-describedby="<?php echo $id; ?>-tip">
 		<option value="null">Please select an option</option>
 		<?php foreach( $options as $name => $attributes ): ?>
 		<option value="<?php echo $name; ?>"<?php echo $attributes['selected'] ? ' selected' : ''; ?>>

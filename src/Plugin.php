@@ -608,8 +608,8 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $type = null;
       $label = null;
-      $tip = null;
       $size = null;
+      $tip = null;
       $usage = null; // option | widget
       $scope = null;
       $options = null;
