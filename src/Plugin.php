@@ -603,6 +603,11 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function render_form_element( $name, $attributes=array() ) {
 
+      // these options don't have attributes
+      if ( ( $name === 'data' ) || ( $name === 'last_updated' ) ) {
+        return;
+      }
+
       // define variables
       $type = null;
       $label = null;
