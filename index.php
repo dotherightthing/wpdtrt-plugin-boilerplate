@@ -2,6 +2,10 @@
 /**
  * PSR-4 Autoloader
  * @see http://phpenthusiast.com/blog/how-to-autoload-with-composer
+ *
+ * @package     WPPlugin
+ * @since 		0.6.0
+ * @version 	1.0.0
  */
 
 	// vendor/autoload.php

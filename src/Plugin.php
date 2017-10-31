@@ -549,10 +549,10 @@ if ( !class_exists( 'Plugin' ) ) {
        */
 
       // Call API and store response in options object
-      $options['data'] = $this->get_api_data();
+      $options['plugin_options']['data'] = $this->get_api_data();
 
       // Store timestamp in options object
-      $options['last_updated'] = time(); // UNIX timestamp for the current time
+      $options['plugin_options']['last_updated'] = time(); // UNIX timestamp for the current time
 
       // Update options object in database
       update_option( $this->get_prefix(), $options, null );

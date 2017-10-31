@@ -2,30 +2,27 @@
 /**
  * Template partial for Select fields.
  *
- * @package     WPDTRT_Attachment_Map
- * @subpackage  WPDTRT_Attachment_Map/templates
+ * @package     WPPlugin
  * @since 		0.6.0
  * @version 	1.0.0
  */
 
 ?>
 
-<tr>
-	<th scope="row">
-		<label for="<?php echo $name; ?>"><?php echo $label; ?>:</label>
-	</th>
-	<td>
-		<!-- value="<?php echo $value; ?>"-->
-		<select name="<?php echo $name; ?>" id="<?php echo $name; ?>" class="regular-text">
-			<option value="null">Please select an option</option>
-			<?php foreach( $options as $name => $attributes ): ?>
-			<option value="<?php echo $name; ?>"<?php echo $attributes['selected'] ? ' selected' : ''; ?>>
-				<?php echo $attributes['text']; ?>
-			</option>
-			<?php endforeach; ?>
-		</select>
-		<?php if ( isset($tip) ): ?>
-		<p class="description"><?php echo $tip; ?></p>
-		<?php endif; ?>
-	</td>
-</tr>
+<?php echo $label_start; ?>
+	<label for="<?php echo $name; ?>"><?php echo $label; ?>:</label>
+<?php echo $label_end; ?>
+
+<?php echo $field_start; ?>
+	<select name="<?php echo $name; ?>" id="<?php echo $name; ?>" id="<?php echo $name; ?>" class="regular-text" aria-describedby="<?php echo $name; ?>-tip">
+		<option value="null">Please select an option</option>
+		<?php foreach( $options as $name => $attributes ): ?>
+		<option value="<?php echo $name; ?>"<?php echo $attributes['selected'] ? ' selected' : ''; ?>>
+			<?php echo $attributes['text']; ?>
+		</option>
+		<?php endforeach; ?>
+	</select>
+	<<?php echo $tip_element; ?> class="description" id="<?php echo $name; ?>-tip">
+		<?php echo $tip; ?>
+	</<?php echo $tip_element; ?>>
+<?php echo $field_end; ?>

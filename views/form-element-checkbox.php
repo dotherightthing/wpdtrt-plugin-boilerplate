@@ -12,8 +12,7 @@
  * 	) );
  *  ?>
  *
- * @package     WPDTRT_Attachment_Map
- * @subpackage  WPDTRT_Attachment_Map/templates
+ * @package     WPPlugin
  * @since 		0.6.0
  * @version 	1.0.0
  */
