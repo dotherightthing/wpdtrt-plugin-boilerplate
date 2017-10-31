@@ -571,7 +571,8 @@ if ( !class_exists( 'Plugin' ) ) {
     /**
      * Form field templating for the options page
      *
-     * @param       array $author_attributes
+     * @param       string $name
+     * @param       array $attributes
      *
      * @return      string
      *
@@ -579,11 +580,10 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      * @todo        Add field validation feedback
      */
-    public function render_form_element( $author_attributes ) {
+    public function render_form_element( $name, $attributes ) {
 
       $default_attributes = array(
         'type' => 'textfield',
-        'name' => null,
         'label' => 'Label',
         'size' => 20,
         'tip' => null,
@@ -593,7 +593,6 @@ if ( !class_exists( 'Plugin' ) ) {
       );
 
       $type = null;
-      $name = null;
       $label = null;
       $tip = null;
       $size = null;
@@ -601,7 +600,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $scope = null;
       $options = null;
 
-      $attributes = array_merge( $default_attributes, $author_attributes );
+      $attributes = array_merge( $default_attributes, $attributes );
       extract( $attributes, EXTR_IF_EXISTS );
 
       $nameStr = $name;
