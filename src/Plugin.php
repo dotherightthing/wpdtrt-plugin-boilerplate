@@ -42,12 +42,12 @@ if ( !class_exists( 'Plugin' ) ) {
      * when it is instantiated,
      * using new WPDTRT_Attachment_Map_Plugin
      *
-     * @param     array $options Plugin options
+     * @param     array $settings Plugin options
      *
      * @version   1.1.0
      * @since     1.0.0
      */
-    function __construct( $options ) {
+    function __construct( $settings ) {
 
       // define variables
       $url = null;
@@ -62,7 +62,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $version = null;
 
       // extract variables
-      extract( $options, EXTR_IF_EXISTS );
+      extract( $settings, EXTR_IF_EXISTS );
 
       $this->set_url( $url );
       $this->set_prefix( $prefix );
@@ -71,11 +71,13 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_developer_prefix( $developer_prefix );
       $this->set_path( $path );
       $this->set_messages( $messages );
-      $this->set_plugin_options( $plugin_options );
-      $this->set_instance_options( $instance_options );
       $this->set_version( $version );
 
-      $this->set_options();
+      // store both sets of options
+      $this->set_options( array(
+        'plugin_options' => $plugin_options,
+        'instance_options' => $instance_options
+      ) );
 
       // attempt 1 - infers that no args are to be passed, fails
       //add_action( 'wp_enqueue_scripts', $this->render_js_data_frontend() );
@@ -257,54 +259,6 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $plugin_options
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @return       array
-     */
-    public function get_plugin_options() {
-      return $this->plugin_options;
-    }
-
-    /**
-     * Set the value of $plugin_options
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @param       array
-     */
-    protected function set_plugin_options( $new_plugin_options ) {
-      $this->plugin_options = $new_plugin_options;
-    }
-
-    /**
-     * Get the value of $instance_options
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @return       array
-     */
-    public function get_instance_options() {
-      return $this->instance_options;
-    }
-
-    /**
-     * Set the value of $instance_options
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @param       array
-     */
-    protected function set_instance_options( $new_instance_options ) {
-      $this->instance_options = $new_instance_options;
-    }
-
-    /**
      * Get the value of $path
      *
      * @since       1.0.0
@@ -338,41 +292,12 @@ if ( !class_exists( 'Plugin' ) ) {
     public function get_options() {
 
       /**
-       * Get default plugin options, as passed into the plugin constructor
-       */
-      $plugin_options = $this->get_plugin_options();
-
-      /**
        * Load any plugin user settings, falling back to an empty array if they don't exist yet
        * @see https://developer.wordpress.org/reference/functions/get_option/#parameters
        */
       $options = get_option( $this->get_prefix(), array() );
 
-      if ( isset( $options['plugin_options'] ) ) {
-        $plugin_user_settings = $options['plugin_options'];
-      }
-      else {
-        $plugin_user_settings = array();
-      }
-
-      /**
-       * Merge default plugin_options with plugin user settings
-       * This overwrites the plugin options with any user specified values
-       */
-      $plugin_options_updated = array_merge( $plugin_options, $plugin_user_settings );
-
-      /**
-       * Get default instance options, as passed into the plugin constructor
-       * These are variously retrieved and manipulated in widgets & shortcodes
-       * But defaults are stored with the plugin as a single point of reference
-       * @todo If this works..
-       */
-      $instance_options = $this->get_instance_options();
-
-      return array(
-        'plugin_options' => $plugin_options_updated,
-        'instance_options' => $instance_options
-      );
+      return $options;
     }
 
     /**
@@ -380,9 +305,9 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @since 1.0.0
      *
-     * @param array New options
+     * @param array $options
      */
-    protected function set_options( $new_options = array() ) {
+    protected function set_options( $new_options ) {
 
       $old_options = $this->get_options();
 
@@ -391,6 +316,8 @@ if ( !class_exists( 'Plugin' ) ) {
        * This overwrites the old values with any new values
        */
       $options = array_merge( $old_options, $new_options );
+
+
 
       /**
        * Save options object to WP Options table in database, as an array
@@ -408,6 +335,58 @@ if ( !class_exists( 'Plugin' ) ) {
        * @see https://codex.wordpress.org/Function_Reference/update_option
        */
       update_option( $this->get_prefix(), $options, null );
+    }
+
+    /**
+     * Get the value of $plugin_options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_plugin_options() {
+      $options = $this->get_options();
+      $plugin_options = $options['plugin_options'];
+      return $plugin_options;
+    }
+
+    /**
+     * Set the value of $plugin_options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    public function set_plugin_options( $new_plugin_options ) {
+
+      $options = $this->get_options();
+
+      $old_plugin_options = $this->get_plugin_options();
+
+      /**
+       * Merge old options with new options
+       * This overwrites the old values with any new values
+       */
+      $options['plugin_options'] = array_merge( $old_plugin_options, $new_plugin_options );
+
+      $this->set_options($options);
+    }
+
+    /**
+     * Get the value of $instance_options
+     * Note: Setting only takes place within Shortcodes and Widgets
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return      array
+     */
+    public function get_instance_options() {
+      $options = $this->get_options();
+      $instance_options = $options['instance_options'];
+      return $instance_options;
     }
 
     /**
@@ -616,6 +595,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $usage = null; // option | widget
       $scope = null;
       $options = null;
+      $value = null;
 
       // populate variables
       extract( $attributes, EXTR_IF_EXISTS );
@@ -631,21 +611,13 @@ if ( !class_exists( 'Plugin' ) ) {
       $tip_element = 'div';
       $classname   = 'regular-text';
 
-      /**
-       * Set the value to the variable with the same name as the $name string
-       * e.g. $name="wpdtrt_blocks_toggle_label" => $wpdtrt_blocks_toggle_label => ('Open menu', 'wpdtrt-attachment-map')
-       * @see http://php.net/manual/en/language.variables.variable.php
-       */
-
       // if the option variable doesn't exist yet, don't output it
-      if ( ! isset( ${$nameStr} ) ) {
-        return;
-      }
+      //if ( ! isset( $value ) ) {
+      //  return;
+      //}
 
       // same
       $id = $nameStr;
-
-      $value = ${$nameStr};
 
       /**
        * Load the HTML template
