@@ -482,6 +482,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      *
      * @return      string
+     * @todo        Translate wp_die ?
      */
     function render_options_page() {
 
@@ -490,14 +491,9 @@ if ( !class_exists( 'Plugin' ) ) {
       }
 
       /**
-       * Make this global available within the required statement
-       */
-      //global $options;
-
-      /**
        * Load existing options
        */
-      $options = $this->get_options();
+      $plugin_options = $this->get_plugin_options();
 
       /**
        * If the form was submitted, update the options
@@ -517,48 +513,40 @@ if ( !class_exists( 'Plugin' ) ) {
          * @todo https://github.com/dotherightthing/generator-wp-plugin-boilerplate/issues/16
          * @todo https://github.com/dotherightthing/generator-wp-plugin-boilerplate/issues/17
          */
-        foreach( $options as $key => $value ) {
+        foreach( $plugin_options as $name => $attributes ) {
 
           // if a value was submitted
-          if ( !empty( $_POST[ $key ] ) ) {
+          if ( !empty( $_POST[ $name ] ) ) {
             // overwrite the existing value
-            $options[ $key ] = esc_html( $_POST[ $key ] );
+            $plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] );
           }
           else {
-            // if a checkbox's unchecked option
-            // value="1"
-            if ( ( $key === ($this->get_prefix() . '_slidedown') ) || ( $key === ($this->get_prefix() . '_reveal_labels')) ) {
-              // also overwrite the existing value
-              $options[ $key ] = '';
+            // if the form contained an unchecked checkbox
+            if ( $plugin_options[ $name ]['type'] === 'checkbox ') {
+              $plugin_options[ $name ]['value'] = '';
             }
-            // if a select's default option
-            // value=""
-            if ( $key === ($this->get_prefix() . '_datatype') ) {
-              // also overwrite the existing value
-              $options[ $key ] = '';
+            // if the form contained an unselected select
+            else if ( $plugin_options[ $name ]['type'] === 'select ') {
+              $plugin_options[ $name ]['value'] = '';
             }
           }
         }
-
-        // Update options object in database
-        update_option( $this->get_prefix(), $options, null );
       }
 
-      /**
-       * Use the options to get the data
-       */
+      // if data has already been retrieved from API
+      // or if we are about to do this for the first time
+      if ( isset( $plugin_options['last_updated'] ) || isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
 
-      // Call API and store response in options object
-      $options['plugin_options']['data'] = $this->get_api_data();
+        // Call API and store response in options object
+        $plugin_options['data'] = $this->get_api_data();
 
-      // Store timestamp in options object
-      $options['plugin_options']['last_updated'] = time(); // UNIX timestamp for the current time
+        // Store timestamp in options object
+        $plugin_options['last_updated'] = time(); // UNIX timestamp for the current time
+
+      }
 
       // Update options object in database
-      update_option( $this->get_prefix(), $options, null );
-
-      // Assign values to variables
-      extract( $options );
+      $this->set_plugin_options( $plugin_options );
 
       /**
        * Load the HTML template
