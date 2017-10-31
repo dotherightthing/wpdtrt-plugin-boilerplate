@@ -46,11 +46,11 @@ if ( !class_exists( 'Widget' ) ) {
       // define variables
       $name = null;
       $title = null;
+      $description = null;
       $plugin = null;
       $template = null;
-      $user_options = null;
+      $selected_instance_options = null;
       //$classname = null;
-      $description = null;
 
       // extract variables
       extract( $options, EXTR_IF_EXISTS );
@@ -59,16 +59,22 @@ if ( !class_exists( 'Widget' ) ) {
       // which stores global plugin options
       $this->set_plugin( $plugin );
       $this->set_template_name( $template );
-      $this->set_user_options( $user_options );
-      //$this->set_options();
 
-      $widget_options = array(
+      $widget_instance_options = array(
         //'classname' => $classname,
         'description' => $description,
       );
 
-      // Instantiate the parent object
-      parent::__construct( $name, $title, $widget_options );
+      $plugin_instance_options = $plugin->get_instance_options();
+
+      foreach( $selected_instance_options as $option_name ) {
+        $widget_instance_options[ $option_name ] = $plugin_instance_options[ $option_name ];
+      }
+
+      $this->set_instance_options( $widget_instance_options );
+
+      // Instantiate the WordPress parent object
+      parent::__construct( $name, $title, $widget_instance_options );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -98,15 +104,15 @@ if ( !class_exists( 'Widget' ) ) {
     }
 
     /**
-     * Set default options
+     * Set instance options
      *
-     * @param array $user_options
+     * @param array $instance_options
      *
      * @since 1.0.0
      *
      */
-    protected function set_user_options( $user_options ) {
-      $this->user_options = $user_options;
+    protected function set_instance_options( $instance_options ) {
+      $this->instance_options = $instance_options;
     }
 
     /**
@@ -117,8 +123,8 @@ if ( !class_exists( 'Widget' ) ) {
      * @since 1.0.0
      *
      */
-    protected function get_user_options() {
-      return $this->user_options;
+    protected function get_instance_options() {
+      return $this->instance_options;
     }
 
     /**
@@ -167,31 +173,30 @@ if ( !class_exists( 'Widget' ) ) {
      * @version     1.0.0
      * @todo        Add field validation feedback
      */
-    public function render_form_element( $name, $attributes ) {
+    public function render_form_element( $name, $attributes=array() ) {
 
-      $default_attributes = array(
-        'type' => 'text',
-        'label' => 'Label',
-        'size' => 20,
-        'tip' => null,
-        'instance' => null,
-        'options' => null
-      );
+      // these options don't have attributes
+      if ( $name === 'description' ) {
+        return;
+      }
 
+      // define variables
       $type = null;
-      $name = null;
       $label = null;
-      $tip = null;
       $size = null;
+      $tip = null;
+      $usage = null; // option | widget
       $instance = null;
       $options = null;
+      $value = null;
 
-      $attributes = array_merge( $default_attributes, $attributes );
+      // populate variables
       extract( $attributes, EXTR_IF_EXISTS );
 
+      // name as a string
       $nameStr = $name;
 
-      // layout
+      // widget admin layout
       $label_start = '<p>';
       $label_end   = '';
       $field_start = '';
@@ -204,7 +209,6 @@ if ( !class_exists( 'Widget' ) ) {
        * e.g. $name="wpdtrt_attachment_map_toggle_label" => $wpdtrt_attachment_map_toggle_label => ('Open menu', 'wpdtrt-attachment-map')
        * @see http://php.net/manual/en/language.variables.variable.php
        */
-
       // translate e.g. 'number' to 'wp-widget-foobar[1]-number'
       $name = $this->get_field_name($nameStr);
       $value = isset( $instance[ $nameStr ] ) ? $instance[ $nameStr ] : '';
@@ -309,16 +313,15 @@ if ( !class_exists( 'Widget' ) ) {
      * Updates a particular instance of a widget, by replacing the old instance with data from the new instance
      *
      * @param array $new_instance New settings for this instance as input by the user via
-     *                            WP_Widget::form().
+     *  WP_Widget::form().
      * @param array $old_instance Old settings for this instance.
      * @return array Settings to save or bool false to cancel saving.
      */
     function update( $new_instance, $old_instance ) {
       // Save user input (widget options)
 
-      $plugin = $this->get_plugin();
       $instance = $old_instance;
-      $user_options = $this->get_user_options();
+      $instance_options = $this->get_instance_options();
 
       /**
        * strip_tags — Strip HTML and PHP tags from a string
@@ -329,7 +332,7 @@ if ( !class_exists( 'Widget' ) ) {
         $instance['title'] = strip_tags( $new_instance['title'] );
       }
 
-      foreach( $user_options as $key=>$value ) {
+      foreach( $instance_options as $key=>$value ) {
 
         // todo: does this check prevent empty values from being saved?
         if ( isset( $new_instance[ $key ] ) ) {
@@ -348,7 +351,7 @@ if ( !class_exists( 'Widget' ) ) {
      */
     function form( $instance ) {
 
-      // get a reference to the instance
+      // get a reference to the parent plugin
       $plugin = $this->get_plugin();
 
       /**
@@ -363,7 +366,7 @@ if ( !class_exists( 'Widget' ) ) {
         $title = null;
       }
 
-      foreach( $this->get_user_options() as $key=>$value ) {
+      foreach( $this->get_instance_options() as $key=>$value ) {
 
         // evaluate variables to populate the 'value' attribute
         if ( isset( $instance[ $key ] ) ) {
