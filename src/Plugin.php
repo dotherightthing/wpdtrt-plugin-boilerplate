@@ -2,10 +2,8 @@
 /**
  * Plugin class.
  *
- * @package     WPPlugin
- * @version     1.0.0
- *
- * @todo Convert CONSTANTS into $this->properties
+ * @package   WPPlugin
+ * @version   1.0.0
  */
 
 namespace DoTheRightThing\WPPlugin;
@@ -626,8 +624,6 @@ if ( !class_exists( 'Plugin' ) ) {
       $label = null;
       $size = null;
       $tip = null;
-      $usage = null; // option | widget
-      $scope = null;
       $options = null;
       $value = null;
 
@@ -644,11 +640,6 @@ if ( !class_exists( 'Plugin' ) ) {
       $field_end   = '</td></tr>';
       $tip_element = 'div';
       $classname   = 'regular-text';
-
-      // if the option variable doesn't exist yet, don't output it
-      //if ( ! isset( $value ) ) {
-      //  return;
-      //}
 
       // same
       $id = $nameStr;

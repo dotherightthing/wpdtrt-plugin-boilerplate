@@ -2,11 +2,10 @@
 /**
  * Plugin widget class.
  *
- * Boilerplate to generate a widget,  which is configured in WP Admin, and can be displayed in sidebars.
+ * Boilerplate to generate a widget, which is configured in WP Admin, and can be displayed in sidebars.
  *
- * @package     WPDTRT_Attachment_Map
- * @subpackage  WPDTRT_Attachment_Map/app
- * @since       0.1.0
+ * @package   WPPlugin
+ * @version   1.0.0
  */
 
 namespace DoTheRightThing\WPPlugin;
@@ -185,9 +184,7 @@ if ( !class_exists( 'Widget' ) ) {
       $label = null;
       $size = null;
       $tip = null;
-      $usage = null; // option | widget
       $options = null;
-      //$value = null;
 
       // populate variables
       extract( $attributes, EXTR_IF_EXISTS );

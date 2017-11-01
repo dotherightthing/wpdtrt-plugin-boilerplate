@@ -2,9 +2,9 @@
 /**
  * Template partial for Checkbox fields.
  *
- * @package     WPPlugin
+ * @package   	WPPlugin
+ * @version   	1.0.0
  * @since 		0.6.0
- * @version 	1.0.0
  */
 
 ?>

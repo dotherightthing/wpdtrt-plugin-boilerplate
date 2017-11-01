@@ -2,10 +2,8 @@
 /**
  * Plugin shortcode class.
  *
- * @package     WPPlugin
- * @version     1.0.0
- *
- * @todo Convert CONSTANTS into $this->properties
+ * @package   WPPlugin
+ * @version   1.0.0
  */
 
 namespace DoTheRightThing\WPPlugin;
@@ -193,9 +191,6 @@ if ( !class_exists( 'Shortcode' ) ) {
      * @return string
      */
     public function render_shortcode( $atts, $content = null ) {
-
-      // post object to get info about the post in which the shortcode appears
-      // global $post;
 
       /**
        * Combine user attributes with known attributes and fill in defaults when needed.
