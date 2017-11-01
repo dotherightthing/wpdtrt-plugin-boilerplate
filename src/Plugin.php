@@ -71,11 +71,12 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_messages( $messages );
       $this->set_version( $version );
 
-      // store both sets of options
-      $this->set_options( array(
+      $options = array(
         'plugin_options' => $plugin_options,
         'instance_options' => $instance_options
-      ) );
+      );
+
+      $this->setup($options);
 
       // attempt 1 - infers that no args are to be passed, fails
       //add_action( 'wp_enqueue_scripts', $this->render_js_data_frontend() );
@@ -95,6 +96,25 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     //// START GETTERS AND SETTERS \\\\
+
+    /**
+     * Initialise plugin options ONCE.
+     *
+     * @since 1.0.0
+     *
+     * @param array $default_options
+     *
+     * @see https://wordpress.stackexchange.com/a/209772
+     */
+    protected function setup( $default_options ) {
+
+      $existing_options = $this->get_options();
+
+      // if the user didn't set some options in a previous session
+      if ( empty( $existing_options ) ) {
+        $this->set_options($default_options);
+      }
+    }
 
     /**
      * Get the value of $url
@@ -314,8 +334,6 @@ if ( !class_exists( 'Plugin' ) ) {
        * This overwrites the old values with any new values
        */
       $options = array_merge( $old_options, $new_options );
-
-
 
       /**
        * Save options object to WP Options table in database, as an array
@@ -575,11 +593,9 @@ if ( !class_exists( 'Plugin' ) ) {
             }
           }
         }
-      }
 
-      // if data has already been retrieved from API
-      // or if we are about to do this for the first time
-      if ( isset( $plugin_options['last_updated'] ) || isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
+        // If we've updated our options
+        // get the latest data from the API
 
         // Call API and store response in options object
         $plugin_options['data'] = $this->get_api_data();
@@ -587,15 +603,28 @@ if ( !class_exists( 'Plugin' ) ) {
         // Store timestamp in options object
         $plugin_options['last_updated'] = time(); // UNIX timestamp for the current time
 
+        // Update options object in database
+        $this->set_plugin_options( $plugin_options );
       }
+      // if data has already been retrieved from API
+      // get the latest data from the API
+      else if ( isset( $plugin_options['last_updated'] ) ) {
 
-      // Update options object in database
-      $this->set_plugin_options( $plugin_options );
+        // Call API and store response in options object
+        $plugin_options['data'] = $this->get_api_data();
+
+        // Store timestamp in options object
+        $plugin_options['last_updated'] = time(); // UNIX timestamp for the current time
+
+        // Update options object in database
+        $this->set_plugin_options( $plugin_options );
+      }
 
       /**
        * Load the HTML template
        * This function's variables will be available to this template,
        * includng $this
+       * $plugin_options are retrieved afresh inside the template
        */
       require_once($this->get_path() . 'templates/options.php');
     }
