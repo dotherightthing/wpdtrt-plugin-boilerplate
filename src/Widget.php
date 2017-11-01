@@ -163,7 +163,7 @@ if ( !class_exists( 'Widget' ) ) {
 
     /**
      * Form field templating for the widget admin page
-     *
+     * @param       array $instance The WordPress Widget instance
      * @param       string $name
      * @param       array $attributes
      *
@@ -173,7 +173,7 @@ if ( !class_exists( 'Widget' ) ) {
      * @version     1.0.0
      * @todo        Add field validation feedback
      */
-    public function render_form_element( $name, $attributes=array() ) {
+    public function render_form_element( $instance, $name, $attributes=array() ) {
 
       // these options don't have attributes
       if ( $name === 'description' ) {
@@ -188,13 +188,6 @@ if ( !class_exists( 'Widget' ) ) {
       $usage = null; // option | widget
       $options = null;
       $value = null;
-
-      /**
-       * render_form_element is called from the widget-admin.php template,
-       * which is required by the form() method,
-       * which has access to the widget $instance.
-       */
-      $instance = null; // the WordPress widget instance
 
       // populate variables
       extract( $attributes, EXTR_IF_EXISTS );
