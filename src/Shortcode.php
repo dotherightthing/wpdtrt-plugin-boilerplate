@@ -60,9 +60,7 @@ if ( !class_exists( 'Shortcode' ) ) {
       $this->set_plugin( $plugin );
       $this->set_template_name( $template );
 
-      $shortcode_instance_options = array(
-        //'classname' => $classname,
-      );
+      $shortcode_instance_options = array();
 
       $plugin_instance_options = $plugin->get_instance_options();
 
