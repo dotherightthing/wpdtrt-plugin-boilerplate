@@ -186,9 +186,15 @@ if ( !class_exists( 'Widget' ) ) {
       $size = null;
       $tip = null;
       $usage = null; // option | widget
-      $instance = null;
       $options = null;
       $value = null;
+
+      /**
+       * render_form_element is called from the widget-admin.php template,
+       * which is required by the form() method,
+       * which has access to the widget $instance.
+       */
+      $instance = null; // the WordPress widget instance
 
       // populate variables
       extract( $attributes, EXTR_IF_EXISTS );
@@ -208,9 +214,13 @@ if ( !class_exists( 'Widget' ) ) {
        * Set the value to the variable with the same name as the $name string
        * e.g. $name="wpdtrt_attachment_map_toggle_label" => $wpdtrt_attachment_map_toggle_label => ('Open menu', 'wpdtrt-attachment-map')
        * @see http://php.net/manual/en/language.variables.variable.php
+       * @see https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/
        */
-      // translate e.g. 'number' to 'wp-widget-foobar[1]-number'
+
+      // Constructs name attributes for use in form() fields
+      // translating e.g. 'number' to 'wp-widget-foobar[1]-number'
       $name = $this->get_field_name($nameStr);
+
       $value = isset( $instance[ $nameStr ] ) ? $instance[ $nameStr ] : '';
 
       if ( $nameStr === 'title' ):
@@ -366,15 +376,15 @@ if ( !class_exists( 'Widget' ) ) {
         $title = null;
       }
 
-      foreach( $this->get_instance_options() as $key=>$value ) {
+      foreach( $this->get_instance_options() as $name=>$attributes ) {
 
         // evaluate variables to populate the 'value' attribute
-        if ( isset( $instance[ $key ] ) ) {
+        if ( isset( $instance[ $name ] ) ) {
           // $enlargement = $instance[ 'enlargement' ];
-          ${$key} = esc_attr( $instance[ $key ] );
+          ${$name} = esc_attr( $instance[ $name ] );
         }
         else {
-          ${$key} = null;
+          ${$name} = null;
         }
       }
 
