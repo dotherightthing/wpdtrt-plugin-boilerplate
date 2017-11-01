@@ -427,6 +427,50 @@ if ( !class_exists( 'Plugin' ) ) {
 
     //// END GETTERS AND SETTERS \\\\
 
+    //// START TRANSFORMATIONS \\\\
+
+    /**
+     * Get a usable value for every form element type
+     * @param       string $field_value
+     * @param       string $field_type
+     *
+     * @return      string $normalised_field_value;
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     * @todo        Add field validation feedback
+     */
+    public function normalise_field_value( $field_value, $field_type ) {
+
+      $normalised_field_value = null;
+
+      // If something was entered into the field
+      // then save the new value.
+      // ( '1', '0', '', true, false ) === isset
+      // ( null ) === !isset
+      if ( isset( $field_value ) ) {
+        $normalised_field_value = $field_value;
+      }
+      else {
+        // but if a checkbox is unchecked
+        // then do change the saved instance value,
+        // otherwise the checkbox will stay checked
+        if ( $field_type === 'checkbox') {
+          $normalised_field_value = '';
+        }
+        // but if the null option in a select is selected
+        // then do change the saved instance value,
+        // otherwise the old option will stay selected
+        else if ( $field_type === 'select') {
+          $normalised_field_value = '';
+        }
+      }
+
+      return $normalised_field_value;
+    }
+
+    //// END TRANSFORMATIONS \\\\
+
     //// START RENDERERS \\\\
 
     /**

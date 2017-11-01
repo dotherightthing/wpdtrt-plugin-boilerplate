@@ -187,7 +187,7 @@ if ( !class_exists( 'Widget' ) ) {
       $tip = null;
       $usage = null; // option | widget
       $options = null;
-      $value = null;
+      //$value = null;
 
       // populate variables
       extract( $attributes, EXTR_IF_EXISTS );
@@ -210,21 +210,12 @@ if ( !class_exists( 'Widget' ) ) {
        * @see https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/
        */
 
-      // if a value was submitted
-      if ( isset( $instance[$nameStr] ) ) {
-        // overwrite the existing value
-        $value = $instance[$nameStr];
-      }
-      else {
-        // if the form contained an unchecked checkbox
-        if ( $type === 'checkbox') {
-          $value = '';
-        }
-        // if the form contained an unselected select
-        else if ( $type === 'select') {
-          $value = '';
-        }
-      }
+      $plugin = $this->get_plugin();
+
+      $value = $plugin->normalise_field_value(
+        ( isset( $instance[$nameStr] ) ? $instance[$nameStr] : null ),
+        $type
+      );
 
       /* Construct name attributes for use in form() fields
        * translating e.g. 'number' to 'wp-widget-foobar[1]-number'
@@ -359,28 +350,14 @@ if ( !class_exists( 'Widget' ) ) {
           continue;
         }
 
-        /**
-         * If something was entered into the field, then save the new value.
-         * ( '1', '0', '', true, false ) === isset
-         * ( null ) === !isset
-         */
-        if ( isset( $new_instance[ $name ] ) ) {
-          $instance[ $name ] = $new_instance[ $name ];
-        }
-        else {
-          // but if a checkbox is unchecked
-          // then do change the saved instance value,
-          // otherwise the checkbox will stay checked
-          if ( $attributes['type'] === 'checkbox') {
-            $instance[ $name ] = '';
-          }
-          // but if the null option in a select is selected
-          // then do change the saved instance value,
-          // otherwise the old option will stay selected
-          else if ( $attributes['type'] === 'select') {
-            $instance[ $name ] = '';
-          }
-        }
+        $plugin = $this->get_plugin();
+
+        $value = $plugin->normalise_field_value(
+          ( isset( $new_instance[$name] ) ? $new_instance[$name] : null ),
+          $attributes['type']
+        );
+
+        $instance[$name] = $value;
       }
 
       return $instance;
