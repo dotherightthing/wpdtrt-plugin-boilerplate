@@ -373,6 +373,7 @@ if ( !class_exists( 'Widget' ) ) {
 
       // get a reference to the parent plugin
       $plugin = $this->get_plugin();
+      $instance_options = $this->get_instance_options();
 
       /**
         * Escape HTML attributes to sanitize the data.
@@ -386,33 +387,20 @@ if ( !class_exists( 'Widget' ) ) {
         $title = null;
       }
 
-      foreach( $this->get_instance_options() as $name=>$attributes ) {
-
-        // evaluate variables to populate the 'value' attribute
-        if ( isset( $instance[ $name ] ) ) {
-          // $enlargement = $instance[ 'enlargement' ];
-          ${$name} = esc_attr( $instance[ $name ] );
-        }
-        else {
-          ${$name} = null;
-        }
-      }
-
-      // get the API data here, to avoid overloading the query_var
-      // @todo: is this really necessary?
-      $data = $plugin->get_api_data();
-      //$options = $plugin->get_options();
-      //$data = $options['data'];
-
       /**
-       * Load the HTML template
-       * This function's variables will be available to this template.
+       * Output the HTML
+       *
+       * @todo Currently redundant but could be used to indicate data ranges: $data = $plugin->get_api_data();
+       * @todo Make the Title label an option, for i18n
        */
+      echo $this->render_form_element( $instance, 'title', array(
+        'type' => 'text',
+        'label' => 'Title' // esc_html__('Title', 'wpdtrt-plugin')
+      ) );
 
-      // invoke a method of the instance
-      $path = $plugin->get_path(); // plugin and shortcode/widget options
-
-      require($path . 'templates/widget-admin.php');
+      foreach( $instance_options as $name=>$attributes ) {
+        echo $this->render_form_element( $instance, $name, $attributes );
+      }
     }
 
     //// END RENDERERS \\\\
