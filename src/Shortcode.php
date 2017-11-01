@@ -47,10 +47,10 @@ if ( !class_exists( 'Shortcode' ) ) {
     function __construct( $options ) {
 
       // define variables
-      $plugin = null;
       $name = null;
+      $plugin = null;
       $template = null;
-      $user_options = null;
+      $selected_instance_options = null;
 
       // extract variables
       extract( $options, EXTR_IF_EXISTS );
@@ -58,12 +58,23 @@ if ( !class_exists( 'Shortcode' ) ) {
       // Store a reference to the partner plugin object
       // which stores global plugin options
       $this->set_plugin( $plugin );
-      $this->set_name( $name );
       $this->set_template_name( $template );
-      $this->set_user_options( $user_options );
-      //$this->set_options();
 
-      add_shortcode( $this->get_name(), [$this, 'render_shortcode'] );
+      $shortcode_instance_options = array(
+        //'classname' => $classname,
+      );
+
+      $plugin_instance_options = $plugin->get_instance_options();
+
+      foreach( $selected_instance_options as $option_name ) {
+        $shortcode_instance_options[ $option_name ] = $plugin_instance_options[ $option_name ];
+      }
+
+      $this->set_instance_options( $shortcode_instance_options );
+
+      $this->set_name( $name ); // for render_shortcode
+
+      add_shortcode( $name, [$this, 'render_shortcode'] );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -117,25 +128,26 @@ if ( !class_exists( 'Shortcode' ) ) {
     }
 
     /**
-     * Get default options used by the shortcode
+     * Get default options
      *
      * @since 1.0.0
      *
      * @return array
      */
-    public function get_user_options() {
-      return $this->user_options;
+    public function get_instance_options() {
+      return $this->instance_options;
     }
 
     /**
-     * Set default options used by the shortcode
+     * Set instance options
+     *
+     * @param array $instance_options
      *
      * @since 1.0.0
      *
-     * @param array
      */
-    protected function set_user_options( $new_user_options ) {
-      $this->user_options = $new_user_options;
+    protected function set_instance_options( $instance_options ) {
+      $this->instance_options = $instance_options;
     }
 
     /**
@@ -194,7 +206,7 @@ if ( !class_exists( 'Shortcode' ) ) {
 
       // merge shortcode options with user's shortcode $atts
       $template_options = shortcode_atts(
-        $this->get_user_options(),
+        $this->get_instance_options(),
         $atts,
         $this->get_name()
       );
