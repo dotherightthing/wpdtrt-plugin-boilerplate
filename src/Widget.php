@@ -210,11 +210,26 @@ if ( !class_exists( 'Widget' ) ) {
        * @see https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/
        */
 
-      // Constructs name attributes for use in form() fields
-      // translating e.g. 'number' to 'wp-widget-foobar[1]-number'
-      $name = $this->get_field_name($nameStr);
+      // if a value was submitted
+      if ( isset( $instance[$nameStr] ) ) {
+        // overwrite the existing value
+        $value = $instance[$nameStr];
+      }
+      else {
+        // if the form contained an unchecked checkbox
+        if ( $type === 'checkbox') {
+          $value = '';
+        }
+        // if the form contained an unselected select
+        else if ( $type === 'select') {
+          $value = '';
+        }
+      }
 
-      $value = isset( $instance[ $nameStr ] ) ? $instance[ $nameStr ] : '';
+      /* Construct name attributes for use in form() fields
+       * translating e.g. 'number' to 'wp-widget-foobar[1]-number'
+       */
+      $name = $this->get_field_name($nameStr);
 
       if ( $nameStr === 'title' ):
         // Display dynamic widget title in .in-widget-title via appendTitle() in wp-admin/js/widgets.min.js;
@@ -331,15 +346,40 @@ if ( !class_exists( 'Widget' ) ) {
        * @example string strip_tags ( string $str [, string $allowable_tags ] )
        * @link http://php.net/manual/en/function.strip-tags.php
        */
+
       if ( isset( $new_instance['title'] ) ) {
         $instance['title'] = strip_tags( $new_instance['title'] );
       }
 
-      foreach( $instance_options as $key=>$value ) {
+      // for each form element name
+      foreach( $instance_options as $name=>$attributes ) {
 
-        // todo: does this check prevent empty values from being saved?
-        if ( isset( $new_instance[ $key ] ) ) {
-          $instance[ $key ] = strip_tags( $new_instance[ $key ] );
+        // these options don't have attributes
+        if ( $name === 'description' ) {
+          continue;
+        }
+
+        /**
+         * If something was entered into the field, then save the new value.
+         * ( '1', '0', '', true, false ) === isset
+         * ( null ) === !isset
+         */
+        if ( isset( $new_instance[ $name ] ) ) {
+          $instance[ $name ] = $new_instance[ $name ];
+        }
+        else {
+          // but if a checkbox is unchecked
+          // then do change the saved instance value,
+          // otherwise the checkbox will stay checked
+          if ( $attributes['type'] === 'checkbox') {
+            $instance[ $name ] = '';
+          }
+          // but if the null option in a select is selected
+          // then do change the saved instance value,
+          // otherwise the old option will stay selected
+          else if ( $attributes['type'] === 'select') {
+            $instance[ $name ] = '';
+          }
         }
       }
 
