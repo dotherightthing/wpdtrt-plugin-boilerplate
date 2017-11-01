@@ -100,9 +100,9 @@ if ( !class_exists( 'Plugin' ) ) {
     /**
      * Initialise plugin options ONCE.
      *
-     * @since 1.0.0
-     *
      * @param array $default_options
+     *
+     * @since 1.0.0
      *
      * @see https://wordpress.stackexchange.com/a/209772
      */
@@ -110,7 +110,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $existing_options = $this->get_options();
 
-      // if the user didn't set some options in a previous session
+      // if the user hasn't set some options in a previous session
       if ( empty( $existing_options ) ) {
         $this->set_options($default_options);
       }
