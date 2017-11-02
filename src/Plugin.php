@@ -81,20 +81,17 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $this->setup($options);
 
-      // attempt 1 - infers that no args are to be passed, fails
-      //add_action( 'wp_enqueue_scripts', $this->render_js_data_frontend() );
-      //add_shortcode( $this->shortcode_name, $this->render_shortcode() );
-
-      // attempt 2 - as the expected callback
-      // https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
-      add_action( 'admin_menu',         [$this, 'render_options_menu'] );
-      add_action( 'admin_notices',      [$this, 'render_settings_errors'] );
-      add_action( 'admin_notices',      [$this, 'render_admin_notices'] );
-      add_action( 'admin_head',         [$this, 'render_css_backend'] );
-      add_action( 'wp_enqueue_scripts', [$this, 'render_css_frontend'] );
-      add_action( 'wp_enqueue_scripts', [$this, 'render_js_frontend'] );
-      add_action( 'wp_enqueue_scripts', [$this, 'render_js_data_frontend'] );
-      add_action( 'admin_enqueue_scripts', [$this, 'render_js_backend'] );
+      /**
+       * $this->render_foobar() - infers that no args are to be passed, fails
+       * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
+       */
+      add_action( 'admin_menu',             [$this, 'render_options_menu'] );
+      add_action( 'admin_notices',          [$this, 'render_settings_errors'] );
+      add_action( 'admin_notices',          [$this, 'render_admin_notices'] );
+      add_action( 'admin_head',             [$this, 'render_css_backend'] );
+      add_action( 'wp_enqueue_scripts',     [$this, 'render_css_frontend'] );
+      add_action( 'wp_enqueue_scripts',     [$this, 'render_js_frontend'] );
+      add_action( 'admin_enqueue_scripts',  [$this, 'render_js_backend'] );
     }
 
     //// START GETTERS AND SETTERS \\\\
