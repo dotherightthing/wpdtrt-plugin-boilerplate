@@ -85,13 +85,16 @@ if ( !class_exists( 'Plugin' ) ) {
        * $this->render_foobar() - infers that no args are to be passed, fails
        * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
        */
-      add_action( 'admin_menu',             [$this, 'render_options_menu'] );
-      add_action( 'admin_notices',          [$this, 'render_settings_errors'] );
-      add_action( 'admin_notices',          [$this, 'render_admin_notices'] );
-      add_action( 'admin_head',             [$this, 'render_css_backend'] );
-      add_action( 'wp_enqueue_scripts',     [$this, 'render_css_frontend'] );
-      add_action( 'wp_enqueue_scripts',     [$this, 'render_js_frontend'] );
-      add_action( 'admin_enqueue_scripts',  [$this, 'render_js_backend'] );
+      add_action( 'admin_menu',               [$this, 'render_options_menu'] );
+      add_action( 'admin_notices',            [$this, 'render_settings_errors'] );
+      add_action( 'admin_notices',            [$this, 'render_admin_notices'] );
+      add_action( 'admin_head',               [$this, 'render_css_backend'] );
+      add_action( 'wp_enqueue_scripts',       [$this, 'render_css_frontend'] );
+      add_action( 'wp_enqueue_scripts',       [$this, 'render_js_frontend'] );
+      add_action( 'admin_enqueue_scripts',    [$this, 'render_js_backend'] );
+    
+      // call the server side PHP function through admin-ajax.php.
+      add_action('wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -440,6 +443,60 @@ if ( !class_exists( 'Plugin' ) ) {
         return (object)[];
     }
 
+    /**
+    * Refresh the data from the API
+    *    The 'action' key's value, 'refresh_api_data',
+    *    matches the latter half of the action 'wp_ajax_refresh_api_data' in our AJAX handler.
+    *    This is because it is used to call the server side PHP function through admin-ajax.php.
+    *    If an action is not specified, admin-ajax.php will exit, and return 0 in the process.
+    *
+    * See also $this->__construct()
+    * See also $this->render_js_backend()
+    * See also js/wpdtrt-foo-backend.js
+    *
+    * @since       0.1.0
+    * @version     1.0.0
+    *
+    * @see         https://codex.wordpress.org/AJAX_in_Plugins
+    */
+    public function refresh_api_data() {
+
+      $plugin_options = $this->get_plugin_options();
+      $existing_data = $plugin_options['data'];
+      $last_updated = $plugin_options['last_updated'];
+
+      // if the data has previously been requested
+      // only update it if it is stale
+      if ( isset( $last_updated ) ) {
+        $current_time = time();
+        $update_difference = $current_time - $last_updated;
+        $one_hour = (1 * 60 * 60);
+        $do_refresh = ( $update_difference > $one_hour );
+      }
+      else {
+        $do_refresh = true;
+      }
+
+      if ( $do_refresh ) {
+        $data = $this->get_api_data();
+      }
+      else {
+        $data = $existing_data;
+      }
+
+      // create the Ajax response
+      print_r( $data );
+
+      /**
+      * Let the Ajax know when the entire function has completed
+      *
+      * wp_die() vs die() vs exit()
+      * Most of the time you should be using wp_die() in your Ajax callback function.
+      * This provides better integration with WordPress and makes it easier to test your code.
+      */
+      wp_die();
+    }
+
     //// END GETTERS AND SETTERS \\\\
 
     //// START TRANSFORMATIONS \\\\
@@ -575,7 +632,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $attach_to_footer = true;
 
       wp_enqueue_script( $this->get_prefix() . '_backend',
-        $this->get_url()  . 'js/' . $this->get_slug() . '-backend.js',
+        $this->get_url()  . 'vendor/dotherightthing/wpdtrt-plugin/js/backend.js',
         array(
           // load these registered dependencies first:
           'jquery'
@@ -587,7 +644,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $plugin_options = $this->get_plugin_options();
 
       wp_localize_script( $this->get_prefix() . '_backend',
-        $this->get_prefix() . '_config',
+        'wpdtrt_plugin_config',
         array(
           'ajaxurl' => admin_url( 'admin-ajax.php' ),
           'messages' => $this->get_messages(),
