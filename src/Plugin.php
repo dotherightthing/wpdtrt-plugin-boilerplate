@@ -551,12 +551,16 @@ if ( !class_exists( 'Plugin' ) ) {
     * See also $this->render_js_backend()
     * See also js/wpdtrt-foo-backend.js
     *
+    * @param       string $format The data format ('ui'|'data')
+    *
     * @since       0.1.0
     * @version     1.0.0
     *
     * @see         https://codex.wordpress.org/AJAX_in_Plugins
     */
-    public function refresh_api_data() {
+    public function refresh_api_data( $format ) {
+
+      $format = sanitize_text_field( $_POST['format'] );
 
       $plugin_options = $this->get_plugin_options();
       $existing_data = $plugin_options['data'];
@@ -581,9 +585,16 @@ if ( !class_exists( 'Plugin' ) ) {
         $data = $existing_data;
       }
       
-      // update the UI
       $shortcode = $this->build_demo_shortcode();
-      echo $this->render_demo_shortcode( $shortcode );
+
+      // update the UI
+
+      if ( $format === 'ui' ) {
+        echo $this->render_demo_shortcode( $shortcode );
+      }
+      else if ( $format === 'data' ) {
+        echo $this->render_demo_shortcode_data();
+      }
 
       /**
       * Let the Ajax know when the entire function has completed

@@ -15,18 +15,42 @@ jQuery(document).ready(function($) {
 	var config = wpdtrt_plugin_config;
 	var loading_message = config.messages.loading;
 	var ajaxurl = config.ajaxurl;
-	var ajax_data = {
-		'action': 'refresh_api_data'
-	};
-	var $container = $('.wpdtrt-plugin-ajax-response');
 
-	$container
+	var ajax_data_ui = {
+		'action': 'refresh_api_data',
+		'format': 'ui'
+	};
+
+	var ajax_data_data = {
+		'action': 'refresh_api_data',
+		'format': 'data'
+	};
+
+	var $ajax_containers = $('.wpdtrt-plugin-ajax-response');
+
+	$ajax_containers
 		.empty()
 		.append('<div class="spinner is-active">' + loading_message + '</div>');
 
-	$.post( ajaxurl, ajax_data, function( response ) {
-		$container
-			.empty()
-			.html( response );
+	$.each( $ajax_containers, function(i, item) {
+
+		var $container = $(item);
+
+		if ( $container.data('format') === 'ui' ) {
+
+			$.post( ajaxurl, ajax_data_ui, function( response ) {
+				$container
+					.empty()
+					.html( response );
+			});
+		}
+		else if ( $container.data('format') === 'data' ) {
+
+			$.post( ajaxurl, ajax_data_data, function( response ) {
+				$container
+					.empty()
+					.html( response );
+			});
+		}
 	});
 });
