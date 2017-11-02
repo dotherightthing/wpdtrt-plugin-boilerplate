@@ -440,95 +440,6 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Build demo shortcode
-     *
-     * @since 1.0.0
-     *
-     * @return string Shortcode
-     */
-    protected function build_demo_shortcode() {
-
-      $params = $this->demo_shortcode_params;
-
-      $options_page_demo_shortcode = '[';
-
-      foreach( $params as $key => $value ) {
-
-        if ( $key === 'id' ) {
-          $options_page_demo_shortcode .= $value;
-        }
-        else {
-          $options_page_demo_shortcode .= ' ' . $key . '=' . '"' . $value . '"';
-        }
-      }
-
-      $options_page_demo_shortcode .= ']';
-
-      /**
-       * Render demo shortcode (update the UI)
-       */
-      return $options_page_demo_shortcode;
-
-    }
-
-    /**
-     * Render demo shortcode
-     *
-     * @param string $shortcode
-     *
-     * @since 1.0.0
-     *
-     * @return string Shortcode HTML
-     */
-    protected function render_demo_shortcode( $shortcode ) {
-      return do_shortcode( $shortcode );
-    }
-
-    /**
-     * Render demo shortcode data
-     *
-     * For the purposes of debugging, we also display the raw data.
-     * var_dump is prefereable to print_r,
-     * because it reveals the data types used,
-     * so we can check whether the data is in the expected format.
-     *
-     * @return string Indented data
-     *
-     * @since 1.0.0
-     *
-     * @link http://kb.dotherightthing.co.nz/php/print_r-vs-var_dump/
-     * @see https://stackoverflow.com/a/139553/6850747
-     */
-    protected function render_demo_shortcode_data() {
-
-      $plugin_options = $this->get_plugin_options();
-      $demo_shortcode_params = $this->demo_shortcode_params;
-      $max_length = $demo_shortcode_params['number'];
-
-      $data_str = '<pre><code>';
-      $data_str .= "{\r\n";
-
-      $count = 0;
-
-      foreach( $plugin_options['data'] as $key => $val ) {
-        $data_str .= var_export( $plugin_options['data'][$key], true );
-
-        $count++;
-
-        // when we reach the end of the sample, stop looping
-        if ($count === $max_length) {
-          break;
-        }
-
-      }
-
-      $data_str .= "}\r\n";
-      $data_str .= '</code></pre>';
-
-      return $data_str;
-    }
-
-    /**
      * Get API data
      * This should be overwritten in the extending class
      *
@@ -653,6 +564,95 @@ if ( !class_exists( 'Plugin' ) ) {
     //// END TRANSFORMATIONS \\\\
 
     //// START RENDERERS \\\\
+
+    /**
+     * Build demo shortcode
+     *
+     * @since 1.0.0
+     *
+     * @return string Shortcode
+     */
+    protected function build_demo_shortcode() {
+
+      $params = $this->demo_shortcode_params;
+
+      $options_page_demo_shortcode = '[';
+
+      foreach( $params as $key => $value ) {
+
+        if ( $key === 'id' ) {
+          $options_page_demo_shortcode .= $value;
+        }
+        else {
+          $options_page_demo_shortcode .= ' ' . $key . '=' . '"' . $value . '"';
+        }
+      }
+
+      $options_page_demo_shortcode .= ']';
+
+      /**
+       * Render demo shortcode (update the UI)
+       */
+      return $options_page_demo_shortcode;
+
+    }
+
+    /**
+     * Render demo shortcode
+     *
+     * @param string $shortcode
+     *
+     * @since 1.0.0
+     *
+     * @return string Shortcode HTML
+     */
+    protected function render_demo_shortcode( $shortcode ) {
+      return do_shortcode( $shortcode );
+    }
+
+    /**
+     * Render demo shortcode data
+     *
+     * For the purposes of debugging, we also display the raw data.
+     * var_dump is prefereable to print_r,
+     * because it reveals the data types used,
+     * so we can check whether the data is in the expected format.
+     *
+     * @return string Indented data
+     *
+     * @since 1.0.0
+     *
+     * @link http://kb.dotherightthing.co.nz/php/print_r-vs-var_dump/
+     * @see https://stackoverflow.com/a/139553/6850747
+     */
+    protected function render_demo_shortcode_data() {
+
+      $plugin_options = $this->get_plugin_options();
+      $demo_shortcode_params = $this->demo_shortcode_params;
+      $max_length = $demo_shortcode_params['number'];
+
+      $data_str = '<pre><code>';
+      $data_str .= "{\r\n";
+
+      $count = 0;
+
+      foreach( $plugin_options['data'] as $key => $val ) {
+        $data_str .= var_export( $plugin_options['data'][$key], true );
+
+        $count++;
+
+        // when we reach the end of the sample, stop looping
+        if ($count === $max_length) {
+          break;
+        }
+
+      }
+
+      $data_str .= "}\r\n";
+      $data_str .= '</code></pre>';
+
+      return $data_str;
+    }
 
     /**
      * Render a human readable last updated date
