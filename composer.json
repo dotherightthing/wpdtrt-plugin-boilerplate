@@ -8,20 +8,13 @@
             "email": "dev@dotherightthing.co.nz"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "git@github.com:dotherightthing/wpdtrt-helpers.git"
-        }
-    ],
     "require": {
         "php": ">=5.6.30",
         "gamajo/template-loader": "^1.3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",
-        "phpdocumentor/phpdocumentor": "2.*",
-        "dotherightthing/wpdtrt-helpers": "dev-master"
+        "phpdocumentor/phpdocumentor": "2.*"
     },
     "autoload": {
         "psr-4": {
