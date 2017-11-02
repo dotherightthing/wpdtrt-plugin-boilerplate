@@ -484,8 +484,35 @@ if ( !class_exists( 'Plugin' ) ) {
         $data = $existing_data;
       }
 
+      /**
+       * Build demo shortcode
+       * @todo add $options_page_demo_shortcode_params as a plugin option
+       */
+      $options_page_demo_shortcode_params = array(
+        'id' => 'wpdtrt_blocks_shortcode_1',
+        'number' => '7',
+        'enlargement' => '1'
+      );
+
+      $options_page_demo_shortcode = '[';
+
+      foreach( $options_page_demo_shortcode_params as $key => $value ) {
+
+        if ( $key === 'id' ) {
+          $options_page_demo_shortcode .= $value;
+        }
+        else {
+          $options_page_demo_shortcode .= ' ' . $key . '=' . '"' . $value . '"';
+        }
+      }
+
+      $options_page_demo_shortcode .= ']';
+
+      // update the UI
+      echo do_shortcode( $options_page_demo_shortcode );
+
       // create the Ajax response
-      print_r( $data );
+      //print_r( $data );
 
       /**
       * Let the Ajax know when the entire function has completed

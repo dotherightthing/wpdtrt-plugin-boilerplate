@@ -31,6 +31,8 @@ jQuery(document).ready(function($) {
 	});
 
 	$.post( ajaxurl, ajax_data, function( response ) {
-		console.log( response );
+		$('.wpdtrt-plugin-ajax-response')
+			.empty()
+			.html( response );
 	});
 });
