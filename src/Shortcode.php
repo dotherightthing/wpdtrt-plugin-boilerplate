@@ -228,7 +228,7 @@ if ( !class_exists( 'Shortcode' ) ) {
         'plugin_template_directory' => 'template-parts/' . $plugin->get_slug(),
         'theme_template_directory' => 'template-parts/' . $plugin->get_slug(),
         'path' => $plugin->get_path()
-      ));;
+      ));
 
       // /template-parts/wpdtrt-plugin-name/content/foo.php
       $templates->get_template_part( 'content', $this->get_template_name() );
