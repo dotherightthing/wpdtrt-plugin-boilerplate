@@ -587,7 +587,8 @@ if ( !class_exists( 'Plugin' ) ) {
       wp_localize_script( $this->get_prefix() . '_backend',
         $this->get_prefix() . '_config',
         array(
-          'ajaxurl' => admin_url( 'admin-ajax.php' )
+          'ajaxurl' => admin_url( 'admin-ajax.php' ),
+          'messages' => $this->get_messages()
           //'options' => $this->get_options() // note: this includes $plugin_options['data']
         )
       );
@@ -730,7 +731,7 @@ if ( !class_exists( 'Plugin' ) ) {
     public function render_form_element( $name, $attributes=array() ) {
 
       // these options don't have attributes
-      if ( ( $name === 'data' ) || ( $name === 'last_updated' ) ) {
+      if ( ( $name === 'data' ) || ( $name === 'last_updated' ) || ( $name === 'force_refresh' ) ) {
         return;
       }
 
