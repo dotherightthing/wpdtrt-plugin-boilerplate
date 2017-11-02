@@ -864,13 +864,18 @@ if ( !class_exists( 'Plugin' ) ) {
           else {
             // if the form contained an unchecked checkbox
             // save the value as empty, rather than discarding it
-            if ( $plugin_options[ $name ]['type'] === 'checkbox') {
-              $plugin_options[ $name ]['value'] = '';
-            }
-            // if the form contained an unselected select
-            // save the value as empty, rather than discarding it
-            else if ( $plugin_options[ $name ]['type'] === 'select') {
-              $plugin_options[ $name ]['value'] = '';
+
+            if ( isset( $plugin_options[ $name ]['type'] ) ) {
+
+              if ( $plugin_options[ $name ]['type'] === 'checkbox') {
+                $plugin_options[ $name ]['value'] = '';
+              }
+              // if the form contained an unselected select
+              // save the value as empty, rather than discarding it
+              else if ( $plugin_options[ $name ]['type'] === 'select') {
+                $plugin_options[ $name ]['value'] = '';
+              }
+              
             }
           }
         }
