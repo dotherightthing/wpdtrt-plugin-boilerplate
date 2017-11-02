@@ -620,7 +620,7 @@ if ( !class_exists( 'Plugin' ) ) {
           // load these registered dependencies first:
           'jquery'
         ),
-        $this->get_version() ,
+        $this->get_version(),
         $attach_to_footer
       );
 
@@ -922,14 +922,14 @@ if ( !class_exists( 'Plugin' ) ) {
       wp_enqueue_style( $this->get_prefix() . '_backend_1',
         $this->get_url()  . 'vendor/dotherightthing/wpdtrt-plugin/css/backend.css',
         array(),
-        $this->get_version() ,
+        $this->get_version(),
         $media
       );
 
       wp_enqueue_style( $this->get_prefix() . '_backend_2',
         $this->get_url() . 'css/' . $this->get_slug() . '-admin.css',
         array(),
-        $this->get_version() ,
+        $this->get_version(),
         $media
       );
     }
@@ -950,7 +950,7 @@ if ( !class_exists( 'Plugin' ) ) {
           // load these registered dependencies first:
           //'a_dependency'
         ),
-        $this->get_version() ,
+        $this->get_version(),
         $media
       );
     }
