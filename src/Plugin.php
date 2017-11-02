@@ -663,6 +663,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      *
      * @todo Fix GMT offset of last updated string (#13)
+     * @see https://codex.wordpress.org/Option_Reference
      */
     public function render_last_updated_humanised() {
 
@@ -672,7 +673,8 @@ if ( !class_exists( 'Plugin' ) ) {
       // use the date format set by the user
       $wp_date_format = get_option('date_format');
       $wp_time_format = get_option('time_format');
-      $last_updated_str = date( $wp_time_format, $last_updated ) . ', ' . date( $wp_date_format, $last_updated );
+      $wp_gmt_offset = get_option('gmt_offset');
+      $last_updated_str = date( $wp_time_format, $last_updated ) . ', ' . date( $wp_date_format, $last_updated ) . ' (GMT' . sprintf("%+d", $wp_gmt_offset) . ')';
 
       return $last_updated_str;
     }
