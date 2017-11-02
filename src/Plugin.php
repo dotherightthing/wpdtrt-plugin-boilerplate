@@ -440,6 +440,51 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
+     * Build demo shortcode
+     *
+     * @since 1.0.0
+     *
+     * @return string Shortcode
+     */
+    protected function build_demo_shortcode() {
+
+      $params = $this->demo_shortcode_params;
+
+      $options_page_demo_shortcode = '[';
+
+      foreach( $params as $key => $value ) {
+
+        if ( $key === 'id' ) {
+          $options_page_demo_shortcode .= $value;
+        }
+        else {
+          $options_page_demo_shortcode .= ' ' . $key . '=' . '"' . $value . '"';
+        }
+      }
+
+      $options_page_demo_shortcode .= ']';
+
+      /**
+       * Render demo shortcode (update the UI)
+       */
+      return $options_page_demo_shortcode;
+
+    }
+
+    /**
+     * Render demo shortcode
+     *
+     * @param string $shortcode
+     *
+     * @since 1.0.0
+     *
+     * @return string Shortcode HTML
+     */
+    protected function render_demo_shortcode( $shortcode ) {
+      return do_shortcode( $shortcode );
+    }
+
+    /**
      * Get API data
      * This should be overwritten in the extending class
      *
@@ -491,26 +536,10 @@ if ( !class_exists( 'Plugin' ) ) {
       else {
         $data = $existing_data;
       }
-
-      /**
-       * Build demo shortcode
-       */
-      $options_page_demo_shortcode = '[';
-
-      foreach( $this->demo_shortcode_params as $key => $value ) {
-
-        if ( $key === 'id' ) {
-          $options_page_demo_shortcode .= $value;
-        }
-        else {
-          $options_page_demo_shortcode .= ' ' . $key . '=' . '"' . $value . '"';
-        }
-      }
-
-      $options_page_demo_shortcode .= ']';
-
+      
       // update the UI
-      echo do_shortcode( $options_page_demo_shortcode );
+      $shortcode = $this->build_demo_shortcode();
+      echo $this->render_demo_shortcode( $shortcode );
 
       /**
       * Let the Ajax know when the entire function has completed
