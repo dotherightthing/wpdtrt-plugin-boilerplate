@@ -71,6 +71,9 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_messages( $messages );
       $this->set_version( $version );
 
+      // internal defaults
+      $plugin_options['force_refresh'] = false;
+
       $options = array(
         'plugin_options' => $plugin_options,
         'instance_options' => $instance_options
@@ -584,11 +587,14 @@ if ( !class_exists( 'Plugin' ) ) {
         $attach_to_footer
       );
 
+      $plugin_options = $this->get_plugin_options();
+
       wp_localize_script( $this->get_prefix() . '_backend',
         $this->get_prefix() . '_config',
         array(
           'ajaxurl' => admin_url( 'admin-ajax.php' ),
-          'messages' => $this->get_messages()
+          'messages' => $this->get_messages(),
+          'force_refresh' => $plugin_options['force_refresh']
           //'options' => $this->get_options() // note: this includes $plugin_options['data']
         )
       );
@@ -684,11 +690,8 @@ if ( !class_exists( 'Plugin' ) ) {
         // If we've updated our options
         // get the latest data from the API
 
-        // Call API and store response in options object
-        $plugin_options['data'] = $this->get_api_data();
-
-        // Store timestamp in options object
-        $plugin_options['last_updated'] = time(); // UNIX timestamp for the current time
+        // Tell the Ajax to get the latest data even if it is not stale
+        $plugin_options['force_refresh'] = true;
 
         // Update options object in database
         $this->set_plugin_options( $plugin_options );
@@ -697,11 +700,8 @@ if ( !class_exists( 'Plugin' ) ) {
       // get the latest data from the API
       else if ( isset( $plugin_options['last_updated'] ) ) {
 
-        // Call API and store response in options object
-        $plugin_options['data'] = $this->get_api_data();
-
-        // Store timestamp in options object
-        $plugin_options['last_updated'] = time(); // UNIX timestamp for the current time
+        // Tell the Ajax to get the latest data even if it is not stale
+        $plugin_options['force_refresh'] = false;
 
         // Update options object in database
         $this->set_plugin_options( $plugin_options );
@@ -731,7 +731,7 @@ if ( !class_exists( 'Plugin' ) ) {
     public function render_form_element( $name, $attributes=array() ) {
 
       // these options don't have attributes
-      if ( ( $name === 'data' ) || ( $name === 'last_updated' ) || ( $name === 'force_refresh' ) ) {
+      if ( ( $name === 'data' ) || ( $name === 'last_updated' ) || ( $name === 'force_refresh') ) {
         return;
       }
 
