@@ -38,7 +38,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * Hook the plugin in to WordPress
      * This constructor automatically initialises the object's properties
      * when it is instantiated,
-     * using new WPDTRT_Attachment_Map_Plugin
+     * using new PluginName
      *
      * @param     array $settings Plugin options
      *
@@ -91,8 +91,7 @@ if ( !class_exists( 'Plugin' ) ) {
       add_action( 'wp_enqueue_scripts', [$this, 'render_css_frontend'] );
       add_action( 'wp_enqueue_scripts', [$this, 'render_js_frontend'] );
       add_action( 'wp_enqueue_scripts', [$this, 'render_js_data_frontend'] );
-
-      //add_action('wp_ajax_data_refresh', [$this, 'get_api_data_again'] );
+      add_action( 'admin_enqueue_scripts', [$this, 'render_js_backend'] );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -490,20 +489,107 @@ if ( !class_exists( 'Plugin' ) ) {
     //// START RENDERERS \\\\
 
     /**
-     * Generate a JavaScript object which the front-end can query
+     * Attach JS for front-end widgets and shortcodes
+     *    Generate a configuration object which the JavaScript can access.
+     *    When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
      *
-     * @since 1.0.0
+     * @see         https://codex.wordpress.org/AJAX_in_Plugins
+     * @see         https://codex.wordpress.org/Function_Reference/wp_localize_script
+     *
+     * @since       1.0.0
+     * @version     1.0.0
      */
-    public function render_js_data_frontend() {
+    public function render_js_frontend() {
 
-      // Load existing options
-      $options = $this->get_options();
+      $attach_to_footer = true;
 
-      // configure mobile JS
-      wp_localize_script(
-        $this->get_prefix(),
-        $this->get_prefix() . '_options',
-        $options
+      /**
+       * Registering scripts is technically not necessary, but highly recommended nonetheless.
+       *
+       * Scripts that have been pre-registered using wp_register_script()
+       * do not need to be manually enqueued using wp_enqueue_script()
+       * if they are listed as a dependency of another script that is enqueued.
+       * WordPress will automatically include the registered script
+       * before it includes the enqueued script that lists the registered script’s handle as a dependency.
+       *
+       * Note: If a dependency is shared between plugins/theme,
+       *  the hook must match, otherwise the dependency will be loaded twice,
+       *  potentially overriding variables and generating errors.
+       *
+       * @see https://developer.wordpress.org/reference/functions/wp_register_script/#more-information
+       */
+
+      /*
+      wp_register_script( 'a_dependency',
+        $this->get_url()  . 'vendor/bower_components/a_dependency/a_dependency.js',
+        array(
+          'jquery'
+        ),
+        DEPENDENCY_VERSION,
+        $attach_to_footer
+      );
+      */
+
+      wp_enqueue_script( $this->get_prefix(),
+        $this->get_url()  . 'js/' . $this->get_slug() . '.js',
+        array(
+          // load these registered dependencies first:
+          'jquery'
+        ),
+        $this->get_version() ,
+        $attach_to_footer
+      );
+
+      wp_localize_script( $this->get_prefix(),
+        $this->get_prefix() . '_config',
+        array(
+          // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+          // but we need to explicitly expose it to frontend pages
+          'ajaxurl' => admin_url( 'admin-ajax.php' ), // wpdtrt_foobar_config.ajaxurl
+          'options' => $this->get_options() // wpdtrt_foobar_config.options
+        )
+      );
+    }
+
+    /**
+     * Attach JS for back-end admin pages
+     *    For consistency with render_js_frontend,
+     *    Generate a configuration object which the JavaScript can access.
+     *    When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
+     *
+     * @param       string $hook_suffix The current admin page.
+     *
+     * @see         https://codex.wordpress.org/AJAX_in_Plugins
+     * @see         https://codex.wordpress.org/Function_Reference/wp_localize_script
+     * @see         https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     */
+    public function render_js_backend( $hook_suffix ) {
+
+      if ( $hook_suffix !== ( 'settings_page_' . $this->get_slug() ) ) {
+        return;
+      }
+
+      $attach_to_footer = true;
+
+      wp_enqueue_script( $this->get_prefix() . '_backend',
+        $this->get_url()  . 'js/' . $this->get_slug() . '-backend.js',
+        array(
+          // load these registered dependencies first:
+          'jquery'
+        ),
+        $this->get_version(),
+        $attach_to_footer
+      );
+
+      wp_localize_script( $this->get_prefix() . '_backend',
+        $this->get_prefix() . '_config',
+        array(
+          'ajaxurl' => admin_url( 'admin-ajax.php' )
+          //'options' => $this->get_options() // note: this includes $plugin_options['data']
+        )
       );
     }
 
@@ -775,67 +861,6 @@ if ( !class_exists( 'Plugin' ) ) {
         ),
         $this->get_version() ,
         $media
-      );
-    }
-
-    /**
-     * Attach JS for front-end widgets and shortcodes
-     *    Generate a configuration object which the JavaScript can access.
-     *    When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
-     *
-     * @see         https://codex.wordpress.org/AJAX_in_Plugins
-     * @see         https://codex.wordpress.org/Function_Reference/wp_localize_script
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     */
-    public function render_js_frontend() {
-
-      $attach_to_footer = true;
-
-      /**
-       * Registering scripts is technically not necessary, but highly recommended nonetheless.
-       *
-       * Scripts that have been pre-registered using wp_register_script()
-       * do not need to be manually enqueued using wp_enqueue_script()
-       * if they are listed as a dependency of another script that is enqueued.
-       * WordPress will automatically include the registered script
-       * before it includes the enqueued script that lists the registered script’s handle as a dependency.
-       *
-       * Note: If a dependency is shared between plugins/theme,
-       *  the hook must match, otherwise the dependency will be loaded twice,
-       *  potentially overriding variables and generating errors.
-       *
-       * @see https://developer.wordpress.org/reference/functions/wp_register_script/#more-information
-       */
-
-      /*
-      wp_register_script( 'a_dependency',
-        $this->get_url()  . 'vendor/bower_components/a_dependency/a_dependency.js',
-        array(
-          'jquery'
-        ),
-        DEPENDENCY_VERSION,
-        $attach_to_footer
-      );
-      */
-
-      wp_enqueue_script( $this->get_prefix(),
-        $this->get_url()  . 'js/' . $this->get_slug() . '.js',
-        array(
-          // load these registered dependencies first:
-          'jquery'
-          // a_dependency
-        ),
-        $this->get_version() ,
-        $attach_to_footer
-      );
-
-      wp_localize_script( $this->get_prefix(),
-        $this->get_prefix() . '_config',
-        array(
-          'ajax_url' => admin_url( 'admin-ajax.php' ) // wpdtrt_blocks_config.ajax_url
-        )
       );
     }
 
