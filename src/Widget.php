@@ -166,7 +166,7 @@ if ( !class_exists( 'Widget' ) ) {
      *
      * @since       1.0.0
      * @version     1.0.0
-     * @todo        Add field validation feedback
+     * @todo        Add field validation feedback (#10)
      */
     public function render_form_element( $instance, $name, $attributes=array() ) {
 
@@ -251,8 +251,6 @@ if ( !class_exists( 'Widget' ) ) {
      * @param array $args     Display arguments including 'before_title', 'after_title',
      *                        'before_widget', and 'after_widget'.
      * @param array $instance The settings for the particular instance of the widget.
-     *
-     * @todo Should $title be passed via query var? as we are using the template loader rather than an include?
      */
     function widget( $args, $instance ) {
 
@@ -384,7 +382,7 @@ if ( !class_exists( 'Widget' ) ) {
        * Output the HTML
        *
        * @todo Currently redundant but could be used to indicate data ranges: $data = $plugin->get_api_data();
-       * @todo Make the Title label an option, for i18n
+       * @todo Make widget form Title translateable (#16)
        */
       echo $this->render_form_element( $instance, 'title', array(
         'type' => 'text',
