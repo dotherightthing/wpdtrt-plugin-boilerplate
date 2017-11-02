@@ -655,6 +655,29 @@ if ( !class_exists( 'Plugin' ) ) {
     //// START RENDERERS \\\\
 
     /**
+     * Render a human readable last updated date
+     *
+     * @return      string $humanised_date
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @todo Fix GMT offset of last updated string
+     */
+    public function render_last_updated_humanised() {
+
+      $plugin_options = $this->get_plugin_options();
+      $last_updated = $plugin_options['last_updated'];
+
+      // use the date format set by the user
+      $wp_date_format = get_option('date_format');
+      $wp_time_format = get_option('time_format');
+      $last_updated_str = date( $wp_time_format, $last_updated ) . ', ' . date( $wp_date_format, $last_updated );
+
+      return $last_updated_str;
+    }
+
+    /**
      * Attach JS for front-end widgets and shortcodes
      *    Generate a configuration object which the JavaScript can access.
      *    When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
