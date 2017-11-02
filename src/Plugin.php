@@ -662,7 +662,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @todo Fix GMT offset of last updated string
+     * @todo Fix GMT offset of last updated string (#13)
      */
     public function render_last_updated_humanised() {
 
@@ -755,7 +755,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @todo        force_refresh() seems to be firing everytime
+     * @todo        force_refresh() seems to be firing every time (#14)
      */
     public function render_js_backend( $hook_suffix ) {
 
@@ -823,12 +823,15 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      *
      * @return      string
-     * @todo        Translate wp_die ?
      */
     function render_options_page() {
 
+      $messages = $this->get_messages();
+
+      $insufficient_permissions_message = $messages['insufficient_permissions'];
+
       if ( ! current_user_can( 'manage_options' ) ) {
-        wp_die( 'Sorry, you do not have sufficient permissions to access this page.' );
+        wp_die( $insufficient_permissions_message );
       }
 
       /**
