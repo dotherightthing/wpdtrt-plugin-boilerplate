@@ -151,14 +151,11 @@ if ( !class_exists( 'Shortcode' ) ) {
      * This is a global which is passed to the function which instantiates this object.
      * This is necessary because the object does not exist until the WordPress init action has fired.
      *
-     * @todo Can this be improved? Setting a high priority (of 0) on the init action
-     *  does not make the object available to the widget_init action
-     *  which should run afterwards.
-     *  Can the reference be passed in a better way?
+     * @param object
      *
      * @since 1.0.0
      *
-     * @param object
+     * @todo Shortcode/Widget implementation questions (#15)
      */
     protected function set_plugin( $plugin ) {
       $this->plugin = $plugin;
@@ -167,10 +164,9 @@ if ( !class_exists( 'Shortcode' ) ) {
     /**
      * Get parent plugin, which contains shortcode/widget options
      *
-     * @since 1.0.0
-     *
      * @return object
-     * @todo $plugin_options_reduced is weeding out the API data, which shouldn't be in here anyway
+     *
+     * @since 1.0.0
      */
     public function get_plugin() {
       return $this->plugin;
@@ -183,12 +179,12 @@ if ( !class_exists( 'Shortcode' ) ) {
     /**
      * Render a shortcode
      *
-     * @since 1.0.0
-     *
      * @param array $atts User defined attributes in shortcode tag
      * @param string $content Content between shortcode opening and closing tags
      *
      * @return string
+     *
+     * @since 1.0.0
      */
     public function render_shortcode( $atts, $content = null ) {
 

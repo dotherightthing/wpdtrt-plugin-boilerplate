@@ -21,8 +21,6 @@ namespace DoTheRightThing\WPPlugin;
  *
  * @since     0.6.0
  * @version 	1.0.0
- *
- * @todo 		See wpdtrt-responsive-nav-shortcodes.php for usage
  */
 class TemplateLoader extends \Gamajo_Template_Loader {
 

@@ -131,10 +131,7 @@ if ( !class_exists( 'Widget' ) ) {
      * This is a global which is passed to the function which instantiates this object.
      * This is necessary because the object does not exist until the WordPress init action has fired.
      *
-     * @todo Can this be improved? Setting a high priority (of 0) on the init action
-     *  does not make the object available to the widget_init action
-     *  which should run afterwards.
-     *  Can the reference be passed in a better way?
+     * @todo Shortcode/Widget implementation questions (#15)
      *
      * @since 1.0.0
      *
@@ -150,7 +147,6 @@ if ( !class_exists( 'Widget' ) ) {
      * @since 1.0.0
      *
      * @return object
-     * @todo $plugin_options_reduced is weeding out the API data, which shouldn't be in here anyway
      */
     public function get_plugin() {
       return $this->plugin;

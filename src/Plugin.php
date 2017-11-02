@@ -619,7 +619,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @since       1.0.0
      * @version     1.0.0
-     * @todo        Add field validation feedback
+     * @todo        Add field validation feedback (#10)
      */
     public function normalise_field_value( $field_value, $field_type ) {
 
@@ -853,9 +853,8 @@ if ( !class_exists( 'Plugin' ) ) {
 
         /**
          * Save default/user values from form submission
+         *
          * @see https://stackoverflow.com/a/13461680/6850747
-         * @todo https://github.com/dotherightthing/generator-wp-plugin-boilerplate/issues/16
-         * @todo https://github.com/dotherightthing/generator-wp-plugin-boilerplate/issues/17
          */
         foreach( $plugin_options as $name => $attributes ) {
 
@@ -917,7 +916,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @since       1.0.0
      * @version     1.0.0
-     * @todo        Add field validation feedback
+     * @todo        Add field validation feedback (#10)
      */
     public function render_form_element( $name, $attributes=array() ) {
 
@@ -976,8 +975,8 @@ if ( !class_exists( 'Plugin' ) ) {
      * Admin Notices: Errors
      * Displayed below the H1
      *
-     * @see     https://digwp.com/2016/05/wordpress-admin-notices/
-     * @since       1.0.0
+     * @see       https://digwp.com/2016/05/wordpress-admin-notices/
+     * @since     1.0.0
      * @version   1.0.0
      */
 
@@ -990,11 +989,9 @@ if ( !class_exists( 'Plugin' ) ) {
      * Displayed below the H1
      * Possible classes: notice-error, notice-warning, notice-success, or notice-info
      *
-     * @see     https://digwp.com/2016/05/wordpress-admin-notices/
-     * @since       1.0.0
+     * @see       https://digwp.com/2016/05/wordpress-admin-notices/
+     * @since     1.0.0
      * @version   1.0.0
-     *
-     * @todo      Pass in an array of translated messages
      */
 
     public function render_admin_notices() {
