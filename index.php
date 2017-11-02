@@ -5,17 +5,10 @@
  *
  * @package   	WPPlugin
  * @version   	1.0.0
- * @since 		0.6.0
+ * @since 		1.0.0
  */
 
 	// vendor/autoload.php
-	// composer autoload file used by all vendors
+	// composer generated autoload file used by all vendors
 	require_once dirname( dirname(__DIR__) ) . "/autoload.php";
-	//require __DIR__.'/../vendor/autoload.php';
-
-	use DoTheRightThing\WPPlugin\Plugin;
-	use DoTheRightThing\WPPlugin\TemplateLoader;
-	use DoTheRightThing\WPPlugin\Shortcode;
-	use DoTheRightThing\WPPlugin\Widget;
-
 ?>
