@@ -395,7 +395,7 @@ if ( !class_exists( 'Widget' ) ) {
         'label' => 'Title' // esc_html__('Title', 'wpdtrt-plugin')
       ) );
 
-      foreach( $instance_options as $name=>$attributes ) {
+      foreach( $instance_options as $name => $attributes ) {
         echo $this->render_form_element( $instance, $name, $attributes );
       }
     }
