@@ -649,6 +649,8 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @since       1.0.0
      * @version     1.0.0
+     *
+     * @todo        force_refresh() seems to be firing everytime
      */
     public function render_js_backend( $hook_suffix ) {
 
@@ -917,7 +919,14 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $media = 'all';
 
-      wp_enqueue_style( $this->get_prefix() . '_backend',
+      wp_enqueue_style( $this->get_prefix() . '_backend_1',
+        $this->get_url()  . 'vendor/dotherightthing/wpdtrt-plugin/css/backend.css',
+        array(),
+        $this->get_version() ,
+        $media
+      );
+
+      wp_enqueue_style( $this->get_prefix() . '_backend_2',
         $this->get_url() . 'css/' . $this->get_slug() . '-admin.css',
         array(),
         $this->get_version() ,

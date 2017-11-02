@@ -4,8 +4,8 @@
  * This file contains JavaScript.
  *    PHP variables are provided in wpdtrt_plugin_config.
  *
- * @package     wpdtrt_plugin
- * @since       0.1.0
+ * @package   	WPPlugin
+ * @since       1.0.0
  */
 
 jQuery(document).ready(function($) {
@@ -18,20 +18,14 @@ jQuery(document).ready(function($) {
 	var ajax_data = {
 		'action': 'refresh_api_data'
 	};
+	var $container = $('.wpdtrt-plugin-ajax-response');
 
-	$('.wpdtrt-plugin-ajax-response')
+	$container
 		.empty()
 		.append('<div class="spinner is-active">' + loading_message + '</div>');
 
-	$('.wpdtrt-plugin-ajax-response > .spinner').css({
-		'float': 'none',
-		'width': 'auto',
-		'padding-left': 27,
-		'margin-left': 0
-	});
-
 	$.post( ajaxurl, ajax_data, function( response ) {
-		$('.wpdtrt-plugin-ajax-response')
+		$container
 			.empty()
 			.html( response );
 	});
