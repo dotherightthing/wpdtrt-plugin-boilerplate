@@ -754,8 +754,6 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @since       1.0.0
      * @version     1.0.0
-     *
-     * @todo        force_refresh() seems to be firing every time (#14)
      */
     public function render_js_backend( $hook_suffix ) {
 
