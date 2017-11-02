@@ -58,6 +58,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $plugin_options = null;
       $instance_options = null;
       $version = null;
+      $demo_shortcode_params = null;
 
       // extract variables
       extract( $settings, EXTR_IF_EXISTS );
@@ -70,6 +71,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_path( $path );
       $this->set_messages( $messages );
       $this->set_version( $version );
+      $this->demo_shortcode_params = $demo_shortcode_params;
 
       // internal defaults
       $plugin_options['force_refresh'] = false;
@@ -96,6 +98,12 @@ if ( !class_exists( 'Plugin' ) ) {
       // call the server side PHP function through admin-ajax.php.
       add_action('wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
     }
+
+    //// START PROPERTIES \\\\
+
+    protected $demo_shortcode_params = array();
+
+    //// END PROPERTIES \\\\
 
     //// START GETTERS AND SETTERS \\\\
 
@@ -486,17 +494,10 @@ if ( !class_exists( 'Plugin' ) ) {
 
       /**
        * Build demo shortcode
-       * @todo add $options_page_demo_shortcode_params as a plugin option
        */
-      $options_page_demo_shortcode_params = array(
-        'id' => 'wpdtrt_blocks_shortcode_1',
-        'number' => '7',
-        'enlargement' => '1'
-      );
-
       $options_page_demo_shortcode = '[';
 
-      foreach( $options_page_demo_shortcode_params as $key => $value ) {
+      foreach( $this->demo_shortcode_params as $key => $value ) {
 
         if ( $key === 'id' ) {
           $options_page_demo_shortcode .= $value;
@@ -510,9 +511,6 @@ if ( !class_exists( 'Plugin' ) ) {
 
       // update the UI
       echo do_shortcode( $options_page_demo_shortcode );
-
-      // create the Ajax response
-      //print_r( $data );
 
       /**
       * Let the Ajax know when the entire function has completed
