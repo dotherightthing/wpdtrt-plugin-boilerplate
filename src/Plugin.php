@@ -862,28 +862,12 @@ if ( !class_exists( 'Plugin' ) ) {
          */
         foreach( $plugin_options as $name => $attributes ) {
 
-          // if a value was submitted
-          if ( !empty( $_POST[ $name ] ) ) {
-            // overwrite the existing value
-            $plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] );
+          // these options don't have attributes
+          if ( ( $name === 'data' ) || ( $name === 'last_updated' ) || ( $name === 'force_refresh') ) {
+            continue;
           }
-          else {
-            // if the form contained an unchecked checkbox
-            // save the value as empty, rather than discarding it
 
-            if ( isset( $plugin_options[ $name ]['type'] ) ) {
-
-              if ( $plugin_options[ $name ]['type'] === 'checkbox') {
-                $plugin_options[ $name ]['value'] = '';
-              }
-              // if the form contained an unselected select
-              // save the value as empty, rather than discarding it
-              else if ( $plugin_options[ $name ]['type'] === 'select') {
-                $plugin_options[ $name ]['value'] = '';
-              }
-              
-            }
-          }
+          $plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] );
         }
 
         // If we've updated our options
