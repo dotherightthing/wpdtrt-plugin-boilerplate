@@ -655,15 +655,16 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Render a human readable last updated date
+     * Render a human readable last updated date.
+     *  Works best with General Settings > Date Format > Custom
      *
      * @return      string $humanised_date
      *
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @todo Fix GMT offset of last updated string (#13)
      * @see https://codex.wordpress.org/Option_Reference
+     * @see https://codex.wordpress.org/Function_Reference/get_gmt_from_date
      */
     public function render_last_updated_humanised() {
 
@@ -673,8 +674,11 @@ if ( !class_exists( 'Plugin' ) ) {
       // use the date format set by the user
       $wp_date_format = get_option('date_format');
       $wp_time_format = get_option('time_format');
-      $wp_gmt_offset = get_option('gmt_offset');
-      $last_updated_str = date( $wp_time_format, $last_updated ) . ', ' . date( $wp_date_format, $last_updated ) . ' (GMT' . sprintf("%+d", $wp_gmt_offset) . ')';
+
+      $last_updated_str = get_gmt_from_date(
+        date( $wp_time_format, $last_updated ),
+        ( $wp_time_format . ', ' . $wp_date_format )
+      );
 
       return $last_updated_str;
     }
