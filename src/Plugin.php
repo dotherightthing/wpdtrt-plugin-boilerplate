@@ -468,6 +468,7 @@ if ( !class_exists( 'Plugin' ) ) {
     * @version     1.0.0
     *
     * @see         https://codex.wordpress.org/AJAX_in_Plugins
+    * @todo        $last_updated check prevents an option change from resulting in new data
     */
     public function refresh_api_data( $format ) {
 
