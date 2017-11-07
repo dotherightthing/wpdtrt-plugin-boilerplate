@@ -842,7 +842,7 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Render the appropriate UI on Settings > DTRT Attachment Map
+     * Render the appropriate UI on Settings > DTRT PluginName
      *
      *    1. Take the user's options (from the form input)
      *    2. Store the user's options
@@ -904,7 +904,7 @@ if ( !class_exists( 'Plugin' ) ) {
       // get the latest data from the API
       else if ( isset( $plugin_options['last_updated'] ) ) {
 
-        // Tell the Ajax to get the latest data even if it is not stale
+        // Only get the latest data if the existing data is stale
         $plugin_options['force_refresh'] = false;
 
         // Update options object in database
