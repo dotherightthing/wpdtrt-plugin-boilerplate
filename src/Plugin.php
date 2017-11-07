@@ -518,6 +518,33 @@ if ( !class_exists( 'Plugin' ) ) {
       wp_die();
     }
 
+    /**
+     * Determine whether the options page form has been submitted or not
+     *
+     * @return      boolean
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @todo        Incorporate validation checks to ensure that all expected inputs are present (#10)
+     */
+    public function options_saved() {
+
+      $options_saved = false;
+
+      if ( isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
+
+        // check that the form submission was legitimate
+        $hidden_field = esc_html( $_POST[$this->get_prefix() . '_form_submitted'] );
+
+        if ( $hidden_field === 'Y' ) {
+          $options_saved = true;
+        }
+      }
+
+      return $options_saved;
+    }
+
     //// END GETTERS AND SETTERS \\\\
 
     //// START TRANSFORMATIONS \\\\
@@ -847,14 +874,7 @@ if ( !class_exists( 'Plugin' ) ) {
       /**
        * If the form was submitted, update the options
        */
-      if ( isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
-
-        // check that the form submission was legitimate
-        $hidden_field = esc_html( $_POST[$this->get_prefix() . '_form_submitted'] );
-
-        if ( $hidden_field !== 'Y' ) {
-          return;
-        }
+      if ( $this->options_saved() === true ) {
 
         /**
          * Save default/user values from form submission
