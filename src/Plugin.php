@@ -56,6 +56,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $path = null;
       $messages = null;
       $plugin_options = null;
+      $plugin_data_options = null;
       $instance_options = null;
       $version = null;
       $demo_shortcode_params = null;
@@ -74,10 +75,14 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->demo_shortcode_params = $demo_shortcode_params;
 
       // internal defaults
-      $plugin_options['force_refresh'] = false;
+      $plugin_data = array();
+      $plugin_data_options['force_refresh'] = false;
+
 
       $options = array(
         'plugin_options' => $plugin_options,
+        'plugin_data' => $plugin_data,
+        'plugin_data_options' => $plugin_data_options,
         'instance_options' => $instance_options
       );
 
@@ -329,6 +334,15 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
+     * Remove plugin options
+     *
+     * @since 1.0.0
+     */
+    protected function delete_options() {
+      delete_option( $this->get_prefix() );
+    }
+
+    /**
      * Set plugin options
      *
      * @since 1.0.0
@@ -396,6 +410,95 @@ if ( !class_exists( 'Plugin' ) ) {
        * This overwrites the old values with any new values
        */
       $options['plugin_options'] = array_merge( $old_plugin_options, $new_plugin_options );
+
+      $this->set_options($options);
+    }
+
+    /**
+     * Get the value of $plugin_data
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_plugin_data() {
+      $options = $this->get_options();
+      $plugin_data = $options['plugin_data'];
+      return $plugin_data;
+    }
+
+    /**
+     * Get the number of items in $plugin_data
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return      number
+     */
+    public function get_plugin_data_length() {
+      $plugin_data = $this->get_plugin_data();
+      return count( $plugin_data );
+    }
+
+    /**
+     * Set the value of $plugin_data
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    public function set_plugin_data( $new_plugin_data ) {
+
+      $options = $this->get_options();
+
+      $old_plugin_data = $this->get_plugin_data();
+
+      /**
+       * Merge old options with new options
+       * This overwrites the old values with any new values
+       * @todo: Is this appropriate for data?
+       */
+      $options['plugin_data'] = array_merge( $old_plugin_data, $new_plugin_data );
+
+      $this->set_options($options);
+    }
+
+    /**
+     * Get the value of $plugin_data_options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_plugin_data_options() {
+      $options = $this->get_options();
+      $plugin_data_options = $options['plugin_data_options'];
+      return $plugin_data_options;
+    }
+
+    /**
+     * Set the value of $plugin_data_options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    public function set_plugin_data_options( $new_plugin_data_options ) {
+
+      $options = $this->get_options();
+
+      $old_plugin_data_options = $this->get_plugin_data_options();
+
+      /**
+       * Merge old options with new options
+       * This overwrites the old values with any new values
+       * @todo: Is this appropriate for data?
+       */
+      $options['plugin_data_options'] = array_merge( $old_plugin_data_options, $new_plugin_data_options );
 
       $this->set_options($options);
     }
@@ -474,13 +577,14 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $format = sanitize_text_field( $_POST['format'] );
 
-      $plugin_options = $this->get_plugin_options();
-      $existing_data = $plugin_options['data'];
-      $last_updated = $plugin_options['last_updated'];
+      $plugin_data = $this->get_plugin_data();
+      $plugin_data_options = $this->get_plugin_data_options();
+      $existing_data = $plugin_data;
+      $last_updated = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
 
       // if the data has previously been requested
       // only update it if it is stale
-      if ( isset( $last_updated ) ) {
+      if ( $last_updated ) {
         $current_time = time();
         $update_difference = $current_time - $last_updated;
         $one_hour = (1 * 60 * 60);
@@ -655,7 +759,7 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     protected function render_demo_shortcode_data() {
 
-      $plugin_options = $this->get_plugin_options();
+      $plugin_data = $this->get_plugin_data();
       $demo_shortcode_params = $this->demo_shortcode_params;
       $max_length = $demo_shortcode_params['number'];
 
@@ -664,8 +768,8 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $count = 0;
 
-      foreach( $plugin_options['data'] as $key => $val ) {
-        $data_str .= var_export( $plugin_options['data'][$key], true );
+      foreach( $plugin_data as $key => $val ) {
+        $data_str .= var_export( $plugin_data[$key], true );
 
         $count++;
 
@@ -696,14 +800,20 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function render_last_updated_humanised() {
 
-      $plugin_options = $this->get_plugin_options();
-      $last_updated = $plugin_options['last_updated'];
+      $last_updated_str = '';
+
+      $plugin_data_options = $this->get_plugin_data_options();
+      $last_updated = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
+
+      if ( ! $last_updated ) {
+        return $last_updated_str;
+      }
 
       // use the date format set by the user
       $wp_date_format = get_option('date_format');
       $wp_time_format = get_option('time_format');
 
-      $last_updated_str = get_gmt_from_date(
+      $last_updated_str .= get_gmt_from_date(
         date( $wp_time_format, $last_updated ),
         ( $wp_time_format . ', ' . $wp_date_format )
       );
@@ -807,15 +917,14 @@ if ( !class_exists( 'Plugin' ) ) {
         $attach_to_footer
       );
 
-      $plugin_options = $this->get_plugin_options();
+      $plugin_data_options = $this->get_plugin_data_options();
 
       wp_localize_script( $this->get_prefix() . '_backend',
         'wpdtrt_plugin_config',
         array(
           'ajaxurl' => admin_url( 'admin-ajax.php' ),
           'messages' => $this->get_messages(),
-          'force_refresh' => $plugin_options['force_refresh']
-          //'options' => $this->get_options() // note: this includes $plugin_options['data']
+          'force_refresh' => $plugin_data_options['force_refresh']
         )
       );
     }
@@ -870,6 +979,7 @@ if ( !class_exists( 'Plugin' ) ) {
        * Load existing options
        */
       $plugin_options = $this->get_plugin_options();
+      $plugin_data_options = $this->get_plugin_data_options();
 
       /**
        * If the form was submitted, update the options
@@ -883,11 +993,6 @@ if ( !class_exists( 'Plugin' ) ) {
          */
         foreach( $plugin_options as $name => $attributes ) {
 
-          // these options don't have attributes
-          if ( ( $name === 'data' ) || ( $name === 'last_updated' ) || ( $name === 'force_refresh') ) {
-            continue;
-          }
-
           $plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] );
         }
 
@@ -895,20 +1000,22 @@ if ( !class_exists( 'Plugin' ) ) {
         // get the latest data from the API
 
         // Tell the Ajax to get the latest data even if it is not stale
-        $plugin_options['force_refresh'] = true;
+        $plugin_data_options['force_refresh'] = true;
 
         // Update options object in database
         $this->set_plugin_options( $plugin_options );
+        $this->set_plugin_data_options( $plugin_data_options );
       }
       // if data has already been retrieved from API
       // get the latest data from the API
-      else if ( isset( $plugin_options['last_updated'] ) ) {
+      else if ( isset( $plugin_data_options['last_updated'] ) ) {
 
         // Only get the latest data if the existing data is stale
-        $plugin_options['force_refresh'] = false;
+        $plugin_data_options['force_refresh'] = false;
 
         // Update options object in database
         $this->set_plugin_options( $plugin_options );
+        $this->set_plugin_data_options( $plugin_data_options );
       }
 
       /**
@@ -934,11 +1041,6 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function render_form_element( $name, $attributes=array() ) {
 
-      // these options don't have attributes
-      if ( ( $name === 'data' ) || ( $name === 'last_updated' ) || ( $name === 'force_refresh') ) {
-        return;
-      }
-
       // define variables
       $type = null;
       $label = null;
@@ -949,6 +1051,10 @@ if ( !class_exists( 'Plugin' ) ) {
 
       // populate variables
       extract( $attributes, EXTR_IF_EXISTS );
+
+      if ( !isset( $type, $label ) ) {
+        return;
+      }
 
       // name as a string
       $nameStr = $name;
