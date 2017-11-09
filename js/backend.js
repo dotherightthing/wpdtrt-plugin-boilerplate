@@ -8,6 +8,8 @@
  * @since       1.0.0
  */
 
+/* global jQuery, wpdtrt_plugin_config */
+
 jQuery(document).ready(function($) {
 
 	// wpdtrt_plugin_config is generic
@@ -15,42 +17,40 @@ jQuery(document).ready(function($) {
 	var config = wpdtrt_plugin_config;
 	var loading_message = config.messages.loading;
 	var ajaxurl = config.ajaxurl;
+	var $ajax_container_data = $('.wpdtrt-plugin-ajax-response[data-format="data"]');
+	var $ajax_container_ui = $('.wpdtrt-plugin-ajax-response[data-format="ui"]');
 
-	var ajax_data_ui = {
-		'action': 'refresh_api_data',
-		'format': 'ui'
-	};
-
-	var ajax_data_data = {
-		'action': 'refresh_api_data',
-		'format': 'data'
-	};
-
-	var $ajax_containers = $('.wpdtrt-plugin-ajax-response');
-
-	$ajax_containers
+	$ajax_container_data
 		.empty()
 		.append('<div class="spinner is-active">' + loading_message + '</div>');
 
-	$.each( $ajax_containers, function(i, item) {
+	$ajax_container_ui
+		.empty()
+		.append('<div class="spinner is-active">' + loading_message + '</div>');
 
-		var $container = $(item);
-
-		if ( $container.data('format') === 'ui' ) {
-
-			$.post( ajaxurl, ajax_data_ui, function( response ) {
-				$container
+	var data = $.post( ajaxurl, {
+			'action': 'refresh_api_data',
+			'format': 'ui'
+		},
+		function(response) {
+			$ajax_container_ui
+				.empty()
+				.html( response );
+		}
+	);
+			
+	data.done( function() {
+		$.post(
+			ajaxurl,
+			{
+				'action': 'refresh_api_data',
+				'format': 'data'
+			},
+			function(response) {
+				$ajax_container_data
 					.empty()
 					.html( response );
-			});
-		}
-		else if ( $container.data('format') === 'data' ) {
-
-			$.post( ajaxurl, ajax_data_data, function( response ) {
-				$container
-					.empty()
-					.html( response );
-			});
-		}
+			}
+		);
 	});
 });
