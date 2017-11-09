@@ -453,14 +453,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $options = $this->get_options();
 
-      $old_plugin_data = $this->get_plugin_data();
-
-      /**
-       * Merge old options with new options
-       * This overwrites the old values with any new values
-       * @todo: Is this appropriate for data?
-       */
-      $options['plugin_data'] = array_merge( $old_plugin_data, $new_plugin_data );
+      $options['plugin_data'] = $new_plugin_data;
 
       $this->set_options($options);
     }
