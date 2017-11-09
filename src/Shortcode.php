@@ -227,6 +227,7 @@ if ( !class_exists( 'Shortcode' ) ) {
       ));
 
       // /template-parts/wpdtrt-plugin-name/content/foo.php
+      // $plugin_data is loaded in template
       $templates->get_template_part( 'content', $this->get_template_name() );
 
       /**

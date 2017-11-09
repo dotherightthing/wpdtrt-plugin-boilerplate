@@ -78,6 +78,8 @@ if ( !class_exists( 'Plugin' ) ) {
       $plugin_data = array();
       $plugin_data_options['force_refresh'] = false;
 
+      // Delete old options during testing
+      //$this->delete_options();
 
       $options = array(
         'plugin_options' => $plugin_options,
@@ -107,13 +109,17 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see https://wordpress.stackexchange.com/a/209772
      */
     protected function setup( $default_options ) {
-
       $existing_options = $this->get_options();
 
       // if the user hasn't set some options in a previous session
       if ( empty( $existing_options ) ) {
         $this->set_options($default_options);
+        $wpdtrt_helpers->log('setup - use default options');
       }
+      else {
+        $wpdtrt_helpers->log('setup - options already exist');
+      }
+
       /**
        * $this->render_foobar() - infers that no args are to be passed, fails
        * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
@@ -285,9 +291,7 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function get_success_message() {
       $messages = $this->get_messages();
-
       $success_message = $messages['success'];
-
       return $success_message;
     }
 
@@ -323,13 +327,11 @@ if ( !class_exists( 'Plugin' ) ) {
      * @return array
      */
     public function get_options() {
-
       /**
        * Load any plugin user settings, falling back to an empty array if they don't exist yet
        * @see https://developer.wordpress.org/reference/functions/get_option/#parameters
        */
       $options = get_option( $this->get_prefix(), array() );
-
       return $options;
     }
 
@@ -350,7 +352,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param array $options
      */
     protected function set_options( $new_options ) {
-
       $old_options = $this->get_options();
 
       /**
@@ -400,9 +401,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_options( $new_plugin_options ) {
-
       $options = $this->get_options();
-
       $old_plugin_options = $this->get_plugin_options();
 
       /**
@@ -410,7 +409,6 @@ if ( !class_exists( 'Plugin' ) ) {
        * This overwrites the old values with any new values
        */
       $options['plugin_options'] = array_merge( $old_plugin_options, $new_plugin_options );
-
       $this->set_options($options);
     }
 
@@ -450,11 +448,8 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_data( $new_plugin_data ) {
-
       $options = $this->get_options();
-
       $options['plugin_data'] = $new_plugin_data;
-
       $this->set_options($options);
     }
 
@@ -481,18 +476,14 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_data_options( $new_plugin_data_options ) {
-
       $options = $this->get_options();
-
       $old_plugin_data_options = $this->get_plugin_data_options();
 
       /**
        * Merge old options with new options
        * This overwrites the old values with any new values
-       * @todo: Is this appropriate for data?
        */
       $options['plugin_data_options'] = array_merge( $old_plugin_data_options, $new_plugin_data_options );
-
       $this->set_options($options);
     }
 
@@ -544,40 +535,42 @@ if ( !class_exists( 'Plugin' ) ) {
      * @return object
      */
     protected function get_api_data() {
-        return (object)[];
+      return (object)[];
     }
 
     /**
-    * Refresh the data from the API
-    *    The 'action' key's value, 'refresh_api_data',
-    *    matches the latter half of the action 'wp_ajax_refresh_api_data' in our AJAX handler.
-    *    This is because it is used to call the server side PHP function through admin-ajax.php.
-    *    If an action is not specified, admin-ajax.php will exit, and return 0 in the process.
-    *
-    * See also $this->__construct()
-    * See also $this->render_js_backend()
-    * See also js/wpdtrt-foo-backend.js
-    *
-    * @param       string $format The data format ('ui'|'data')
-    *
-    * @since       0.1.0
-    * @version     1.0.0
-    *
-    * @see         https://codex.wordpress.org/AJAX_in_Plugins
-    * @todo        $last_updated check prevents an option change from resulting in new data
-    */
-    public function refresh_api_data( $format ) {
+     * Refresh the data from the API
+     *    The 'action' key's value, 'refresh_api_data',
+     *    matches the latter half of the action 'wp_ajax_refresh_api_data' in our AJAX handler.
+     *    This is because it is used to call the server side PHP function through admin-ajax.php.
+     *    If an action is not specified, admin-ajax.php will exit, and return 0 in the process.
+     *
+     * See also $this->__construct()
+     * See also $this->render_js_backend()
+     * See also js/wpdtrt-foo-backend.js
+     *
+     * @param       string $format The data format ('ui'|'data')
+     *
+     * @since       0.1.0
+     * @version     1.0.0
+     *
+     * @see         https://codex.wordpress.org/AJAX_in_Plugins
+     * @todo        $last_updated check prevents an option change from resulting in new data
+     */
+    public function refresh_api_data( $format ) { // ?
+      $format = sanitize_text_field( $_POST['format'] ); // ?
 
-      $format = sanitize_text_field( $_POST['format'] );
+      if ( $format === 'ui' ) {
+        $shortcode = $this->build_demo_shortcode();
+      }
 
-      $plugin_data = $this->get_plugin_data();
       $plugin_data_options = $this->get_plugin_data_options();
-      $existing_data = $plugin_data;
+      $existing_data = $this->get_plugin_data();
       $last_updated = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
 
-      // if the data has previously been requested
+      // if the data has previously been requested AND has loaded
       // only update it if it is stale
-      if ( $last_updated ) {
+      if ( $last_updated && $existing_data ) {
         $current_time = time();
         $update_difference = $current_time - $last_updated;
         $one_hour = (1 * 60 * 60);
@@ -594,11 +587,9 @@ if ( !class_exists( 'Plugin' ) ) {
         $data = $existing_data;
       }
       
-      $shortcode = $this->build_demo_shortcode();
-
       // update the UI
-
       if ( $format === 'ui' ) {
+        $shortcode = $this->build_demo_shortcode();
         echo $this->render_demo_shortcode( $shortcode );
       }
       else if ( $format === 'data' ) {
@@ -606,12 +597,12 @@ if ( !class_exists( 'Plugin' ) ) {
       }
 
       /**
-      * Let the Ajax know when the entire function has completed
-      *
-      * wp_die() vs die() vs exit()
-      * Most of the time you should be using wp_die() in your Ajax callback function.
-      * This provides better integration with WordPress and makes it easier to test your code.
-      */
+       * Let the Ajax know when the entire function has completed
+       *
+       * wp_die() vs die() vs exit()
+       * Most of the time you should be using wp_die() in your Ajax callback function.
+       * This provides better integration with WordPress and makes it easier to test your code.
+       */
       wp_die();
     }
 
@@ -626,7 +617,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @todo        Incorporate validation checks to ensure that all expected inputs are present (#10)
      */
     public function options_saved() {
-
       $options_saved = false;
 
       if ( isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
@@ -658,7 +648,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @todo        Add field validation feedback (#10)
      */
     public function normalise_field_value( $field_value, $field_type ) {
-
       $normalised_field_value = null;
 
       // If something was entered into the field
@@ -698,9 +687,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @return string Shortcode
      */
     protected function build_demo_shortcode() {
-
       $params = $this->demo_shortcode_params;
-
       $options_page_demo_shortcode = '[';
 
       foreach( $params as $key => $value ) {
@@ -719,7 +706,6 @@ if ( !class_exists( 'Plugin' ) ) {
        * Render demo shortcode (update the UI)
        */
       return $options_page_demo_shortcode;
-
     }
 
     /**
@@ -751,12 +737,16 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see https://stackoverflow.com/a/139553/6850747
      */
     protected function render_demo_shortcode_data() {
-
       $plugin_data = $this->get_plugin_data();
+      $data_str = '';
       $demo_shortcode_params = $this->demo_shortcode_params;
       $max_length = $demo_shortcode_params['number'];
 
-      $data_str = '<pre><code>';
+      if ( empty( $plugin_data ) ) {
+        return $data_str;
+      }
+
+      $data_str .= '<pre><code>';
       $data_str .= "{\r\n";
 
       $count = 0;
@@ -770,7 +760,6 @@ if ( !class_exists( 'Plugin' ) ) {
         if ($count === $max_length) {
           break;
         }
-
       }
 
       $data_str .= "}\r\n";
@@ -792,9 +781,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see https://codex.wordpress.org/Function_Reference/get_gmt_from_date
      */
     public function render_last_updated_humanised() {
-
       $last_updated_str = '';
-
       $plugin_data_options = $this->get_plugin_data_options();
       $last_updated = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
 
@@ -826,7 +813,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      */
     public function render_js_frontend() {
-
       $attach_to_footer = true;
 
       /**
@@ -893,7 +879,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      */
     public function render_js_backend( $hook_suffix ) {
-
       if ( $hook_suffix !== ( 'settings_page_' . $this->get_slug() ) ) {
         return;
       }
@@ -932,7 +917,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      */
     public function render_options_menu() {
-
       add_options_page(
         $this->get_developer_prefix() . ' ' . $this->get_menu_title(), // <title>
         $this->get_menu_title(), // menu
@@ -959,9 +943,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @return      string
      */
     function render_options_page() {
-
       $messages = $this->get_messages();
-
       $insufficient_permissions_message = $messages['insufficient_permissions'];
 
       if ( ! current_user_can( 'manage_options' ) ) {
@@ -1033,7 +1015,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @todo        Add field validation feedback (#10)
      */
     public function render_form_element( $name, $attributes=array() ) {
-
       // define variables
       $type = null;
       $label = null;
@@ -1094,7 +1075,7 @@ if ( !class_exists( 'Plugin' ) ) {
      */
 
     public function render_settings_errors() {
-        settings_errors();
+      settings_errors();
     }
 
     /**
@@ -1108,7 +1089,6 @@ if ( !class_exists( 'Plugin' ) ) {
      */
 
     public function render_admin_notices() {
-
       $screen = get_current_screen();
 
       if ($screen->id === 'settings_page_' . $this->get_slug() ):
@@ -1134,7 +1114,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      */
     public function render_css_backend() {
-
       $media = 'all';
 
       wp_enqueue_style( $this->get_prefix() . '_backend_1',
@@ -1159,7 +1138,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      */
     public function render_css_frontend() {
-
       $media = 'all';
 
       wp_enqueue_style( $this->get_prefix(),
