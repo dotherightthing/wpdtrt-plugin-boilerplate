@@ -114,10 +114,6 @@ if ( !class_exists( 'Plugin' ) ) {
       // if the user hasn't set some options in a previous session
       if ( empty( $existing_options ) ) {
         $this->set_options($default_options);
-        $wpdtrt_helpers->log('setup - use default options');
-      }
-      else {
-        $wpdtrt_helpers->log('setup - options already exist');
       }
 
       /**
