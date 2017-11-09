@@ -995,13 +995,14 @@ if ( !class_exists( 'Plugin' ) ) {
         $this->set_plugin_data_options( $plugin_data_options );
       }
 
+
       /**
        * Load the HTML template
        * This function's variables will be available to this template,
        * includng $this
        * $plugin_options are retrieved afresh inside the template
        */
-      require_once($this->get_path() . 'templates/options.php');
+      require_once($this->get_path() . 'vendor/dotherightthing/wpdtrt-plugin/views/options.php');
     }
 
     /**
