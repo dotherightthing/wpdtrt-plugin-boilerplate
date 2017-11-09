@@ -87,21 +87,6 @@ if ( !class_exists( 'Plugin' ) ) {
       );
 
       $this->setup($options);
-
-      /**
-       * $this->render_foobar() - infers that no args are to be passed, fails
-       * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
-       */
-      add_action( 'admin_menu',               [$this, 'render_options_menu'] );
-      add_action( 'admin_notices',            [$this, 'render_settings_errors'] );
-      add_action( 'admin_notices',            [$this, 'render_admin_notices'] );
-      add_action( 'admin_head',               [$this, 'render_css_backend'] );
-      add_action( 'wp_enqueue_scripts',       [$this, 'render_css_frontend'] );
-      add_action( 'wp_enqueue_scripts',       [$this, 'render_js_frontend'] );
-      add_action( 'admin_enqueue_scripts',    [$this, 'render_js_backend'] );
-    
-      // call the server side PHP function through admin-ajax.php.
-      add_action('wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
     }
 
     //// START PROPERTIES \\\\
@@ -129,6 +114,21 @@ if ( !class_exists( 'Plugin' ) ) {
       if ( empty( $existing_options ) ) {
         $this->set_options($default_options);
       }
+      /**
+       * $this->render_foobar() - infers that no args are to be passed, fails
+       * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
+       * @see https://tommcfarlin.com/wordpress-plugin-constructors-hooks/
+       */
+      add_action( 'admin_menu',               [$this, 'render_options_menu'] );
+      add_action( 'admin_notices',            [$this, 'render_settings_errors'] );
+      add_action( 'admin_notices',            [$this, 'render_admin_notices'] );
+      add_action( 'admin_head',               [$this, 'render_css_backend'] );
+      add_action( 'wp_enqueue_scripts',       [$this, 'render_css_frontend'] );
+      add_action( 'wp_enqueue_scripts',       [$this, 'render_js_frontend'] );
+      add_action( 'admin_enqueue_scripts',    [$this, 'render_js_backend'] );
+    
+      // call the server side PHP function through admin-ajax.php.
+      add_action( 'wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
     }
 
     /**
