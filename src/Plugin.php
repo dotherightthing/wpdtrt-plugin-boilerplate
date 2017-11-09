@@ -563,6 +563,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $plugin_data_options = $this->get_plugin_data_options();
       $existing_data = $this->get_plugin_data();
       $last_updated = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
+      $force_refresh = isset( $plugin_data_options['force_refresh'] ) ? $plugin_data_options['force_refresh'] : false;
 
       // if the data has previously been requested AND has loaded
       // only update it if it is stale
@@ -572,8 +573,11 @@ if ( !class_exists( 'Plugin' ) ) {
         $one_hour = (1 * 60 * 60);
         $do_refresh = ( $update_difference > $one_hour );
       }
-      else {
+      else if ( $force_refresh ) {
         $do_refresh = true;
+      }
+      else {
+        $do_refresh = false;
       }
 
       if ( $do_refresh ) {
@@ -978,7 +982,7 @@ if ( !class_exists( 'Plugin' ) ) {
         $this->set_plugin_data_options( $plugin_data_options );
       }
       // if data has already been retrieved from API
-      // get the latest data from the API
+      // get the saved data
       else if ( isset( $plugin_data_options['last_updated'] ) ) {
 
         // Only get the latest data if the existing data is stale
