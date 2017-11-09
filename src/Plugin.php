@@ -573,11 +573,12 @@ if ( !class_exists( 'Plugin' ) ) {
         $one_hour = (1 * 60 * 60);
         $do_refresh = ( $update_difference > $one_hour );
       }
-      else if ( $force_refresh ) {
-        $do_refresh = true;
-      }
       else {
         $do_refresh = false;
+      }
+
+      if ( $force_refresh ) {
+        $do_refresh = true;
       }
 
       if ( $do_refresh ) {
@@ -957,7 +958,8 @@ if ( !class_exists( 'Plugin' ) ) {
       $plugin_data_options = $this->get_plugin_data_options();
 
       /**
-       * If the form was submitted, update the options
+       * If the form was submitted, update the options,
+       * regardless of whether they have changed or not.
        */
       if ( $this->options_saved() === true ) {
 
