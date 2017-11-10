@@ -35,10 +35,8 @@ if ( !class_exists( 'Plugin' ) ) {
   class Plugin {
 
     /**
-     * Hook the plugin in to WordPress
-     * This constructor automatically initialises the object's properties
-     * when it is instantiated,
-     * using new PluginName
+     * Initialise the object's properties when it is instantiated,
+     * using new DoTheRightThing\WPPluginPlugin
      *
      * @param     array $settings Plugin options
      *
@@ -47,7 +45,7 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     function __construct( $settings ) {
 
-      // define variables
+      // option variables
       $url = null;
       $prefix = null;
       $slug = null;
@@ -66,9 +64,10 @@ if ( !class_exists( 'Plugin' ) ) {
       $instance_options = null;
       $plugin_dependencies = array();
 
-      // extract variables
+      // overwrite options with values from the settings array
       extract( $settings, EXTR_IF_EXISTS );
 
+      // store option variables
       $this->set_url( $url );
       $this->set_prefix( $prefix );
       $this->set_slug( $slug );
@@ -91,6 +90,7 @@ if ( !class_exists( 'Plugin' ) ) {
       );
 
       $this->setup($options);
+      // hook in to WordPress
     }
 
     //// START PROPERTIES \\\\
@@ -109,6 +109,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @since 1.0.0
      *
      * @see https://wordpress.stackexchange.com/a/209772
+     * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/24
      */
     protected function setup( $default_options ) {
       $existing_options = $this->get_options();
@@ -160,17 +161,12 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @since       1.0.0
      * @see         http://tgmpluginactivation.com/configuration/
+     * @see         http://tgmpluginactivation.com/download/ for more options
      */
     public function register_required_plugins() {
 
       /**
        * Include the TGM_Plugin_Activation class.
-       *
-       * Parent Theme:
-       * require_once get_template_directory() . '/path/to/class-tgm-plugin-activation.php';
-       *
-       * Child Theme:
-       * require_once get_stylesheet_directory() . '/path/to/class-tgm-plugin-activation.php';
        *
        * Plugin:
        * require_once dirname( __FILE__ ) . '/path/to/class-tgm-plugin-activation.php';
@@ -184,13 +180,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $plugins = $this->get_plugin_dependencies();
 
       /*
-       * Array of configuration settings. Amend each line as needed.
-       *
-       * TGMPA will start providing localized text strings soon. If you already have translations of our standard
-       * strings available, please help us make TGMPA even better by giving us access to these translations or by
-       * sending in a pull-request with .po file(s) with the translations.
-       *
-       * Only uncomment the strings in the config array if you want to customize the strings.
+       * Array of configuration settings.
        */
       $config = array(
         'id'           => $this->get_slug(),        // Unique ID for hashing notices for multiple instances of TGMPA.
@@ -203,83 +193,6 @@ if ( !class_exists( 'Plugin' ) ) {
         'dismiss_msg'  => '',                       // If 'dismissable' is false, this message will be output at top of nag.
         'is_automatic' => false,                    // Automatically activate plugins after installation or not.
         'message'      => '',                       // Message to output right before the plugins table.
-
-        /*
-        'strings'      => array(
-          'page_title'                      => __( 'Install Required Plugins', 'text-domain' ),
-          'menu_title'                      => __( 'Install Plugins', 'text-domain' ),
-          /* translators: %s: plugin name. * /
-          'installing'                      => __( 'Installing Plugin: %s', 'text-domain' ),
-          /* translators: %s: plugin name. * /
-          'updating'                        => __( 'Updating Plugin: %s', 'text-domain' ),
-          'oops'                            => __( 'Something went wrong with the plugin API.', 'text-domain' ),
-          'notice_can_install_required'     => _n_noop(
-            /* translators: 1: plugin name(s). * /
-            'This theme requires the following plugin: %1$s.',
-            'This theme requires the following plugins: %1$s.',
-            'text-domain'
-          ),
-          'notice_can_install_recommended'  => _n_noop(
-            /* translators: 1: plugin name(s). * /
-            'This theme recommends the following plugin: %1$s.',
-            'This theme recommends the following plugins: %1$s.',
-            'text-domain'
-          ),
-          'notice_ask_to_update'            => _n_noop(
-            /* translators: 1: plugin name(s). * /
-            'The following plugin needs to be updated to its latest version to ensure maximum compatibility with this theme: %1$s.',
-            'The following plugins need to be updated to their latest version to ensure maximum compatibility with this theme: %1$s.',
-            'text-domain'
-          ),
-          'notice_ask_to_update_maybe'      => _n_noop(
-            /* translators: 1: plugin name(s). * /
-            'There is an update available for: %1$s.',
-            'There are updates available for the following plugins: %1$s.',
-            'text-domain'
-          ),
-          'notice_can_activate_required'    => _n_noop(
-            /* translators: 1: plugin name(s). * /
-            'The following required plugin is currently inactive: %1$s.',
-            'The following required plugins are currently inactive: %1$s.',
-            'text-domain'
-          ),
-          'notice_can_activate_recommended' => _n_noop(
-            /* translators: 1: plugin name(s). * /
-            'The following recommended plugin is currently inactive: %1$s.',
-            'The following recommended plugins are currently inactive: %1$s.',
-            'text-domain'
-          ),
-          'install_link'                    => _n_noop(
-            'Begin installing plugin',
-            'Begin installing plugins',
-            'text-domain'
-          ),
-          'update_link'             => _n_noop(
-            'Begin updating plugin',
-            'Begin updating plugins',
-            'text-domain'
-          ),
-          'activate_link'                   => _n_noop(
-            'Begin activating plugin',
-            'Begin activating plugins',
-            'text-domain'
-          ),
-          'return'                          => __( 'Return to Required Plugins Installer', 'text-domain' ),
-          'plugin_activated'                => __( 'Plugin activated successfully.', 'text-domain' ),
-          'activated_successfully'          => __( 'The following plugin was activated successfully:', 'text-domain' ),
-          /* translators: 1: plugin name. * /
-          'plugin_already_active'           => __( 'No action taken. Plugin %1$s was already active.', 'text-domain' ),
-          /* translators: 1: plugin name. * /
-          'plugin_needs_higher_version'     => __( 'Plugin not activated. A higher version of %s is needed for this theme. Please update the plugin.', 'text-domain' ),
-          /* translators: 1: dashboard link. * /
-          'complete'                        => __( 'All plugins installed and activated successfully. %1$s', 'text-domain' ),
-          'dismiss'                         => __( 'Dismiss this notice', 'text-domain' ),
-          'notice_cannot_install_activate'  => __( 'There are one or more required or recommended plugins to install, update or activate.', 'text-domain' ),
-          'contact_admin'                   => __( 'Please contact the administrator of this site for help.', 'text-domain' ),
-
-          'nag_type'                        => '', // Determines admin notice type - can only be one of the typical WP notice classes, such as 'updated', 'update-nag', 'notice-warning', 'notice-info' or 'error'. Some of which may not work as expected in older WP versions.
-        ),
-        */
       );
 
       tgmpa( $plugins, $config );
@@ -671,7 +584,6 @@ if ( !class_exists( 'Plugin' ) ) {
 
     /**
      * Get the value of $instance_options
-     * Note: Setting only takes place within Shortcodes and Widgets
      *
      * @since       1.0.0
      * @version     1.0.0
