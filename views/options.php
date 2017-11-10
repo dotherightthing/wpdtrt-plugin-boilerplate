@@ -28,13 +28,13 @@
   $demo_display = isset( $this->demo_shortcode_params ) && ( $form_submitted || ( $demo_date_last_updated_date !== '' ) );
   $demo_shortcode = $demo_display ? $this->build_demo_shortcode() : '';
   $demo_data_maxlength = $demo_shortcode_params ? $demo_shortcode_params['number'] : 0;
+  $demo_noscript_warning = $messages['demo_noscript_warning']; 
 
   if ( $demo_display ) {
     $demo_sample_title = $messages['demo_sample_title'];
     $demo_data_title = $messages['demo_data_title'];
     $demo_shortcode_title = $messages['demo_shortcode_title']; 
     $demo_data_description = $messages['demo_data_description']; 
-    $demo_noscript_warning = $messages['demo_noscript_warning']; 
     $demo_data_length = str_replace('#', $plugin_data_length, $messages['demo_data_length']); 
     $demo_data_displayed_length = str_replace('#', $demo_data_maxlength, $messages['demo_data_displayed_length']); 
     $demo_date_last_updated = $messages['demo_date_last_updated']; 
@@ -64,7 +64,7 @@
 
     <fieldset>
       <legend class="screen-reader-text">
-        <span><?php echo $demo_sample_title; ?></span>
+        <span><?php echo $options_form_title; ?></span>
       </legend>
       <table class="form-table">
         <tbody>

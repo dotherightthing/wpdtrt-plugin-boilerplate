@@ -55,11 +55,16 @@ if ( !class_exists( 'Plugin' ) ) {
       $developer_prefix = null;
       $path = null;
       $messages = null;
-      $plugin_options = null;
-      $plugin_data_options = null;
-      $instance_options = null;
       $version = null;
       $demo_shortcode_params = null;
+
+      // options
+      $plugin_options = null;
+      $plugin_data = array();
+      $plugin_data_options = null;
+      $plugin_data_options['force_refresh'] = false;
+      $instance_options = null;
+      $plugin_dependencies = array();
 
       // extract variables
       extract( $settings, EXTR_IF_EXISTS );
@@ -74,10 +79,6 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_version( $version );
       $this->demo_shortcode_params = $demo_shortcode_params;
 
-      // internal defaults
-      $plugin_data = array();
-      $plugin_data_options['force_refresh'] = false;
-
       // Delete old options during testing
       //$this->delete_options();
 
@@ -85,7 +86,8 @@ if ( !class_exists( 'Plugin' ) ) {
         'plugin_options' => $plugin_options,
         'plugin_data' => $plugin_data,
         'plugin_data_options' => $plugin_data_options,
-        'instance_options' => $instance_options
+        'instance_options' => $instance_options,
+        'plugin_dependencies' => $plugin_dependencies
       );
 
       $this->setup($options);
@@ -115,6 +117,16 @@ if ( !class_exists( 'Plugin' ) ) {
       if ( empty( $existing_options ) ) {
         $this->set_options($default_options);
       }
+
+      $this->set_plugin_dependency(
+        array(
+          'name'          => 'WordPress Admin Style',
+          'slug'          => 'wordpress-admin-style',
+          'source'        => 'https://github.com/bueltge/wordpress-admin-style/archive/master.zip',
+          'external_url'  => 'https://github.com/bueltge/wordpress-admin-style',
+          'required'      => false
+        )
+      );
 
       /**
        * $this->render_foobar() - infers that no args are to be passed, fails
@@ -169,26 +181,7 @@ if ( !class_exists( 'Plugin' ) ) {
        * Array of plugin arrays. Required keys are name and slug.
        * If the source is NOT from the .org repo, then source is also required.
        */
-      $plugins = array(
-
-          array(
-              'name'          => 'WordPress Admin Style',
-              'slug'          => 'wordpress-admin-style',
-              'source'        => 'https://github.com/bueltge/wordpress-admin-style/archive/master.zip',
-              'external_url'  => 'https://github.com/bueltge/wordpress-admin-style',
-              'required'      => false
-          )
-
-        /*
-          array(
-            'name'          => 'Advanced Custom Fields',
-            'slug'          => 'advanced-custom-fields',
-            'required'      => true,
-            'is_callable'   => array( 'acf_field_google_map', 'render_field' )
-          ),
-          */
-
-      );
+      $plugins = $this->get_plugin_dependencies();
 
       /*
        * Array of configuration settings. Amend each line as needed.
@@ -568,6 +561,40 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
+     * Get a list of plugin dependencies to load via TGMA
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_plugin_dependencies() {
+      $options = $this->get_options();
+      $plugin_dependencies = $options['plugin_dependencies'];
+      return $plugin_dependencies;
+    }
+
+    /**
+     * Store a plugin dependency for loading via TGMA
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    public function set_plugin_dependency( $new_plugin_dependency ) {
+      $options = $this->get_options();
+      $old_plugin_dependencies = $this->get_plugin_dependencies();
+
+      /**
+       * Merge old options with new options
+       * This overwrites the old values with any new values
+       */
+      $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, array( $new_plugin_dependency ) );
+      $this->set_options($options);
+    }
+
+    /**
      * Get the value of $plugin_data
      *
      * @since       1.0.0
@@ -670,7 +697,7 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Set the value of $url
+     * Set the value of $version
      *
      * @since       1.0.0
      * @version     1.0.0
