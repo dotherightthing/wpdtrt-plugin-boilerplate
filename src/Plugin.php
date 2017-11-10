@@ -499,6 +499,13 @@ if ( !class_exists( 'Plugin' ) ) {
       $options = $this->get_options();
       $old_plugin_dependencies = $this->get_plugin_dependencies();
 
+      foreach( $old_plugin_dependencies as $key => $value ) {
+        if ( $value['slug'] === $new_plugin_dependency['slug'] ) {
+          // remove the old entry so we can set it again below
+          unset( $old_plugin_dependencies[$key] );
+        }
+      }
+
       /**
        * Merge old options with new options
        * This overwrites the old values with any new values
