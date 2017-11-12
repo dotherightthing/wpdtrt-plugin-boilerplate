@@ -22,7 +22,11 @@ var scssSrc = './scss/*.scss';
 
 // target directories
 var cssDir = './css/';
-var phpDir = '**/*.php';
+var phpDir = [
+  '*.php',
+  'app/**/*.php',
+  'template-parts/**/*.php'
+];
 
 // tasks
 
@@ -68,7 +72,7 @@ gulp.task('css', function () {
 
 gulp.task('php', function () {
   return gulp
-    .src([phpDir])
+    .src(phpDir)
 
     // validate PHP
     // The linter ships with PHP
