@@ -13,7 +13,7 @@
  */
 
   $plugin_options = $this->get_plugin_options();
-  $form_submitted = ( $this->options_saved() === true );
+  $form_submitted = ( $this->helper_options_saved() === true );
   $plugin_version = $this->get_version();
   $plugin_title = $this->get_developer_prefix() . ' ' . $this->get_menu_title();
   $plugin_data_length = $this->get_plugin_data_length();
@@ -26,7 +26,7 @@
 
   $demo_shortcode_params = $this->demo_shortcode_params;
   $demo_display = isset( $this->demo_shortcode_params ) && ( $form_submitted || ( $demo_date_last_updated_date !== '' ) );
-  $demo_shortcode = $demo_display ? $this->build_demo_shortcode() : '';
+  $demo_shortcode = $demo_display ? $this->helper_build_demo_shortcode() : '';
   $demo_data_maxlength = $demo_shortcode_params ? $demo_shortcode_params['number'] : 0;
   $demo_noscript_warning = $messages['demo_noscript_warning']; 
 
