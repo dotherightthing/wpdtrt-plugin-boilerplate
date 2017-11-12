@@ -18,10 +18,11 @@ The included Gulp task,
 4. converts SCSS into CSS
 
 ```
-// Install Node dependencies
+// 1. Install Node dependencies
 npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
 
-// Run the default Gulp task set, then watch for changes
+// 2. Run the default Gulp task set
+// 3. Watch for changes
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 

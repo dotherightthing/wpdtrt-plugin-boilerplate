@@ -19,9 +19,6 @@
     "gulp-shell": "^0.6.3",
     "postcss-pxtorem": "^4.0.1"
   },
-  "scripts": {
-    "postinstall": "node_modules/.bin/bower install && composer install && gulp"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:dotherightthing/wpdtrt-plugin.git"
