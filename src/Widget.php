@@ -205,7 +205,7 @@ if ( !class_exists( 'Widget' ) ) {
 
       $plugin = $this->get_plugin();
 
-      $value = $plugin->normalise_field_value(
+      $value = $plugin->helper_normalise_field_value(
         ( isset( $instance[$nameStr] ) ? $instance[$nameStr] : null ),
         $type
       );
@@ -343,7 +343,7 @@ if ( !class_exists( 'Widget' ) ) {
 
         $plugin = $this->get_plugin();
 
-        $value = $plugin->normalise_field_value(
+        $value = $plugin->helper_normalise_field_value(
           ( isset( $new_instance[$name] ) ? $new_instance[$name] : null ),
           $attributes['type']
         );
