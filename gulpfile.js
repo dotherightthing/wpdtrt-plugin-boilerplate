@@ -12,10 +12,12 @@
 // dependencies
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
+var composer = require('gulp-composer');
 var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
 var pxtorem = require('postcss-pxtorem');
 var sass = require('gulp-sass');
+var shell = require('gulp-shell');
 
 // parent theme source directories
 var scssSrc = './scss/*.scss';
@@ -29,6 +31,10 @@ var phpDir = [
 ];
 
 // tasks
+
+gulp.task("composer", function () {
+  composer();
+});
 
 gulp.task('css', function () {
 
@@ -70,7 +76,7 @@ gulp.task('css', function () {
     .pipe(gulp.dest(cssDir));
 });
 
-gulp.task('php', function () {
+gulp.task('phplint', function () {
   return gulp
     .src(phpDir)
 
@@ -86,8 +92,14 @@ gulp.task('php', function () {
     }));
 });
 
+gulp.task('phpdoc', shell.task([
+  'vendor/bin/phpdoc -d . -t docs/phpdoc -i vendor/,node_modules/'
+]));
+
 gulp.task( 'default', [
-  'css',
-  'php'
+    'composer',
+    'phplint',
+    'phpdoc',
+    'css'
   ]
 );

@@ -8,15 +8,22 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 
 [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks) is the demo plugin.
 
-## Authoring Tips
+## Set up
 
-### 1. Compile `SCSS` using `gulpfile.js`
+The included Gulp task,
+
+1. installs Composer dependencies
+2. performs PHP linting
+3. generates PHP documentation
+4. converts SCSS into CSS
 
 ```
+// Install Node dependencies
+npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
+
+// Run the default Gulp task set
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
-
----
 
 ## Background
 
@@ -25,21 +32,20 @@ gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 The goals of this plugin are:
 
 * to consolidate best practice techniques
-* to move boilerplate code into reusable classes
 * to create a familiar, standardised interface for plugin development
-* to allow the plugin authors to focus on the plugin functionality during development
 * to allow the boilerplate code to be maintained independently of the plugin functionality
+* to permit a focus on plugin functionality during development
 
 ### History
 
 This is an evolution of several other approaches:
 
-#### [generator-wp-plugin-boilerplate](https://github.com/dotherightthing)
+#### [Yeoman Plugin Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 + generates a WordPress plugin from a Yeoman template
 - difficult to track evolving changes to boilerplate code
 
-#### wpdtrt
+#### [Base theme](https://github.com/dotherightthing/wpdtrt)
 
 + WordPress parent theme
 + bundles common functionality

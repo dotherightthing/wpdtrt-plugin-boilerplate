@@ -1,0 +1,36 @@
+{
+  "name": "wpdtrt-plugin",
+  "version": "1.0.0",
+  "description": "Classes providing boilerplate functionality for WordPress plugins, including dependent widgets and shortcodes.",
+  "main": "readme.txt",
+  "person": {
+    "name": "Dan Smith",
+    "email": "dev@dotherightthing.co.nz",
+    "url": "https://profiles.wordpress.org/dotherightthingnz"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-composer": "^0.4.4",
+    "gulp-phplint": "^0.3.4",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-shell": "^0.6.3",
+    "postcss-pxtorem": "^4.0.1"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/bower install && composer install && gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:dotherightthing/wpdtrt-plugin.git"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 11"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/dotherightthing/wpdtrt-plugin",
+  "srcDir": "/Volumes/DanBackup/Websites/wpdtrt-plugin"
+}
