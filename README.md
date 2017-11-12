@@ -4,11 +4,9 @@
 
 Base classes for a WordPress plugin and associated shortcodes and widgets.
 
-## Demo usage
+## Set up a child plugin
 
-[DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks) is the demo plugin.
-
-## Set up
+Manually mirror the set up of the demo plugin, [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks).
 
 The included Gulp task,
 
@@ -18,12 +16,20 @@ The included Gulp task,
 4. converts SCSS into CSS
 
 ```
-// 1. Install Node dependencies
+// 1. Install Node dependencies from the child plugin folder
 npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
 
-// 2. Run the default Gulp task set
-// 3. Watch for changes
+// 2. Run the default Gulp task set from the child plugin folder
+// 3. Watch for changes to the child plugin folder
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+```
+
+## Maintenance of DTRT Plugin
+
+```
+// Run maintenance tasks from the DTRT Plugin folder
+npm install
+gulp maintenance
 ```
 
 ## Background

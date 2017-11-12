@@ -92,7 +92,18 @@ gulp.task('phplint', function () {
 });
 
 gulp.task('phpdoc', shell.task([
-  'vendor/bin/phpdoc -d . -t docs/phpdoc -i vendor/,node_modules/'
+  /**
+   * Generate PHP Documentation
+   *
+   * @example
+   *  -d = the directory, or directories, of your project that you want to document.
+   *  -f = a specific file, or files, in your project that you want to document.
+   *  -t = the location where your documentation will be written (also called ‘target folder’).
+   *  --ignore
+   * @see https://docs.phpdoc.org/guides/running-phpdocumentor.html#quickstart
+   * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/12
+   */
+  'vendor/bin/phpdoc -d . -t ./docs/phpdoc --ignore ./vendor/,./node_modules/'
 ]));
 
 gulp.task('watch', function () {
@@ -101,11 +112,22 @@ gulp.task('watch', function () {
   gulp.watch( scssDir, ['scss'] );
 });
 
+// run from child plugin folders
+// gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 gulp.task( 'default', [
     'composer',
     'phplint',
-    'phpdoc',
     'scss',
     'watch'
+  ]
+);
+
+// run from the parent plugin folder
+// gulp maintenance
+gulp.task ('maintenance', [
+    'composer',
+    'phplint',
+    'scss',
+    // 'phpdoc' // also fails here as DTRT Plugin also loads TGMPA
   ]
 );
