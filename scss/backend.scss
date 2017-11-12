@@ -1,11 +1,12 @@
 /**
  * Styles for the admin back-end
  *
- * This file contains CSS.
- *
  * @package     WPPlugin
  * @since       1.0.0
  */
+
+@import "variables";
+@import "extends";
 
 .wpdtrt-plugin-screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);
@@ -16,10 +17,27 @@
   word-wrap: normal !important;
 }
 
-/* restyle WP .spinner */
+// restyle WP .spinner
 .wpdtrt-plugin-ajax-response .spinner {
   float: none;
   width: auto;
   padding-left: 27px;
   margin-left: 0;
+}
+
+.wpdtrt-plugin-version {
+  // copied from dashboard-widgets-suite plugin
+  color: #c7c7c7;
+  font-size: 90%;
+}
+
+.wpdtrt-plugin-date {
+  font-size: .95em;
+}
+
+.widget {
+  .wpdtrt-plugin-tip {
+    display: block;
+    padding-top: 4px;
+  }
 }

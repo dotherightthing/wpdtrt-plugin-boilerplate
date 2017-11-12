@@ -1406,7 +1406,7 @@ if ( !class_exists( 'Plugin' ) ) {
       );
 
       wp_enqueue_style( $this->get_prefix() . '_backend_2',
-        $this->get_url() . 'css/' . $this->get_slug() . '-admin.css',
+        $this->get_url() . 'css/backend.css',
         array(),
         $this->get_version(),
         $media
@@ -1423,7 +1423,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $media = 'all';
 
       wp_enqueue_style( $this->get_prefix(),
-        $this->get_url()  . 'css/' . $this->get_slug() . '.css',
+        $this->get_url()  . 'css/frontend.css',
         array(
           // load these registered dependencies first:
           //'a_dependency'
