@@ -85,7 +85,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_demo_shortcode_params( $demo_shortcode_params );
 
       // Delete old options during testing
-      //$this->delete_options();
+      //$this->unset_options();
 
       // store option arrays
       $this->set_plugin_options( $plugin_options );
@@ -95,10 +95,10 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_plugin_dependencies( $plugin_dependencies );
 
       // hook in to WordPress
-      $this->setup();
+      $this->wp_setup();
     }
 
-    //// START GETTERS AND SETTERS \\\\
+    //// START WORDPRESS INTEGRATION \\\\
 
     /**
      * Initialise plugin options ONCE.
@@ -110,7 +110,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see https://wordpress.stackexchange.com/a/209772
      * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/24
      */
-    protected function setup() {
+    protected function wp_setup() {
 
       $this->set_plugin_dependency(
         array(
@@ -134,7 +134,7 @@ if ( !class_exists( 'Plugin' ) ) {
       add_action( 'wp_enqueue_scripts',       [$this, 'render_css_frontend'] );
       add_action( 'wp_enqueue_scripts',       [$this, 'render_js_frontend'] );
       add_action( 'admin_enqueue_scripts',    [$this, 'render_js_backend'] );
-      add_action( 'tgmpa_register',           [$this, 'register_required_plugins'] );
+      add_action( 'tgmpa_register',           [$this, 'wp_register_plugin_dependencies'] );
     
       // call the server side PHP function through admin-ajax.php.
       add_action( 'wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
@@ -156,7 +156,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see         http://tgmpluginactivation.com/configuration/
      * @see         http://tgmpluginactivation.com/download/ for more options
      */
-    public function register_required_plugins() {
+    public function wp_register_plugin_dependencies() {
 
       /**
        * Include the TGM_Plugin_Activation class.
@@ -191,17 +191,11 @@ if ( !class_exists( 'Plugin' ) ) {
       tgmpa( $plugins, $config );
     }
 
-    /**
-     * Get the value of $url
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @return      string
-     */
-    public function get_url() {
-      return $this->url;
-    }
+    //// END WORDPRESS INTEGRATION \\\\
+
+    //// START GETTERS AND SETTERS (SET, GET, REFRESH, UNSET) \\\\
+
+    // URL
 
     /**
      * Set the value of $url
@@ -216,16 +210,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $demo_shortcode_params
+     * Get the value of $url
      *
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @return      array
+     * @return      string
      */
-    public function get_demo_shortcode_params() {
-      return $this->demo_shortcode_params;
+    public function get_url() {
+      return $this->url;
     }
+
+    // SHORTCODE PARAMS
 
     /**
      * Set the value of $demo_shortcode_params
@@ -240,16 +236,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $prefix
+     * Get the value of $demo_shortcode_params
      *
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @return      string
+     * @return      array
      */
-    public function get_prefix() {
-      return $this->prefix;
+    public function get_demo_shortcode_params() {
+      return $this->demo_shortcode_params;
     }
+
+    // PREFIX
 
     /**
      * Set the value of $prefix
@@ -264,16 +262,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $slug
+     * Get the value of $prefix
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @return      string
      */
-    public function get_slug() {
-      return $this->slug;
+    public function get_prefix() {
+      return $this->prefix;
     }
+
+    // SLUG
 
     /**
      * Set the value of $slug
@@ -288,16 +288,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $menu_title
+     * Get the value of $slug
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @return      string
      */
-    public function get_menu_title() {
-      return $this->menu_title;
+    public function get_slug() {
+      return $this->slug;
     }
+
+    // MENU TITLE
 
     /**
      * Set the value of $menu_title
@@ -312,16 +314,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $developer_prefix
+     * Get the value of $menu_title
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @return      string
      */
-    public function get_developer_prefix() {
-      return $this->developer_prefix;
+    public function get_menu_title() {
+      return $this->menu_title;
     }
+
+    // DEVELOPER PREFIX
 
     /**
      * Set the value of $developer_prefix
@@ -336,16 +340,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $messages
+     * Get the value of $developer_prefix
      *
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @return       array
+     * @return      string
      */
-    public function get_messages() {
-      return $this->messages;
+    public function get_developer_prefix() {
+      return $this->developer_prefix;
     }
+
+    // MESSAGES i18n
 
     /**
      * Set the value of $messages
@@ -358,6 +364,20 @@ if ( !class_exists( 'Plugin' ) ) {
     protected function set_messages( $new_messages ) {
       $this->messages = $new_messages;
     }
+
+    /**
+     * Get the value of $messages
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_messages() {
+      return $this->messages;
+    }
+
+    // SUCCESS MESSAGE
 
     /**
      * Get the value of the $success_message
@@ -373,17 +393,7 @@ if ( !class_exists( 'Plugin' ) ) {
       return $success_message;
     }
 
-    /**
-     * Get the value of $path
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @return       string
-     */
-    public function get_path() {
-      return $this->path;
-    }
+    // PATH
 
     /**
      * Set the value of $path
@@ -398,39 +408,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get plugin options, user values merged with the defaults
+     * Get the value of $path
      *
-     * @since 1.0.0
+     * @since       1.0.0
+     * @version     1.0.0
      *
-     * @return array
+     * @return       string
      */
-    public function get_options() {
-
-      /**
-       * Load any plugin user settings, falling back to an empty $options_array if they don't exist yet
-       * @see https://developer.wordpress.org/reference/functions/get_option/#parameters
-       */
-      $fallback_options_array = array(
-        'plugin_options' => array(),
-        'plugin_data' => array(),
-        'plugin_data_options' => array(),
-        'instance_options' => array(),
-        'plugin_dependencies' => array()
-      );
-
-      $options = get_option( $this->get_prefix(), $fallback_options_array );
-
-      return $options;
+    public function get_path() {
+      return $this->path;
     }
 
-    /**
-     * Remove plugin options
-     *
-     * @since 1.0.0
-     */
-    protected function delete_options() {
-      delete_option( $this->get_prefix() );
-    }
+    // OPTIONS
 
     /**
      * Set plugin options
@@ -467,30 +456,41 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $plugin_options
+     * Get plugin options, user values merged with the defaults
      *
-     * @since       1.0.0
-     * @version     1.0.0
+     * @since 1.0.0
      *
-     * @return       array
+     * @return array
      */
-    public function get_plugin_options() {
-      $options = $this->get_options();
-      $plugin_options = $options['plugin_options'];
-      return $plugin_options;
+    public function get_options() {
+
+      /**
+       * Load any plugin user settings, falling back to an empty $options_array if they don't exist yet
+       * @see https://developer.wordpress.org/reference/functions/get_option/#parameters
+       */
+      $fallback_options_array = array(
+        'plugin_options' => array(),
+        'plugin_data' => array(),
+        'plugin_data_options' => array(),
+        'instance_options' => array(),
+        'plugin_dependencies' => array()
+      );
+
+      $options = get_option( $this->get_prefix(), $fallback_options_array );
+
+      return $options;
     }
 
     /**
-     * Callback function for array_filter which only removes NULL keys
+     * Remove plugin options
      *
-     * @param array $arr The array to filter
-     * @return array The filtered array
-     *
-     * @see http://php.net/manual/en/function.array-filter.php#115777
+     * @since 1.0.0
      */
-    protected function array_filter_not_null( $arr ) {
-      return !is_null( $arr );
+    protected function unset_options() {
+      delete_option( $this->get_prefix() );
     }
+
+    // PLUGIN OPTIONS
 
     /**
      * Set the value of $plugin_options
@@ -513,11 +513,11 @@ if ( !class_exists( 'Plugin' ) ) {
       $old_plugin_options = $this->get_plugin_options();
 
       foreach ( $old_plugin_options as $k => $v ) {
-        $old_plugin_options[$k] = array_filter( $old_plugin_options[$k], [$this, 'array_filter_not_null'] );
+        $old_plugin_options[$k] = array_filter( $old_plugin_options[$k], [$this, 'helper_array_filter_not_null'] );
       }
 
       foreach ( $new_plugin_options as $k => $v ) {
-        $new_plugin_options[$k] = array_filter( $new_plugin_options[$k], [$this, 'array_filter_not_null'] );
+        $new_plugin_options[$k] = array_filter( $new_plugin_options[$k], [$this, 'helper_array_filter_not_null'] );
       } 
 
       /**
@@ -531,71 +531,20 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the default value from an input type
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @param       string $input_type
-     * @return      mixed $default_value
-     */
-    public function get_default_value( $input_type ) {
-
-      if ( $input_type === 'select' ) {
-        $default_value = null;
-      }
-      else if ( $input_type === 'checkbox' ) {
-        $default_value = '';
-      }
-      else if ( $input_type === 'radio' ) {
-        $default_value = '';
-      }
-      else if ( $input_type === 'password' ) {
-        $default_value = '';
-      }
-      else if ( $input_type === 'text' ) {
-        $default_value = '';
-      }
-      else {
-        $default_value = null;
-      }
-
-      return $default_value;
-    }
-
-    /**
-     * Get a list of plugin dependencies to load via TGMA
+     * Get the value of $plugin_options
      *
      * @since       1.0.0
      * @version     1.0.0
      *
      * @return       array
      */
-    public function get_plugin_dependencies() {
+    public function get_plugin_options() {
       $options = $this->get_options();
-      $plugin_dependencies = $options['plugin_dependencies'];
-      return $plugin_dependencies;
+      $plugin_options = $options['plugin_options'];
+      return $plugin_options;
     }
 
-    /**
-     * Store all plugin dependencies for loading via TGMA
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @param       array
-     */
-    protected function set_plugin_dependencies( $new_plugin_dependencies ) {
-      $old_plugin_dependencies = $this->get_plugin_dependencies();
-
-      /**
-       * Merge old options with new options
-       * This overwrites the old values with any new values
-       */
-      $options = $this->get_options();
-      $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, $new_plugin_dependencies );
-      $this->set_options($options);
-    }
+    // PLUGIN DEPENDENCIES
 
     /**
      * Store a plugin dependency for loading via TGMA
@@ -621,6 +570,56 @@ if ( !class_exists( 'Plugin' ) ) {
        */
       $options = $this->get_options();
       $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, array( $new_plugin_dependency ) );
+      $this->set_options($options);
+    }
+
+    /**
+     * Store all plugin dependencies for loading via TGMA
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    protected function set_plugin_dependencies( $new_plugin_dependencies ) {
+      $old_plugin_dependencies = $this->get_plugin_dependencies();
+
+      /**
+       * Merge old options with new options
+       * This overwrites the old values with any new values
+       */
+      $options = $this->get_options();
+      $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, $new_plugin_dependencies );
+      $this->set_options($options);
+    }
+
+    /**
+     * Get a list of plugin dependencies to load via TGMA
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return       array
+     */
+    public function get_plugin_dependencies() {
+      $options = $this->get_options();
+      $plugin_dependencies = $options['plugin_dependencies'];
+      return $plugin_dependencies;
+    }
+
+    // PLUGIN DATA
+
+    /**
+     * Set the value of $plugin_data
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    public function set_plugin_data( $new_plugin_data ) {
+      $options = $this->get_options();
+      $options['plugin_data'] = $new_plugin_data;
       $this->set_options($options);
     }
 
@@ -651,33 +650,7 @@ if ( !class_exists( 'Plugin' ) ) {
       return count( $plugin_data );
     }
 
-    /**
-     * Set the value of $plugin_data
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @param       array
-     */
-    public function set_plugin_data( $new_plugin_data ) {
-      $options = $this->get_options();
-      $options['plugin_data'] = $new_plugin_data;
-      $this->set_options($options);
-    }
-
-    /**
-     * Get the value of $plugin_data_options
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @return       array
-     */
-    public function get_plugin_data_options() {
-      $options = $this->get_options();
-      $plugin_data_options = $options['plugin_data_options'];
-      return $plugin_data_options;
-    }
+    // PLUGIN DATA OPTIONS
 
     /**
      * Set the value of $plugin_data_options
@@ -699,19 +672,22 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_options($options);
     }
 
+
     /**
-     * Get the value of $instance_options
+     * Get the value of $plugin_data_options
      *
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @return      array
+     * @return       array
      */
-    public function get_instance_options() {
+    public function get_plugin_data_options() {
       $options = $this->get_options();
-      $instance_options = $options['instance_options'];
-      return $instance_options;
+      $plugin_data_options = $options['plugin_data_options'];
+      return $plugin_data_options;
     }
+
+    // INSTANCE OPTIONS
 
     /**
      * Set the value of $instance_options
@@ -734,16 +710,20 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $version
+     * Get the value of $instance_options
      *
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @return      string
+     * @return      array
      */
-    public function get_version() {
-      return $this->version;
+    public function get_instance_options() {
+      $options = $this->get_options();
+      $instance_options = $options['instance_options'];
+      return $instance_options;
     }
+
+    // VERSION
 
     /**
      * Set the value of $version
@@ -756,6 +736,20 @@ if ( !class_exists( 'Plugin' ) ) {
     protected function set_version( $new_version ) {
       $this->version = $new_version;
     }
+
+    /**
+     * Get the value of $version
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return      string
+     */
+    public function get_version() {
+      return $this->version;
+    }
+
+    // API DATA
 
     /**
      * Get API data
@@ -792,7 +786,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $format = sanitize_text_field( $_POST['format'] ); // ?
 
       if ( $format === 'ui' ) {
-        $shortcode = $this->build_demo_shortcode();
+        $shortcode = $this->helper_build_demo_shortcode();
       }
 
       $plugin_data_options = $this->get_plugin_data_options();
@@ -825,7 +819,7 @@ if ( !class_exists( 'Plugin' ) ) {
       
       // update the UI
       if ( $format === 'ui' ) {
-        $shortcode = $this->build_demo_shortcode();
+        $shortcode = $this->helper_build_demo_shortcode();
         echo $this->render_demo_shortcode( $shortcode );
       }
       else if ( $format === 'data' ) {
@@ -842,37 +836,11 @@ if ( !class_exists( 'Plugin' ) ) {
       wp_die();
     }
 
-    /**
-     * Determine whether the options page form has been submitted or not
-     *
-     * @return      boolean
-     *
-     * @since       1.0.0
-     * @version     1.0.0
-     *
-     * @todo        Incorporate validation checks to ensure that all expected inputs are present (#10)
-     */
-    public function options_saved() {
-      $options_saved = false;
-
-      if ( isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
-
-        // check that the form submission was legitimate
-        $hidden_field = esc_html( $_POST[$this->get_prefix() . '_form_submitted'] );
-
-        if ( $hidden_field === 'Y' ) {
-          $options_saved = true;
-        }
-      }
-
-      return $options_saved;
-    }
-
     //// END GETTERS AND SETTERS \\\\
 
-    //// START TRANSFORMATIONS \\\\
+    //// START HELPERS \\\\
 
-    /**
+   /**
      * Get a usable value for every form element type
      * @param       string $field_value
      * @param       string $field_type
@@ -883,7 +851,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      * @todo        Add field validation feedback (#10)
      */
-    public function normalise_field_value( $field_value, $field_type ) {
+    public function helper_normalise_field_value( $field_value, $field_type ) {
       $normalised_field_value = null;
 
       // If something was entered into the field
@@ -911,9 +879,76 @@ if ( !class_exists( 'Plugin' ) ) {
       return $normalised_field_value;
     }
 
-    //// END TRANSFORMATIONS \\\\
+    /**
+     * Callback function for array_filter which only removes NULL keys
+     *
+     * @param array $arr The array to filter
+     * @return array The filtered array
+     *
+     * @see http://php.net/manual/en/function.array-filter.php#115777
+     */
+    protected function helper_array_filter_not_null( $arr ) {
+      return !is_null( $arr );
+    }
 
-    //// START RENDERERS \\\\
+    /**
+     * Get the default value from an input type
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       string $input_type
+     * @return      mixed $default_value
+     */
+    public function helper_get_default_value( $input_type ) {
+
+      if ( $input_type === 'select' ) {
+        $default_value = null;
+      }
+      else if ( $input_type === 'checkbox' ) {
+        $default_value = '';
+      }
+      else if ( $input_type === 'radio' ) {
+        $default_value = '';
+      }
+      else if ( $input_type === 'password' ) {
+        $default_value = '';
+      }
+      else if ( $input_type === 'text' ) {
+        $default_value = '';
+      }
+      else {
+        $default_value = null;
+      }
+
+      return $default_value;
+    }
+
+    /**
+     * Determine whether the options page form has been submitted or not
+     *
+     * @return      boolean
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @todo        Incorporate validation checks to ensure that all expected inputs are present (#10)
+     */
+    public function helper_options_saved() {
+      $helper_options_saved = false;
+
+      if ( isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
+
+        // check that the form submission was legitimate
+        $hidden_field = esc_html( $_POST[$this->get_prefix() . '_form_submitted'] );
+
+        if ( $hidden_field === 'Y' ) {
+          $helper_options_saved = true;
+        }
+      }
+
+      return $helper_options_saved;
+    }
 
     /**
      * Build demo shortcode
@@ -922,7 +957,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @return string Shortcode
      */
-    protected function build_demo_shortcode() {
+    protected function helper_build_demo_shortcode() {
       $params = $this->get_demo_shortcode_params();
       $options_page_demo_shortcode = '[';
 
@@ -943,6 +978,10 @@ if ( !class_exists( 'Plugin' ) ) {
        */
       return $options_page_demo_shortcode;
     }
+
+    //// END HELPERS \\\\
+
+    //// START RENDERERS \\\\
 
     /**
      * Render demo shortcode
@@ -1160,7 +1199,6 @@ if ( !class_exists( 'Plugin' ) ) {
         $this->get_slug(), // menu_slug
         [$this, 'render_options_page'] // function callback
       );
-
     }
 
     /**
@@ -1196,7 +1234,7 @@ if ( !class_exists( 'Plugin' ) ) {
        * If the form was submitted, update the options,
        * regardless of whether they have changed or not.
        */
-      if ( $this->options_saved() === true ) {
+      if ( $this->helper_options_saved() === true ) {
 
         /**
          * Save default/user values from form submission
@@ -1250,7 +1288,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      * @todo        Add field validation feedback (#10)
      */
-    public function render_form_element( $name, $attributes=array() ) {
+    public function render_form_element( $name, $attributes = array() ) {
       // define variables
       $type = null;
       $label = null;
@@ -1267,7 +1305,7 @@ if ( !class_exists( 'Plugin' ) ) {
       }
 
       if ( !isset( $value ) ) {
-        $value = $this->get_default_value( $type );
+        $value = $this->helper_get_default_value( $type );
       }
 
       // name as a string
@@ -1392,7 +1430,6 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     //// END RENDERERS \\\\
-
   }
 }
 
