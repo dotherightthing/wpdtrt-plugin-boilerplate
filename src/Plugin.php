@@ -1071,9 +1071,10 @@ if ( !class_exists( 'Plugin' ) ) {
       $wp_date_format = get_option('date_format');
       $wp_time_format = get_option('time_format');
 
-      $last_updated_str .= get_gmt_from_date(
-        date( $wp_time_format, $last_updated ),
-        ( $wp_time_format . ', ' . $wp_date_format )
+      // get the Local Time from a GMT/UTC timestamp
+      $last_updated_str .= get_date_from_gmt(
+        date( 'Y-m-d H:i:s', $last_updated ),
+        ( $wp_time_format . ', ' . $wp_date_format ) // http://php.net/manual/en/datetime.format.php
       );
 
       return $last_updated_str;
