@@ -59,16 +59,11 @@ if ( !class_exists( 'Plugin' ) ) {
       // option arrays
       // note that these should exclude 'value' keys,
       // to avoid overwriting existing user settings
-
-      // TODO: these need to be merged into any already saved
-      // as __construct is called repeatedly
-      $plugin_options = array();
-      $plugin_data = array();
-      $plugin_data_options = array(
-        'force_refresh' => false
-      );
-      $instance_options = array();
-      $plugin_dependencies = array();
+      $plugin_options = null;
+      $plugin_data = null;
+      $plugin_data_options = null;
+      $instance_options = null;
+      $plugin_dependencies = null;
 
       // overwrite options with values from the settings array
       extract( $settings, EXTR_IF_EXISTS );
@@ -90,9 +85,12 @@ if ( !class_exists( 'Plugin' ) ) {
       // store option arrays
       $this->set_plugin_options( $plugin_options );
       $this->set_plugin_data( $plugin_data );
-      $this->set_plugin_data_options( $plugin_data_options );
+      $this->set_plugin_data_options( isset($plugin_data_options) ? $plugin_data_options : array() );
       $this->set_instance_options( $instance_options );
-      $this->set_plugin_dependencies( $plugin_dependencies );
+      $this->set_plugin_dependencies( isset($plugin_dependencies) ? $plugin_dependencies : array() );
+
+      // defaults
+      $plugin_data_options['force_refresh'] = false;
 
       // hook in to WordPress
       $this->wp_setup();
