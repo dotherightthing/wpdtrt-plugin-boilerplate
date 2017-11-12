@@ -9,6 +9,8 @@
  * @since       1.0.0
  */
 
+/* global require */
+
 // dependencies
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
@@ -29,7 +31,7 @@ var phpDir = [
 
 // tasks
 
-gulp.task("composer", function () {
+gulp.task('composer', function () {
   composer();
 });
 
