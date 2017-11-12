@@ -19,15 +19,12 @@ var pxtorem = require('postcss-pxtorem');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 
-// parent theme source directories
-var scssSrc = './scss/*.scss';
-
-// target directories
+var scssDir = './scss/*.scss';
 var cssDir = './css/';
 var phpDir = [
-  '*.php',
-  'app/**/*.php',
-  'template-parts/**/*.php'
+  './**/*.php',
+  '!vendor/**/*',
+  '!node_modules/**/*'
 ];
 
 // tasks
@@ -36,7 +33,7 @@ gulp.task("composer", function () {
   composer();
 });
 
-gulp.task('css', function () {
+gulp.task('scss', function () {
 
   var processors = [
       autoprefixer({
@@ -70,7 +67,7 @@ gulp.task('css', function () {
   ];
 
   return gulp
-    .src(scssSrc)
+    .src(scssDir)
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(postcss(processors))
     .pipe(gulp.dest(cssDir));
@@ -96,10 +93,17 @@ gulp.task('phpdoc', shell.task([
   'vendor/bin/phpdoc -d . -t docs/phpdoc -i vendor/,node_modules/'
 ]));
 
+gulp.task('watch', function () {
+  gulp.watch( './composer.json', ['composer'] );
+  gulp.watch( phpDir, ['phplint'] );
+  gulp.watch( scssDir, ['scss'] );
+});
+
 gulp.task( 'default', [
     'composer',
     'phplint',
     'phpdoc',
-    'css'
+    'scss',
+    'watch'
   ]
 );

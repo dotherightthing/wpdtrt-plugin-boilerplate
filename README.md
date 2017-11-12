@@ -21,7 +21,7 @@ The included Gulp task,
 // Install Node dependencies
 npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
 
-// Run the default Gulp task set
+// Run the default Gulp task set, then watch for changes
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 
