@@ -940,7 +940,7 @@ if ( !class_exists( 'Plugin' ) ) {
     public function helper_options_saved() {
       $helper_options_saved = false;
 
-      if ( isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ) {
+      if ( isset( $_POST['wpdtrt_plugin_form_submitted'] ) ) {
 
         // check that the form submission was legitimate
         $hidden_field = esc_html( $_POST[$this->get_prefix() . '_form_submitted'] );
@@ -1375,7 +1375,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       if ($screen->id === 'settings_page_' . $this->get_slug() ):
 
-        if ( isset( $_POST[$this->get_prefix() . '_form_submitted'] ) ):
+        if ( isset( $_POST['wpdtrt_plugin_form_submitted'] ) ):
     ?>
           <div class="notice notice-success is-dismissible">
             <p><?php echo

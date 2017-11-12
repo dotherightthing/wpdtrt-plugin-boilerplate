@@ -2,14 +2,12 @@
 /**
  * Template partial for Admin Options page.
  *
- * WP Admin > Settings > DTRT Blocks
+ * WP Admin > Settings > PluginName
  *
- * @uses        WordPress_Admin_Style
- *
- * @package     wpdtrt_blocks
- * @subpackage  wpdtrt_blocks/templates
+ * @package     WPPlugin
+ * @version     1.0.0
  * @since     1.0.0
- * @version   1.0.0
+ * @uses        WordPress_Admin_Style
  */
 
   $plugin_options = $this->get_plugin_options();
@@ -46,7 +44,7 @@
   <div id="icon-options-general" class="icon32"></div>
   <h1>
     <?php echo $plugin_title; ?>
-    <span class="wpdtrt-blocks-version"><?php echo $plugin_version; ?></span>
+    <span class="wpdtrt-plugin-version"><?php echo $plugin_version; ?></span>
   </h1>
   <noscript>
     <div class="notice notice-warning">
@@ -57,7 +55,7 @@
   <form name="data_form" method="post" action="">
 
     <?php //hidden field is used by options_saved() ?>
-    <input type="hidden" name="wpdtrt_blocks_form_submitted" value="Y" />
+    <input type="hidden" name="wpdtrt_plugin_form_submitted" value="Y" />
 
     <h2 class="title"><?php echo $options_form_title; ?></h2>
     <p><?php echo $options_form_description; ?></p>
@@ -81,7 +79,6 @@
       submit_button(
         $text = $options_form_submit,
         $type = 'primary',
-        $name = 'wpdtrt_blocks_submit', // TODO: can this be generic?
         $wrap = true, // wrap in paragraph
         $other_attributes = null
       );
@@ -115,9 +112,9 @@
 
   <p><?php echo $demo_data_description; ?>.</p>
 
-  <div class="wpdtrt-plugin-ajax-response wpdtrt-blocks-data" data-format="data"></div>
+  <div class="wpdtrt-plugin-ajax-response" data-format="data"></div>
 
-  <p class="wpdtrt-blocks-date">
+  <p class="wpdtrt-plugin-date">
     <em><?php echo $demo_date_last_updated . ': ' . $demo_date_last_updated_date; ?></em>
   </p>
 
