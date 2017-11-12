@@ -775,7 +775,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * See also $this->__construct()
      * See also $this->render_js_backend()
-     * See also js/wpdtrt-foo-backend.js
+     * See also js/backend.js
      *
      * @param       string $format The data format ('ui'|'data')
      *
@@ -1122,7 +1122,7 @@ if ( !class_exists( 'Plugin' ) ) {
       */
 
       wp_enqueue_script( $this->get_prefix(),
-        $this->get_url()  . 'js/' . $this->get_slug() . '.js',
+        $this->get_url()  . 'js/frontend.js',
         array(
           // load these registered dependencies first:
           'jquery'
