@@ -56,12 +56,18 @@ if ( !class_exists( 'Plugin' ) ) {
       $version = null;
       $demo_shortcode_params = null;
 
-      // options
-      $plugin_options = null;
+      // option arrays
+      // note that these should exclude 'value' keys,
+      // to avoid overwriting existing user settings
+
+      // TODO: these need to be merged into any already saved
+      // as __construct is called repeatedly
+      $plugin_options = array();
       $plugin_data = array();
-      $plugin_data_options = null;
-      $plugin_data_options['force_refresh'] = false;
-      $instance_options = null;
+      $plugin_data_options = array(
+        'force_refresh' => false
+      );
+      $instance_options = array();
       $plugin_dependencies = array();
 
       // overwrite options with values from the settings array
@@ -81,16 +87,15 @@ if ( !class_exists( 'Plugin' ) ) {
       // Delete old options during testing
       //$this->delete_options();
 
-      $options = array(
-        'plugin_options' => $plugin_options,
-        'plugin_data' => $plugin_data,
-        'plugin_data_options' => $plugin_data_options,
-        'instance_options' => $instance_options,
-        'plugin_dependencies' => $plugin_dependencies
-      );
+      // store option arrays
+      $this->set_plugin_options( $plugin_options );
+      $this->set_plugin_data( $plugin_data );
+      $this->set_plugin_data_options( $plugin_data_options );
+      $this->set_instance_options( $instance_options );
+      $this->set_plugin_dependencies( $plugin_dependencies );
 
-      $this->setup($options);
       // hook in to WordPress
+      $this->setup();
     }
 
     //// START PROPERTIES \\\\
@@ -111,13 +116,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see https://wordpress.stackexchange.com/a/209772
      * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/24
      */
-    protected function setup( $default_options ) {
-      $existing_options = $this->get_options();
-
-      // if the user hasn't set some options in a previous session
-      if ( empty( $existing_options ) ) {
-        $this->set_options($default_options);
-      }
+    protected function setup() {
 
       $this->set_plugin_dependency(
         array(
@@ -388,11 +387,21 @@ if ( !class_exists( 'Plugin' ) ) {
      * @return array
      */
     public function get_options() {
+
       /**
-       * Load any plugin user settings, falling back to an empty array if they don't exist yet
+       * Load any plugin user settings, falling back to an empty $options_array if they don't exist yet
        * @see https://developer.wordpress.org/reference/functions/get_option/#parameters
        */
-      $options = get_option( $this->get_prefix(), array() );
+      $fallback_options_array = array(
+        'plugin_options' => array(),
+        'plugin_data' => array(),
+        'plugin_data_options' => array(),
+        'instance_options' => array(),
+        'plugin_dependencies' => array()
+      );
+
+      $options = get_option( $this->get_prefix(), $fallback_options_array );
+
       return $options;
     }
 
@@ -454,6 +463,18 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
+     * Callback function for array_filter which only removes NULL keys
+     *
+     * @param array $arr The array to filter
+     * @return array The filtered array
+     *
+     * @see http://php.net/manual/en/function.array-filter.php#115777
+     */
+    protected function array_filter_not_null( $arr ) {
+      return !is_null( $arr );
+    }
+
+    /**
      * Set the value of $plugin_options
      *
      * @since       1.0.0
@@ -462,15 +483,66 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_options( $new_plugin_options ) {
-      $options = $this->get_options();
+      /**
+       * Remove null keys
+       *
+       * Filtering out null values from the constructor protects existing user data
+       * and allows plugin authors to add options as the plugin evolves
+       *
+       * @see https://stackoverflow.com/a/16891515/6850747
+       * @todo Removing an option from the config object does not remove it from the UI (#25)
+       */
       $old_plugin_options = $this->get_plugin_options();
+
+      foreach ( $old_plugin_options as $k => $v ) {
+        $old_plugin_options[$k] = array_filter( $old_plugin_options[$k], [$this, 'array_filter_not_null'] );
+      }
+
+      foreach ( $new_plugin_options as $k => $v ) {
+        $new_plugin_options[$k] = array_filter( $new_plugin_options[$k], [$this, 'array_filter_not_null'] );
+      } 
 
       /**
        * Merge old options with new options
        * This overwrites the old values with any new values
        */
-      $options['plugin_options'] = array_merge( $old_plugin_options, $new_plugin_options );
+      $options = $this->get_options();
+      $options['plugin_options'] = array_replace_recursive( $old_plugin_options, $new_plugin_options );
+
       $this->set_options($options);
+    }
+
+    /**
+     * Get the default value from an input type
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       string $input_type
+     * @return      mixed $default_value
+     */
+    public function get_default_value( $input_type ) {
+
+      if ( $input_type === 'select' ) {
+        $default_value = null;
+      }
+      else if ( $input_type === 'checkbox' ) {
+        $default_value = '';
+      }
+      else if ( $input_type === 'radio' ) {
+        $default_value = '';
+      }
+      else if ( $input_type === 'password' ) {
+        $default_value = '';
+      }
+      else if ( $input_type === 'text' ) {
+        $default_value = '';
+      }
+      else {
+        $default_value = null;
+      }
+
+      return $default_value;
     }
 
     /**
@@ -488,6 +560,26 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
+     * Store all plugin dependencies for loading via TGMA
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    protected function set_plugin_dependencies( $new_plugin_dependencies ) {
+      $old_plugin_dependencies = $this->get_plugin_dependencies();
+
+      /**
+       * Merge old options with new options
+       * This overwrites the old values with any new values
+       */
+      $options = $this->get_options();
+      $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, $new_plugin_dependencies );
+      $this->set_options($options);
+    }
+
+    /**
      * Store a plugin dependency for loading via TGMA
      *
      * @since       1.0.0
@@ -496,7 +588,6 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_dependency( $new_plugin_dependency ) {
-      $options = $this->get_options();
       $old_plugin_dependencies = $this->get_plugin_dependencies();
 
       foreach( $old_plugin_dependencies as $key => $value ) {
@@ -510,6 +601,7 @@ if ( !class_exists( 'Plugin' ) ) {
        * Merge old options with new options
        * This overwrites the old values with any new values
        */
+      $options = $this->get_options();
       $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, array( $new_plugin_dependency ) );
       $this->set_options($options);
     }
@@ -578,13 +670,13 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_data_options( $new_plugin_data_options ) {
-      $options = $this->get_options();
       $old_plugin_data_options = $this->get_plugin_data_options();
 
       /**
        * Merge old options with new options
        * This overwrites the old values with any new values
        */
+      $options = $this->get_options();
       $options['plugin_data_options'] = array_merge( $old_plugin_data_options, $new_plugin_data_options );
       $this->set_options($options);
     }
@@ -601,6 +693,26 @@ if ( !class_exists( 'Plugin' ) ) {
       $options = $this->get_options();
       $instance_options = $options['instance_options'];
       return $instance_options;
+    }
+
+    /**
+     * Set the value of $instance_options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    public function set_instance_options( $new_instance_options ) {
+      $old_instance_options = $this->get_instance_options();
+
+      /**
+       * Merge old options with new options
+       * This overwrites the old values with any new values
+       */
+      $options = $this->get_options();
+      $options['instance_options'] = array_merge( $old_instance_options, $new_instance_options );
+      $this->set_options($options);
     }
 
     /**
@@ -1074,10 +1186,8 @@ if ( !class_exists( 'Plugin' ) ) {
          * @see https://stackoverflow.com/a/13461680/6850747
          */
         foreach( $plugin_options as $name => $attributes ) {
-
           $plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] );
         }
-
         // If we've updated our options
         // get the latest data from the API
 
@@ -1136,6 +1246,10 @@ if ( !class_exists( 'Plugin' ) ) {
 
       if ( !isset( $type, $label ) ) {
         return;
+      }
+
+      if ( !isset( $value ) ) {
+        $value = $this->get_default_value( $type );
       }
 
       // name as a string
