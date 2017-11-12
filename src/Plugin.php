@@ -82,7 +82,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_path( $path );
       $this->set_messages( $messages );
       $this->set_version( $version );
-      $this->demo_shortcode_params = $demo_shortcode_params;
+      $this->set_demo_shortcode_params( $demo_shortcode_params );
 
       // Delete old options during testing
       //$this->delete_options();
@@ -97,12 +97,6 @@ if ( !class_exists( 'Plugin' ) ) {
       // hook in to WordPress
       $this->setup();
     }
-
-    //// START PROPERTIES \\\\
-
-    protected $demo_shortcode_params = array();
-
-    //// END PROPERTIES \\\\
 
     //// START GETTERS AND SETTERS \\\\
 
@@ -219,6 +213,30 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     protected function set_url( $new_url ) {
       $this->url = $new_url;
+    }
+
+    /**
+     * Get the value of $demo_shortcode_params
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return      array
+     */
+    public function get_demo_shortcode_params() {
+      return $this->demo_shortcode_params;
+    }
+
+    /**
+     * Set the value of $demo_shortcode_params
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    protected function set_demo_shortcode_params( $new_demo_shortcode_params ) {
+      $this->demo_shortcode_params = $new_demo_shortcode_params;
     }
 
     /**
@@ -905,7 +923,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @return string Shortcode
      */
     protected function build_demo_shortcode() {
-      $params = $this->demo_shortcode_params;
+      $params = $this->get_demo_shortcode_params();
       $options_page_demo_shortcode = '[';
 
       foreach( $params as $key => $value ) {
@@ -957,7 +975,7 @@ if ( !class_exists( 'Plugin' ) ) {
     protected function render_demo_shortcode_data() {
       $plugin_data = $this->get_plugin_data();
       $data_str = '';
-      $demo_shortcode_params = $this->demo_shortcode_params;
+      $demo_shortcode_params = $this->get_demo_shortcode_params();
       $max_length = $demo_shortcode_params['number'];
 
       if ( empty( $plugin_data ) ) {
