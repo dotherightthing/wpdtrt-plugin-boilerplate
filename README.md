@@ -1,4 +1,4 @@
-# DTRT Plugin Boilerplate
+# DTRT WP Plugin
 
 [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/issues)
 
