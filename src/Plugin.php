@@ -616,6 +616,11 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_data( $new_plugin_data ) {
+
+      if ( ! isset( $new_plugin_data ) ) {
+        return;
+      }
+
       $options = $this->get_options();
       $options['plugin_data'] = $new_plugin_data;
       $this->set_options($options);
