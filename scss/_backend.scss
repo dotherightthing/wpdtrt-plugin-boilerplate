@@ -5,8 +5,9 @@
  * @since       1.0.0
  */
 
-@import "variables";
-@import "extends";
+// @imports are handled in the child plugin
+// @import "variables";
+// @import "extends";
 
 .wpdtrt-plugin-screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);

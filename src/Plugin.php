@@ -1398,16 +1398,12 @@ if ( !class_exists( 'Plugin' ) ) {
     public function render_css_backend() {
       $media = 'all';
 
-      wp_enqueue_style( $this->get_prefix() . '_backend_1',
-        $this->get_url()  . 'vendor/dotherightthing/wpdtrt-plugin/css/backend.css',
-        array(),
-        $this->get_version(),
-        $media
-      );
-
-      wp_enqueue_style( $this->get_prefix() . '_backend_2',
+      wp_enqueue_style( $this->get_prefix() . '_backend',
         $this->get_url() . 'css/backend.css',
-        array(),
+        array(
+          // load these registered dependencies first:
+          //'a_dependency'
+        ),
         $this->get_version(),
         $media
       );
