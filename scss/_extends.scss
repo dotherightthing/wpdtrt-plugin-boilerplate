@@ -5,15 +5,14 @@
  * @since       1.0.0
  */
 
-// twentysixteen/style.css
-.screen-reader-text {
-	clip: rect(1px, 1px, 1px, 1px);
-	height: 1px;
-	overflow: hidden;
-	position: absolute !important;
-	width: 1px;
-	// many screen reader and browser combinations announce broken words as they would appear visually
-	word-wrap: normal !important;
+// ex twentysixteen/style.css
+.wpdtrt-plugin-screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
 }
 
 .clear {
@@ -31,7 +30,6 @@
 }
 
 .text-sharpen {
-	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
