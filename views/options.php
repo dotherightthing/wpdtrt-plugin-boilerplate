@@ -26,7 +26,7 @@
   $demo_display = isset( $this->demo_shortcode_params ) && ( $form_submitted || ( $demo_date_last_updated_date !== '' ) );
   $demo_shortcode = $demo_display ? $this->helper_build_demo_shortcode() : '';
   $demo_data_maxlength = $demo_shortcode_params ? $demo_shortcode_params['number'] : 0;
-  $demo_noscript_warning = $messages['demo_noscript_warning']; 
+  $noscript_warning = $messages['noscript_warning']; 
 
   if ( $demo_display ) {
     $demo_sample_title = $messages['demo_sample_title'];
@@ -48,7 +48,7 @@
   </h1>
   <noscript>
     <div class="notice notice-warning">
-      <p><?php echo $demo_noscript_warning; ?></p>
+      <p><?php echo $noscript_warning; ?></p>
     </div>
   </noscript>
 
