@@ -4,29 +4,26 @@
 
 Base classes for a WordPress plugin and associated shortcodes and widgets.
 
-## Set up a child plugin
+## Set up a plugin
 
 Manually mirror the set up of the demo plugin, [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks).
 
-The included Gulp task,
-
-1. installs dependencies
-2. performs PHP linting
-3. generates PHP documentation
-4. converts SCSS into CSS
+A) Install the Gulp dependencies of the base class:
 
 ```
-// 1. Install PHP dependencies
-composer install
-
-// 2. Install PHP and front-end dependencies which don't have composer.json files
-bower install
-
-// 3. Install Node dependencies into the parent plugin's folder
 npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
+```
 
-// 4. Run the parent plugin's Gulp tasks against the contents of the child plugin's folder
-// 5. Watch for changes to the child plugin's folder
+B) Run the base class's Gulp tasks on the plugin files:
+
+1. Install PHP dependencies (Composer)
+2. Install PHP and front-end dependencies which don't have composer.json files (Bower)
+3. Lint PHP code
+4. Generate PHP documentation
+5. Convert SCSS into CSS
+6. Watch for changes to files
+
+```
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 
