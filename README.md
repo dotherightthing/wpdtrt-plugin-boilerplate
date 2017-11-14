@@ -99,4 +99,4 @@ This is an evolution of several other approaches:
 
 ---
 
-DTRT WP Plugin | README version 1.0.1
+DTRT WP Plugin | README version 1.0.2
