@@ -15,6 +15,7 @@
 // dependencies
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
+var bower = require('gulp-bower');
 var composer = require('gulp-composer');
 var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
@@ -31,6 +32,10 @@ var phpDir = [
 ];
 
 // tasks
+
+gulp.task('bower', function () {
+  return bower();
+});
 
 gulp.task('composer', function () {
   composer();
@@ -117,6 +122,7 @@ gulp.task('watch', function () {
 // gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 gulp.task( 'default', [
     'composer',
+    'bower',
     'phplint',
     'scss',
     'watch'
@@ -127,6 +133,7 @@ gulp.task( 'default', [
 // gulp maintenance
 gulp.task ('maintenance', [
     'composer',
+    'bower',
     'phplint',
     'scss',
     // 'phpdoc' // also fails here as DTRT Plugin also loads TGMPA
