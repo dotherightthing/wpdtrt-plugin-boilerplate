@@ -30,7 +30,7 @@ npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotheright
 
 D) Run the WP Plugin's Gulp tasks on the plugin files:
 
-1. Install PHP dependencies (Composer)
+1. Install (any new) PHP dependencies (Composer)
 2. Install PHP and front-end dependencies which don't have composer.json files (Bower)
 3. Lint PHP code
 4. Generate PHP documentation
