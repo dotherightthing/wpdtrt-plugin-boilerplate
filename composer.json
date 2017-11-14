@@ -2,6 +2,9 @@
     "name": "dotherightthing/wpdtrt-plugin",
     "description": "Base classes for a plugin, plugin shortcode, and plugin widget.",
     "type": "library",
+    "config": {
+        "vendor-dir": "vendor"
+    },
     "authors": [
         {
             "name": "Dan Smith",
