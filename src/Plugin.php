@@ -943,7 +943,7 @@ if ( !class_exists( 'Plugin' ) ) {
       if ( isset( $_POST['wpdtrt_plugin_form_submitted'] ) ) {
 
         // check that the form submission was legitimate
-        $hidden_field = esc_html( $_POST[$this->get_prefix() . '_form_submitted'] );
+        $hidden_field = esc_html( $_POST['wpdtrt_plugin_form_submitted'] );
 
         if ( $hidden_field === 'Y' ) {
           $helper_options_saved = true;
