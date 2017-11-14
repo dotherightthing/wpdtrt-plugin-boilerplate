@@ -22,8 +22,8 @@
   $options_form_description = $messages['options_form_description']; 
   $options_form_submit = $messages['options_form_submit'];
 
-  $demo_shortcode_params = $this->demo_shortcode_params;
-  $demo_display = isset( $this->demo_shortcode_params ) && ( $form_submitted || ( $demo_date_last_updated_date !== '' ) );
+  $demo_shortcode_params = $this->get_demo_shortcode_params();
+  $demo_display = isset( $demo_shortcode_params ) && ( $form_submitted || ( $demo_date_last_updated_date !== '' ) );
   $demo_shortcode = $demo_display ? $this->helper_build_demo_shortcode() : '';
   $demo_data_maxlength = $demo_shortcode_params ? $demo_shortcode_params['number'] : 0;
   $noscript_warning = $messages['noscript_warning']; 

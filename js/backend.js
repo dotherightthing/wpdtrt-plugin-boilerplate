@@ -17,40 +17,43 @@ jQuery(document).ready(function($) {
 	var config = wpdtrt_plugin_config;
 	var loading_message = config.messages.loading;
 	var ajaxurl = config.ajaxurl;
-	var $ajax_container_data = $('.wpdtrt-plugin-ajax-response[data-format="data"]');
-	var $ajax_container_ui = $('.wpdtrt-plugin-ajax-response[data-format="ui"]');
 
-	$ajax_container_data
-		.empty()
-		.append('<div class="spinner is-active">' + loading_message + '</div>');
+	if ( config.refresh_api_data === 'true' ) {
+		var $ajax_container_data = $('.wpdtrt-plugin-ajax-response[data-format="data"]');
+		var $ajax_container_ui = $('.wpdtrt-plugin-ajax-response[data-format="ui"]');
 
-	$ajax_container_ui
-		.empty()
-		.append('<div class="spinner is-active">' + loading_message + '</div>');
+		$ajax_container_data
+			.empty()
+			.append('<div class="spinner is-active">' + loading_message + '</div>');
 
-	var data = $.post( ajaxurl, {
-			'action': 'refresh_api_data',
-			'format': 'ui'
-		},
-		function(response) {
-			$ajax_container_ui
-				.empty()
-				.html( response );
-		}
-	);
-			
-	data.done( function() {
-		$.post(
-			ajaxurl,
-			{
+		$ajax_container_ui
+			.empty()
+			.append('<div class="spinner is-active">' + loading_message + '</div>');
+
+		var data = $.post( ajaxurl, {
 				'action': 'refresh_api_data',
-				'format': 'data'
+				'format': 'ui'
 			},
 			function(response) {
-				$ajax_container_data
+				$ajax_container_ui
 					.empty()
 					.html( response );
 			}
 		);
-	});
+				
+		data.done( function() {
+			$.post(
+				ajaxurl,
+				{
+					'action': 'refresh_api_data',
+					'format': 'data'
+				},
+				function(response) {
+					$ajax_container_data
+						.empty()
+						.html( response );
+				}
+			);
+		});
+	}
 });

@@ -783,14 +783,9 @@ if ( !class_exists( 'Plugin' ) ) {
      * @version     1.0.0
      *
      * @see         https://codex.wordpress.org/AJAX_in_Plugins
-     * @todo        $last_updated check prevents an option change from resulting in new data
      */
     public function refresh_api_data( $format ) { // ?
       $format = sanitize_text_field( $_POST['format'] ); // ?
-
-      if ( $format === 'ui' ) {
-        $shortcode = $this->helper_build_demo_shortcode();
-      }
 
       $plugin_data_options = $this->get_plugin_data_options();
       $existing_data = $this->get_plugin_data();
@@ -962,6 +957,13 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     protected function helper_build_demo_shortcode() {
       $params = $this->get_demo_shortcode_params();
+
+      if ( !isset( $params ) ) {
+        global $debug;
+        $debug->log('no demo shortcode params', true, 'helper_build_demo_shortcode');
+        return '';
+      }
+
       $options_page_demo_shortcode = '[';
 
       foreach( $params as $key => $value ) {
@@ -1013,6 +1015,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @link http://kb.dotherightthing.co.nz/php/print_r-vs-var_dump/
      * @see https://stackoverflow.com/a/139553/6850747
+     * @todo Error when dumping some data objects (#37)
      */
     protected function render_demo_shortcode_data() {
       $plugin_data = $this->get_plugin_data();
@@ -1176,12 +1179,15 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $plugin_data_options = $this->get_plugin_data_options();
 
+      $demo_shortcode_params = $this->get_demo_shortcode_params();
+
       wp_localize_script( $this->get_prefix() . '_backend',
         'wpdtrt_plugin_config',
         array(
           'ajaxurl' => admin_url( 'admin-ajax.php' ),
           'messages' => $this->get_messages(),
-          'force_refresh' => $plugin_data_options['force_refresh']
+          'force_refresh' => $plugin_data_options['force_refresh'],
+          'refresh_api_data' => isset( $demo_shortcode_params ) ? 'true' : 'false'
         )
       );
     }
