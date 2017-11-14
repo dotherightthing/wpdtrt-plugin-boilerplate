@@ -3,7 +3,8 @@
  * Plugin class.
  *
  * @package   WPPlugin
- * @version   1.0.0
+ * @since     1.0.0
+ * @version   1.0.1
  */
 
 namespace DoTheRightThing\WPPlugin;
@@ -779,8 +780,8 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @param       string $format The data format ('ui'|'data')
      *
-     * @since       0.1.0
-     * @version     1.0.0
+     * @since       1.0.0
+     * @version     1.0.1
      *
      * @see         https://codex.wordpress.org/AJAX_in_Plugins
      */
@@ -928,7 +929,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @return      boolean
      *
      * @since       1.0.0
-     * @version     1.0.0
+     * @version     1.0.1
      *
      * @todo        Incorporate validation checks to ensure that all expected inputs are present (#10)
      */
@@ -951,9 +952,11 @@ if ( !class_exists( 'Plugin' ) ) {
     /**
      * Build demo shortcode
      *
-     * @since 1.0.0
-     *
      * @return string Shortcode
+     *
+     * @since 1.0.0
+     * @version 1.0.1
+     *
      */
     protected function helper_build_demo_shortcode() {
       $params = $this->get_demo_shortcode_params();
@@ -1158,7 +1161,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see         https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
      *
      * @since       1.0.0
-     * @version     1.0.0
+     * @version     1.0.1
      */
     public function render_js_backend( $hook_suffix ) {
       if ( $hook_suffix !== ( 'settings_page_' . $this->get_slug() ) ) {

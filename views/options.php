@@ -5,8 +5,8 @@
  * WP Admin > Settings > PluginName
  *
  * @package     WPPlugin
- * @version     1.0.0
- * @since     1.0.0
+ * @since       1.0.0
+ * @version     1.0.1
  * @uses        WordPress_Admin_Style
  */
 

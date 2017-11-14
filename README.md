@@ -38,6 +38,13 @@ npm install
 gulp maintenance
 ```
 
+Update plugin version:
+
+* at the top of any edited methods
+* at the top of any edited files
+* at the bottom of the edited README.md
+* tag the release
+
 ## Background
 
 ### Goals
@@ -68,3 +75,7 @@ This is an evolution of several other approaches:
 
 - someone else's code
 - not intuitive
+
+---
+
+DTRT WP Plugin | README version 1.0.1

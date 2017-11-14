@@ -5,6 +5,7 @@
  * @package   	WPPlugin
  * @version   	1.0.0
  * @since 		1.0.0
+ * @uses        WordPress_Admin_Style
  */
 
 ?>
