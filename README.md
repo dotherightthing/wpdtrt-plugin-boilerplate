@@ -4,17 +4,31 @@
 
 Base classes for a WordPress plugin and associated shortcodes and widgets.
 
+## System requirements
+
+1. [WordPress](https://wordpress.org/)
+2. [Node.js & NPM](https://nodejs.org/en/)
+3. [Composer](https://getcomposer.org/)
+4. [Bower](https://bower.io/)
+5. [Gulp](https://gulpjs.com/)
+
 ## Set up a plugin
 
-Manually mirror the set up of the demo plugin, [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks).
+A) Manually mirror the set up of the demo plugin, [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks).
 
-A) Install the Gulp dependencies of the base class:
+B) Install PHP dependencies, including the WP Plugin base class:
+
+```
+composer install
+```
+
+C) Install the Gulp dependencies required by WP Plugin:
 
 ```
 npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
 ```
 
-B) Run the base class's Gulp tasks on the plugin files:
+D) Run the WP Plugin's Gulp tasks on the plugin files:
 
 1. Install PHP dependencies (Composer)
 2. Install PHP and front-end dependencies which don't have composer.json files (Bower)
@@ -27,10 +41,11 @@ B) Run the base class's Gulp tasks on the plugin files:
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 
-## Maintenance of DTRT Plugin
+## Maintenance of WP Plugin
+
+A) Run maintenance tasks from the WP Plugin folder
 
 ```
-// Run maintenance tasks from the DTRT Plugin folder
 npm install
 gulp maintenance
 ```
@@ -41,6 +56,7 @@ Update plugin version:
 * at the top of any edited files
 * at the bottom of the edited README.md
 * tag the release
+* update the version constant in the root file of child plugins
 
 ## Background
 
