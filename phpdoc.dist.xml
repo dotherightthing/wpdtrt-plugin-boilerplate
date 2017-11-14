@@ -11,5 +11,7 @@
   </transformations>
   <files>
     <directory>src</directory>
+    <ignore>node_modules/*</ignore>
+    <ignore>vendor/*</ignore>
   </files>
 </phpdoc>

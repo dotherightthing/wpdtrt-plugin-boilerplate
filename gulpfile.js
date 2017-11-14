@@ -17,6 +17,7 @@ var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
 var bower = require('gulp-bower');
 var composer = require('gulp-composer');
+var del = require('del');
 var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
 var pxtorem = require('postcss-pxtorem');
@@ -39,6 +40,12 @@ gulp.task('bower', function () {
 
 gulp.task('composer', function () {
   composer();
+});
+
+gulp.task('erase_docs', function () {
+  return del([
+    'docs/phpdoc/**/*'
+  ]);
 });
 
 gulp.task('scss', function () {
@@ -107,9 +114,16 @@ gulp.task('phpdoc', shell.task([
    *  -t = the location where your documentation will be written (also called ‘target folder’).
    *  --ignore
    * @see https://docs.phpdoc.org/guides/running-phpdocumentor.html#quickstart
-   * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/12
+   * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/12
    */
-  'vendor/bin/phpdoc -d . -t ./docs/phpdoc --ignore ./vendor/,./node_modules/'
+  // remove plugin which generates Fatal Error (#12)
+  'composer remove tgmpa/tgm-plugin-activation',
+  // run PHPDoc
+  'vendor/bin/phpdoc -d . -t ./docs/phpdoc',
+  // reinstall plugin which generates Fatal Error (#12)
+  'composer require tgmpa/tgm-plugin-activation',
+  // view the generated documentation
+  'open docs/phpdoc/index.html'
 ]));
 
 gulp.task('watch', function () {
@@ -124,6 +138,8 @@ gulp.task( 'default', [
     'composer',
     'bower',
     'phplint',
+    'erase_docs',
+    'phpdoc',
     'scss',
     'watch'
   ]
@@ -135,7 +151,8 @@ gulp.task ('maintenance', [
     'composer',
     'bower',
     'phplint',
-    'scss',
-    // 'phpdoc' // also fails here as DTRT Plugin also loads TGMPA
+    'erase_docs',
+    'phpdoc',
+    'scss'
   ]
 );
