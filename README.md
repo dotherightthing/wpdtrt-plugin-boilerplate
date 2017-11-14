@@ -10,7 +10,7 @@ Manually mirror the set up of the demo plugin, [DTRT Blocks](https://github.com/
 
 The included Gulp task,
 
-1. installs Composer dependencies
+1. installs dependencies
 2. performs PHP linting
 3. generates PHP documentation
 4. converts SCSS into CSS
@@ -19,11 +19,14 @@ The included Gulp task,
 // 1. Install PHP dependencies
 composer install
 
-// 2. Install Node dependencies into the parent plugin's folder
+// 2. Install PHP and front-end dependencies which don't have composer.json files
+bower install
+
+// 3. Install Node dependencies into the parent plugin's folder
 npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
 
-// 3. Run the parent plugin's Gulp tasks against the contents of the child plugin's folder
-// 4. Watch for changes to the child plugin's folder
+// 4. Run the parent plugin's Gulp tasks against the contents of the child plugin's folder
+// 5. Watch for changes to the child plugin's folder
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 
