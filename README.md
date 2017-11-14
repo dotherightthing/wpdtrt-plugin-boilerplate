@@ -1,10 +1,14 @@
 # DTRT WP Plugin
 
-[![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/issues)
+[![GitHub tags](https://img.shields.io/github/tag/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/tags) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/issues)
 
 Base classes for a WordPress plugin and associated shortcodes and widgets.
 
-## System requirements
+---
+
+## Set up a plugin
+
+### System requirements
 
 1. [WordPress](https://wordpress.org/)
 2. [Node.js & NPM](https://nodejs.org/en/)
@@ -12,26 +16,26 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 4. [Bower](https://bower.io/)
 5. [Gulp](https://gulpjs.com/)
 
-## Set up a plugin
+### Manually mirror the set up of the demo plugin
 
-A) Manually mirror the set up of the demo plugin, [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks).
+The demo plugin is [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks).
 
-B) Install PHP dependencies, including the WP Plugin base class:
+### Install PHP dependencies, including the WP Plugin base class:
 
 ```
 composer install
 ```
 
-C) Install the Gulp dependencies required by WP Plugin:
+### Install the Gulp dependencies required by WP Plugin:
 
 ```
 npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherightthing/wpdtrt-plugin/
 ```
 
-D) Run the WP Plugin's Gulp tasks on the plugin files:
+### Run WP Plugin's Gulp tasks on the plugin files:
 
 1. Install (any new) PHP dependencies (Composer)
-2. Install PHP and front-end dependencies which don't have composer.json files (Bower)
+2. Install PHP and front-end dependencies which don't have `composer.json` files (Bower)
 3. Lint PHP code
 4. Generate PHP documentation
 5. Convert SCSS into CSS
@@ -40,6 +44,8 @@ D) Run the WP Plugin's Gulp tasks on the plugin files:
 ```
 gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
+
+---
 
 ## Maintenance of WP Plugin
 
@@ -58,6 +64,8 @@ Update plugin version:
 * tag the release
 * update the version constant in the root file of child plugins
 
+---
+
 ## Background
 
 ### Goals
@@ -73,18 +81,18 @@ The goals of this plugin are:
 
 This is an evolution of several other approaches:
 
-#### [Yeoman Plugin Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
+#### A) [Yeoman Plugin Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 + generates a WordPress plugin from a Yeoman template
 - difficult to track evolving changes to boilerplate code
 
-#### [Base theme](https://github.com/dotherightthing/wpdtrt)
+#### B) [Base theme](https://github.com/dotherightthing/wpdtrt)
 
 + WordPress parent theme
 + bundles common functionality
 - functionality too tightly coupled
 
-#### 3rd party class
+#### C) 3rd party class
 
 - someone else's code
 - not intuitive
