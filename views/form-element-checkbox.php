@@ -6,6 +6,12 @@
  * @version   	1.0.0
  * @since 		1.0.0
  * @uses        WordPress_Admin_Style
+ * @example
+ * 	'fieldname' => array(
+ * 		'type' => 'checkbox',
+ * 		'label' => esc_html__('Field label', 'text-domain'),
+ * 		'tip' => __('Helper text', 'text-domain')
+ * 	)
  */
 
 ?>

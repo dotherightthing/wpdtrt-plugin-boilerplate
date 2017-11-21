@@ -6,6 +6,13 @@
  * @version   	1.0.0
  * @since 		1.0.0
  * @uses        WordPress_Admin_Style
+ * @example
+ * 	'fieldname' => array(
+ * 		'type' => 'password',
+ * 		'label' => __('Field label', 'text-domain'),
+ * 		'size' => 10,
+ * 		'tip' => __('Helper text', 'text-domain')
+ * 	)
  */
 
 ?>

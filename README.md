@@ -16,15 +16,11 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 4. [Bower](https://bower.io/)
 5. [Gulp](https://gulpjs.com/)
 
-### Manually mirror the set up of the demo plugin
+### Generate the plugin scaffolding
 
-The demo plugin is [DTRT Blocks](https://github.com/dotherightthing/wpdtrt-blocks).
+[Install the WordPress Plugin Boilerplate](https://github.com/dotherightthing/generator-wp-plugin-boilerplate#installation).
 
-### Install PHP dependencies, including the WP Plugin base class:
-
-```
-composer install
-```
+After running the generator, Composer will automatically install PHP dependencies, including the WP Plugin base class.
 
 ### Install the Gulp dependencies required by WP Plugin:
 

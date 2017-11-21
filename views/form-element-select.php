@@ -6,6 +6,20 @@
  * @version   	1.0.0
  * @since 		1.0.0
  * @uses        WordPress_Admin_Style
+ * @example
+ * 	'fieldname' => array(
+ * 		'type' => 'select',
+ * 		'label' => __('Field label', 'fieldname'),
+ * 		'options' => array(
+ * 			'option1value' => array(
+ * 			'text' => __('Label for option 1', 'text-domain')
+ * 			),
+ * 			'option2value' => array(
+ * 				'text' => __('Label for option 2', 'text-domain')
+ * 			)
+ * 		),
+ * 		'tip' => __('Helper text', 'text-domain')
+ * 	)
  */
 
 ?>
