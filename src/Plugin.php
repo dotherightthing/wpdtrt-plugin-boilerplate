@@ -603,7 +603,8 @@ if ( !class_exists( 'Plugin' ) ) {
     public function get_plugin_dependencies() {
       $options = $this->get_options();
       $plugin_dependencies = $options['plugin_dependencies'];
-      return $plugin_dependencies;
+      // remove empty array elements before returning
+      return array_filter( $plugin_dependencies );
     }
 
     // PLUGIN DATA
@@ -688,6 +689,11 @@ if ( !class_exists( 'Plugin' ) ) {
     public function get_plugin_data_options() {
       $options = $this->get_options();
       $plugin_data_options = $options['plugin_data_options'];
+
+      if ( !isset( $plugin_data_options) ) {
+        $plugin_data_options = array();
+      }
+
       return $plugin_data_options;
     }
 
