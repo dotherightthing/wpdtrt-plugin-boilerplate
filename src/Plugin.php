@@ -877,6 +877,9 @@ if ( !class_exists( 'Plugin' ) ) {
         else if ( $field_type === 'select') {
           $normalised_field_value = '';
         }
+        else if ( $field_type === 'file') {
+          $normalised_field_value = '';
+        }
       }
 
       return $normalised_field_value;
