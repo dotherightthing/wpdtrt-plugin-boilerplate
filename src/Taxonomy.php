@@ -97,8 +97,8 @@ if ( !class_exists( 'Taxonomy' ) ) {
        */
       add_action( $taxonomy_name . '_add_form_fields', [$this, 'render_options'], 10, 2 );
       add_action( 'created_' . $taxonomy_name, [$this, 'create_options'], 10, 2 );
-      add_action( $taxonomy_name . '_edit_form_fields', 'edit_options', 10, 2 );
-      add_action( 'edited_' . $taxonomy_name, 'update_options', 10, 2 );
+      add_action( $taxonomy_name . '_edit_form_fields', [$this, 'edit_options'], 10, 2 );
+      add_action( 'edited_' . $taxonomy_name, [$this, 'update_options'], 10, 2 );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -263,11 +263,11 @@ if ( !class_exists( 'Taxonomy' ) ) {
      * @see         https://developer.wordpress.org/reference/hooks/taxonomy_edit_form_fields/
      * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
      */
-    protected function edit_options( $tag, $taxonomy ) {
+    public function edit_options( $tag, $taxonomy ) {
       $taxonomy_options = $this->get_options();
 
       foreach( $taxonomy_options as $name => $attributes ) {
-        echo $this->render_form_element( $name, $attributes, $term->term_id );
+        echo $this->render_form_element( $name, $attributes, $tag->term_id );
       }
     }
 
@@ -282,7 +282,7 @@ if ( !class_exists( 'Taxonomy' ) ) {
      * @see         https://developer.wordpress.org/reference/hooks/edited_taxonomy/
      * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
      */
-    protected function update_options( $term_id, $tt_id ) {
+    public function update_options( $term_id, $tt_id ) {
       $taxonomy_options = $this->get_options();
 
       foreach( $taxonomy_options as $name => $attributes ) {
