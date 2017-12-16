@@ -102,8 +102,6 @@ if ( !class_exists( 'Plugin' ) ) {
     /**
      * Initialise plugin options ONCE.
      *
-     * @param array $default_options
-     *
      * @since 1.0.0
      *
      * @see https://wordpress.stackexchange.com/a/209772
