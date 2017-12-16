@@ -45,6 +45,7 @@ if ( !class_exists( 'Taxonomy' ) ) {
       $plugin = null;
       $selected_instance_options = null;
       $labels = null;
+      $taxonomy_options = null;
 
       // extract variables
       extract( $options, EXTR_IF_EXISTS );
@@ -67,7 +68,37 @@ if ( !class_exists( 'Taxonomy' ) ) {
 
       $this->set_name( $name );
 
+      $this->set_options( $taxonomy_options );
+
       $this->register_taxonomy();
+
+      // hook in to WordPress
+      $this->wp_setup();
+    }
+
+    /**
+     * Initialise taxonomy options ONCE.
+     *
+     * @param array $default_options
+     *
+     * @since 1.0.0
+     *
+     * @see https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     * @see https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/
+     */
+    protected function wp_setup() {
+
+      $taxonomy_name = $this->get_name();
+
+      /**
+       * $this->render_foobar() - infers that no args are to be passed, fails
+       * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
+       * @see https://tommcfarlin.com/wordpress-plugin-constructors-hooks/
+       */
+      add_action( $taxonomy_name . '_add_form_fields', [$this, 'render_options'], 10, 2 );
+      add_action( 'created_' . $taxonomy_name, [$this, 'create_options'], 10, 2 );
+      add_action( $taxonomy_name . '_edit_form_fields', 'edit_options', 10, 2 );
+      add_action( 'edited_' . $taxonomy_name, 'update_options', 10, 2 );
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -169,24 +200,136 @@ if ( !class_exists( 'Taxonomy' ) ) {
       return $this->plugin;
     }
 
+    /**
+     * Get the value of $options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @return      array
+     */
+    public function get_options() {
+      return $this->options;
+    }
+
+    /**
+     * Set the value of $options
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array
+     */
+    protected function set_options( $new_options ) {
+      $this->options = $new_options;
+    }
+
     //// END GETTERS AND SETTERS \\\\
+
+    //// START DATA MANAGEMENT \\\\
+
+    /**
+     * Save custom meta from the term create screen
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       int $term_id Term ID.
+     * @param       int $tt_id Term taxonomy ID.
+     * @see         https://developer.wordpress.org/reference/hooks/created_taxonomy/
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     */
+    public function create_options( $term_id, $tt_id ) {
+
+      $taxonomy_options = $this->get_options();
+
+      foreach( $taxonomy_options as $name => $attributes ) {
+
+        if ( isset( $_POST[ $name ] ) && '' !== $_POST[ $name ] ) {
+          $group = sanitize_title( $_POST[ $name ] );
+          add_term_meta( $term_id, $name, $group, false );
+        }
+      }
+    }
+
+    /**
+     * Display custom meta on the term edit screen
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       object $tag Current taxonomy term object.
+     * @param       string $taxonomy Current taxonomy slug.
+     * @see         https://developer.wordpress.org/reference/hooks/taxonomy_edit_form_fields/
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     */
+    protected function edit_options( $tag, $taxonomy ) {
+      $taxonomy_options = $this->get_options();
+
+      foreach( $taxonomy_options as $name => $attributes ) {
+        echo $this->render_form_element( $name, $attributes, $term->term_id );
+      }
+    }
+
+    /**
+     * Save custom meta from the term edit screen
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       int $term_id Term ID.
+     * @param       int $tt_id Term taxonomy ID.
+     * @see         https://developer.wordpress.org/reference/hooks/edited_taxonomy/
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     */
+    protected function update_options( $term_id, $tt_id ) {
+      $taxonomy_options = $this->get_options();
+
+      foreach( $taxonomy_options as $name => $attributes ) {
+
+        if ( isset( $_POST[ $name ] ) && '' !== $_POST[ $name ] ) {
+          $group = sanitize_title( $_POST[ $name ] );
+          update_term_meta( $term_id, $name, $group );
+        }
+      }
+    }
+
+    //// END DATA MANAGEMENT \\\\
 
     //// START RENDERERS \\\\
 
     /**
+     * Display custom meta on the term create screen
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       string $taxonomy The taxonomy slug.
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     * @see         https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/
+     */
+    public function render_options($taxonomy) {
+      $taxonomy_options = $this->get_options();
+
+      foreach( $taxonomy_options as $name => $attributes ) {
+        echo $this->render_form_element( $name, $attributes );
+      }
+    }
+
+    /**
      * Form field templating for the widget admin page
-     * @param       array $instance The WordPress Taxonomy instance
      * @param       string $name
      * @param       array $attributes
+     * @param       string $term_id Taxonomy term ID (available in edit_options)
      *
      * @return      string
      *
      * @since       1.0.0
      * @version     1.0.0
      * @todo        Add field validation feedback (#10)
-     * @see         https://pippinsplugins.com/adding-custom-meta-fields-to-taxonomies/
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
      */
-    public function render_form_element( $instance, $name, $attributes=array() ) {
+    public function render_form_element( $name, $attributes=array(), $term_id=null ) {
 
       // these options don't have attributes
       if ( $name === 'description' ) {
@@ -205,42 +348,34 @@ if ( !class_exists( 'Taxonomy' ) ) {
 
       // name as a string
       $nameStr = $name;
+      $id = $name;
 
       // widget admin layout
-      $label_start = '<div class="form-field">';
+      $label_start = '';
       $label_end   = '';
       $field_start = '';
-      $field_end   = '</div>';
+      $field_end   = '';
       $tip_element = 'p';
       $classname   = '';
 
-      /**
-       * Set the value to the variable with the same name as the $name string
-       * e.g. $name="wpdtrt_attachment_map_toggle_label" => $wpdtrt_attachment_map_toggle_label => ('Open menu', 'wpdtrt-attachment-map')
-       * @see http://php.net/manual/en/language.variables.variable.php
-       * @see https://developer.wordpress.org/reference/classes/wp_widget/get_field_name/
-       */
+      if ( isset( $term_id ) ) {
+        $label_start = '<tr class="form-field term-group-wrap"><th scope="row">';
+        $label_end   = '</th>';
+        $field_start = '<td>';
+        $field_end   = '</td></tr>';
+
+        $user_value = get_term_meta( $term_id, $name, true );
+      }
+      else {
+        $user_value = null;
+      }
 
       $plugin = $this->get_plugin();
 
       $value = $plugin->helper_normalise_field_value(
-        ( isset( $instance[$nameStr] ) ? $instance[$nameStr] : null ),
+        ( isset( $user_value ) ? $user_value : null ),
         $type
       );
-
-      /* Construct name attributes for use in form() fields
-       * translating e.g. 'number' to 'wp-widget-foobar[1]-number'
-       */
-      $name = $this->get_field_name($nameStr);
-
-      if ( $nameStr === 'title' ):
-        // Display dynamic widget title in .in-widget-title via appendTitle() in wp-admin/js/widgets.min.js;
-        $id = $name . '-' . $nameStr;
-      else:
-        $id = $name;
-      endif;
-
-      $plugin = $this->get_plugin();
 
       /**
        * Load the HTML template
