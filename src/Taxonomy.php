@@ -95,10 +95,11 @@ if ( !class_exists( 'Taxonomy' ) ) {
        * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
        * @see https://tommcfarlin.com/wordpress-plugin-constructors-hooks/
        */
-      add_action( $taxonomy_name . '_add_form_fields', [$this, 'render_options'], 10, 2 );
-      add_action( 'created_' . $taxonomy_name, [$this, 'create_options'], 10, 2 );
+      add_action( $taxonomy_name . '_add_form_fields',  [$this, 'render_options'], 10, 2 );
+      add_action( 'created_' . $taxonomy_name,          [$this, 'create_options'], 10, 2 );
       add_action( $taxonomy_name . '_edit_form_fields', [$this, 'edit_options'], 10, 2 );
-      add_action( 'edited_' . $taxonomy_name, [$this, 'update_options'], 10, 2 );
+      add_action( 'edited_' . $taxonomy_name,           [$this, 'update_options'], 10, 2 );
+      add_filter( 'post_type_link',                     [$this, 'replace_taxonomy_in_cpt_permalinks'], 10, 3); // Custom post type
     }
 
     //// START GETTERS AND SETTERS \\\\
