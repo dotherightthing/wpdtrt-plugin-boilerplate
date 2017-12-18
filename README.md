@@ -65,6 +65,20 @@ $ npm --prefix ./vendor/dotherightthing/wpdtrt-plugin/ install ./vendor/dotherig
 $ gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 
+### Run unit tests
+
+WP_UnitTestCase tests are run from the plugin directory, using a dedicated database.
+
+```
+# Tests are plugin specific
+cd /path/to/plugin
+
+# Run tests in /path/to/plugin/tests
+phpunit
+```
+
+*Please see [PHP Unit Testing, revisited](kb.dotherightthing.dan/php/wordpress/php-unit-testing-revisited/) for setup instructions.*
+
 ---
 
 ## Maintenance of WP Plugin
