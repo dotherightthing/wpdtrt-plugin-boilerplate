@@ -95,11 +95,14 @@ if ( !class_exists( 'Taxonomy' ) ) {
        * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
        * @see https://tommcfarlin.com/wordpress-plugin-constructors-hooks/
        */
-      add_action( $taxonomy_name . '_add_form_fields',  [$this, 'render_options'], 10, 2 );
-      add_action( 'created_' . $taxonomy_name,          [$this, 'create_options'], 10, 2 );
-      add_action( $taxonomy_name . '_edit_form_fields', [$this, 'edit_options'], 10, 2 );
-      add_action( 'edited_' . $taxonomy_name,           [$this, 'update_options'], 10, 2 );
-      add_filter( 'post_type_link',                     [$this, 'replace_taxonomy_in_cpt_permalinks'], 10, 3); // Custom post type
+      add_action( $taxonomy_name . '_add_form_fields',                    [$this, 'render_options'], 10, 2 );
+      add_action( 'created_' . $taxonomy_name,                            [$this, 'create_options'], 10, 2 );
+      add_action( $taxonomy_name . '_edit_form_fields',                   [$this, 'edit_options'], 10, 2 );
+      add_action( 'edited_' . $taxonomy_name,                             [$this, 'update_options'], 10, 2 );
+      add_filter( 'manage_edit-' . $taxonomy_name . '_columns',           [$this, 'options_columns'] );
+      add_filter( 'manage_' . $taxonomy_name . '_custom_column',          [$this, 'options_columns_content'], 10, 3 );
+      add_filter( 'manage_edit-' . $taxonomy_name . '_sortable_columns',  [$this, 'options_columns_sortable'] );
+      add_filter( 'post_type_link',                                       [$this, 'replace_taxonomy_in_cpt_permalinks'], 10, 3); // Custom post type
     }
 
     //// START GETTERS AND SETTERS \\\\
@@ -237,6 +240,7 @@ if ( !class_exists( 'Taxonomy' ) ) {
      *
      * @param       int $term_id Term ID.
      * @param       int $tt_id Term taxonomy ID.
+     *
      * @see         https://developer.wordpress.org/reference/hooks/created_taxonomy/
      * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
      */
@@ -261,6 +265,7 @@ if ( !class_exists( 'Taxonomy' ) ) {
      *
      * @param       object $tag Current taxonomy term object.
      * @param       string $taxonomy Current taxonomy slug.
+     *
      * @see         https://developer.wordpress.org/reference/hooks/taxonomy_edit_form_fields/
      * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
      */
@@ -280,6 +285,7 @@ if ( !class_exists( 'Taxonomy' ) ) {
      *
      * @param       int $term_id Term ID.
      * @param       int $tt_id Term taxonomy ID.
+     *
      * @see         https://developer.wordpress.org/reference/hooks/edited_taxonomy/
      * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
      */
@@ -293,6 +299,90 @@ if ( !class_exists( 'Taxonomy' ) ) {
           update_term_meta( $term_id, $name, $group );
         }
       }
+    }
+
+    /**
+     * Display options in the term list table
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array $columns Table columns.
+     * @return      array $columns
+     *
+     * @see         https://developer.wordpress.org/reference/?
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     */
+    public function options_columns( $columns ) {
+      $taxonomy_options = $this->get_options();
+
+      foreach( $taxonomy_options as $name => $attributes ) {
+        if ( $attributes['admin_table'] ) {
+          $columns[ $name ] = $attributes['admin_table_label'];
+        }
+      }
+
+      return $columns;
+    }
+
+    /**
+     * Display options in the term list table
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       string $content
+     * @param       string $column_name
+     * @param       number $term_id
+     * @return      string $content
+     *
+     * @see         https://developer.wordpress.org/reference/?
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     */
+    public function options_columns_content( $content, $column_name, $term_id ) {
+      $taxonomy_options = $this->get_options();
+
+      foreach( $taxonomy_options as $name => $attributes ) {
+
+        if ( $name === $column_name ) {
+
+          $term_id = absint( $term_id );
+
+          $user_value = get_term_meta( $term_id, $name, true );
+
+          if ( !empty( $user_value ) ) {
+              $content .= esc_attr( $user_value );
+          }
+        }
+      }
+
+      // return $content; // fails for me
+      echo $content;
+    }
+
+    /**
+     * Make options sortable in the term list table
+     *
+     * @since       1.0.0
+     * @version     1.0.0
+     *
+     * @param       array $sortable
+     * @return      array $sortable
+     *
+     * @see         https://developer.wordpress.org/reference/?
+     * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+     * @todo        https://github.com/dotherightthing/wpdtrt-plugin/issues/42
+     */
+    public function options_columns_sortable( $sortable ) {
+      $taxonomy_options = $this->get_options();
+
+      foreach( $taxonomy_options as $name => $attributes ) {
+        if ( $attributes['admin_table_sort'] === true ) {
+          $sortable[ $name ] = $name;
+        }
+      }
+
+      return $sortable;
     }
 
     //// END DATA MANAGEMENT \\\\
