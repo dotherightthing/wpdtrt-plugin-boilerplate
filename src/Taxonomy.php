@@ -876,7 +876,8 @@ if ( !class_exists( 'Taxonomy' ) ) {
      * @see http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict
      * @see https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug
      * @see https://kellenmace.com/edit-slug-button-missing-in-wordpress/
-     * @see http://kb.dotherightthing.dan/php/wordpress/missing-permalink-edit-button/
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/44 - Permalink Edit button missing
+     * @todo make this less generic as this class is instantiated for EACH taxonomy
      */
     public function replace_taxonomy_in_cpt_permalinks($permalink, $post, $leavename) {
 

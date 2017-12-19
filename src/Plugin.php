@@ -132,7 +132,8 @@ if ( !class_exists( 'Plugin' ) ) {
       add_action( 'wp_enqueue_scripts',       [$this, 'render_js_frontend'] );
       add_action( 'admin_enqueue_scripts',    [$this, 'render_js_backend'] );
       add_action( 'tgmpa_register',           [$this, 'wp_register_plugin_dependencies'] );
-    
+      add_action( 'post_type_link',           [$this, 'render_cpt_permalink_placeholders'], 10, 3 ); // Custom Post Type
+
       // call the server side PHP function through admin-ajax.php.
       add_action( 'wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
     }
@@ -997,6 +998,54 @@ if ( !class_exists( 'Plugin' ) ) {
     //// END HELPERS \\\\
 
     //// START RENDERERS \\\\
+
+    /**
+     * Support Custom Field %placeholders% in Custom Post Type permalinks
+     *  This replacement is only applied when the permalink is generated
+     *  eg on an archive listing or wpadmin edit page
+     *  NOT in the rewrite rules / when the page is loaded
+     *
+     * @param $permalink See WordPress function options
+     * @param $post See WordPress function options
+     * @param $leavename See WordPress function options
+     * @return $permalink
+     *
+     * @example
+     *  // wpdtrt-dbth/library/register_post_type_tourdiaries.php
+     *  'rewrite' => array(
+     *    'slug' => 'tourdiaries/%wpdtrt_tourdates_taxonomy_tour%/%wpdtrt_tourdates_cf_daynumber%',
+     *    'with_front' => false
+     *  )
+     *
+     * @see http://shibashake.com/wordpress-theme/add-custom-taxonomy-tags-to-your-wordpress-permalinks
+     * @see http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict
+     * @see https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug
+     * @see https://kellenmace.com/edit-slug-button-missing-in-wordpress/
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/44 - Permalink Edit button missing
+     */
+    public function render_cpt_permalink_placeholders($permalink, $post, $leavename) {
+
+      // Get post
+      $post_id = $post->ID;
+      $prefix = $this->get_prefix();
+
+      // extract all %placeholders% from the permalink
+      // https://regex101.com/
+      preg_match_all('/(?<=\/%' . $prefix . '_cf_).+?(?=%\/)/', $permalink, $placeholders, PREG_OFFSET_CAPTURE);
+
+      // placeholders in an array of taxonomy/term arrays
+      foreach ( $placeholders[0] as $placeholder ) {
+
+        $placeholder_name = $prefix . '_cf_' . $placeholder[0];
+
+        if ( metadata_exists( 'post', $post_id, $placeholder_name ) ) {
+          $replacement = get_post_meta( $post_id, $placeholder_name, true );
+          $permalink = str_replace( ( '%' . $placeholder_name . '%' ), $replacement, $permalink);
+        }
+      }
+
+      return $permalink;
+    }
 
     /**
      * Render demo shortcode
