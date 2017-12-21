@@ -20,6 +20,7 @@
 
   $options_form_title = $messages['options_form_title']; 
   $options_form_description = $messages['options_form_description']; 
+  $no_options_form_description = $messages['no_options_form_description']; 
   $options_form_submit = $messages['options_form_submit'];
 
   $demo_shortcode_params = $this->get_demo_shortcode_params();
@@ -58,7 +59,14 @@
     <input type="hidden" name="wpdtrt_plugin_form_submitted" value="Y" />
 
     <h2 class="title"><?php echo $options_form_title; ?></h2>
-    <p><?php echo $options_form_description; ?></p>
+    <p><?php
+      if ( ! empty( $plugin_options ) ) {
+        echo $options_form_description;
+      }
+      else {
+        echo $no_options_form_description;
+      }
+    ?></p>
 
     <fieldset>
       <legend class="screen-reader-text">
@@ -76,12 +84,14 @@
     </fieldset>
 
     <?php
-      submit_button(
-        $text = $options_form_submit,
-        $type = 'primary',
-        $wrap = true, // wrap in paragraph
-        $other_attributes = null
-      );
+      if ( ! empty( $plugin_options ) ) {
+        submit_button(
+          $text = $options_form_submit,
+          $type = 'primary',
+          $wrap = true, // wrap in paragraph
+          $other_attributes = null
+        );
+      }
     ?>
 
   </form>
