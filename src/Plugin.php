@@ -496,36 +496,41 @@ if ( !class_exists( 'Plugin' ) ) {
      * @since       1.0.0
      * @version     1.0.0
      *
-     * @param       array
+     * @param       array $plugin_options
+     * @return      array $options Merged options (for unit testing)
      */
     public function set_plugin_options( $new_plugin_options ) {
-      /**
-       * Remove null keys
-       *
-       * Filtering out null values from the constructor protects existing user data
-       * and allows plugin authors to add options as the plugin evolves
-       *
-       * @see https://stackoverflow.com/a/16891515/6850747
-       * @todo Removing an option from the config object does not remove it from the UI (#25)
-       */
-      $old_plugin_options = $this->get_plugin_options();
 
-      foreach ( $old_plugin_options as $k => $v ) {
-        $old_plugin_options[$k] = array_filter( $old_plugin_options[$k], [$this, 'helper_array_filter_not_null'] );
+      global $debug;
+
+      $old_plugin_options = $this->get_plugin_options();
+      $merged_plugin_options = array();
+
+      // for each of the old options
+      foreach( $old_plugin_options as $old_option => $old_value ) {
+        // if the old option is still supported in the new config object
+        if ( isset( $new_plugin_options[$old_option] ) ) {
+          // retain the old option and use the old (initial or user) value
+          $merged_plugin_options[$old_option] = $old_value;
+          // remove the old option from the available new options
+          unset( $new_plugin_options[$old_option] );
+        }
       }
 
-      foreach ( $new_plugin_options as $k => $v ) {
-        $new_plugin_options[$k] = array_filter( $new_plugin_options[$k], [$this, 'helper_array_filter_not_null'] );
-      } 
+      // for each of the remaining new options
+      foreach( $new_plugin_options as $new_option => $new_value ) {
+          // add the new option and use the new (initial) value
+          $merged_plugin_options[$new_option] = $new_value;
+      }
 
-      /**
-       * Merge old options with new options
-       * This overwrites the old values with any new values
-       */
+      // Save the merged options
       $options = $this->get_options();
-      $options['plugin_options'] = array_replace_recursive( $old_plugin_options, $new_plugin_options );
+      $options['plugin_options'] = $merged_plugin_options;
 
       $this->set_options($options);
+
+      // return array for unit testing
+      return $options['plugin_options'];
     }
 
     /**
