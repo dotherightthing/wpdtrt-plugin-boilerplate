@@ -18,7 +18,6 @@ class PluginTest extends WP_UnitTestCase {
         parent::setUp();
 
         $this->taxonomy = $this->create_taxonomy();
-        //$this->create_customposttype();
 
         $this->plugin = $this->taxonomy->get_plugin();
     }
@@ -26,8 +25,6 @@ class PluginTest extends WP_UnitTestCase {
     /**
      * TearDown
      * Automatically called by PHPUnit after each test method is run
-     *
-     * @see https://codesymphony.co/writing-wordpress-plugin-unit-tests/#object-factories     
      */
     public function tearDown() {
 
@@ -36,7 +33,8 @@ class PluginTest extends WP_UnitTestCase {
 
     /**
 	 * Create the 'tour' taxonomy
-	 * @todo make this a generic test which doesn't use this particular plugin
+	 *
+	 * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/45
 	 */
     public function create_taxonomy() {
 		$taxonomy = wpdtrt_tourdates_taxonomy_tour_init();
@@ -52,24 +50,24 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Test that we are dealing with the expected plugin options
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-tourdates/issues/11
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/25
 	 */
 	public function test_plugin_options() {
 		
 		$plugin_options_full = array(
         	'start_date' => array(
 	            'type' => 'text',
-	            'label' => esc_html__('Start date', 'wpdtrt-tourdates'),
+	            'label' => 'Start date',
 	            'admin_table' => true,
-	            'admin_table_label' => esc_html__('Start', 'wpdtrt-tourdates'),
+	            'admin_table_label' => 'Start',
 	            'admin_table_sort' => true,
 	            'tip' => 'YYYY-M-D',
         	),
 			'end' => array(
 	            'type' => 'text',
-	            'label' => esc_html__('End date', 'wpdtrt-tourdates'),
+	            'label' => 'End date',
 	            'admin_table' => true,
-	            'admin_table_label' => esc_html__('End', 'wpdtrt-tourdates'),
+	            'admin_table_label' => 'End',
 	            'admin_table_sort' => true,
 	            'tip' => 'YYYY-M-D',
         	)
