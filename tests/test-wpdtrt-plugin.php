@@ -80,25 +80,25 @@ class PluginTest extends WP_UnitTestCase {
 		$this->assertEquals(
 			$this->plugin->set_plugin_options( $plugin_options_full ),
 			$plugin_options_full,
-			'Plugin options do not match the array passed in: '
+			'Plugin options incorrectly merged (null -> some)'
 		);	
 
 		$this->assertEquals(
 			$this->plugin->set_plugin_options( $plugin_options_full ),
 			$this->plugin->get_plugin_options(),
-			'Plugin options do not match the array passed in: '
+			'Plugin options incorrectly merged (null -> some)'
 		);	
 
 		$this->assertEquals(
 			$this->plugin->set_plugin_options( $plugin_options_empty ),
 			$plugin_options_empty,
-			'Plugin options do not match the array passed in'
+			'Plugin options incorrectly merged (some -> none)'
 		);
 
 		$this->assertEquals(
 			$this->plugin->set_plugin_options( $plugin_options_empty ),
 			$this->plugin->get_plugin_options(),
-			'Plugin options do not match the array passed in'
+			'Plugin options incorrectly merged (some -> none)'
 		);
 	}
 }
