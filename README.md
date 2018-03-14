@@ -73,6 +73,10 @@ WP_UnitTestCase tests are run from the plugin directory, using a dedicated datab
 # Tests are plugin specific
 cd /path/to/plugin
 
+# Install WordPress Test Suite
+# bash bin/install-wp-tests.sh DB_NAME DB_USER DB_PASSWORD DB_HOST latest
+bash bin/install-wp-tests.sh wordpress_test root DB_PASSWORD 127.0.0.1 latest
+
 # Run tests in /path/to/plugin/tests
 phpunit
 ```
