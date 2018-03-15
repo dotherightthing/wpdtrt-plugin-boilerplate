@@ -139,7 +139,7 @@ gulp.task( 'default', [
     'bower',
     'phplint',
     'erase_docs',
-    'phpdoc',
+    //'phpdoc',
     'scss',
     'watch'
   ]
@@ -152,7 +152,7 @@ gulp.task ('maintenance', [
     'bower',
     'phplint',
     'erase_docs',
-    'phpdoc',
+    //'phpdoc',
     'scss'
   ]
 );
