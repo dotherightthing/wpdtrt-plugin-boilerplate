@@ -7,7 +7,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.0.2
+ * @version     1.1.3
  */
 
 /* global require */
