@@ -104,7 +104,7 @@ gulp.task('phplint', function () {
     }));
 });
 
-//gulp.task('phpdoc', shell.task([
+gulp.task('phpdoc', shell.task([
   /**
    * Generate PHP Documentation
    *
@@ -117,14 +117,14 @@ gulp.task('phplint', function () {
    * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/12
    */
   // remove plugin which generates Fatal Error (#12)
-//  'composer remove tgmpa/tgm-plugin-activation',
+  'composer remove tgmpa/tgm-plugin-activation',
   // run PHPDoc
-//  'vendor/bin/phpdoc -d . -t ./docs/phpdoc',
+  'vendor/bin/phpdoc -d . -t ./docs/phpdoc',
   // reinstall plugin which generates Fatal Error (#12)
-//  'composer require tgmpa/tgm-plugin-activation',
+  'composer require tgmpa/tgm-plugin-activation',
   // view the generated documentation
-//  'open docs/phpdoc/index.html'
-//]));
+  'open docs/phpdoc/index.html'
+]));
 
 gulp.task('watch', function () {
   //gulp.watch( './composer.json', ['composer'] );
@@ -139,7 +139,7 @@ gulp.task( 'default', [
     'bower',
     'phplint',
     'erase_docs',
-    //'phpdoc',
+    'phpdoc',
     'scss',
     'watch'
   ]
@@ -152,7 +152,7 @@ gulp.task ('maintenance', [
     'bower',
     'phplint',
     'erase_docs',
-    //'phpdoc',
+    'phpdoc',
     'scss'
   ]
 );
