@@ -15,12 +15,28 @@
         {
             "type": "vcs",
             "url":  "git@github.com:dotherightthing/wpdtrt-debug.git"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "tgmpa/tgm-plugin-activation",
+                "version": "2.6.1",
+                "type": "package",
+                "dist": {
+                    "url": "https://github.com/TGMPA/TGM-Plugin-Activation/archive/2.6.1.zip",
+                    "type": "zip"
+                },
+                "autoload": {
+                    "files": []
+                }
+            },
+            "url": "https://github.com/TGMPA/TGM-Plugin-Activation.git"
         }
     ],
     "require-dev": {
         "phpunit/phpunit": "^5.7",
         "phpdocumentor/phpdocumentor": "2.*",
-        "dotherightthing/wpdtrt-debug": "dev-master",
+        "dotherightthing/wpdtrt-debug": "^1.0.0",
         "tgmpa/tgm-plugin-activation": "^2.6"
     },
     "require": {

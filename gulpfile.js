@@ -7,7 +7,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.1.3
+ * @version     1.1.4
  */
 
 /* global require */
@@ -117,13 +117,13 @@ gulp.task('phpdoc', shell.task([
    * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/12
    */
   // remove plugin which generates Fatal Error (#12)
-  'composer remove tgmpa/tgm-plugin-activation',
+  //'composer remove tgmpa/tgm-plugin-activation',
   // run PHPDoc
   'vendor/bin/phpdoc -d . -t ./docs/phpdoc',
   // reinstall plugin which generates Fatal Error (#12)
-  'composer require tgmpa/tgm-plugin-activation',
+  //'composer require tgmpa/tgm-plugin-activation',
   // view the generated documentation
-  'open docs/phpdoc/index.html'
+  //'open docs/phpdoc/index.html'
 ]));
 
 gulp.task('watch', function () {
