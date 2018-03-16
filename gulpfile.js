@@ -156,3 +156,9 @@ gulp.task ('maintenance', [
     'scss'
   ]
 );
+
+gulp.task ('dist', [
+    'maintenance'
+  ]
+);
+
