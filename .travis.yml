@@ -101,5 +101,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: dotherightthing/wpdtrt-plugin
-    branch: master
     tags: true
