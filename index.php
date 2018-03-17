@@ -4,11 +4,11 @@
  * @see http://phpenthusiast.com/blog/how-to-autoload-with-composer
  *
  * @package   	WPPlugin
- * @version   	1.1.5
+ * @version   	1.1.6
  * @since 		1.0.0
  */
 
 	// vendor/autoload.php
 	// composer generated autoload file used by all vendors
-	require_once dirname( dirname(__DIR__) ) . "/autoload.php";
+	require_once "./vendor/autoload.php";
 ?>

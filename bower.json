@@ -1,0 +1,21 @@
+{
+  "name": "wpdtrt-plugin",
+  "version": "1.1.6",
+  "description": "Classes providing boilerplate functionality for WordPress plugins, including dependent widgets and shortcodes.",
+  "main": "readme.txt",
+  "authors": [
+    {
+      "name": "Dan Smith",
+      "email": "dev@dotherightthing.co.nz"
+    }
+  ],
+  "dependencies": {},
+  "license": "All Rights Reserved",
+  "homepage": "https://github.com/dotherightthing/wpdtrt-plugin",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor"
+  ],
+  "private": true
+}
