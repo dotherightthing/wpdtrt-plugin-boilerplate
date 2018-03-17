@@ -37,3 +37,4 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 
 = 0.1 =
 * Initial release
+
