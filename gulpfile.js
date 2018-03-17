@@ -25,6 +25,7 @@ var del = require('del');
 var jshint = require('gulp-jshint');
 var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
+var print = require('gulp-print').default;
 var pxtorem = require('postcss-pxtorem');
 var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
@@ -102,6 +103,11 @@ gulp.task('js', function() {
     .pipe(jshint())
     .pipe(jshint.reporter('default', { verbose: true }))
     .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('list_files', function() {
+  return gulp.src('./*')
+    .pipe(print());
 });
 
 gulp.task('phpdoc_delete', function () {
@@ -238,7 +244,8 @@ gulp.task ('maintenance', function(callback) {
     ['css', 'js'],
     'phplint',
     'phpdoc',
-    'release'
+    'release',
+    'list_files'
   )
 });
 

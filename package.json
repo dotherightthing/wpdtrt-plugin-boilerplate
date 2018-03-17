@@ -18,6 +18,7 @@
     "gulp-jshint": "^2.1.0",
     "gulp-phplint": "^0.3.4",
     "gulp-postcss": "^7.0.1",
+    "gulp-print": "^5.0.0",
     "gulp-sass": "^3.2.0",
     "gulp-shell": "^0.6.5",
     "gulp-zip": "^4.1.0",
