@@ -1,6 +1,6 @@
 # DTRT WP Plugin
 
-[![GitHub tags](https://img.shields.io/github/tag/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/tags) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/issues)
+[![GitHub tags](https://img.shields.io/github/tag/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/tags) [![Build Status](https://travis-ci.org/dotherightthing/wpdtrt-plugin.svg?branch=wpplugin)](https://travis-ci.org/dotherightthing/wpdtrt-plugin) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin.svg)](https://github.com/dotherightthing/wpdtrt-plugin/issues)
 
 Base classes for a WordPress plugin and associated shortcodes and widgets.
 
