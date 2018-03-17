@@ -10,7 +10,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.1.11
+ * @version     1.1.12
  */
 
 /* global require */
@@ -39,7 +39,8 @@ var jsFiles = './js/*.js';
 var phpFiles = [
   './**/*.php',
   '!node_modules/**/*',
-  '!vendor/**/*'
+  '!vendor/**/*',
+  '!wpdtrt-plugin/**/*' // release folder
 ];
 var scssFiles = './scss/*.scss';
 
@@ -162,11 +163,16 @@ gulp.task('phplint', function () {
     }));
 });
 
-gulp.task('release_delete', function () {
+gulp.task('release_delete_pre', function () {
+  return del([
+    'release.zip'
+  ]);
+});
+
+gulp.task('release_delete_post', function () {
   return del([
     cssDir,
-    distDir,
-    'release.zip'
+    distDir
   ]);
 });
 
@@ -201,9 +207,10 @@ gulp.task('release_zip', function() {
 
 gulp.task('release', function(callback) {
   runSequence(
-    'release_delete',
+    'release_delete_pre',
     'release_copy',
-    'release_zip'
+    'release_zip',
+    'release_delete_post'
   )
 });
 

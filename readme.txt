@@ -6,7 +6,7 @@ Tags: boilerplate,
 Requires at least: 4.8.2
 Tested up to: 4.8.2
 Requires PHP: 5.6.30
-Stable tag: 1.1.11
+Stable tag: 1.1.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
