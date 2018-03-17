@@ -10,7 +10,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.1.7
+ * @version     1.1.8
  */
 
 /* global require */
@@ -223,16 +223,15 @@ gulp.task('default', [
   ]
 );
 
-gulp.task ('maintenance', [
-    'composer',
-    'bower',
-    'css',
-    'js',
+gulp.task ('maintenance', function(callback) {
+  runSequence(
+    ['composer', 'bower'],
+    ['css', 'js'],
     'phplint',
     'phpdoc',
     'release'
-  ]
-);
+  )
+});
 
 gulp.task ('dist', [
     'maintenance'
