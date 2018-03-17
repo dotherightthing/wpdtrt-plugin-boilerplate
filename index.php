@@ -10,5 +10,5 @@
 
 	// vendor/autoload.php
 	// composer generated autoload file used by all vendors
-	require_once "./vendor/autoload.php";
+	require_once "vendor/autoload.php";
 ?>

@@ -2,35 +2,46 @@
  * Gulp Task Runner
  * Compile front-end resources
  *
+ * @example usage from parent plugin:
+ *    gulp dist
+ *
  * @example usage from child plugin:
- *    gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+ *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.1.5
+ * @version     1.1.6
  */
 
 /* global require */
 
 // dependencies
+
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
 var bower = require('gulp-bower');
 var composer = require('gulp-composer');
 var del = require('del');
+var jshint = require('gulp-jshint');
 var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
 var pxtorem = require('postcss-pxtorem');
+var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
+var zip = require('gulp-zip');
 
-var scssDir = './scss/*.scss';
-var cssDir = './css/';
-var phpDir = [
+// paths
+
+var cssDir = 'css';
+var distDir = 'wpdtrt-plugin';
+var jsFiles = './js/*.js';
+var phpFiles = [
   './**/*.php',
-  '!vendor/**/*',
-  '!node_modules/**/*'
+  '!node_modules/**/*',
+  '!vendor/**/*'
 ];
+var scssFiles = './scss/*.scss';
 
 // tasks
 
@@ -42,13 +53,7 @@ gulp.task('composer', function () {
   composer();
 });
 
-gulp.task('erase_docs', function () {
-  return del([
-    'docs/phpdoc/**/*'
-  ]);
-});
-
-gulp.task('scss', function () {
+gulp.task('css', function () {
 
   var processors = [
       autoprefixer({
@@ -82,15 +87,68 @@ gulp.task('scss', function () {
   ];
 
   return gulp
-    .src(scssDir)
+    .src(scssFiles)
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(postcss(processors))
     .pipe(gulp.dest(cssDir));
 });
 
+gulp.task('js', function() {
+  return gulp
+    .src(jsFiles)
+
+    // validate JS
+    .pipe(jshint())
+    .pipe(jshint.reporter('default', { verbose: true }))
+    .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('phpdoc_delete', function () {
+  return del([
+    'docs/phpdoc/**/*'
+  ]);
+});
+
+gulp.task('phpdoc_pre', shell.task([
+  // remove plugin which generates Fatal Error (#12)
+  'composer remove tgmpa/tgm-plugin-activation'
+]));
+
+gulp.task('phpdoc_doc', shell.task([
+  /**
+   * Generate PHP Documentation
+   *
+   * @example
+   *  -d = the directory, or directories, of your project that you want to document.
+   *  -f = a specific file, or files, in your project that you want to document.
+   *  -t = the location where your documentation will be written (also called ‘target folder’).
+   *  --ignore
+   * @see https://docs.phpdoc.org/guides/running-phpdocumentor.html#quickstart
+   * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/12
+   */
+  'vendor/bin/phpdoc -d . -t ./docs/phpdoc',
+
+  // view the generated documentation
+  //'open docs/phpdoc/index.html'
+]));
+
+gulp.task('phpdoc_post', shell.task([
+  // reinstall plugin which generates Fatal Error (#12)
+  'composer require tgmpa/tgm-plugin-activation'
+]));
+
+gulp.task('phpdoc', function(callback) {
+  runSequence(
+    'phpdoc_delete',
+    'phpdoc_pre',
+    'phpdoc_doc',
+    'phpdoc_post'
+  )
+});
+
 gulp.task('phplint', function () {
   return gulp
-    .src(phpDir)
+    .src(phpFiles)
 
     // validate PHP
     // The linter ships with PHP
@@ -104,56 +162,75 @@ gulp.task('phplint', function () {
     }));
 });
 
-gulp.task('phpdoc', shell.task([
-  /**
-   * Generate PHP Documentation
-   *
-   * @example
-   *  -d = the directory, or directories, of your project that you want to document.
-   *  -f = a specific file, or files, in your project that you want to document.
-   *  -t = the location where your documentation will be written (also called ‘target folder’).
-   *  --ignore
-   * @see https://docs.phpdoc.org/guides/running-phpdocumentor.html#quickstart
-   * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/12
-   */
-  // remove plugin which generates Fatal Error (#12)
-  //'composer remove tgmpa/tgm-plugin-activation',
-  // run PHPDoc
-  'vendor/bin/phpdoc -d . -t ./docs/phpdoc',
-  // reinstall plugin which generates Fatal Error (#12)
-  //'composer require tgmpa/tgm-plugin-activation',
-  // view the generated documentation
-  //'open docs/phpdoc/index.html'
-]));
-
-gulp.task('watch', function () {
-  //gulp.watch( './composer.json', ['composer'] );
-  gulp.watch( phpDir, ['phplint'] );
-  gulp.watch( scssDir, ['scss'] );
+gulp.task('release_delete', function () {
+  return del([
+    cssDir,
+    distDir,
+    'release.zip'
+  ]);
 });
 
-// run from child plugin folders
-// gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
-gulp.task( 'default', [
+gulp.task('release_copy', function() {
+  // Return the event stream to gulp.task to inform the task of when the stream ends
+  // https://stackoverflow.com/a/32188928/6850747
+  return gulp.src([
+    './app/**/*',
+    './config/**/*',
+    './css/**/*',
+    './js/**/*',
+    './languages/**/*',
+    './templates/**/*',
+    './vendor/**/*',
+    './index.php',
+    './readme.txt',
+    './uninstall.php',
+    './wpdtrt-plugin.php'
+  ], { base: '.' })
+  .pipe(gulp.dest(distDir))
+});
+
+gulp.task('release_zip', function() {
+  // Return the event stream to gulp.task to inform the task of when the stream ends
+  // https://stackoverflow.com/a/32188928/6850747
+  return gulp.src([
+    './' + distDir + '/**/*'
+  ], { base: '.' })
+  .pipe(zip('release.zip'))
+  .pipe(gulp.dest('./'))
+});
+
+gulp.task('release', function(callback) {
+  runSequence(
+    'release_delete',
+    'release_copy',
+    'release_zip'
+  )
+});
+
+gulp.task('watch', function () {
+  gulp.watch( scssFiles, ['css'] );
+  gulp.watch( jsFiles, ['js'] );
+  gulp.watch( phpFiles, ['phplint'] );
+});
+
+gulp.task('default', [
     'composer',
     'bower',
+    'css',
+    'js',
     'phplint',
-    'erase_docs',
-    'phpdoc',
-    'scss',
     'watch'
   ]
 );
 
-// run from the parent plugin folder
-// gulp maintenance
 gulp.task ('maintenance', [
     'composer',
     'bower',
+    'css',
+    'js',
     'phplint',
-    'erase_docs',
     'phpdoc',
-    'scss'
+    'release'
   ]
 );
 
@@ -161,4 +238,3 @@ gulp.task ('dist', [
     'maintenance'
   ]
 );
-
