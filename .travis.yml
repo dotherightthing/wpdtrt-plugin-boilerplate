@@ -95,7 +95,7 @@ deploy:
   provider: releases
   api_key:
     secure: mkqjtzbiCfXgWDmneyeFcQ3+LCBAyN1kzZ9XJDQAcKYOah7HEcPErGajNZFLAUtqVJiL0rfbSOmz1sRC2oh0BUtYjZZttEpOuGRkVt+KhAWqxiYf70MuXqGHT3skqkZkwTgFQEQPo3cpo/c2tchcuw0KG4f8nmzjPkbiv3cJUxjLc2NuEVyMGfr7H0F9xktMwoAfjnxDa9F2MGQwfmdC5Hha1EZFMJb/iSkyEuSuZWm6/qZcSZlCFef/WAxtd7dsDEkuTiSsItz2O1B4AKsTG4SpuUSNL8b1CEDwyU61gtHzcVN1xKRZGY0yKSEhDsjwF8cFq3i5eLHa2sjbVe6bl4ciMJYFP7bAzgTtlxLva3CykD6JfJBrntIu0tbkjeO4AgUfkKt2Cn4aAj7cSxoXVbkMW8ZUI2hwKoY6cUOKJk9quWm16owu+BbNQlcF55AoiGCZCPrV13+bAOfLipOmEKdiEoy1lPQ/d1CVIRCFV3injCoCy/9z93zim3BMpQozuC3R54JW7PFVrbPZOcLdCPHC1mgOO7RLVk9Xn0FPAbmGGgYs6rltGHlGZTrOUY0TWaOs4MUwqTPOTqLdBE+4EhFPNhgUvEmEEne/2nFDy/XdREZemX9vQKXEvH7GUa1URyLCT//xVc962iJtJ4Z34Z9eZWX9JLN0aQPgDsXxLrM=
-  file: release.zip
+  file: 'release.zip'
   # prevent Travis CI from resetting the working directory
   # which deletes all changes made during the build 
   skip_cleanup: true
