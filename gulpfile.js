@@ -10,7 +10,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.1.12
+ * @version     1.2.0
  */
 
 /* global require */
@@ -37,6 +37,7 @@ var zip = require('gulp-zip');
 
 var cssDir = 'css';
 var distDir = 'wpdtrt-plugin';
+var dummyFile = 'README.md';
 var jsFiles = './js/*.js';
 var phpFiles = [
   './**/*.php',
@@ -113,8 +114,7 @@ gulp.task('css', function () {
   ];
 
   // return stream or promise for run-sequence
-  return gulp
-    .src(scssFiles)
+  return gulp.src(scssFiles)
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(postcss(processors))
     .pipe(gulp.dest(cssDir));
@@ -152,21 +152,26 @@ gulp.task('phpdoc_delete', function () {
 
   // return stream or promise for run-sequence
   return del([
-    'docs/phpdoc/**/*'
+    'docs/phpdoc'
   ]);
 });
 
-gulp.task('phpdoc_pre', function () {
+gulp.task('phpdoc_pre', function() {
 
   log(' ');
   log('========== 6b. phpdoc_pre ==========');
   log(' ');
 
   // return stream or promise for run-sequence
-  return shell.task([
-    // remove plugin which generates Fatal Error (#12)
-    'composer remove tgmpa/tgm-plugin-activation'
-  ]);
+  // note: src files are not used,
+  // this structure is only used
+  // to include the preceding log()
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      // remove plugin which generates Fatal Error (#12)
+      'composer remove tgmpa/tgm-plugin-activation'
+    ])
+  );
 });
 
 gulp.task('phpdoc_doc', function() {
@@ -176,23 +181,14 @@ gulp.task('phpdoc_doc', function() {
   log(' ');
 
   // return stream or promise for run-sequence
-  return shell.task([
-    /**
-     * Generate PHP Documentation
-     *
-     * @example
-     *  -d = the directory, or directories, of your project that you want to document.
-     *  -f = a specific file, or files, in your project that you want to document.
-     *  -t = the location where your documentation will be written (also called ‘target folder’).
-     *  --ignore
-     * @see https://docs.phpdoc.org/guides/running-phpdocumentor.html#quickstart
-     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/12
-     */
-    'vendor/bin/phpdoc -d . -t ./docs/phpdoc',
-
-    // view the generated documentation
-    //'open docs/phpdoc/index.html'
-  ]);
+  // note: src files are not used,
+  // this structure is only used
+  // to include the preceding log()
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'vendor/bin/phpdoc -d . -t ./docs/phpdoc'
+    ])
+  );
 });
 
 gulp.task('phpdoc_post', function() {
@@ -202,10 +198,15 @@ gulp.task('phpdoc_post', function() {
   log(' ');
 
   // return stream or promise for run-sequence
-  return shell.task([
-    // reinstall plugin which generates Fatal Error (#12)
-    'composer require tgmpa/tgm-plugin-activation'
-  ]);
+  // note: src files are not used,
+  // this structure is only used
+  // to include the preceding log()
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      // reinstall plugin which generates Fatal Error (#12)
+      'composer require tgmpa/tgm-plugin-activation'
+    ])
+  );
 });
 
 gulp.task('phpdoc', function(callback) {
@@ -366,7 +367,9 @@ gulp.task ('maintenance', function(callback) {
     'release', // 7
     'list_files', // 8
     'finish'
-  )
+  );
+
+  callback();
 });
 
 gulp.task ('dist', [

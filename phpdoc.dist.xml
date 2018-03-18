@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdoc>
+  <title>wpdtrt-plugin</title>
   <parser>
-    <target>doc</target>
+    <target>docs/phpdoc</target>
   </parser>
   <transformer>
-    <target>doc</target>
+    <target>docs/phpdoc</target>
   </transformer>
   <transformations>
-	<template name="clean" />
+	 <template name="clean" />
   </transformations>
   <files>
-    <directory>src</directory>
+    <directory>.</directory>
+    <ignore>bin/*</ignore>
     <ignore>node_modules/*</ignore>
+    <ignore>tests/*</ignore>
     <ignore>vendor/*</ignore>
   </files>
 </phpdoc>
