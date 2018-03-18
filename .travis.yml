@@ -101,4 +101,6 @@ deploy:
   skip_cleanup: true
   on:
     repo: dotherightthing/wpdtrt-plugin
-    #tags: true
+    tags: true
+    # https://stackoverflow.com/a/27775257/6850747
+    all_branches: true
