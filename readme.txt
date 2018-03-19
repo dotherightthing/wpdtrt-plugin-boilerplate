@@ -3,8 +3,8 @@
 Contributors: dotherightthingnz
 Donate link: http://dotherightthing.co.nz
 Tags: boilerplate,
-Requires at least: 4.8.2
-Tested up to: 4.8.2
+Requires at least: 4.8.1
+Tested up to: 4.9.4
 Requires PHP: 5.6.30
 Stable tag: 1.2.0
 License: GPLv2 or later

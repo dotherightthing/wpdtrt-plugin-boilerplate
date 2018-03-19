@@ -59,13 +59,6 @@ gulp.task('bower', function () {
   return bower();
 });
 
-gulp.task('finish', function () {
-
-  log(' ');
-  log('========== All Tasks Complete ==========');
-  log(' ');
-});
-
 gulp.task('composer', function () {
 
   log(' ');
@@ -118,6 +111,13 @@ gulp.task('css', function () {
     .pipe(sass({outputStyle: 'expanded'}))
     .pipe(postcss(processors))
     .pipe(gulp.dest(cssDir));
+});
+
+gulp.task('finish', function () {
+
+  log(' ');
+  log('========== All Tasks Complete ==========');
+  log(' ');
 });
 
 gulp.task('js', function() {
