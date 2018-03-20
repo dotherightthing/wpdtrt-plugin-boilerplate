@@ -1,6 +1,6 @@
 {
   "name": "wpdtrt-plugin",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Classes providing boilerplate functionality for WordPress plugins, including dependent widgets and shortcodes.",
   "main": "index.php",
   "person": {
