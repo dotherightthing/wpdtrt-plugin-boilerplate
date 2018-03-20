@@ -199,7 +199,7 @@ gulp.task('phpdoc_tgmpa', function() {
     .pipe(shell([
       // install plugin which generates Fatal Error (#12)
       // if previously installed via package.json
-      'composer require tgmpa/tgm-plugin-activation'
+      'composer require tgmpa/tgm-plugin-activation:2.6.*'
     ])
   );
 });
