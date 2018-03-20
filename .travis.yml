@@ -62,7 +62,7 @@ before_install:
 # https://docs.travis-ci.com/user/customizing-the-build/#Customizing-the-Installation-Step
 # Note: Remember to run composer update on local dev to get latest updates to dependencies
 install:
-  - composer install --no-interaction # also run via gulpfile.js
+  - composer install # also run via gulpfile.js
   - npm install
   - npm install bower -g
 # - bower install - run via gulpfile.js
