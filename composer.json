@@ -16,7 +16,7 @@
         {
             "type": "vcs",
             "url":  "git@github.com:dotherightthing/wpdtrt-debug.git",
-            "no-api": "true"
+            "no-api": true
         }
     ],
     "require": {
