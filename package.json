@@ -2,7 +2,7 @@
   "name": "wpdtrt-plugin",
   "version": "1.2.0",
   "description": "Classes providing boilerplate functionality for WordPress plugins, including dependent widgets and shortcodes.",
-  "main": "readme.txt",
+  "main": "index.php",
   "person": {
     "name": "Dan Smith",
     "email": "dev@dotherightthing.co.nz",
