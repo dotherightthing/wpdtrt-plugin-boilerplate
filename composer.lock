@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c54ca3ef8694c70798ccec8649891e93",
+    "content-hash": "207a75144eb644bf5a059856fdcb76a1",
     "packages": [
         {
             "name": "cilex/cilex",
@@ -625,7 +625,7 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotherightthing/wpdtrt-debug.git",
+                "url": "git@github.com:dotherightthing/wpdtrt-debug.git",
                 "reference": "d2ac61adb44ef84069d2aed673ff76b75296ae05"
             },
             "dist": {
