@@ -15,7 +15,8 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "git@github.com:dotherightthing/wpdtrt-debug.git"
+            "url":  "git@github.com:dotherightthing/wpdtrt-debug.git",
+            "no-api": "true"
         }
     ],
     "require": {
