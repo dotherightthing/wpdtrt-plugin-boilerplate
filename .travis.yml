@@ -54,6 +54,9 @@ before_install:
   # Disable XDebug which is only required for Code Coverage reports
   # https://johnblackbourn.com/reducing-travis-ci-build-times-for-wordpress-projects/
   - phpenv config-rm xdebug.ini
+  # Fix PHPDoc error:
+  # "Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?"
+  - sudo apt-get install graphviz
 
 # Install dependencies
 # https://docs.travis-ci.com/user/customizing-the-build/#Customizing-the-Installation-Step
