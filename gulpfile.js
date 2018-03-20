@@ -10,7 +10,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.2.1
+ * @version     1.2.2
  */
 
 /* global require */
@@ -156,24 +156,6 @@ gulp.task('phpdoc_delete', function () {
   ]);
 });
 
-gulp.task('phpdoc_pre', function() {
-
-  log(' ');
-  log('========== 6b. phpdoc_pre ==========');
-  log(' ');
-
-  // return stream or promise for run-sequence
-  // note: src files are not used,
-  // this structure is only used
-  // to include the preceding log()
-  return gulp.src(dummyFile, {read: false})
-    .pipe(shell([
-      // remove plugin which generates Fatal Error (#12)
-      'composer remove tgmpa/tgm-plugin-activation'
-    ])
-  );
-});
-
 gulp.task('phpdoc_doc', function() {
 
   log(' ');
@@ -191,10 +173,10 @@ gulp.task('phpdoc_doc', function() {
   );
 });
 
-gulp.task('phpdoc_post', function() {
+gulp.task('phpdoc_tgmpa', function() {
 
   log(' ');
-  log('========== 6d. phpdoc_post ==========');
+  log('========== 6d. phpdoc_tgmpa ==========');
   log(' ');
 
   // return stream or promise for run-sequence
@@ -203,7 +185,8 @@ gulp.task('phpdoc_post', function() {
   // to include the preceding log()
   return gulp.src(dummyFile, {read: false})
     .pipe(shell([
-      // reinstall plugin which generates Fatal Error (#12)
+      // install plugin which generates Fatal Error (#12)
+      // if previously installed via package.json
       'composer require tgmpa/tgm-plugin-activation'
     ])
   );
@@ -218,9 +201,8 @@ gulp.task('phpdoc', function(callback) {
   // return?
   runSequence(
     'phpdoc_delete',
-    'phpdoc_pre',
     'phpdoc_doc',
-    'phpdoc_post',
+    'phpdoc_tgmpa',
     callback
   );
 });
@@ -358,7 +340,7 @@ gulp.task('default', [
 gulp.task ('maintenance', function(callback) {
   runSequence(
     'start',
-    'bower', // 1
+    //'bower', // 1 -- hanging on wpdtrt-tourdates
     'composer', // 2
     'css', // 3
     'js', // 4
