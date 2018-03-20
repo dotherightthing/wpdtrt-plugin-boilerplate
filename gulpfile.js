@@ -10,7 +10,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.2.4
+ * @version     1.2.5
  */
 
 /* global require */
@@ -24,6 +24,7 @@ var composer = require('gulp-composer');
 var del = require('del');
 var jshint = require('gulp-jshint');
 var log = require('fancy-log');
+var minimist = require('minimist');
 var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
 var print = require('gulp-print').default;
@@ -32,6 +33,17 @@ var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var zip = require('gulp-zip');
+
+// Configuration
+// https://github.com/gulpjs/gulp/blob/master/docs/recipes/pass-arguments-from-cli.md
+// https://stackoverflow.com/questions/23023650/is-it-possible-to-pass-a-flag-to-gulp-to-have-it-run-tasks-in-different-ways
+
+var knownOptions = {
+  string: 'vendor-path',
+  default: './vendor'
+};
+
+var options = minimist(process.argv.slice(2), knownOptions);
 
 // paths
 
