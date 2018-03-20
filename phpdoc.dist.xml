@@ -14,7 +14,7 @@
     <directory>.</directory>
     <ignore>bin/*</ignore>
     <ignore>node_modules/*</ignore>
-    <ignore>tests/*</ignore>
+    <ignore>tests/bootstrap.php</ignore>
     <ignore>vendor/*</ignore>
   </files>
 </phpdoc>
