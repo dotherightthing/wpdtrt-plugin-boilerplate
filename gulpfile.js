@@ -3,17 +3,19 @@
  * Compile front-end resources
  *
  * @example usage from parent plugin:
+ *    gulp dist --pluginrole parent
  *    gulp dist
  *
  * @example usage from child plugin:
- *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+ *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./ --pluginrole child
  *
  * @package     WPPlugin
  * @since       1.0.0
  * @version     1.2.8
  */
 
-/* global require */
+/* jshint node: true */
+/* global require, process */
 
 // dependencies
 
@@ -32,13 +34,18 @@ var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var zip = require('gulp-zip');
 
-// Configuration
-// https://github.com/gulpjs/gulp/blob/master/docs/recipes/pass-arguments-from-cli.md
-// https://stackoverflow.com/questions/23023650/is-it-possible-to-pass-a-flag-to-gulp-to-have-it-run-tasks-in-different-ways
+/**
+ * Command Line Configuration
+ * @example
+ *    gulp dist --pluginrole child
+ *
+ * @see https://github.com/gulpjs/gulp/blob/master/docs/recipes/pass-arguments-from-cli.md
+ * @see https://stackoverflow.com/questions/23023650/is-it-possible-to-pass-a-flag-to-gulp-to-have-it-run-tasks-in-different-ways
+ */
 
 var knownOptions = {
-  string: 'vendor-path',
-  default: './vendor'
+  string: 'pluginrole',
+  default: { pluginrole: process.env.NODE_ENV || 'parent' }
 };
 
 var options = minimist(process.argv.slice(2), knownOptions);
@@ -258,6 +265,71 @@ gulp.task('release_delete_pre', function () {
   ]);
 });
 
+/**
+ * The parent plugin has various dev dependencies
+ * which need to be made available to the child plugin for install tasks.
+ * Composer projects only install dev dependencies listed in their own require-dev,
+ * so we copy in the parent dev dependencies so that these are available to the child too.
+ * This approach allows us to easily remove all dev dependencies,
+ * before zipping project files,
+ * by re-running the composer install with the --no-dev flag.
+ *
+ * See also 'Command Line Configuration', above.
+ *
+ * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/47
+ * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/51
+ */
+gulp.task('add_dev_dependencies', function() {
+
+  log(' ');
+  log('========== add_dev_dependencies (' + options.pluginrole + ') ==========');
+  log(' ');
+
+  if ( options.pluginrole === 'child' ) {
+
+    // read the require-dev list from the parent's composer.json
+    var composer_json = require('./vendor/dotherightthing/wpdtrt-plugin/composer.json'),
+        dev_packages = composer_json['require-dev'],
+        dev_packages_str = '';
+
+    // convert the require-dev list into a space-separated string
+    for (var dev_package_name in dev_packages) {
+      // https://stackoverflow.com/a/1963179/6850747
+      if (dev_packages.hasOwnProperty(dev_package_name)) {
+        dev_packages_str += (' ' + dev_package_name);
+      }
+    }
+
+    // add each dependency from the parent's require-dev
+    // to the child's require-dev
+    return gulp.src(dummyFile, {read: false})
+      .pipe(shell([
+        'composer require' + dev_packages_str + ' --dev'
+      ]));
+
+    }
+    else if ( options.pluginrole === 'parent' ) {
+      return;
+    }
+});
+
+gulp.task('remove_dev_dependencies', function() {
+
+  log(' ');
+  log('========== remove_dev_dependencies ==========');
+  log(' ');
+
+  /**
+   * Remove dev packages once we've used them
+   * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/47
+   */
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'composer install --prefer-dist --no-interaction --no-dev'
+    ])
+  );
+});
+
 gulp.task('release_delete_post', function () {
 
   log(' ');
@@ -294,7 +366,7 @@ gulp.task('release_copy', function() {
     './uninstall.php',
     './wpdtrt-plugin.php'
   ], { base: '.' })
-  .pipe(gulp.dest(distDir))
+  .pipe(gulp.dest(distDir));
 });
 
 gulp.task('release_zip', function() {
@@ -309,7 +381,7 @@ gulp.task('release_zip', function() {
     './' + distDir + '/**/*'
   ], { base: '.' })
   .pipe(zip('release.zip'))
-  .pipe(gulp.dest('./'))
+  .pipe(gulp.dest('./'));
 });
 
 gulp.task('release', function(callback) {
@@ -324,7 +396,7 @@ gulp.task('release', function(callback) {
     'release_zip',
     'release_delete_post',
     callback
-  )
+  );
 });
 
 gulp.task('start', function () {
@@ -360,10 +432,12 @@ gulp.task ('maintenance', function(callback) {
     'start',
     //'bower', // 1 -- hanging on wpdtrt-tourdates
     'composer', // 2
+    'add_dev_dependencies',
     'css', // 3
     'js', // 4
     'phplint', // 5
     'phpdoc', // 6
+    'remove_dev_dependencies',
     'release', // 7
     'list_files', // 8
     'finish'
