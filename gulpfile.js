@@ -19,8 +19,6 @@
 
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
-var bower = require('gulp-bower');
-var composer = require('gulp-composer');
 var del = require('del');
 var jshint = require('gulp-jshint');
 var log = require('fancy-log');
@@ -68,7 +66,11 @@ gulp.task('bower', function () {
   log(' ');
 
   // return stream or promise for run-sequence
-  return bower();
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'bower install'
+    ])
+  );
 });
 
 gulp.task('composer', function () {
@@ -78,7 +80,11 @@ gulp.task('composer', function () {
   log(' ');
 
   // return stream or promise for run-sequence
-  return composer();
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'composer install --prefer-dist --no-interaction'
+    ])
+  );
 });
 
 gulp.task('css', function () {
