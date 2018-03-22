@@ -3,7 +3,7 @@
 Plugin Name:  DTRT Test
 Plugin URI:   https://github.com/dotherightthing/wpdtrt-plugin
 Description:  Base classes for a WordPress plugin and associated shortcodes and widgets.
-Version:      1.2.10
+Version:      1.2.11
 Author:       Dan Smith
 Author URI:   https://profiles.wordpress.org/dotherightthingnz
 License:      GPLv2 or later

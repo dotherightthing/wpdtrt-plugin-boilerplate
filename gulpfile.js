@@ -11,7 +11,7 @@
  *
  * @package     WPPlugin
  * @since       1.0.0
- * @version     1.2.10
+ * @version     1.2.11
  */
 
 /* jshint node: true */
