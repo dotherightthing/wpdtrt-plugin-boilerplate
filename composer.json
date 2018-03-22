@@ -3,7 +3,7 @@
     "description": "Base classes for a plugin, plugin shortcode, and plugin widget.",
     "type": "library",
     "keywords": ["boilerplate", "framework"],
-    "license": "proprietary",
+    "license": "ISC",
     "authors": [
         {
             "name": "Dan Smith",
