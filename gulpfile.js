@@ -49,10 +49,6 @@ var phpFiles = [
 ];
 var scssFiles = './scss/*.scss';
 
-gulp.task('test', function () {
-  return true;
-});
-
 // tasks
 
 gulp.task('bower', function () {
