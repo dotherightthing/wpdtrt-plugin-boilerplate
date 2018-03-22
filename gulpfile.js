@@ -3,9 +3,13 @@
  * Compile front-end resources
  *
  * @example usage from parent plugin:
+ *    gulp
+ *    gulp dev
  *    gulp dist
  *
  * @example usage from child plugin:
+ *    gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+ *    gulp dev --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *
  * @package     WPPlugin
@@ -444,16 +448,33 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', [
-    'composer',
+    'start',
     'bower',
+    'composer',
+    'add_dev_dependencies',
     'css',
     'js',
-    'phplint',
+    'phplint', // 5
+    'phpdoc', // 6
+    'finish'
+  ]
+);
+
+gulp.task('dev', [
+    'start',
+    'bower',
+    'composer',
+    'add_dev_dependencies',
+    'css',
+    'js',
+    'phplint', // 5
+    'phpdoc', // 6
+    'finish',
     'watch'
   ]
 );
 
-gulp.task ('maintenance', function(callback) {
+gulp.task ('dist', function(callback) {
   runSequence(
     'start',
     'bower', // 1
@@ -471,8 +492,3 @@ gulp.task ('maintenance', function(callback) {
 
   callback();
 });
-
-gulp.task ('dist', [
-    'maintenance'
-  ]
-);
