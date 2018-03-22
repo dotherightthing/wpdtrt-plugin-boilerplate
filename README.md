@@ -67,6 +67,16 @@ $ gulp dev --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd .
 $ gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 
+#### Run documentation build task
+
+```
+# 1. Run phpdoc build task
+$ gulp phpdoc --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+
+# 2. View the generated documentation
+$ open ./docs/phpdoc/index.html
+```
+
 #### Run unit tests
 
 WP_UnitTestCase tests create a dedicated WordPress environment at runtime.
@@ -75,10 +85,10 @@ WP_UnitTestCase tests create a dedicated WordPress environment at runtime.
 # 1. Run default build task
 
 # 2. Install WordPress Test Suite
-bash bin/install-wp-tests.sh wpdtrt_plugin_test YOUR_DB_USERNAME YOUR_DB_PASSWORD 127.0.0.1 latest
+$ bash bin/install-wp-tests.sh wpdtrt_plugin_test YOUR_DB_USERNAME YOUR_DB_PASSWORD 127.0.0.1 latest
 
 # 3. Run ./tests
-phpunit
+$ phpunit
 ```
 
 *If you are having problems installing the WordPress Test Suite, please read [PHP Unit Testing, revisited](http://kb.dotherightthing.dan/php/wordpress/php-unit-testing-revisited/) for setup gotchas and solutions.*
