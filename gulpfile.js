@@ -13,8 +13,7 @@
  *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *
  * @package     WPPlugin
- * @since       1.0.0
- * @version     1.2.12
+ * @version     1.2.13
  */
 
 /* jshint node: true */
