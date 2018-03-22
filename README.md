@@ -81,7 +81,7 @@ bash bin/install-wp-tests.sh wpdtrt_plugin_test YOUR_DB_USERNAME YOUR_DB_PASSWOR
 phpunit
 ```
 
-*If you are having problems installing the WordPress Test Suite, please read [PHP Unit Testing, revisited](kb.dotherightthing.dan/php/wordpress/php-unit-testing-revisited/) for setup gotchas and solutions.*
+*If you are having problems installing the WordPress Test Suite, please read [PHP Unit Testing, revisited](http://kb.dotherightthing.dan/php/wordpress/php-unit-testing-revisited/) for setup gotchas and solutions.*
 
 ---
 
