@@ -16,6 +16,20 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 4. [Bower](https://bower.io/)
 5. [Gulp](https://gulpjs.com/)
 
+### Running Gulp tasks
+
+To run Gulp tasks from `wpdtrt-plugin`:
+
+```
+gulp TASK_NAME
+```
+
+To run Gulp tasks from a generated `wpdtrt-CHILD_PLUGIN_NAME`:
+
+```
+gulp TASK_NAME --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+```
+
 ### Set up a new plugin
 
 #### Generate the plugin scaffolding
@@ -36,7 +50,7 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 5. Convert SCSS into CSS
 
 ```
-$ gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+$ gulp
 ```
 
 ### Develop child plugins, or maintain this one
@@ -51,7 +65,7 @@ $ gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 6. Watch for changes to files
 
 ```
-$ gulp dev --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+$ gulp dev
 ```
 
 #### Run distribution build task
@@ -64,14 +78,14 @@ $ gulp dev --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd .
 6. Generate `./release.zip`
 
 ```
-$ gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+$ gulp dist
 ```
 
 #### Run documentation build task
 
 ```
 # 1. Run phpdoc build task
-$ gulp phpdoc --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+$ gulp phpdoc
 
 # 2. View the generated documentation
 $ open ./docs/phpdoc/index.html
