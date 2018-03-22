@@ -467,7 +467,7 @@ gulp.task('default', [
 gulp.task ('maintenance', function(callback) {
   runSequence(
     'start',
-    //'bower', // 1 -- hanging on wpdtrt-tourdates
+    'bower', // 1
     'composer', // 2
     'add_dev_dependencies',
     'css', // 3
