@@ -3,11 +3,10 @@
  * Compile front-end resources
  *
  * @example usage from parent plugin:
- *    gulp dist --pluginrole parent
  *    gulp dist
  *
  * @example usage from child plugin:
- *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./ --pluginrole child
+ *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *
  * @package     WPPlugin
  * @since       1.0.0
@@ -24,7 +23,6 @@ var autoprefixer = require('autoprefixer');
 var del = require('del');
 var jshint = require('gulp-jshint');
 var log = require('fancy-log');
-var minimist = require('minimist');
 var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
 var print = require('gulp-print').default;
@@ -34,35 +32,26 @@ var sass = require('gulp-sass');
 var shell = require('gulp-shell');
 var zip = require('gulp-zip');
 
-/**
- * Command Line Configuration
- * @example
- *    gulp dist --pluginrole child
- *
- * @see https://github.com/gulpjs/gulp/blob/master/docs/recipes/pass-arguments-from-cli.md
- * @see https://stackoverflow.com/questions/23023650/is-it-possible-to-pass-a-flag-to-gulp-to-have-it-run-tasks-in-different-ways
- */
-
-var knownOptions = {
-  string: 'pluginrole',
-  default: { pluginrole: process.env.NODE_ENV || 'parent' }
-};
-
-var options = minimist(process.argv.slice(2), knownOptions);
-
 // paths
 
+// pop() - remove the last element from the path array and return it
+var pluginName = process.cwd().split('/').pop();
+
 var cssDir = 'css';
-var distDir = 'wpdtrt-plugin';
+var distDir = pluginName;
 var dummyFile = 'README.md';
 var jsFiles = './js/*.js';
 var phpFiles = [
   './**/*.php',
   '!node_modules/**/*',
   '!vendor/**/*',
-  '!wpdtrt-plugin/**/*' // release folder
+  '!' + pluginName + '/**/*' // release folder
 ];
 var scssFiles = './scss/*.scss';
+
+gulp.task('test', function () {
+  return true;
+});
 
 // tasks
 
@@ -315,10 +304,10 @@ gulp.task('release_delete_pre', function () {
 gulp.task('add_dev_dependencies', function() {
 
   log(' ');
-  log('========== add_dev_dependencies (' + options.pluginrole + ') ==========');
+  log('========== add_dev_dependencies ==========');
   log(' ');
 
-  if ( options.pluginrole === 'child' ) {
+  if ( pluginName !== 'wpdtrt-plugin' ) {
 
     // Read the require-dev list from the parent's composer.json
     // The require function is relative to this gulpfile || node_modules
@@ -344,7 +333,7 @@ gulp.task('add_dev_dependencies', function() {
       ]));
 
     }
-    else if ( options.pluginrole === 'parent' ) {
+    else {
       return;
     }
 });
@@ -375,7 +364,7 @@ gulp.task('release_delete_post', function () {
   // return stream or promise for run-sequence
   return del([
     cssDir,
-    distDir // wpdtrt-plugin
+    distDir
   ]);
 });
 
@@ -385,9 +374,8 @@ gulp.task('release_copy', function() {
   log('========== 7b. release_copy ==========');
   log(' ');
 
-  // return stream or promise for run-sequence
-  // https://stackoverflow.com/a/32188928/6850747
-  return gulp.src([
+  // @see http://www.globtester.com/
+  var releaseFiles = [
     './app/**/*',
     './config/**/*',
     './css/**/*',
@@ -396,14 +384,19 @@ gulp.task('release_copy', function() {
     './languages/**/*',
     './templates/**/*',
     './vendor/**/*',
-    '!./vendor/dotherightthing/wpdtrt-plugin/node_modules',
     './views/**/*',
     './index.php',
     './readme.txt',
     './uninstall.php',
-    './wpdtrt-plugin.php'
-  ], { base: '.' })
-  .pipe(gulp.dest(distDir));
+    './' + pluginName + '.php',
+    '!**/node_modules/**/*'
+  ];
+
+  // return stream or promise for run-sequence
+  // https://stackoverflow.com/a/32188928/6850747
+  return gulp.src(releaseFiles, { base: '.' })
+    .pipe(print())
+    .pipe(gulp.dest(distDir));
 });
 
 gulp.task('release_zip', function() {
@@ -439,7 +432,7 @@ gulp.task('release', function(callback) {
 gulp.task('start', function () {
 
   log(' ');
-  log('========== Tasks Started ==========');
+  log('========== Start Gulp Tasks for ' + pluginName + ' ==========');
   log(' ');
 });
 
