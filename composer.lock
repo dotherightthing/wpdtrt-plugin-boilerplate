@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "79bee533a6e8d948f990d93551dbcf1e",
+    "content-hash": "d4a6567ce79128ac7fa2a4a35112a74e",
     "packages": [
         {
             "name": "dotherightthing/wpdtrt-debug",
