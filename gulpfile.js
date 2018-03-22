@@ -181,6 +181,32 @@ gulp.task('phpdoc_delete', function () {
   ]);
 });
 
+gulp.task('phpdoc_remove_before', function() {
+
+  log(' ');
+  log('========== 6b. phpdoc_remove_before ==========');
+  log(' ');
+
+  // Read the extra data from the parent's composer.json
+  // The require function is relative to this gulpfile || node_modules
+  // @see https://stackoverflow.com/a/23643087/6850747
+  var composer_json = require('./composer.json'),
+      phpdoc_remove_before = composer_json['extra'][0]['require-after-phpdoc'],
+      phpdoc_remove_before_no_version = phpdoc_remove_before.split(':')[0];
+
+  // return stream or promise for run-sequence
+  // note: src files are not used,
+  // this structure is only used
+  // to include the preceding log()
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      // install plugin which generates Fatal Error (#12)
+      // if previously installed via package.json
+      'composer remove ' + phpdoc_remove_before_no_version
+    ])
+  );
+});
+
 gulp.task('phpdoc_doc', function() {
 
   log(' ');
@@ -198,11 +224,17 @@ gulp.task('phpdoc_doc', function() {
   );
 });
 
-gulp.task('phpdoc_tgmpa', function() {
+gulp.task('phpdoc_require_after', function() {
 
   log(' ');
-  log('========== 6d. phpdoc_tgmpa ==========');
+  log('========== 6d. phpdoc_require_after ==========');
   log(' ');
+
+  // Read the extra data from the parent's composer.json
+  // The require function is relative to this gulpfile || node_modules
+  // @see https://stackoverflow.com/a/23643087/6850747
+  var composer_json = require('./composer.json'),
+      phpdoc_require_after = composer_json['extra'][0]['require-after-phpdoc'];
 
   // return stream or promise for run-sequence
   // note: src files are not used,
@@ -212,7 +244,7 @@ gulp.task('phpdoc_tgmpa', function() {
     .pipe(shell([
       // install plugin which generates Fatal Error (#12)
       // if previously installed via package.json
-      'composer require tgmpa/tgm-plugin-activation:2.6.*'
+      'composer require ' + phpdoc_require_after
     ])
   );
 });
@@ -226,8 +258,9 @@ gulp.task('phpdoc', function(callback) {
   // return?
   runSequence(
     'phpdoc_delete',
+    'phpdoc_remove_before',
     'phpdoc_doc',
-    'phpdoc_tgmpa',
+    'phpdoc_require_after',
     callback
   );
 });
@@ -287,16 +320,19 @@ gulp.task('add_dev_dependencies', function() {
 
   if ( options.pluginrole === 'child' ) {
 
-    // read the require-dev list from the parent's composer.json
-    var composer_json = require('./vendor/dotherightthing/wpdtrt-plugin/composer.json'),
+    // Read the require-dev list from the parent's composer.json
+    // The require function is relative to this gulpfile || node_modules
+    // @see https://stackoverflow.com/a/23643087/6850747
+    var composer_json = require('./composer.json'),
         dev_packages = composer_json['require-dev'],
         dev_packages_str = '';
 
     // convert the require-dev list into a space-separated string
-    for (var dev_package_name in dev_packages) {
-      // https://stackoverflow.com/a/1963179/6850747
-      if (dev_packages.hasOwnProperty(dev_package_name)) {
-        dev_packages_str += (' ' + dev_package_name);
+    // foo/bar:1.2.3
+    // @see https://stackoverflow.com/a/1963179/6850747
+    for (var pkg in dev_packages) {
+      if (dev_packages.hasOwnProperty(pkg)) {
+        dev_packages_str += (' ' + pkg + ':' + dev_packages[pkg]);
       }
     }
 
@@ -360,6 +396,7 @@ gulp.task('release_copy', function() {
     './languages/**/*',
     './templates/**/*',
     './vendor/**/*',
+    '!./vendor/dotherightthing/wpdtrt-plugin/node_modules',
     './views/**/*',
     './index.php',
     './readme.txt',
