@@ -16,7 +16,7 @@
    */
 
   if ( defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
-    $projectRootPath = '../../../';
+    $projectRootPath = realpath(__DIR__ . '/../../..') . '/';
   }
   else {
     $projectRootPath = '';
