@@ -375,13 +375,13 @@ gulp.task('release_copy', function() {
 
   // @see http://www.globtester.com/
   var releaseFiles = [
-    './app/**/*',
     './config/**/*',
     './css/**/*',
     './docs/**/*',
     './js/**/*',
     './languages/**/*',
-    './templates/**/*',
+    './src/**/*',
+    './template-parts/**/*',
     './vendor/**/*',
     './views/**/*',
     './index.php',
