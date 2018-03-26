@@ -40,19 +40,19 @@ gulp TASK_NAME --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --c
 
 *These tasks are automatically run by the generator.*
 
-1. Install PHP dependencies: `composer install`
-2. Install Node dependencies: `npm install`
+1. Install PHP dependencies, including DTRT WP Plugin: `composer install`
+2. Install Node dependencies, including Gulp: `npm install`
 
 #### Run default build task
 
-1. Install (any new) PHP dependencies (Composer)
+1. Install PHP dependencies required by DTRT WP Plugin (Composer)
 2. Install PHP and front-end dependencies which don't have `composer.json` files (Bower)
 3. Lint PHP and JavaScript code
 4. Generate PHP documentation
 5. Convert SCSS into CSS
 
 ```
-$ gulp
+$ gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 ```
 
 ### Develop child plugins, or maintain this one
