@@ -24,6 +24,7 @@
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
 var del = require('del');
+var jsdoc = require('gulp-jsdoc3');
 var jshint = require('gulp-jshint');
 var log = require('fancy-log');
 var phplint = require('gulp-phplint');
@@ -139,11 +140,15 @@ gulp.task('js', function() {
   log('========== 4. js =========='); // validate JS
   log(' ');
 
+  var jsdocConfig = require('./jsdocConfig');
+
   // return stream or promise for run-sequence
   return gulp.src(jsFiles)
     .pipe(jshint())
     .pipe(jshint.reporter('default', { verbose: true }))
-    .pipe(jshint.reporter('fail'));
+    .pipe(jshint.reporter('fail'))
+    // note: output cannot be piped on from jsdoc
+    .pipe(jsdoc(jsdocConfig));
 });
 
 gulp.task('list_files', function() {
@@ -435,6 +440,11 @@ gulp.task('start', function () {
   log(' ');
 });
 
+/**
+ * Tasks
+ * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/60
+ */ 
+
 gulp.task('watch', function () {
 
   log(' ');
@@ -446,7 +456,8 @@ gulp.task('watch', function () {
   gulp.watch( phpFiles, ['phplint'] );
 });
 
-gulp.task('default', [
+gulp.task('default', function(callback) {
+  runSequence(
     'start',
     'bower',
     'composer',
@@ -456,10 +467,13 @@ gulp.task('default', [
     'phplint', // 5
     'phpdoc', // 6
     'finish'
-  ]
-);
+  );
 
-gulp.task('dev', [
+  callback();
+});
+
+gulp.task ('dev', function(callback) {
+  runSequence(
     'start',
     'bower',
     'composer',
@@ -470,8 +484,10 @@ gulp.task('dev', [
     'phpdoc', // 6
     'finish',
     'watch'
-  ]
-);
+  );
+
+  callback();
+});
 
 gulp.task ('dist', function(callback) {
   runSequence(
