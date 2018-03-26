@@ -4,7 +4,6 @@
  * This file contains JavaScript.
  *    PHP variables are provided in wpdtrt_plugin_config.
  *
- * @package   	WPPlugin
  * @since       1.0.0
  * @version 	1.0.1
  */
