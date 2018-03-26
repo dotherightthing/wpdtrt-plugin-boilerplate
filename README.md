@@ -38,6 +38,8 @@ gulp TASK_NAME --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --c
 
 #### Install dependencies
 
+*These tasks are automatically run by the generator.*
+
 1. Install PHP dependencies: `composer install`
 2. Install Node dependencies: `npm install`
 
