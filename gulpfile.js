@@ -53,13 +53,26 @@ var phpFiles = [
 ];
 var scssFiles = './scss/*.scss';
 
+// helpers
+
+// @see: https://stackoverflow.com/a/27535245/6850747
+gulp.Gulp.prototype.__runTask = gulp.Gulp.prototype._runTask;
+gulp.Gulp.prototype._runTask = function(task) {
+  this.currentTask = task;
+  this.__runTask(task);
+}
+
+function taskheader(task) {
+  log(' ');
+  log('========== ' + task.currentTask.name + ' ==========');
+  log(' ');
+}
+
 // tasks
 
 gulp.task('bower', function () {
 
-  log(' ');
-  log('========== 1. bower ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   return gulp.src(dummyFile, {read: false})
@@ -71,9 +84,7 @@ gulp.task('bower', function () {
 
 gulp.task('composer', function () {
 
-  log(' ');
-  log('========== 2. composer ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   return gulp.src(dummyFile, {read: false})
@@ -85,9 +96,7 @@ gulp.task('composer', function () {
 
 gulp.task('css', function () {
 
-  log(' ');
-  log('========== 3. css ==========');
-  log(' ');
+  taskheader(this);
 
   var processors = [
       autoprefixer({
@@ -129,16 +138,12 @@ gulp.task('css', function () {
 
 gulp.task('finish', function () {
 
-  log(' ');
-  log('========== All Tasks Complete ==========');
-  log(' ');
+  taskheader(this);
 });
 
 gulp.task('js', function() {
 
-  log(' ');
-  log('========== 4. js =========='); // validate JS
-  log(' ');
+  taskheader(this);
 
   var jsdocConfig = require('./jsdocConfig');
 
@@ -153,9 +158,7 @@ gulp.task('js', function() {
 
 gulp.task('list_files', function() {
 
-  log(' ');
-  log('========== 8. list_files ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   return gulp.src('./*')
@@ -164,9 +167,7 @@ gulp.task('list_files', function() {
 
 gulp.task('phpdoc_delete', function () {
 
-  log(' ');
-  log('========== 6a. phpdoc_delete ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   return del([
@@ -176,9 +177,7 @@ gulp.task('phpdoc_delete', function () {
 
 gulp.task('phpdoc_remove_before', function() {
 
-  log(' ');
-  log('========== 6b. phpdoc_remove_before ==========');
-  log(' ');
+  taskheader(this);
 
   // Read the extra data from the parent's composer.json
   // The require function is relative to this gulpfile || node_modules
@@ -202,9 +201,7 @@ gulp.task('phpdoc_remove_before', function() {
 
 gulp.task('phpdoc_doc', function() {
 
-  log(' ');
-  log('========== 6c. phpdoc_doc ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   // note: src files are not used,
@@ -219,9 +216,7 @@ gulp.task('phpdoc_doc', function() {
 
 gulp.task('phpdoc_require_after', function() {
 
-  log(' ');
-  log('========== 6d. phpdoc_require_after ==========');
-  log(' ');
+  taskheader(this);
 
   // Read the extra data from the parent's composer.json
   // The require function is relative to this gulpfile || node_modules
@@ -244,9 +239,7 @@ gulp.task('phpdoc_require_after', function() {
 
 gulp.task('phpdoc', function(callback) {
 
-  log(' ');
-  log('========== 6. phpdoc ==========');
-  log(' ');
+  taskheader(this);
 
   // return?
   runSequence(
@@ -260,9 +253,7 @@ gulp.task('phpdoc', function(callback) {
 
 gulp.task('phplint', function () {
 
-  log(' ');
-  log('========== 5. phplint ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   return gulp.src(phpFiles)
@@ -279,11 +270,20 @@ gulp.task('phplint', function () {
     }));
 });
 
+gulp.task('phpunit', function() {
+
+  taskheader(this);
+
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'phpunit'
+    ])
+  );
+});
+
 gulp.task('release_delete_pre', function () {
 
-  log(' ');
-  log('========== 7a. release_delete_pre ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   return del([
@@ -307,9 +307,7 @@ gulp.task('release_delete_pre', function () {
  */
 gulp.task('add_dev_dependencies', function() {
 
-  log(' ');
-  log('========== add_dev_dependencies ==========');
-  log(' ');
+  taskheader(this);
 
   if ( pluginName !== 'wpdtrt-plugin' ) {
 
@@ -344,9 +342,7 @@ gulp.task('add_dev_dependencies', function() {
 
 gulp.task('remove_dev_dependencies', function() {
 
-  log(' ');
-  log('========== remove_dev_dependencies ==========');
-  log(' ');
+  taskheader(this);
 
   /**
    * Remove dev packages once we've used them
@@ -361,9 +357,7 @@ gulp.task('remove_dev_dependencies', function() {
 
 gulp.task('release_delete_post', function () {
 
-  log(' ');
-  log('========== 7d. release_delete_post ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   return del([
@@ -374,9 +368,7 @@ gulp.task('release_delete_post', function () {
 
 gulp.task('release_copy', function() {
 
-  log(' ');
-  log('========== 7b. release_copy ==========');
-  log(' ');
+  taskheader(this);
 
   // @see http://www.globtester.com/
   var releaseFiles = [
@@ -405,9 +397,7 @@ gulp.task('release_copy', function() {
 
 gulp.task('release_zip', function() {
 
-  log(' ');
-  log('========== 7c. release_zip ==========');
-  log(' ');
+  taskheader(this);
 
   // return stream or promise for run-sequence
   // https://stackoverflow.com/a/32188928/6850747
@@ -420,9 +410,7 @@ gulp.task('release_zip', function() {
 
 gulp.task('release', function(callback) {
 
-  log(' ');
-  log('========== 7. release ==========');
-  log(' ');
+  taskheader(this);
 
   runSequence(
     'release_delete_pre',
@@ -435,9 +423,7 @@ gulp.task('release', function(callback) {
 
 gulp.task('start', function () {
 
-  log(' ');
-  log('========== Start Gulp Tasks for ' + pluginName + ' ==========');
-  log(' ');
+  taskheader(this);
 });
 
 /**
@@ -447,9 +433,7 @@ gulp.task('start', function () {
 
 gulp.task('watch', function () {
 
-  log(' ');
-  log('========== watch ==========');
-  log(' ');
+  taskheader(this);
 
   gulp.watch( scssFiles, ['css'] );
   gulp.watch( jsFiles, ['js'] );
@@ -466,6 +450,7 @@ gulp.task('default', function(callback) {
     'js',
     'phplint', // 5
     'phpdoc', // 6
+    'phpunit',
     'finish'
   );
 
@@ -482,6 +467,7 @@ gulp.task ('dev', function(callback) {
     'js',
     'phplint', // 5
     'phpdoc', // 6
+    'phpunit',
     'finish',
     'watch'
   );
@@ -499,6 +485,7 @@ gulp.task ('dist', function(callback) {
     'js', // 4
     'phplint', // 5
     'phpdoc', // 6
+    'phpunit',
     'remove_dev_dependencies',
     'release', // 7
     'list_files', // 8
