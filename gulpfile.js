@@ -426,7 +426,7 @@ gulp.task('watch', function () {
   gulp.watch( phpFiles, ['phplint'] );
 });
 
-gulp.task('default', function(callback) {
+gulp.task('install', function(callback) {
   runSequence(
     'start',
     'bower',
