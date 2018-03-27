@@ -64,16 +64,15 @@ before_install:
 install:
   - composer install --prefer-dist --no-interaction # also run via gulpfile.js
   - npm install
-  - npm install bower -g
+  - npm install -g bower
 # - bower install - run via gulpfile.js
-  - npm install gulp-cli -g
+  - npm install -g gulp-cli
   # https://www.sitepoint.com/php-continuous-integration-travis-ci/
   # https://getcomposer.org/doc/03-cli.md
 
 # https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 # Run the build task
 script:

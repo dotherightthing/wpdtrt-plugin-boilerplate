@@ -20,8 +20,6 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 
 ### Set up a new plugin
 
-#### Generate the plugin scaffolding
-
 [Install and run the WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate#installation).
 
 ### Develop child plugins, or maintain this one
@@ -110,5 +108,3 @@ This is an evolution of several other approaches:
 
 - someone else's code
 - not intuitive
-
----
