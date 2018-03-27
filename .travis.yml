@@ -73,6 +73,7 @@ install:
 # https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
 
 # Run the build task
 script:
