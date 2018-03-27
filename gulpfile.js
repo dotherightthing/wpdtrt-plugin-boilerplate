@@ -237,20 +237,6 @@ gulp.task('phpdoc_require_after', function() {
   );
 });
 
-gulp.task('phpdoc', function(callback) {
-
-  taskheader(this);
-
-  // return?
-  runSequence(
-    'phpdoc_delete',
-    'phpdoc_remove_before',
-    'phpdoc_doc',
-    'phpdoc_require_after',
-    callback
-  );
-});
-
 gulp.task('phplint', function () {
 
   taskheader(this);
@@ -448,8 +434,9 @@ gulp.task('default', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phplint', // 5
-    'phpdoc', // 6
+    'phplint',
+    'phpdoc_doc',
+    'phpdoc_require_after',
     'phpunit',
     'finish'
   );
@@ -457,7 +444,7 @@ gulp.task('default', function(callback) {
   callback();
 });
 
-gulp.task ('dev', function(callback) {
+gulp.task('dev', function(callback) {
   runSequence(
     'start',
     'bower',
@@ -465,8 +452,11 @@ gulp.task ('dev', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phplint', // 5
-    'phpdoc', // 6
+    'phplint',
+    'phpdoc_delete',
+    'phpdoc_remove_before',
+    'phpdoc_doc',
+    'phpdoc_require_after',
     'phpunit',
     'finish',
     'watch'
@@ -475,22 +465,29 @@ gulp.task ('dev', function(callback) {
   callback();
 });
 
-gulp.task ('dist', function(callback) {
+gulp.task('dist', function(callback) {
   runSequence(
     'start',
-    'bower', // 1
-    'composer', // 2
+    'bower',
+    'composer'
     'add_dev_dependencies',
-    'css', // 3
-    'js', // 4
-    'phplint', // 5
-    'phpdoc', // 6
+    'css',
+    'js',
+    'phplint',
+    'phpdoc_delete',
+    'phpdoc_remove_before',
+    'phpdoc_doc',
+    'phpdoc_require_after',
     'phpunit',
     'remove_dev_dependencies',
-    'release', // 7
-    'list_files', // 8
+    'release',
+    'list_files',
     'finish'
   );
 
   callback();
 });
+
+gulp.task('default', [
+  'install'
+]);
