@@ -18,42 +18,11 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 
 ### Running Gulp tasks
 
-To run Gulp tasks from `wpdtrt-plugin`:
-
-```
-gulp TASK_NAME
-```
-
-To run Gulp tasks from a generated `wpdtrt-CHILD_PLUGIN_NAME`:
-
-```
-gulp TASK_NAME --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
-```
-
 ### Set up a new plugin
 
 #### Generate the plugin scaffolding
 
-[Install the WordPress Plugin Boilerplate](https://github.com/dotherightthing/generator-wp-plugin-boilerplate#installation).
-
-#### Install dependencies
-
-*These tasks are automatically run by the generator.*
-
-1. Install PHP dependencies, including DTRT WP Plugin: `composer install`
-2. Install Node dependencies, including Gulp: `npm install`
-
-#### Run default build task
-
-1. Install PHP dependencies required by DTRT WP Plugin (Composer)
-2. Install PHP and front-end dependencies which don't have `composer.json` files (Bower)
-3. Lint PHP and JavaScript code
-4. Generate PHP documentation
-5. Convert SCSS into CSS
-
-```
-$ gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
-```
+[Install and run the WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate#installation).
 
 ### Develop child plugins, or maintain this one
 
@@ -67,6 +36,10 @@ $ gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
 6. Watch for changes to files
 
 ```
+// from a generated 'child' plugin:
+$ gulp dev --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+
+// from this plugin
 $ gulp dev
 ```
 
@@ -80,17 +53,11 @@ $ gulp dev
 6. Generate `./release.zip`
 
 ```
+// from a generated 'child' plugin:
+$ gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+
+// from this plugin
 $ gulp dist
-```
-
-#### Run documentation build task
-
-```
-# 1. Run phpdoc build task
-$ gulp phpdoc
-
-# 2. View the generated documentation
-$ open ./docs/phpdoc/index.html
 ```
 
 #### Run unit tests
