@@ -60,7 +60,7 @@ gulp.Gulp.prototype.__runTask = gulp.Gulp.prototype._runTask;
 gulp.Gulp.prototype._runTask = function(task) {
   this.currentTask = task;
   this.__runTask(task);
-}
+};
 
 function taskheader(task) {
   log(' ');
@@ -469,7 +469,7 @@ gulp.task('dist', function(callback) {
   runSequence(
     'start',
     'bower',
-    'composer'
+    'composer',
     'add_dev_dependencies',
     'css',
     'js',
