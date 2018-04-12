@@ -62,13 +62,15 @@ $ gulp dist
 
 WP_UnitTestCase tests create a dedicated WordPress environment at runtime.
 
+
+
 ```
-# 1. Run default build task
+// Run default build task
 
-# 2. Install WordPress Test Suite
-$ bash bin/install-wp-tests.sh wpdtrt_plugin_test YOUR_DB_USERNAME YOUR_DB_PASSWORD 127.0.0.1 latest
+// Install WordPress Test Suite
+$ bash bin/install-wp-tests.sh YOUR_TESTING_DB_NAME YOUR_TESTING_DB_USERNAME YOUR_TESTING_DB_PASSWORD 127.0.0.1 latest
 
-# 3. Run ./tests
+// Run ./tests
 $ phpunit
 ```
 
