@@ -2,8 +2,8 @@
 /**
  * Plugin Name:  DTRT Test
  * Plugin URI:   https://github.com/dotherightthing/wpdtrt-plugin
- * Description:  Base classes for a WordPress plugin and associated shortcodes and widgets.
- * Version:      1.2.18
+ * Description:  Test plugin using the wpdtrt-plugin base classes, to create a WordPress plugin and associated shortcodes and widgets.
+ * Version:      1.2.19
  * Author:       Dan Smith
  * Author URI:   https://profiles.wordpress.org/dotherightthingnz
  * License:      GPLv2 or later

@@ -18,15 +18,7 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/wpdtrt-plugin` directory
-2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Use the Settings->DTRT Plugin screen to configure the plugin
-4. Settings->Permalinks: Post name
-
-== Screenshots ==
-
-1. The caption for ./assets/screenshot-1.(png|jpg|jpeg|gif)
-2. The caption for ./assets/screenshot-2.(png|jpg|jpeg|gif)
+Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 == Changelog ==
 
