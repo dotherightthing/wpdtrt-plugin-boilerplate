@@ -203,6 +203,9 @@ if ( !class_exists( 'Shortcode' ) ) {
       // store a reference to the parent plugin
       $plugin = $this->get_plugin();
 
+      // pass through any content between the shortcode tags
+      $template_options['content'] = $content;
+
       $template_options['plugin'] = $plugin;
 
       // Pass options to template-part as query var
