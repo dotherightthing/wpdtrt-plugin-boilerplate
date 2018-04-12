@@ -63,7 +63,7 @@ if( ! defined( 'WPDTRT_TEST_VERSION' ) ) {
  * @since     1.0.0
  * @version   1.0.0
  */
-  define( 'WPDTRT_TEST_VERSION', '1.2.18' );
+  define( 'WPDTRT_TEST_VERSION', '1.2.19' );
 }
 
 if( ! defined( 'WPDTRT_TEST_PATH' ) ) {
