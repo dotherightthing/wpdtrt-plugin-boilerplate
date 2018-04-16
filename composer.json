@@ -35,8 +35,11 @@
     "minimum-stability": "stable",
     "repositories": [
         {
-            "type": "vcs",
-            "url":  "git@github.com:dotherightthing/wpdtrt-debug.git"
+            "type": "composer",
+            "url": "https://repo.packagist.com/dotherightthing/"
+        },
+        {
+            "packagist.org": false
         }
     ],
     "config": {
