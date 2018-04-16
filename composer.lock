@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c1a97cec73218299976ca650d090e40",
+    "content-hash": "926ab6a4107eb4a2365d34dbda6409f1",
     "packages": [
         {
             "name": "dotherightthing/wpdtrt-debug",
@@ -1866,16 +1866,16 @@
         },
         {
             "name": "phpdocumentor/phpdocumentor",
-            "version": "v2.8.4",
+            "version": "v2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "6d8f4c6381283dd2ae21efae30080adde9bfb1ba"
+                "reference": "adfb4affa80e8cc0134616f2d2d264dd25c243eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/6d8f4c6381283dd2ae21efae30080adde9bfb1ba",
-                "reference": "6d8f4c6381283dd2ae21efae30080adde9bfb1ba",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/adfb4affa80e8cc0134616f2d2d264dd25c243eb",
+                "reference": "adfb4affa80e8cc0134616f2d2d264dd25c243eb",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1957,7 +1957,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2015-07-03T10:23:02+00:00"
+            "time": "2015-07-28T06:36:40+00:00"
         },
         {
             "name": "phpdocumentor/reflection",
