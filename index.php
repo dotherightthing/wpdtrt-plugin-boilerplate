@@ -4,7 +4,7 @@
  * @see http://phpenthusiast.com/blog/how-to-autoload-with-composer
  *
  * @package   	WPPlugin
- * @version     1.2.19
+ * @version     1.2.20
  */
 
   /**

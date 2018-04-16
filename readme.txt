@@ -6,7 +6,7 @@ Tags: boilerplate,
 Requires at least: 4.8.1
 Tested up to: 4.9.4
 Requires PHP: 5.6.30
-Stable tag: 1.2.19
+Stable tag: 1.2.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,8 +22,8 @@ Please install and use via the [WordPress Plugin Boilerplate Generator](https://
 
 == Changelog ==
 
-= 1.2.19 =
-* Make any content between the shortcode tags available to the shortcode template 
+= 1.2.20 =
+* Make any content between the shortcode tags available to the shortcode template
 
 = 0.1 =
 * Initial version
