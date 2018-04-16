@@ -186,7 +186,7 @@ if ( !class_exists( 'Shortcode' ) ) {
      *
      * @since 1.0.0
      */
-    public function render_shortcode( $atts, $content = null ) {
+    public function render_shortcode( $atts, $content = '' ) {
 
       /**
        * Combine user attributes with known attributes and fill in defaults when needed.
@@ -202,9 +202,6 @@ if ( !class_exists( 'Shortcode' ) ) {
 
       // store a reference to the parent plugin
       $plugin = $this->get_plugin();
-
-      // pass through any content between the shortcode tags
-      $template_options['content'] = $content;
 
       $template_options['plugin'] = $plugin;
 
@@ -229,9 +226,15 @@ if ( !class_exists( 'Shortcode' ) ) {
         'path' => $plugin->get_path()
       ));
 
+      $template_data = array(
+        'content' => $content // content between shortcode tags
+      );
+
       // /template-parts/wpdtrt-plugin-name/content/foo.php
       // $plugin_data is loaded in template
-      $templates->get_template_part( 'content', $this->get_template_name() );
+      $templates
+        ->set_template_data( $template_data, 'context' )
+        ->get_template_part( 'content', $this->get_template_name() );
 
       /**
        * ob_get_clean — Get current buffer contents and delete current output buffer
