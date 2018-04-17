@@ -32,6 +32,3 @@ Please install and use via the [WordPress Plugin Boilerplate Generator](https://
 
 = 0.1 =
 * Initial release
-
-
-
