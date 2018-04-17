@@ -62,8 +62,6 @@ $ gulp dist
 
 WP_UnitTestCase tests create a dedicated WordPress environment at runtime.
 
-
-
 ```
 // Run default build task
 
@@ -75,6 +73,10 @@ $ phpunit
 ```
 
 *If you are having problems installing the WordPress Test Suite, please read [PHP Unit Testing, revisited](http://kb.dotherightthing.dan/php/wordpress/php-unit-testing-revisited/) for setup gotchas and solutions.*
+
+#### Further documentation
+
+Check out the project [wiki](https://github.com/dotherightthing/wpdtrt-plugin/wiki).
 
 ---
 
