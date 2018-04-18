@@ -65,6 +65,10 @@ WP_UnitTestCase tests create a dedicated WordPress environment at runtime.
 ```
 // Run default build task
 
+// Make mysqladmin available to install-wp-tests.sh
+// https://github.com/dotherightthing/wpdtrt-plugin/issues/68
+$ source ~/.bash_profile
+
 // Install WordPress Test Suite
 $ bash bin/install-wp-tests.sh YOUR_TESTING_DB_NAME YOUR_TESTING_DB_USERNAME YOUR_TESTING_DB_PASSWORD 127.0.0.1 latest
 
