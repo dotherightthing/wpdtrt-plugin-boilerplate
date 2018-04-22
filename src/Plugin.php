@@ -109,16 +109,6 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     protected function wp_setup() {
 
-      $this->set_plugin_dependency(
-        array(
-          'name'          => 'WordPress Admin Style',
-          'slug'          => 'wordpress-admin-style',
-          'source'        => 'https://github.com/bueltge/wordpress-admin-style/archive/master.zip',
-          'external_url'  => 'https://github.com/bueltge/wordpress-admin-style',
-          'required'      => false
-        )
-      );
-
       /**
        * $this->render_foobar() - infers that no args are to be passed, fails
        * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
