@@ -1,9 +1,9 @@
-/**
- * SCSS @extends
- *
- * @package     WPPlugin
- * @since       1.0.0
- */
+//
+// SCSS @extends (Helpers)
+//
+// @package     WPPlugin
+// @since       1.0.0
+//
 
 // ex twentysixteen/style.css
 .wpdtrt-plugin-screen-reader-text {
@@ -32,4 +32,23 @@
 .text-sharpen {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+// embedresponsively.com
+// scales iframe height proportionally
+
+%h-embedresponsively {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;    
+  }
 }
