@@ -13,7 +13,7 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 1. [WordPress](https://wordpress.org/)
 2. [Node.js & NPM](https://nodejs.org/en/)
 3. [Composer](https://getcomposer.org/)
-4. [Bower](https://bower.io/)
+4. [Yarn](https://yarnpkg.com/en/)
 5. [Gulp](https://gulpjs.com/)
 
 ### Running Gulp tasks

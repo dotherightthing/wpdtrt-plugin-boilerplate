@@ -63,10 +63,9 @@ before_install:
 # Note: Remember to run composer update on local dev to get latest updates to dependencies
 install:
   - composer install --prefer-dist --no-interaction # also run via gulpfile.js
-  - npm install
-  - npm install -g bower
-# - bower install - run via gulpfile.js
-  - npm install -g gulp-cli
+  # Adding Yarn to Travis CI - https://gist.github.com/acburdine/61f4f91bacf6554fccdaa394fd14ebbd
+  - npm install -g yarn
+  - yarn global add gulp-cli
   # https://www.sitepoint.com/php-continuous-integration-travis-ci/
   # https://getcomposer.org/doc/03-cli.md
 

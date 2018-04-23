@@ -70,14 +70,14 @@ function taskheader(task) {
 
 // tasks
 
-gulp.task('bower', function () {
+gulp.task('yarn', function () {
 
   taskheader(this);
 
   // return stream or promise for run-sequence
   return gulp.src(dummyFile, {read: false})
     .pipe(shell([
-      'bower install'
+      'yarn install'
     ])
   );
 });
@@ -431,7 +431,7 @@ gulp.task('watch', function () {
 gulp.task('install', function(callback) {
   runSequence(
     'start',
-    'bower',
+    'yarn',
     'composer',
     'add_dev_dependencies',
     'css',
@@ -449,7 +449,7 @@ gulp.task('install', function(callback) {
 gulp.task('dev', function(callback) {
   runSequence(
     'start',
-    'bower',
+    'yarn',
     'composer',
     'add_dev_dependencies',
     'css',
@@ -470,7 +470,7 @@ gulp.task('dev', function(callback) {
 gulp.task('dist', function(callback) {
   runSequence(
     'start',
-    'bower',
+    'yarn',
     'composer',
     'add_dev_dependencies',
     'css',
