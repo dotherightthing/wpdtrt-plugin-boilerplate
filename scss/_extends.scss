@@ -1,11 +1,12 @@
 //
-// SCSS @extends (Helpers)
+// SCSS silent @extends (Helpers)
 //
 // @package     WPPlugin
 // @since       1.0.0
 //
 
 // ex twentysixteen/style.css
+%wpdtrt-plugin--screen-reader-text,
 .wpdtrt-plugin-screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);
   height: 1px;
@@ -15,6 +16,7 @@
   word-wrap: normal !important;
 }
 
+%wpdtrt-plugin--clear,
 .clear {
 	&::after {
 	    content: "";
@@ -23,12 +25,14 @@
 	}
 }
 
+%wpdtrt-plugin--list-reset,
 .list-reset {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
+%wpdtrt-plugin--text-sharpen,
 .text-sharpen {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -37,6 +41,7 @@
 // embedresponsively.com
 // scales iframe height proportionally
 
+%wpdtrt-plugin--embedresponsively,
 %h-embedresponsively {
   position: relative;
   padding-bottom: 56.25%;
