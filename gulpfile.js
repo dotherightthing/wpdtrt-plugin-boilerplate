@@ -384,8 +384,7 @@ gulp.task('release_copy', function() {
     './index.php',
     './readme.txt',
     './uninstall.php',
-    './' + pluginName + '.php',
-    '!**/node_modules/**/*'
+    './' + pluginName + '.php'
   ];
 
   // return stream or promise for run-sequence
