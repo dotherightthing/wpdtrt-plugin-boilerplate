@@ -77,7 +77,7 @@ gulp.task('yarn', function () {
   // return stream or promise for run-sequence
   return gulp.src(dummyFile, {read: false})
     .pipe(shell([
-      'yarn install'
+      'yarn install --non-interactive'
     ])
   );
 });
@@ -89,12 +89,10 @@ gulp.task('yarn_dist', function () {
   // return stream or promise for run-sequence
   return gulp.src(dummyFile, {read: false})
     .pipe(shell([
-      'yarn install --production'
+      'yarn install --non-interactive --production'
     ])
   );
 });
-
-//yarn install --production
 
 gulp.task('composer', function () {
 
