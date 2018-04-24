@@ -82,6 +82,20 @@ gulp.task('yarn', function () {
   );
 });
 
+gulp.task('yarn_dist', function () {
+
+  taskheader(this);
+
+  // return stream or promise for run-sequence
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'yarn install --production'
+    ])
+  );
+});
+
+//yarn install --production
+
 gulp.task('composer', function () {
 
   taskheader(this);
@@ -482,6 +496,7 @@ gulp.task('dist', function(callback) {
     'phpdoc_require_after',
     'phpunit',
     'remove_dev_dependencies',
+    'yarn_dist', // will this uninstall Gulp?
     'release',
     'list_files',
     'finish'
