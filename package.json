@@ -23,7 +23,8 @@
     "gulp-zip": "^4.1.0",
     "include-media": "^1.4.9",
     "jshint": "^2.9.5",
-    "postcss-pxtorem": "^4.0.1"
+    "postcss-pxtorem": "^4.0.1",
+    "run-sequence": "^2.2.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
