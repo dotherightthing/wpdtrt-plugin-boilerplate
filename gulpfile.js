@@ -494,7 +494,7 @@ gulp.task('dist', function(callback) {
     'phpdoc_require_after',
     'phpunit',
     'remove_dev_dependencies',
-    'yarn_dist', // will this uninstall Gulp?
+    'yarn_dist',
     'release',
     'list_files',
     'finish'
