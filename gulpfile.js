@@ -377,6 +377,7 @@ gulp.task('release_copy', function() {
     '!/images/**/*.pxm',
     './js/**/*',
     './languages/**/*',
+    './node_modules/**/*',
     './src/**/*',
     './template-parts/**/*',
     './vendor/**/*',
