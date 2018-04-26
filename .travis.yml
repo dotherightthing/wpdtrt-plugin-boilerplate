@@ -50,7 +50,7 @@ cache:
 # https://docs.travis-ci.com/user/customizing-the-build/#Installing-a-Second-Programming-language
 # https://stackoverflow.com/a/44250453/6850747
 before_install:
-  - nvm install 6.11.2
+  - nvm install 8.11.1
   # Disable XDebug which is only required for Code Coverage reports
   # https://johnblackbourn.com/reducing-travis-ci-build-times-for-wordpress-projects/
   - phpenv config-rm xdebug.ini
