@@ -27,7 +27,7 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 #### Run development build task
 
 1. Install (any new) PHP dependencies (Composer)
-2. Install PHP and front-end dependencies which don't have `composer.json` files (Bower)
+2. Install PHP and front-end dependencies which don't have `composer.json` files (Yarn)
 3. Lint PHP and JavaScript code
 4. Generate PHP documentation
 5. Convert SCSS into CSS
@@ -44,7 +44,7 @@ $ gulp dev
 #### Run distribution build task
 
 1. Install (any new) PHP dependencies (Composer)
-2. Install PHP and front-end dependencies which don't have `composer.json` files (Bower)
+2. Install PHP and front-end dependencies which don't have `composer.json` files (Yarn)
 3. Lint PHP and JavaScript code
 4. Generate PHP documentation
 5. Convert SCSS into CSS
