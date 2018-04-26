@@ -379,7 +379,7 @@ gulp.task('release_copy', function() {
     './js/**/*',
     './languages/**/*',
     './node_modules/**/*',
-    '!/node_modules/bower/*',
+    '!/node_modules/bower/**/*',
     './src/**/*',
     './template-parts/**/*',
     './vendor/**/*',
