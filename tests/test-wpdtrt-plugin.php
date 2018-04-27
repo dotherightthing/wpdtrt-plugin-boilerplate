@@ -16,6 +16,8 @@ class PluginTest extends WP_UnitTestCase {
     public function setUp() {
   		// Make the factory objects available.
         parent::setUp();
+
+        $this->mock_data();
     }
 
     /**
@@ -29,40 +31,85 @@ class PluginTest extends WP_UnitTestCase {
 
     // ########## MOCK DATA ########## //
 
+    public function mock_data() {
+
+        $this->old_plugin_option = array(
+            'google_static_maps_api_key' => array(
+                'type' => 'text',
+                'label' => 'Google Static Maps API Key',
+                'size' => 50,
+                'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY'
+            )
+        );
+
+        $this->new_plugin_option = array(
+            'google_static_maps_api_key' => array(
+                'type' => 'text',
+                'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
+                'size' => 50,
+                'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin'),
+                'value' => 'abc12345'
+            )
+        );
+
+        $this->fallback_plugin_options = array(
+            'plugin_options' => array(),
+            'plugin_data' => array(),
+            'plugin_data_options' => array(),
+            'instance_options' => array(),
+            'plugin_dependencies' => array()
+        );
+
+        $this->old_plugin_options = array(
+            'plugin_options' => array(
+                'google_static_maps_api_key' => array(
+                    'type' => 'text',
+                    'label' => 'Google Static Maps API Key',
+                    'size' => 50,
+                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY'
+                )
+            ),
+            'plugin_data' => array(),
+            'plugin_data_options' => array(
+                'force_refresh' => 1
+            ),
+            'instance_options' => array(),
+            'plugin_dependencies' => array()
+        );
+
+        $this->new_plugin_options = array(
+            'plugin_options' => array(
+                'google_static_maps_api_key' => array(
+                    'type' => 'text',
+                    'label' => 'Google Static Maps API Key',
+                    'size' => 50,
+                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
+                    'value' => 'abc12345'
+                )
+            ),
+            'plugin_data' => array(),
+            'plugin_data_options' => array(
+                'force_refresh' => 1
+            ),
+            'instance_options' => array(),
+            'plugin_dependencies' => array()
+        );
+    }
 
     // ########## TEST ########## //
 
 	/**
-	 * Test set_plugin_options
-     * Tests that values authored on the plugin options page
-     * are successfully saved and persist
+	 * Test set_plugin_options() and get_plugin_options()
+     * These plugin methods manage keys/values which appear
+     * and are authored on the plugin options page
 	 */
-	public function test_set_plugin_options() {
+	public function test__set_plugin_options__get_plugin_options() {
 
         global $wpdtrt_test_plugin;
 
-        $old_plugin_options = array(
-          'google_static_maps_api_key' => array(
-            'type' => 'text',
-            'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
-            'size' => 50,
-            'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin')
-          )
-        );
-
-        $new_plugin_options = array(
-          'google_static_maps_api_key' => array(
-            'type' => 'text',
-            'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
-            'size' => 50,
-            'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin'),
-            'value' => 'abc12345'
-          )
-        );
-
         // when the page is first loaded,
         // we get the plugin options out of the coded config
-        $wpdtrt_test_plugin->set_plugin_options($old_plugin_options);
+        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_option );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -93,7 +140,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // the user enters values and saves the page
         // we expect their entry to be saved in a new 'value' key
-        $wpdtrt_test_plugin->set_plugin_options($new_plugin_options);
+        $wpdtrt_test_plugin->set_plugin_options( $this->new_plugin_option );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -125,7 +172,7 @@ class PluginTest extends WP_UnitTestCase {
         // the page is reloaded
         // we expect the user's entry to be persistent
         // rather than be replaced by the old subset of options
-        $wpdtrt_test_plugin->set_plugin_options($old_plugin_options);
+        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_option );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -157,11 +204,11 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
     /**
-     * Test set_options
-     * Tests that old and new options are successfully merged
-     * and stored in the WordPress Options table
+     * Test set_options()
+     * This is the plugin method which merges old and new data
+     * and then stores in the WordPress Options table
      */
-    public function test_set_options() {
+    public function test__array_merge() {
 
         global $wpdtrt_test_plugin;
 
@@ -206,50 +253,21 @@ class PluginTest extends WP_UnitTestCase {
          */
 
         /**
-         * Test data merging:
-         * array_merge is used in several functions
+         * Test array_merge()
+         * This is the PHP function used in several plugin methods
          * to blend old data (especially old keys) with new data (especially values)
          */
-        $old_options = array(
-            'plugin_options' => array(
-                'google_static_maps_api_key' => array(
-                    'type' => 'text',
-                    'label' => 'Google Static Maps API Key',
-                    'size' => 50,
-                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY'
-                )
-            ),
-            'plugin_data' => array(),
-            'plugin_data_options' => array(
-                'force_refresh' => 1
-            ),
-            'instance_options' => array(),
-            'plugin_dependencies' => array()
-        );
 
-        $new_options = array(
-            'plugin_options' => array(
-                'google_static_maps_api_key' => array(
-                    'type' => 'text',
-                    'label' => 'Google Static Maps API Key',
-                    'size' => 50,
-                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
-                    'value' => 'abc12345'
-                )
-            ),
-            'plugin_data' => array(),
-            'plugin_data_options' => array(
-                'force_refresh' => 1
-            ),
-            'instance_options' => array(),
-            'plugin_dependencies' => array()
-        );
-
-        $options = array_merge( $old_options, $new_options );
+        $options = array_merge( $this->old_plugin_options, $this->new_plugin_options );
 
         $this->assertArrayHasKey(
             'plugin_options',
             $options
+        );  
+
+        $this->assertArrayHasKey(
+            'google_static_maps_api_key',
+            $options['plugin_options']
         );  
 
         $this->assertArrayHasKey(
@@ -272,11 +290,72 @@ class PluginTest extends WP_UnitTestCase {
             $options
         );  
 
-        // fails - issue #84
+        // passes
         $this->assertArrayHasKey(
             'value',
             $options['plugin_options']['google_static_maps_api_key'],
             'When the old and new values are merged, new values are lost'
+        );  
+    }
+
+    /**
+     * Test update_option()
+     * This is the WordPress function which adds the merged data to the options table
+     */
+    public function test__update_option__get_option() {
+
+        global $wpdtrt_test_plugin;
+
+        /**
+         * Testing set_options()
+         */
+
+        $options = array_merge( $this->old_plugin_options, $this->new_plugin_options );
+
+        update_option( $wpdtrt_test_plugin->get_prefix(), $options, null );
+
+        /**
+         * Testing get_options()
+         */
+
+        $options = get_option( $wpdtrt_test_plugin->get_prefix(), $this->fallback_plugin_options );
+
+        $this->assertArrayHasKey(
+            'plugin_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'google_static_maps_api_key',
+            $options['plugin_options']
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'instance_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_dependencies',
+            $options
+        );  
+
+        // passes..
+        // TODO: perhaps at some point, old options are saved over the top of new options?
+        $this->assertArrayHasKey(
+            'value',
+            $options['plugin_options']['google_static_maps_api_key'],
+            'When the options are saved to the database and then retrieved, new values are lost'
         );  
     }
 }
