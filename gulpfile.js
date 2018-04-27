@@ -360,7 +360,6 @@ gulp.task('release_copy', function() {
   taskheader(this);
 
   // @see http://www.globtester.com/
-  // bower - @see dotherightthing/generator-wp-plugin-boilerplate#57
   var releaseFiles = [
     './config/**/*',
     './css/**/*',
