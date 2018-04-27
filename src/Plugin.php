@@ -481,7 +481,8 @@ if ( !class_exists( 'Plugin' ) ) {
     // PLUGIN OPTIONS
 
     /**
-     * Set the value of $plugin_options
+     * Set the value of $plugin_options.
+     *  Add any new options (keys) that have been added in code.
      *
      * @since       1.0.0
      * @version     1.0.0
@@ -491,25 +492,20 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function set_plugin_options( $new_plugin_options ) {
 
-      global $debug;
-
+      // old options stored in database
       $old_plugin_options = $this->get_plugin_options();
+
       $merged_plugin_options = array();
 
-      // for each of the old options
+      // for each of the old option keys
       foreach( $old_plugin_options as $old_option => $old_value ) {
-        // if the old option is still supported in the new config object
-        if ( isset( $new_plugin_options[$old_option] ) ) {
-          // retain the old option and use the old (initial or user) value
-          $merged_plugin_options[$old_option] = $old_value;
-          // remove the old option from the available new options
-          unset( $new_plugin_options[$old_option] );
-        }
+        // copy the option key and value into a merge array
+        $merged_plugin_options[$old_option] = $old_value;
       }
 
-      // for each of the remaining new options
+      // for each of the new option keys
       foreach( $new_plugin_options as $new_option => $new_value ) {
-          // add the new option and use the new (initial) value
+          // overwrite the value in the merge array
           $merged_plugin_options[$new_option] = $new_value;
       }
 
