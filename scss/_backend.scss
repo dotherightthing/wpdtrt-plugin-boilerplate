@@ -9,6 +9,10 @@
 // @import "variables";
 // @import "extends";
 
+// -------------------------------------------------------------------
+// Plugin options page
+// -------------------------------------------------------------------
+
 // restyle WP .spinner
 .wpdtrt-plugin-ajax-response .spinner {
   float: none;
@@ -27,9 +31,48 @@
   font-size: .95em;
 }
 
+// -------------------------------------------------------------------
+// Widget page
+// -------------------------------------------------------------------
+
 .widget {
   .wpdtrt-plugin-tip {
     display: block;
     padding-top: 4px;
+  }
+}
+
+// -------------------------------------------------------------------
+// Attachment page
+// -------------------------------------------------------------------
+
+// hide unused core fields, to show custom fields sooner
+.attachment-details {
+    > [data-setting="url"],
+    > [data-setting="title"],
+    > [data-setting="description"] {
+     display: none;
+    }
+}
+
+// hide redundant warning, to show custom fields sooner
+.media-types-required-info {
+  display: none;
+}
+
+// create a visual separator before the custom fields
+.compat-item table.compat-attachment-fields {
+    padding-top: 5px;
+    border-top: 1px solid #ddd;
+    margin-top: 15px;
+}
+
+.compat-attachment-fields {
+
+  // reduce size of help text, to compress custom fields
+  p.help {
+    font-size: 11px;
+    font-style: normal;
+    margin-top: 3px;
   }
 }

@@ -56,3 +56,10 @@
     height: 100%;    
   }
 }
+
+// add a divider after the last attachment field added by a plugin
+%wpdtrt-plugin--last-attachment-field-divider {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+}
