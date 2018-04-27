@@ -33,7 +33,9 @@ class PluginTest extends WP_UnitTestCase {
     // ########## TEST ########## //
 
 	/**
-	 * Test
+	 * Test set_plugin_options
+     * Tests that values authored on the plugin options page
+     * are successfully saved and persist
 	 */
 	public function test_set_plugin_options() {
 
@@ -122,7 +124,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // the page is reloaded
         // we expect the user's entry to be persistent
-        // rather than be removed by the old subset of options
+        // rather than be replaced by the old subset of options
         $wpdtrt_test_plugin->set_plugin_options($old_plugin_options);
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
@@ -153,4 +155,128 @@ class PluginTest extends WP_UnitTestCase {
             'When the page is reloaded, the user value should persist (#84)'
         );  
 	}
+
+    /**
+     * Test set_options
+     * Tests that old and new options are successfully merged
+     * and stored in the WordPress Options table
+     */
+    public function test_set_options() {
+
+        global $wpdtrt_test_plugin;
+
+        /**
+         * Various options are stored in a single, multidimensional $options array,
+         *  which is stored in the WordPress Options table.
+         *
+         *  $options['plugin_options']
+         *      What: Global options available anywhere in the Plugin
+         *      Format: An array of options, each describes a form input for collecting data
+         *      Defaults: Set in wpdrt-pluginname.php
+         *      Updates: Updated via user input on plugin options page
+         *      Docs: https://github.com/dotherightthing/wpdtrt-plugin/wiki/Add-a-global-option
+         *
+         *  $options['plugin_dependencies']
+         *      What: WordPress plugin dependencies required by the Plugin
+         *      Format: An array of TGMPA dependencies, each describes a source repository
+         *      Defaults: Set in wpdrt-pluginname.php (config object)
+         *      Updates: Set in class-wpdtrt-pluginname-plugin (set_plugin_dependency in wp_setup)
+         *      Docs: https://github.com/dotherightthing/wpdtrt-plugin/wiki/Add-a-WordPress-plugin-dependency
+         *
+         *  $options['instance_options']
+         *      What: Widget & Shortcode options
+         *      Format: An array of options, each describes a form input for collecting data
+         *      Defaults: Set in wpdrt-pluginname.php
+         *      Updates: Updated via user input on widget screen, and coded shortcode options
+         *      Docs: https://github.com/dotherightthing/wpdtrt-plugin/wiki/Add-a-shortcode-or-widget-option
+         *
+         *  $options['plugin_data']
+         *      What: API response
+         *      Format: JSON
+         *      Defaults: Set in class-wpdtrt-pluginname-plugin (get_api_data)
+         *      Updates: Updated via repeat calls to the API after a timeout (via options page)
+         *      Docs: -
+         *
+         *  $options['plugin_data_options']
+         *      What: meta data attached to the plugin data, to determine refresh frequency
+         *      Format: An array containing two options: last_updated and force_refresh
+         *      Defaults: -
+         *      Updates: TODO - Via options page?
+         *      Docs: -
+         */
+
+        /**
+         * Test data merging:
+         * array_merge is used in several functions
+         * to blend old data (especially old keys) with new data (especially values)
+         */
+        $old_options = array(
+            'plugin_options' => array(
+                'google_static_maps_api_key' => array(
+                    'type' => 'text',
+                    'label' => 'Google Static Maps API Key',
+                    'size' => 50,
+                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY'
+                )
+            ),
+            'plugin_data' => array(),
+            'plugin_data_options' => array(
+                'force_refresh' => 1
+            ),
+            'instance_options' => array(),
+            'plugin_dependencies' => array()
+        );
+
+        $new_options = array(
+            'plugin_options' => array(
+                'google_static_maps_api_key' => array(
+                    'type' => 'text',
+                    'label' => 'Google Static Maps API Key',
+                    'size' => 50,
+                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
+                    'value' => 'abc12345'
+                )
+            ),
+            'plugin_data' => array(),
+            'plugin_data_options' => array(
+                'force_refresh' => 1
+            ),
+            'instance_options' => array(),
+            'plugin_dependencies' => array()
+        );
+
+        $options = array_merge( $old_options, $new_options );
+
+        $this->assertArrayHasKey(
+            'plugin_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'instance_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_dependencies',
+            $options
+        );  
+
+        // fails - issue #84
+        $this->assertArrayHasKey(
+            'value',
+            $options['plugin_options']['google_static_maps_api_key'],
+            'When the old and new values are merged, new values are lost'
+        );  
+    }
 }
