@@ -350,7 +350,6 @@ gulp.task('release_delete_post', function () {
 
   // return stream or promise for run-sequence
   return del([
-    cssDir,
     distDir
   ]);
 });
@@ -486,9 +485,13 @@ gulp.task('dist', function(callback) {
     'phpdoc_doc',
     'phpdoc_require_after',
     'phpunit',
+    // package release
     'remove_dev_dependencies',
     'yarn_dist',
     'release',
+    // reinstall dev tools
+    'yarn',
+    'add_dev_dependencies',
     'finish'
   );
 
