@@ -168,15 +168,6 @@ gulp.task('js', function() {
     .pipe(jsdoc(jsdocConfig));
 });
 
-gulp.task('list_files', function() {
-
-  taskheader(this);
-
-  // return stream or promise for run-sequence
-  return gulp.src('./*')
-    .pipe(print());
-});
-
 gulp.task('phpdoc_delete', function () {
 
   taskheader(this);
@@ -499,7 +490,6 @@ gulp.task('dist', function(callback) {
     'remove_dev_dependencies',
     'yarn_dist',
     'release',
-    'list_files',
     'finish'
   );
 
