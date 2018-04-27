@@ -379,7 +379,8 @@ gulp.task('release_copy', function() {
     './js/**/*',
     './languages/**/*',
     './node_modules/**/*',
-    '!./node_modules/bower/**/*',
+    '!./node_modules/wpdtrt-plugin', // Yarn environment symlink
+    '!./node_modules/wpdtrt-plugin/**/*', // Yarn environment symlink contents
     './src/**/*',
     './template-parts/**/*',
     './vendor/**/*',
