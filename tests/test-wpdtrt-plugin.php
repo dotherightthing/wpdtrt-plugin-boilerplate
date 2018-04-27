@@ -213,46 +213,6 @@ class PluginTest extends WP_UnitTestCase {
         global $wpdtrt_test_plugin;
 
         /**
-         * Various options are stored in a single, multidimensional $options array,
-         *  which is stored in the WordPress Options table.
-         *
-         *  $options['plugin_options']
-         *      What: Global options available anywhere in the Plugin
-         *      Format: An array of options, each describes a form input for collecting data
-         *      Defaults: Set in wpdrt-pluginname.php
-         *      Updates: Updated via user input on plugin options page
-         *      Docs: https://github.com/dotherightthing/wpdtrt-plugin/wiki/Add-a-global-option
-         *
-         *  $options['plugin_dependencies']
-         *      What: WordPress plugin dependencies required by the Plugin
-         *      Format: An array of TGMPA dependencies, each describes a source repository
-         *      Defaults: Set in wpdrt-pluginname.php (config object)
-         *      Updates: Set in class-wpdtrt-pluginname-plugin (set_plugin_dependency in wp_setup)
-         *      Docs: https://github.com/dotherightthing/wpdtrt-plugin/wiki/Add-a-WordPress-plugin-dependency
-         *
-         *  $options['instance_options']
-         *      What: Widget & Shortcode options
-         *      Format: An array of options, each describes a form input for collecting data
-         *      Defaults: Set in wpdrt-pluginname.php
-         *      Updates: Updated via user input on widget screen, and coded shortcode options
-         *      Docs: https://github.com/dotherightthing/wpdtrt-plugin/wiki/Add-a-shortcode-or-widget-option
-         *
-         *  $options['plugin_data']
-         *      What: API response
-         *      Format: JSON
-         *      Defaults: Set in class-wpdtrt-pluginname-plugin (get_api_data)
-         *      Updates: Updated via repeat calls to the API after a timeout (via options page)
-         *      Docs: -
-         *
-         *  $options['plugin_data_options']
-         *      What: meta data attached to the plugin data, to determine refresh frequency
-         *      Format: An array containing two options: last_updated and force_refresh
-         *      Defaults: -
-         *      Updates: TODO - Via options page?
-         *      Docs: -
-         */
-
-        /**
          * Test array_merge()
          * This is the PHP function used in several plugin methods
          * to blend old data (especially old keys) with new data (especially values)
