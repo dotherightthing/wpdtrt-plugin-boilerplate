@@ -6,7 +6,7 @@ Tags: boilerplate,
 Requires at least: 4.8.1
 Tested up to: 4.9.4
 Requires PHP: 5.6.30
-Stable tag: 1.2.30
+Stable tag: 1.2.31
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,9 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 == Changelog ==
+
+= 1.2.31 =
+* Add common backend styles
 
 = 1.2.30 =
 * Migrate from Bower & NPM to Yarn
