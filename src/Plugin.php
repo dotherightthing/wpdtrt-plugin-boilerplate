@@ -495,19 +495,7 @@ if ( !class_exists( 'Plugin' ) ) {
       // old options stored in database
       $old_plugin_options = $this->get_plugin_options();
 
-      $merged_plugin_options = array();
-
-      // for each of the old option keys
-      foreach( $old_plugin_options as $old_option => $old_value ) {
-        // copy the option key and value into a merge array
-        $merged_plugin_options[$old_option] = $old_value;
-      }
-
-      // for each of the new option keys
-      foreach( $new_plugin_options as $new_option => $new_value ) {
-          // overwrite the value in the merge array
-          $merged_plugin_options[$new_option] = $new_value;
-      }
+      $merged_plugin_options = array_merge_recursive( $old_plugin_options, $new_plugin_options );
 
       // Save the merged options
       $options = $this->get_options();

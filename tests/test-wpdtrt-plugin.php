@@ -33,7 +33,7 @@ class PluginTest extends WP_UnitTestCase {
 
     public function mock_data() {
 
-        $this->old_plugin_option = array(
+        $this->old_plugin_options = array(
             'google_static_maps_api_key' => array(
                 'type' => 'text',
                 'label' => 'Google Static Maps API Key',
@@ -42,7 +42,7 @@ class PluginTest extends WP_UnitTestCase {
             )
         );
 
-        $this->new_plugin_option = array(
+        $this->new_plugin_options = array(
             'google_static_maps_api_key' => array(
                 'type' => 'text',
                 'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
@@ -60,7 +60,7 @@ class PluginTest extends WP_UnitTestCase {
             'plugin_dependencies' => array()
         );
 
-        $this->old_plugin_options = array(
+        $this->old_options = array(
             'plugin_options' => array(
                 'google_static_maps_api_key' => array(
                     'type' => 'text',
@@ -77,7 +77,7 @@ class PluginTest extends WP_UnitTestCase {
             'plugin_dependencies' => array()
         );
 
-        $this->new_plugin_options = array(
+        $this->new_options = array(
             'plugin_options' => array(
                 'google_static_maps_api_key' => array(
                     'type' => 'text',
@@ -109,7 +109,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // when the page is first loaded,
         // we get the plugin options out of the coded config
-        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_option );
+        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -140,7 +140,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // the user enters values and saves the page
         // we expect their entry to be saved in a new 'value' key
-        $wpdtrt_test_plugin->set_plugin_options( $this->new_plugin_option );
+        $wpdtrt_test_plugin->set_plugin_options( $this->new_plugin_options );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -172,7 +172,8 @@ class PluginTest extends WP_UnitTestCase {
         // the page is reloaded
         // we expect the user's entry to be persistent
         // rather than be replaced by the old subset of options
-        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_option );
+        // TODO: how are old options are saved over the top of new options?
+        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -204,21 +205,16 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
     /**
-     * Test set_options()
-     * This is the plugin method which merges old and new data
-     * and then stores in the WordPress Options table
+     * Test array_merge()
+     * This is the PHP function used in several plugin methods
+     * to blend old data (especially old keys) with new data (especially values)
+     * This approach fails, but array_merge_recursive works.
      */
-    public function test__array_merge() {
+    public function archived_test__array_merge() {
 
         global $wpdtrt_test_plugin;
 
-        /**
-         * Test array_merge()
-         * This is the PHP function used in several plugin methods
-         * to blend old data (especially old keys) with new data (especially values)
-         */
-
-        $options = array_merge( $this->old_plugin_options, $this->new_plugin_options );
+        $options = array_merge( $this->old_options, $this->new_options );
 
         $this->assertArrayHasKey(
             'plugin_options',
@@ -254,8 +250,146 @@ class PluginTest extends WP_UnitTestCase {
         $this->assertArrayHasKey(
             'value',
             $options['plugin_options']['google_static_maps_api_key'],
-            'When the old and new values are merged, new values are lost'
+            'When old and new values are merged, new values are lost'
+        ); 
+
+        /**
+         * Test array_merge in reverse
+         * When the page is subsequently reloaded
+         * the plugin appears to reapply the original config
+         * causing user data to be erased
+         */
+
+        $options = array_merge( $this->new_options, $this->old_options );
+
+         $this->assertArrayHasKey(
+            'plugin_options',
+            $options
         );  
+
+        $this->assertArrayHasKey(
+            'google_static_maps_api_key',
+            $options['plugin_options']
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'instance_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_dependencies',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'value',
+            $options['plugin_options']['google_static_maps_api_key'],
+            'When new and old values are merged, new values are lost'
+        ); 
+    }
+
+    /**
+     * Test array_merge_recursive()
+     * A potential replacement for array_merge
+     */
+    public function test__array_merge_recursive() {
+
+        global $wpdtrt_test_plugin;
+
+        $options = array_merge_recursive( $this->old_options, $this->new_options );
+
+        $this->assertArrayHasKey(
+            'plugin_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'google_static_maps_api_key',
+            $options['plugin_options']
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'instance_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_dependencies',
+            $options
+        );  
+
+        // passes
+        $this->assertArrayHasKey(
+            'value',
+            $options['plugin_options']['google_static_maps_api_key'],
+            'When old and new values are merged, new values are lost'
+        ); 
+
+        /**
+         * Test array_merge in reverse
+         * When the page is subsequently reloaded
+         * the plugin appears to reapply the original config
+         * causing user data to be erased
+         */
+
+        $options = array_merge_recursive( $this->new_options, $this->old_options );
+
+         $this->assertArrayHasKey(
+            'plugin_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'google_static_maps_api_key',
+            $options['plugin_options']
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_data_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'instance_options',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'plugin_dependencies',
+            $options
+        );  
+
+        $this->assertArrayHasKey(
+            'value',
+            $options['plugin_options']['google_static_maps_api_key'],
+            'When new and old values are merged, new values are lost'
+        ); 
     }
 
     /**
@@ -270,7 +404,7 @@ class PluginTest extends WP_UnitTestCase {
          * Testing set_options()
          */
 
-        $options = array_merge( $this->old_plugin_options, $this->new_plugin_options );
+        $options = array_merge( $this->old_options, $this->new_options );
 
         update_option( $wpdtrt_test_plugin->get_prefix(), $options, null );
 
@@ -310,12 +444,101 @@ class PluginTest extends WP_UnitTestCase {
             $options
         );  
 
-        // passes..
-        // TODO: perhaps at some point, old options are saved over the top of new options?
+        // passes
         $this->assertArrayHasKey(
             'value',
             $options['plugin_options']['google_static_maps_api_key'],
             'When the options are saved to the database and then retrieved, new values are lost'
         );  
+    }
+
+    /**
+     * Test that the correct field 'type'
+     * is passed to the Plugin's render_form_element()
+     * as it us used to determine the include() name
+     * via options.php
+     */
+    public function test__render_form_element() {
+
+        foreach( $this->new_plugin_options as $name => $attributes ) {
+
+            $this->assertArrayHasKey(
+                'type',
+                $attributes
+            );
+
+            $this->assertEquals(
+                'text',
+                $attributes['type']
+            );
+        }
+    }
+
+    /**
+     * Test whether multiple calls to set and get plugin options
+     * result in duplicate keys
+     */
+    public function test__set_plugin_options__get_plugin_options__multi() {
+
+        global $wpdtrt_test_plugin;
+
+        /*
+        [28-Apr-2018 01:13:06 UTC] PHP Notice:  Array to string conversion in /Volumes/DanBackup/Websites/wpdtrt-exif/vendor/dotherightthing/wpdtrt-plugin/src/Plugin.php on line 1386
+        [28-Apr-2018 01:13:06 UTC] PHP Warning:  require(/Volumes/DanBackup/Websites/wpdtrt-exif/vendor/dotherightthing/wpdtrt-plugin/views/form-element-Array.php): failed to open stream: No such file or directory in /Volumes/DanBackup/Websites/wpdtrt-exif/vendor/dotherightthing/wpdtrt-plugin/src/Plugin.php on line 1386
+
+        //render_form_element()
+        global $debug;
+        $debug->log( $type );
+
+        (
+            [0] => text
+            [1] => text
+            [2] => text
+            [3] => text
+            [4] => text
+            [5] => text
+            [6] => text
+            [7] => text
+            [8] => text
+            [9] => text
+            [10] => text
+            [11] => text
+            [12] => text
+            [13] => text
+            [14] => text
+            [15] => text
+            [16] => text
+            [17] => text
+            [18] => text
+            [19] => text
+            [20] => text
+            [21] => text
+        )
+
+        It looks like array_merge_recursive in set_plugin_options is adding keys multiple times.
+        */
+
+        // when the page is first loaded,
+        // we get the plugin options out of the coded config
+        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
+        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+        $wpdtrt_test_plugin->set_plugin_options( $plugin_options );
+        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+        $wpdtrt_test_plugin->set_plugin_options( $plugin_options );
+        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+
+        foreach( $plugin_options as $name => $attributes ) {
+
+            $this->assertArrayHasKey(
+                'type',
+                $attributes
+            );
+
+            $this->assertEquals(
+                'text',
+                $attributes['type'],
+                'A string is expexted for the field type'
+            );
+        }
     }
 }
