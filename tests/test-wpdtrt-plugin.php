@@ -36,7 +36,7 @@ class PluginTest extends WP_UnitTestCase {
 
     public function mock_data() {
 
-        $this->old_plugin_options = array(
+        $this->plugin_options_config = array(
             'google_static_maps_api_key' => array(
                 'type' => 'text',
                 'label' => 'Google Static Maps API Key',
@@ -45,7 +45,7 @@ class PluginTest extends WP_UnitTestCase {
             )
         );
 
-        $this->new_plugin_options = array(
+        $this->plugin_options_user = array(
             'google_static_maps_api_key' => array(
                 'type' => 'text',
                 'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
@@ -63,7 +63,7 @@ class PluginTest extends WP_UnitTestCase {
             'plugin_dependencies' => array()
         );
 
-        $this->old_options = array(
+        $this->all_options_config = array(
             'plugin_options' => array(
                 'google_static_maps_api_key' => array(
                     'type' => 'text',
@@ -80,7 +80,7 @@ class PluginTest extends WP_UnitTestCase {
             'plugin_dependencies' => array()
         );
 
-        $this->new_options = array(
+        $this->all_options_user = array(
             'plugin_options' => array(
                 'google_static_maps_api_key' => array(
                     'type' => 'text',
@@ -114,7 +114,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // when the page is first loaded,
         // we get the plugin options out of the coded config
-        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -145,7 +145,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // the user enters values and saves the page
         // we expect their entry to be saved in a new 'value' key
-        $wpdtrt_test_plugin->set_plugin_options( $this->new_plugin_options );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_user );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -178,7 +178,7 @@ class PluginTest extends WP_UnitTestCase {
         // we expect the user's entry to be persistent
         // rather than be replaced by the old subset of options
         // TODO: how are old options are saved over the top of new options?
-        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -220,7 +220,7 @@ class PluginTest extends WP_UnitTestCase {
 
         global $wpdtrt_test_plugin;
 
-        $options = array_merge( $this->old_options, $this->new_options );
+        $options = array_merge( $this->all_options_config, $this->all_options_user );
 
         $this->assertArrayHasKey(
             'plugin_options',
@@ -266,7 +266,7 @@ class PluginTest extends WP_UnitTestCase {
          * causing user data to be erased
          */
 
-        $options = array_merge( $this->new_options, $this->old_options );
+        $options = array_merge( $this->all_options_user, $this->all_options_config );
 
          $this->assertArrayHasKey(
             'plugin_options',
@@ -315,7 +315,7 @@ class PluginTest extends WP_UnitTestCase {
 
         global $wpdtrt_test_plugin;
 
-        $options = array_merge_recursive( $this->old_options, $this->new_options );
+        $options = array_merge_recursive( $this->all_options_config, $this->all_options_user );
 
         $this->assertArrayHasKey(
             'plugin_options',
@@ -361,7 +361,7 @@ class PluginTest extends WP_UnitTestCase {
          * causing user data to be erased
          */
 
-        $options = array_merge_recursive( $this->new_options, $this->old_options );
+        $options = array_merge_recursive( $this->all_options_user, $this->all_options_config );
 
          $this->assertArrayHasKey(
             'plugin_options',
@@ -414,7 +414,7 @@ class PluginTest extends WP_UnitTestCase {
          * Testing set_options()
          */
 
-        $options = array_merge( $this->old_options, $this->new_options );
+        $options = array_merge( $this->all_options_config, $this->all_options_user );
 
         update_option( $wpdtrt_test_plugin->get_prefix(), $options, null );
 
@@ -472,7 +472,7 @@ class PluginTest extends WP_UnitTestCase {
      */
     public function test__render_form_element() {
 
-        foreach( $this->new_plugin_options as $name => $attributes ) {
+        foreach( $this->plugin_options_user as $name => $attributes ) {
 
             $this->assertArrayHasKey(
                 'type',
@@ -500,7 +500,7 @@ class PluginTest extends WP_UnitTestCase {
         // we get the plugin options out of the coded config
 
         // 1
-        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         foreach( $plugin_options as $name => $attributes ) {
@@ -532,7 +532,7 @@ class PluginTest extends WP_UnitTestCase {
         // we get the plugin options out of the coded config
 
         // 1
-        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         // 2
