@@ -485,8 +485,9 @@ if ( !class_exists( 'Plugin' ) ) {
      *  Add any new options or attributes in the configuration.
      *  Adds the value attribute once this has been supplied by the user.
      *
-     * @since       1.0.0
      * @version     1.1.0
+     * @since       1.0.0
+     * @since       1.3.0 Fixed option merging
      *
      * @param       array $plugin_options
      * @return      array $options Merged options (for unit testing)

@@ -99,13 +99,15 @@ class PluginTest extends WP_UnitTestCase {
         );
     }
 
-    // ########## TEST ########## //
+    // ########## TESTS ########## //
 
 	/**
 	 * Test set_plugin_options() and get_plugin_options()
      * These plugin methods manage keys/values which appear
      * and are authored on the plugin options page
-	 */
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+     */
 	public function test__set_plugin_options__get_plugin_options() {
 
         global $wpdtrt_test_plugin;
@@ -199,11 +201,10 @@ class PluginTest extends WP_UnitTestCase {
             $plugin_options['google_static_maps_api_key']
         );  
 
-        // fails - issue #84
         $this->assertArrayHasKey(
             'value',
             $plugin_options['google_static_maps_api_key'],
-            'When the page is reloaded, the user value should persist (#84)'
+            'When the page is reloaded, the user value should persist'
         );  
 	}
 
@@ -212,6 +213,8 @@ class PluginTest extends WP_UnitTestCase {
      * This is the PHP function used in several plugin methods
      * to blend old data (especially old keys) with new data (especially values)
      * This approach fails, but array_merge_recursive works.
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
      */
     public function archived_test__array_merge() {
 
@@ -305,6 +308,8 @@ class PluginTest extends WP_UnitTestCase {
     /**
      * Test array_merge_recursive()
      * A potential replacement for array_merge
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
      */
     public function test__array_merge_recursive() {
 
@@ -398,6 +403,8 @@ class PluginTest extends WP_UnitTestCase {
     /**
      * Test update_option()
      * This is the WordPress function which adds the merged data to the options table
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
      */
     public function test__update_option__get_option() {
 
@@ -460,6 +467,8 @@ class PluginTest extends WP_UnitTestCase {
      * is passed to the Plugin's render_form_element()
      * as it us used to determine the include() name
      * via options.php
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
      */
     public function test__render_form_element() {
 
@@ -479,7 +488,9 @@ class PluginTest extends WP_UnitTestCase {
 
     /**
      * Test whether single calls to set and get plugin options
-     * results in duplicate keys
+     * result in duplicate keys
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
      */
     public function test__set_plugin_options__get_plugin_options__single() {
 
@@ -510,6 +521,8 @@ class PluginTest extends WP_UnitTestCase {
     /**
      * Test whether multiple calls to set and get plugin options
      * result in duplicate keys
+      *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
      */
     public function test__set_plugin_options__get_plugin_options__multi() {
 
@@ -543,5 +556,14 @@ class PluginTest extends WP_UnitTestCase {
                 'A string is expected for the field type'
             );
         }
+    }
+
+    /**
+     * Test that the options page fields display the correct attributes
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+     */
+    public function todo__test__render_options_page_field() {
+        // 
     }
 }
