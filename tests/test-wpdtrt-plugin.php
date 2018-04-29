@@ -26,7 +26,10 @@ class PluginTest extends WP_UnitTestCase {
      */
     public function tearDown() {
 
+        global $wpdtrt_test_plugin;
+
     	parent::tearDown();
+        //$wpdtrt_test_plugin->set_plugin_options( array() );
     }
 
     // ########## MOCK DATA ########## //
@@ -475,6 +478,36 @@ class PluginTest extends WP_UnitTestCase {
     }
 
     /**
+     * Test whether single calls to set and get plugin options
+     * results in duplicate keys
+     */
+    public function test__set_plugin_options__get_plugin_options__single() {
+
+        global $wpdtrt_test_plugin;
+
+        // when the page is first loaded,
+        // we get the plugin options out of the coded config
+
+        // 1
+        $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
+        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+
+        foreach( $plugin_options as $name => $attributes ) {
+
+            $this->assertArrayHasKey(
+                'type',
+                $attributes
+            );
+
+            $this->assertEquals(
+                'text',
+                $attributes['type'],
+                'A string is expected for the field type'
+            );
+        }
+    }
+
+    /**
      * Test whether multiple calls to set and get plugin options
      * result in duplicate keys
      */
@@ -482,48 +515,18 @@ class PluginTest extends WP_UnitTestCase {
 
         global $wpdtrt_test_plugin;
 
-        /*
-        [28-Apr-2018 01:13:06 UTC] PHP Notice:  Array to string conversion in /Volumes/DanBackup/Websites/wpdtrt-exif/vendor/dotherightthing/wpdtrt-plugin/src/Plugin.php on line 1386
-        [28-Apr-2018 01:13:06 UTC] PHP Warning:  require(/Volumes/DanBackup/Websites/wpdtrt-exif/vendor/dotherightthing/wpdtrt-plugin/views/form-element-Array.php): failed to open stream: No such file or directory in /Volumes/DanBackup/Websites/wpdtrt-exif/vendor/dotherightthing/wpdtrt-plugin/src/Plugin.php on line 1386
-
-        //render_form_element()
-        global $debug;
-        $debug->log( $type );
-
-        (
-            [0] => text
-            [1] => text
-            [2] => text
-            [3] => text
-            [4] => text
-            [5] => text
-            [6] => text
-            [7] => text
-            [8] => text
-            [9] => text
-            [10] => text
-            [11] => text
-            [12] => text
-            [13] => text
-            [14] => text
-            [15] => text
-            [16] => text
-            [17] => text
-            [18] => text
-            [19] => text
-            [20] => text
-            [21] => text
-        )
-
-        It looks like array_merge_recursive in set_plugin_options is adding keys multiple times.
-        */
-
         // when the page is first loaded,
         // we get the plugin options out of the coded config
+
+        // 1
         $wpdtrt_test_plugin->set_plugin_options( $this->old_plugin_options );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+
+        // 2
         $wpdtrt_test_plugin->set_plugin_options( $plugin_options );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+
+        // 3
         $wpdtrt_test_plugin->set_plugin_options( $plugin_options );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
@@ -537,7 +540,7 @@ class PluginTest extends WP_UnitTestCase {
             $this->assertEquals(
                 'text',
                 $attributes['type'],
-                'A string is expexted for the field type'
+                'A string is expected for the field type'
             );
         }
     }

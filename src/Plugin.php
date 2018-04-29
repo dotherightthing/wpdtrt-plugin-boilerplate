@@ -482,10 +482,11 @@ if ( !class_exists( 'Plugin' ) ) {
 
     /**
      * Set the value of $plugin_options.
-     *  Add any new options (keys) that have been added in code.
+     *  Add any new options or attributes in the configuration.
+     *  Adds the value attribute once this has been supplied by the user.
      *
      * @since       1.0.0
-     * @version     1.0.0
+     * @version     1.1.0
      *
      * @param       array $plugin_options
      * @return      array $options Merged options (for unit testing)
@@ -495,7 +496,55 @@ if ( !class_exists( 'Plugin' ) ) {
       // old options stored in database
       $old_plugin_options = $this->get_plugin_options();
 
-      $merged_plugin_options = array_merge_recursive( $old_plugin_options, $new_plugin_options );
+      // new array to save to database
+      $merged_plugin_options = array();
+
+      if ( empty( $old_plugin_options ) ) {
+        $merged_plugin_options = $new_plugin_options;
+      }
+      else {
+
+        // all existing 'old' options, e.g. 'google_maps_api_key' etc
+        foreach( $old_plugin_options as $option_name => $option_value ) {
+
+          // each option describes a form input using an array
+          if ( is_array( $option_value ) ) {
+
+            // the form input attributes: 'type', 'label', 'size', 'value' etc
+            foreach( $option_value as $attribute => $value) {
+
+              // if a 'new' value is supplied for an existing attribute, use it
+              if ( array_key_exists( $attribute, $new_plugin_options[$option_name] ) ) {
+               $merged_plugin_options[$option_name][$attribute] = $new_plugin_options[$option_name][$attribute];
+              }
+              // else use the existing value
+              else {
+                $merged_plugin_options[$option_name][$attribute] = $value;
+              }
+            }
+          }
+        }
+
+        // all 'new'/unknown options
+        foreach( $new_plugin_options as $option_name => $option_value ) {
+
+          // each option describes a form input using an array
+          if ( is_array( $option_value ) ) {
+
+            // the form input attributes: 'type', 'label', 'size', 'value' etc
+            foreach( $option_value as $attribute => $value) {
+
+              // if a 'new' attribute is not existing, add it
+              if ( ! array_key_exists( $attribute, $merged_plugin_options[$option_name] ) ) {
+                $merged_plugin_options[$option_name][$attribute] = $value;
+              }
+            }
+          }
+        }
+
+        // remove any duplicate keys
+        $merged_plugin_options[$option_name] = array_unique( $merged_plugin_options[$option_name] );
+      }
 
       // Save the merged options
       $options = $this->get_options();
