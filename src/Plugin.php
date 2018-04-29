@@ -935,20 +935,27 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @param       string $input_type
      * @return      mixed $default_value
+     *
+     * @see views/form-element-checkbox.php
+     * @see views/form-element-file.php
+     * @see views/form-element-number.php
+     * @see views/form-element-password.php
+     * @see views/form-element-select.php
+     * @see views/form-element-text.php
      */
     public function helper_get_default_value( $input_type ) {
 
-      if ( $input_type === 'select' ) {
-        $default_value = null;
-      }
-      else if ( $input_type === 'checkbox' ) {
+      if ( $input_type === 'checkbox' ) {
         $default_value = '';
       }
-      else if ( $input_type === 'radio' ) {
-        $default_value = '';
-      }
+      //else if ( $input_type === 'radio' ) { // not supported yet
+      //  $default_value = '';
+      //}
       else if ( $input_type === 'password' ) {
         $default_value = '';
+      }
+      else if ( $input_type === 'select' ) {
+        $default_value = null;
       }
       else if ( $input_type === 'text' ) {
         $default_value = '';

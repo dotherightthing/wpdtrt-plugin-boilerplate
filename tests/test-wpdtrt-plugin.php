@@ -36,16 +36,60 @@ class PluginTest extends WP_UnitTestCase {
 
     public function mock_data() {
 
-        $this->plugin_options_config = array(
+        $this->plugin_option_types = array(
+            'checkbox_input' => array(
+                'type' => 'checkbox',
+                'label' => esc_html__('Field label', 'text-domain'),
+                'tip' => __('Helper text', 'text-domain')
+            ),
+            'file_input' => array(
+                'type' => 'file',
+                'label' => __('Field label', 'text-domain'),
+                'tip' => __('Helper text', 'text-domain')
+            ),
+            'number_input' => array(
+                'type' => 'number',
+                'label' => __('Field label', 'text-domain'),
+                'size' => 10,
+                'tip' => __('Helper text', 'text-domain')
+            ),
+            'password_input' => array(
+                'type' => 'password',
+                'label' => __('Field label', 'text-domain'),
+                'size' => 10,
+                'tip' => __('Helper text', 'text-domain')
+            ),
+            'select_input' => array(
+                'type' => 'select',
+                'label' => __('Field label', 'fieldname'),
+                'options' => array(
+                    'option1value' => array(
+                        'text' => __('Label for option 1', 'text-domain')
+                    ),
+                    'option2value' => array(
+                        'text' => __('Label for option 2', 'text-domain')
+                    )
+                ),
+                'tip' => __('Helper text', 'text-domain')
+            ),
+            'text_input' => array(
+                'type' => 'text',
+                'label' => __('Field label', 'text-domain'),
+                'size' => 10,
+                'tip' => __('Helper text', 'text-domain')
+            ),
+        );
+
+        $this->plugin_options_config_novalues = array(
             'google_static_maps_api_key' => array(
                 'type' => 'text',
-                'label' => 'Google Static Maps API Key',
+                'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
                 'size' => 50,
-                'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY'
+                'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin')
             )
         );
 
-        $this->plugin_options_user = array(
+        $this->plugin_options_user_values = array(
             'google_static_maps_api_key' => array(
                 'type' => 'text',
                 'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
@@ -55,7 +99,7 @@ class PluginTest extends WP_UnitTestCase {
             )
         );
 
-        $this->fallback_plugin_options = array(
+        $this->all_options_fallback = array(
             'plugin_options' => array(),
             'plugin_data' => array(),
             'plugin_data_options' => array(),
@@ -69,7 +113,7 @@ class PluginTest extends WP_UnitTestCase {
                     'type' => 'text',
                     'label' => 'Google Static Maps API Key',
                     'size' => 50,
-                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY'
+                    'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin'),
                 )
             ),
             'plugin_data' => array(),
@@ -86,7 +130,7 @@ class PluginTest extends WP_UnitTestCase {
                     'type' => 'text',
                     'label' => 'Google Static Maps API Key',
                     'size' => 50,
-                    'tip' => 'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
+                    'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin'),
                     'value' => 'abc12345'
                 )
             ),
@@ -114,7 +158,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // when the page is first loaded,
         // we get the plugin options out of the coded config
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -145,7 +189,7 @@ class PluginTest extends WP_UnitTestCase {
 
         // the user enters values and saves the page
         // we expect their entry to be saved in a new 'value' key
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_user );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_user_values );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -178,7 +222,7 @@ class PluginTest extends WP_UnitTestCase {
         // we expect the user's entry to be persistent
         // rather than be replaced by the old subset of options
         // TODO: how are old options are saved over the top of new options?
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertArrayHasKey(
@@ -422,7 +466,7 @@ class PluginTest extends WP_UnitTestCase {
          * Testing get_options()
          */
 
-        $options = get_option( $wpdtrt_test_plugin->get_prefix(), $this->fallback_plugin_options );
+        $options = get_option( $wpdtrt_test_plugin->get_prefix(), $this->all_options_fallback );
 
         $this->assertArrayHasKey(
             'plugin_options',
@@ -472,7 +516,7 @@ class PluginTest extends WP_UnitTestCase {
      */
     public function test__render_form_element() {
 
-        foreach( $this->plugin_options_user as $name => $attributes ) {
+        foreach( $this->plugin_options_user_values as $name => $attributes ) {
 
             $this->assertArrayHasKey(
                 'type',
@@ -500,7 +544,7 @@ class PluginTest extends WP_UnitTestCase {
         // we get the plugin options out of the coded config
 
         // 1
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         foreach( $plugin_options as $name => $attributes ) {
@@ -532,7 +576,7 @@ class PluginTest extends WP_UnitTestCase {
         // we get the plugin options out of the coded config
 
         // 1
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         // 2
@@ -559,6 +603,88 @@ class PluginTest extends WP_UnitTestCase {
     }
 
     /**
+     * Test initial plugin options config
+     *  For each option, the 'value' attribute is deliberately omitted,
+     *  this is to aid the checking of this value by helper_get_default_value().
+     *  If the value was set to '' by default,
+     *  it could erase a user value when the new and old options were merged -
+     *  or, if blank values were ignored
+     *  it would prevent the user from erasing values they no longer required
+     * @todo helper_get_default_value
+     */
+    public function test__plugin_options_config_novalue() {
+
+        global $wpdtrt_test_plugin;
+
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
+        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+
+        foreach( $plugin_options as $name => $attributes ) {
+
+            $this->assertArrayNotHasKey(
+                'value',
+                $attributes,
+                'Config should not set a value for plugin options'
+            );
+        }
+    }
+
+    /**
+     * Test that form element values are correctly set
+     * when a form element is rendered
+     * for a plugin option which doesn't have a value attribute yet
+     *
+     * @see views/form-element-checkbox.php
+     * @see views/form-element-file.php
+     * @see views/form-element-number.php
+     * @see views/form-element-password.php
+     * @see views/form-element-select.php
+     * @see views/form-element-text.php
+     *
+     * @todo test HTML output to ensure that default values translate to semantic HTML
+     */
+    public function test__helper_get_default_value() {
+
+        global $wpdtrt_test_plugin;
+
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_option_types );
+        $stored_plugin_options = $wpdtrt_test_plugin->get_plugin_options();
+
+        $this->assertEquals(
+            $wpdtrt_test_plugin->helper_get_default_value( $stored_plugin_options['checkbox_input']['type'] ),
+            '',
+            'When a plugin option does not have a value yet, a checkbox input should output an empty string (not checked)'
+        );
+
+        $this->assertNull(
+            $wpdtrt_test_plugin->helper_get_default_value( $stored_plugin_options['file_input']['type'] ),
+            'When a plugin option does not have a value yet, a file input should output NULL (nothing selected)'
+        );
+
+        $this->assertNull(
+            $wpdtrt_test_plugin->helper_get_default_value( $stored_plugin_options['number_input']['type'] ),
+            'When a plugin option does not have a value yet, a number input should output NULL [to check]'
+        );
+
+        $this->assertEquals(
+            $wpdtrt_test_plugin->helper_get_default_value( $stored_plugin_options['password_input']['type'] ),
+            '',
+            'When a plugin option does not have a value yet, a password input should output an empty string'
+        );
+
+        $this->assertNull(
+            $wpdtrt_test_plugin->helper_get_default_value( $stored_plugin_options['select_input']['type'] ),
+            'When a plugin option does not have a value yet, a select input should output NULL (nothing selected)'
+        );
+
+        $this->assertEquals(
+            $wpdtrt_test_plugin->helper_get_default_value( $stored_plugin_options['text_input']['type'] ),
+            '',
+            'When a plugin option does not have a value yet, a text input should output an empty string'
+        );
+    }
+
+    /**
      * Test that the options page fields display the correct attributes
      *
      * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
@@ -566,4 +692,13 @@ class PluginTest extends WP_UnitTestCase {
     public function todo__test__render_options_page_field() {
         // 
     }
+
+    /*
+    TODO
+    so the value does not exist until it is created
+    via user input
+    once created it can be updated
+    either by user input
+    or by the config (unusual but possible)
+    */
 }
