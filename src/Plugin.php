@@ -974,7 +974,7 @@ if ( !class_exists( 'Plugin' ) ) {
         if ( $key === 'name' ) {
           $options_page_demo_shortcode .= $value;
         }
-        else {
+        else if ( substr($key, 0, 5) !== 'mock_' ) {
           $options_page_demo_shortcode .= ' ' . $key . '=' . '"' . $value . '"';
         }
       }
