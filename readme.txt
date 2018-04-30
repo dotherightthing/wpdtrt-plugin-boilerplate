@@ -6,7 +6,7 @@ Tags: boilerplate,
 Requires at least: 4.8.1
 Tested up to: 4.9.5
 Requires PHP: 5.6.30
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,12 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 == Changelog ==
+
+= 1.3.2 =
+* Pass real shortcode 'name' to demo shortcode
+* Support mock data in demo shortcode
+* Remove redundant check for duplicate merged options
+* Documentation
 
 = 1.3.1 =
 * Fixed merging/persistence of plugin dependencies
