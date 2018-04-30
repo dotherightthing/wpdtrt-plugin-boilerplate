@@ -610,6 +610,7 @@ class PluginTest extends WP_UnitTestCase {
      *  it could erase a user value when the new and old options were merged -
      *  or, if blank values were ignored
      *  it would prevent the user from erasing values they no longer required
+     *  Note: 'value' attributes MAY be added for unit tests.
      * @todo helper_get_default_value
      */
     public function test__plugin_options_config_novalue() {

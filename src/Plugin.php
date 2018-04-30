@@ -498,54 +498,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $old_plugin_options = $this->get_plugin_options();
 
       // new array to save to database
-      $merged_plugin_options = array();
-
-      if ( empty( $old_plugin_options ) ) {
-        $merged_plugin_options = $new_plugin_options;
-      }
-      else {
-
-        // all existing 'old' options, e.g. 'google_maps_api_key' etc
-        foreach( $old_plugin_options as $option_name => $option_value ) {
-
-          // each option describes a form input using an array
-          if ( is_array( $option_value ) ) {
-
-            // the form input attributes: 'type', 'label', 'size', 'value' etc
-            foreach( $option_value as $attribute => $value) {
-
-              // if a 'new' value is supplied for an existing attribute, use it
-              if ( array_key_exists( $attribute, $new_plugin_options[$option_name] ) ) {
-               $merged_plugin_options[$option_name][$attribute] = $new_plugin_options[$option_name][$attribute];
-              }
-              // else use the existing value
-              else {
-                $merged_plugin_options[$option_name][$attribute] = $value;
-              }
-            }
-          }
-        }
-
-        // all 'new'/unknown options
-        foreach( $new_plugin_options as $option_name => $option_value ) {
-
-          // each option describes a form input using an array
-          if ( is_array( $option_value ) ) {
-
-            // the form input attributes: 'type', 'label', 'size', 'value' etc
-            foreach( $option_value as $attribute => $value) {
-
-              // if a 'new' attribute is not existing, add it
-              if ( ! array_key_exists( $attribute, $merged_plugin_options[$option_name] ) ) {
-                $merged_plugin_options[$option_name][$attribute] = $value;
-              }
-            }
-          }
-        }
-
-        // remove any duplicate keys
-        $merged_plugin_options[$option_name] = array_unique( $merged_plugin_options[$option_name] );
-      }
+      $merged_plugin_options = $this->helper_merge_option_arrays( $old_plugin_options, $new_plugin_options );
 
       // Save the merged options
       $options = $this->get_options();
@@ -602,6 +555,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
     /**
      * Store all plugin dependencies for loading via TGMA
+     *  Merges new dependencies with any old ones
      *
      * @since       1.0.0
      * @version     1.0.0
@@ -609,15 +563,21 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     protected function set_plugin_dependencies( $new_plugin_dependencies ) {
+
+      // old options stored in database
       $old_plugin_dependencies = $this->get_plugin_dependencies();
 
-      /**
-       * Merge old options with new options
-       * This overwrites the old values with any new values
-       */
+      // new array to save to database
+      $merged_plugin_dependencies = $this->helper_merge_option_arrays( $old_plugin_dependencies, $new_plugin_dependencies );
+
+      // Save the merged options
       $options = $this->get_options();
-      $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, $new_plugin_dependencies );
+      $options['plugin_dependencies'] = $merged_plugin_dependencies;
+
       $this->set_options($options);
+
+      // return array for unit testing
+      return $options['plugin_dependencies'];
     }
 
     /**
@@ -935,27 +895,20 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @param       string $input_type
      * @return      mixed $default_value
-     *
-     * @see views/form-element-checkbox.php
-     * @see views/form-element-file.php
-     * @see views/form-element-number.php
-     * @see views/form-element-password.php
-     * @see views/form-element-select.php
-     * @see views/form-element-text.php
      */
     public function helper_get_default_value( $input_type ) {
 
-      if ( $input_type === 'checkbox' ) {
+      if ( $input_type === 'select' ) {
+        $default_value = null;
+      }
+      else if ( $input_type === 'checkbox' ) {
         $default_value = '';
       }
-      //else if ( $input_type === 'radio' ) { // not supported yet
-      //  $default_value = '';
-      //}
+      else if ( $input_type === 'radio' ) {
+        $default_value = '';
+      }
       else if ( $input_type === 'password' ) {
         $default_value = '';
-      }
-      else if ( $input_type === 'select' ) {
-        $default_value = null;
       }
       else if ( $input_type === 'text' ) {
         $default_value = '';
@@ -1029,6 +982,71 @@ if ( !class_exists( 'Plugin' ) ) {
        * Render demo shortcode (update the UI)
        */
       return $options_page_demo_shortcode;
+    }
+
+    /**
+     * Merge option arrays
+     *  Adds any new items.
+     *
+     * @version     1.0.0
+     * @since       1.3.0
+     *
+     * @param       array $old_options
+     * @param       array $new_options
+     * @return      array $merged_options
+     */
+    public function helper_merge_option_arrays( $old_options, $new_options ) {
+
+      $merged_options = array();
+
+      if ( empty( $old_options ) ) {
+        $merged_options = $new_options;
+      }
+      else {
+
+        // all existing 'old' options, e.g. 'google_maps_api_key' etc
+        foreach( $old_options as $option_name => $option_value ) {
+
+          // each option describes a form input using an array
+          if ( is_array( $option_value ) ) {
+
+            // the form input attributes: 'type', 'label', 'size', 'value' etc
+            foreach( $option_value as $attribute => $value) {
+
+              // if a 'new' value is supplied for an existing attribute, use it
+              if ( array_key_exists( $attribute, $new_options[$option_name] ) ) {
+               $merged_options[$option_name][$attribute] = $new_options[$option_name][$attribute];
+              }
+              // else use the existing value
+              else {
+                $merged_options[$option_name][$attribute] = $value;
+              }
+            }
+          }
+        }
+
+        // all 'new'/unknown options
+        foreach( $new_options as $option_name => $option_value ) {
+
+          // each option describes a form input using an array
+          if ( is_array( $option_value ) ) {
+
+            // the form input attributes: 'type', 'label', 'size', 'value' etc
+            foreach( $option_value as $attribute => $value) {
+
+              // if a 'new' attribute is not existing, add it
+              if ( ! array_key_exists( $attribute, $merged_options[$option_name] ) ) {
+                $merged_options[$option_name][$attribute] = $value;
+              }
+            }
+          }
+        }
+
+        // remove any duplicate keys
+        $merged_options[$option_name] = array_unique( $merged_options[$option_name] );
+      }
+
+      return $merged_options;
     }
 
     //// END HELPERS \\\\
