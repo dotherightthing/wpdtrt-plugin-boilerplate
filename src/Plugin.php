@@ -971,7 +971,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       foreach( $params as $key => $value ) {
 
-        if ( $key === 'id' ) {
+        if ( $key === 'name' ) {
           $options_page_demo_shortcode .= $value;
         }
         else {
