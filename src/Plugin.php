@@ -1044,9 +1044,6 @@ if ( !class_exists( 'Plugin' ) ) {
             }
           }
         }
-
-        // remove any duplicate keys
-        $merged_options[$option_name] = array_unique( $merged_options[$option_name] );
       }
 
       return $merged_options;
