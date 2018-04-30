@@ -803,6 +803,7 @@ if ( !class_exists( 'Plugin' ) ) {
         $do_refresh = true;
       }
 
+      // TODO: should this data be passed somewhere?
       if ( $do_refresh ) {
         $data = $this->get_api_data();
       }
@@ -958,9 +959,7 @@ if ( !class_exists( 'Plugin' ) ) {
     protected function helper_build_demo_shortcode() {
       $params = $this->get_demo_shortcode_params();
 
-      if ( !isset( $params ) ) {
-        global $debug;
-        $debug->log('no demo shortcode params', true, 'helper_build_demo_shortcode');
+      if ( !isset($params) || empty($params) ) {
         return '';
       }
 
