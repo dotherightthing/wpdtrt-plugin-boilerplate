@@ -497,6 +497,10 @@ if ( !class_exists( 'Plugin' ) ) {
       // old options stored in database
       $old_plugin_options = $this->get_plugin_options();
 
+      // to remove persistent options:
+      // unset($old_plugin_options['option_name']);
+      // unset($new_plugin_options['option_name']);
+
       // new array to save to database
       $merged_plugin_options = $this->helper_merge_option_arrays( $old_plugin_options, $new_plugin_options );
 
