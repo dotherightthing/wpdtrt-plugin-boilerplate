@@ -4,9 +4,9 @@ Contributors: dotherightthingnz
 Donate link: http://dotherightthing.co.nz
 Tags: boilerplate,
 Requires at least: 4.8.1
-Tested up to: 4.9.4
+Tested up to: 4.9.5
 Requires PHP: 5.6.30
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,9 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 == Changelog ==
+
+= 1.3.1 =
+* Fixed merging/persistence of plugin dependencies
 
 = 1.3.0 =
 * Fixed merging/persistence of plugin options
