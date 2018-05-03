@@ -1388,6 +1388,13 @@ if ( !class_exists( 'Plugin' ) ) {
         $this->set_plugin_options( $plugin_options );
         $this->set_plugin_data_options( $plugin_data_options );
       }
+      // else if form not submitted yet
+      else {
+        // Don't get the data until we know which data to get,
+        // (once the form is submitted)
+        $plugin_data_options['force_refresh'] = false;
+        $this->set_plugin_data_options( $plugin_data_options );
+      }
 
 
       /**
