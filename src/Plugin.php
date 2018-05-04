@@ -255,7 +255,7 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get the value of $prefix
+     * Get the value of $prefix (wpdtrt_foo)
      *
      * @since       1.0.0
      * @version     1.0.0
@@ -785,15 +785,78 @@ if ( !class_exists( 'Plugin' ) ) {
     // API DATA
 
     /**
-     * Get API data
-     * This should be overwritten in the extending class
+     * Get the API Endpoint (URL) from which to pull data
      *
-     * @since 1.0.0
+     * The endpoint URL is sometimes constructed from plugin specific settings fields.
+     * We need to manually assemble the endpoint string from dynamic data.
+     * As this data and assembly is contextual, it is done in the child plugin.
      *
-     * @return object
+     * A WordPress filter is used to get the correct value of $endpoint at runtime.
+     * This allows us to keep the get_api_data() code in the parent class,
+     * rather than expecting authors to overwrite get_api_data() with in the child class.
+     * Alternatively, plugin authors could simply override $this->get_api_endpoint()
+     *
+     * @return string $endpoint
+     *
+     * @example
+     *  public function wpdtrt_forms_set_api_endpoint { return $endpoint; }
+     *  add_filter( 'wpdtrt_forms_set_api_endpoint', [$this, 'set_api_endpoint'] );
+     */
+    public function get_api_endpoint() {
+      // Call child plugin method:
+      // A filter is used rather than an action as actions do not return a value.
+      // A prefix prevents the filter from affecting other active instances of wpplugin.
+      $child_plugin_filter = $this->get_prefix() . '_set_api_endpoint';
+      $default_endpoint = '';
+      $endpoint = apply_filters( $child_plugin_filter, $default_endpoint );
+
+      return $endpoint;
+    }
+
+    /**
+     * Request the data from the API
+     *
+     * @return      object $data The body of the JSON response
+     *
+     * @since       0.1.0
+     * @since       1.0.0
+     * @since       1.3.4 Use get_api_endpoint() to pass in the endpoint
+     *
+     * @see         get_api_endpoint()
+     * @uses        ../../../../wp-includes/http.php
+     * @see         https://developer.wordpress.org/reference/functions/wp_remote_get/
      */
     protected function get_api_data() {
-      return (object)[];
+
+      $endpoint = $this->get_api_endpoint();
+      $data = false;
+
+      if ( $endpoint ) {
+
+        $args = array(
+            'timeout' => 30, // seconds to wait for the request to complete
+            'blocking' => true // false = nothing loads
+        );
+
+        $response = wp_remote_get(
+            $endpoint,
+            $args
+        );
+
+        /**
+        * Return the body, not the header
+        * Note: There is an optional boolean argument, which returns an associative array if TRUE
+        */
+        $data = json_decode( $response['body'], true );
+
+        // Save the data and retrieval time
+        $this->set_plugin_data( $data );
+        $this->set_plugin_data_options( array(
+            'last_updated' => time()
+        ));
+      }
+      
+      return $data;
     }
 
     /**
