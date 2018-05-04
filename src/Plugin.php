@@ -1319,8 +1319,6 @@ if ( !class_exists( 'Plugin' ) ) {
       );
       */
 
-      do_action ( 'wpdtrt_plugin__register_js_frontend' );
-
       wp_enqueue_script( $this->get_prefix(),
         $this->get_url()  . 'js/frontend.js',
         array(
@@ -1363,8 +1361,6 @@ if ( !class_exists( 'Plugin' ) ) {
       }
 
       $attach_to_footer = true;
-
-      do_action ( 'wpdtrt_plugin__register_js_backend' );
 
       wp_enqueue_script( $this->get_prefix() . '_backend',
         $this->get_url()  . 'vendor/dotherightthing/wpdtrt-plugin/js/backend.js',
@@ -1630,8 +1626,6 @@ if ( !class_exists( 'Plugin' ) ) {
     public function render_css_backend() {
       $media = 'all';
 
-      do_action ( 'wpdtrt_plugin__register_css_backend' );
-
       wp_enqueue_style( $this->get_prefix() . '_backend',
         $this->get_url() . 'css/backend.css',
         array(
@@ -1651,8 +1645,6 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function render_css_frontend() {
       $media = 'all';
-
-      do_action ( 'wpdtrt_plugin__register_css_frontend' );
 
       wp_enqueue_style( $this->get_prefix(),
         $this->get_url()  . 'css/frontend.css',
