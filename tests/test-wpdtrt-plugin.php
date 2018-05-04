@@ -694,6 +694,45 @@ class PluginTest extends WP_UnitTestCase {
         // 
     }
 
+    /**
+     * Test that get_api_data() returns JSON data
+     *  and that this is stored and retrievable.
+     */
+    public function test__get_api_data() {
+        global $wpdtrt_test_plugin;
+
+        $endpoint = 'http://jsonplaceholder.typicode.com/photos/1';
+        $data = $wpdtrt_test_plugin->get_api_data( $endpoint );
+
+        /*
+        // Demo data format:
+        {
+            "albumId": 1,
+            "id": 1,
+            "title": "accusamus beatae ad facilis cum similique qui sunt",
+            "url": "http://placehold.it/600/92c952",
+            "thumbnailUrl": "http://placehold.it/150/92c952"
+        }
+        */
+
+        $this->assertTrue(
+            is_array($data),
+            'Expected API data to be stored an array'
+        );
+
+        $this->assertArrayHasKey(
+            'id',
+            $data,
+            'Expected demo API data to contain an id key'
+        );
+
+        $this->assertEquals(
+            $data,
+            $wpdtrt_test_plugin->get_plugin_data(),
+            'Expected API data to be stored as plugin_data'
+        );
+    }
+
     /*
     TODO
     so the value does not exist until it is created
