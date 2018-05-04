@@ -51,6 +51,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $prefix = null;
       $slug = null;
       $menu_title = null;
+      $settings_title = null;
       $developer_prefix = null;
       $path = null;
       $messages = null;
@@ -74,6 +75,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_prefix( $prefix );
       $this->set_slug( $slug );
       $this->set_menu_title( $menu_title );
+      $this->set_settings_title( $settings_title );
       $this->set_developer_prefix( $developer_prefix );
       $this->set_path( $path );
       $this->set_messages( $messages );
@@ -126,6 +128,9 @@ if ( !class_exists( 'Plugin' ) ) {
 
       // call the server side PHP function through admin-ajax.php.
       add_action( 'wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
+
+      $plugin_root_relative_to_plugin_folder =  $this->get_slug() . '/' . $this->get_slug() . '.php'; // plugin_basename(__FILE__)
+      add_filter( 'plugin_action_links_' . $plugin_root_relative_to_plugin_folder, [$this, 'render_settings_link'] );
     }
 
     /**
@@ -311,6 +316,32 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function get_menu_title() {
       return $this->menu_title;
+    }
+
+    // SETTINGS TITLE
+
+    /**
+     * Set the value of $settings_title
+     *
+     * @since       1.3.4
+     * @version     1.0.0
+     *
+     * @param string
+     */
+    protected function set_settings_title( $new_settings_title ) {
+      $this->settings_title = $new_settings_title;
+    }
+
+    /**
+     * Get the value of $settings_title
+     *
+     * @since       1.3.4
+     * @version     1.0.0
+     *
+     * @return      string
+     */
+    public function get_settings_title() {
+      return $this->settings_title;
     }
 
     // DEVELOPER PREFIX
@@ -1322,6 +1353,26 @@ if ( !class_exists( 'Plugin' ) ) {
         $this->get_slug(), // menu_slug
         [$this, 'render_options_page'] // function callback
       );
+    }
+
+    /**
+     * Display a link to the plugin settings page in the plugins list
+     *
+     * @param array $links
+     * @return array $links
+     * @since 1.3.4
+     *
+     * @see https://isabelcastillo.com/settings-link-plugin-plugins
+     * @see https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)
+     */
+    public function render_settings_link( $links ) {
+      $settings_url = get_admin_url() . 'options-general.php?page=' . $this->get_slug();
+      $settings_link = '<a href="' . $settings_url . '">' . $this->settings_title . '</a>';
+
+      // prepend $setting_link to the beginning of the $links array
+      array_unshift( $links, $settings_link );
+
+      return $links;
     }
 
     /**
