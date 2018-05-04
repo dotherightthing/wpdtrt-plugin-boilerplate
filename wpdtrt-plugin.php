@@ -180,6 +180,7 @@ if( ! defined( 'WPDTRT_TEST_URL' ) ) {
         'prefix' => 'wpdtrt_test',
         'slug' => 'wpdtrt-test',
         'menu_title' => __('Test', 'wpdtrt-test'),
+        'settings_title' => __('Settings', 'wpdtrt-test'),
         'developer_prefix' => 'DTRT',
         'path' => WPDTRT_TEST_PATH,
         'messages' => array(
