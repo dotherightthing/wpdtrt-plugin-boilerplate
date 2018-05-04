@@ -717,7 +717,7 @@ class PluginTest extends WP_UnitTestCase {
 
         $this->assertTrue(
             is_array($data),
-            'Expected API data to be an array'
+            'Expected JSON data to be converted to an associative array'
         );
 
         $this->assertArrayHasKey(

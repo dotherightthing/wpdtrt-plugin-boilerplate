@@ -799,7 +799,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *  add_filter( 'wpdtrt_forms_set_api_endpoint', [$this, 'set_api_endpoint'] );
      *
      * @param       string $endpoint Used for unit testing
-     * @return      object $data The body of the JSON response
+     * @return      array $data The body of the JSON response, as an associative array
      *
      * @since       0.1.0
      * @since       1.0.0
@@ -808,6 +808,7 @@ if ( !class_exists( 'Plugin' ) ) {
      * @see         get_api_endpoint()
      * @uses        ../../../../wp-includes/http.php
      * @see         https://developer.wordpress.org/reference/functions/wp_remote_get/
+     * @see         http://php.net/manual/en/function.json-decode.php
      */
     public function get_api_data( $endpoint = '' ) {
 
