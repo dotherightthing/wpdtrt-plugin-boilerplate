@@ -695,7 +695,7 @@ class PluginTest extends WP_UnitTestCase {
     }
 
     /**
-     * Test that get_api_data() returns JSON data
+     * Test that get_api_data() returns data
      *  and that this is stored and retrievable.
      */
     public function test__get_api_data() {
