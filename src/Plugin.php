@@ -131,6 +131,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $plugin_root_relative_to_plugin_folder =  $this->get_slug() . '/' . $this->get_slug() . '.php'; // plugin_basename(__FILE__)
       add_filter( 'plugin_action_links_' . $plugin_root_relative_to_plugin_folder, [$this, 'render_settings_link'] );
+      add_filter( 'plugin_action_links_' . $plugin_root_relative_to_plugin_folder, [$this, 'render_library_link'] );
     }
 
     /**
@@ -1423,6 +1424,25 @@ if ( !class_exists( 'Plugin' ) ) {
 
       // prepend $setting_link to the beginning of the $links array
       array_unshift( $links, $settings_link );
+
+      return $links;
+    }
+
+    /**
+     * Display a link to the wpdtrt-plugin library
+     *
+     * @param array $links
+     * @return array $links
+     * @since 1.3.6
+     */
+    public function render_library_link( $links ) {
+
+      if ( defined( 'WPDTRT_PLUGIN_VERSION' ) ) {
+
+        $library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin/releases/tag/' . WPDTRT_PLUGIN_VERSION . '">DTRT WP Plugin ' . WPDTRT_PLUGIN_VERSION . '</a>';
+
+        array_push( $links, $library_link );
+      }
 
       return $links;
     }

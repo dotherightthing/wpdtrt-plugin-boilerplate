@@ -15,6 +15,11 @@
    * @todo This code is duplicated in index.php
    */
 
+  // Child plugins use different versions of the same class.
+  // Identify which version of the class is in use.
+  // https://github.com/dotherightthing/wpdtrt-plugin/issues/66
+  define( 'WPDTRT_PLUGIN_VERSION', '1.3.6' );
+
   if ( defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
     $projectRootPath = realpath(__DIR__ . '/../../..') . '/';
   }
