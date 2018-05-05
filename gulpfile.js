@@ -446,69 +446,71 @@ gulp.task('watch', function () {
   gulp.watch( phpFiles, ['phplint'] );
 });
 
-gulp.task('bump_parent', function() {
+gulp.task('bump', function() {
 
-  taskheader(this, 'wpdtrt-plugin to ' + pkg_version + ' using package.json' );
+  if ( pkg.name === 'wpdtrt-plugin' ) {
+    taskheader(this, '| bump ' + pkg.name + ' to ' + pkg_version + ' using package.json' );
 
-  // DoTheRightThing\WPPlugin\r_1_2_3
-  gulp.src('./src/*.php')
-    .pipe(replace(
-      /(DoTheRightThing\\WPPlugin\\r_)([0-9]_[0-9]_[0-9])/,
-      '$1' + namespace_version
-    ))
-    .pipe(gulp.dest('./src/'));
+    // DoTheRightThing\WPPlugin\r_1_2_3
+    gulp.src('./src/*.php')
+      .pipe(replace(
+        /(DoTheRightThing\\WPPlugin\\r_)([0-9]_[0-9]_[0-9])/,
+        '$1' + namespace_version
+      ))
+      .pipe(gulp.dest('./src/'));
 
-  // const WPPLUGIN_VERSION = '1.2.3';
-  gulp.src('./src/Plugin.php')
-    .pipe(replace(
-      /(const WPPLUGIN_VERSION = ')([0-9]\.[0-9]\.[0-9])(';)/,
-      '$1' + pkg_version + '$3'
-    ))
-    .pipe(gulp.dest('./src/'));
+    // const WPPLUGIN_VERSION = '1.2.3';
+    gulp.src('./src/Plugin.php')
+      .pipe(replace(
+        /(const WPPLUGIN_VERSION = ')([0-9]\.[0-9]\.[0-9])(';)/,
+        '$1' + pkg_version + '$3'
+      ))
+      .pipe(gulp.dest('./src/'));
 
-  // * @version 1.2.3
-  gulp.src('./index.php')
-    .pipe(replace(
-      /(\* @version\s+)([0-9]\.[0-9]\.[0-9])/,
-      '$1' + pkg_version
-    ))
-    .pipe(gulp.dest('./'));
+    // * @version 1.2.3
+    gulp.src('./index.php')
+      .pipe(replace(
+        /(\* @version\s+)([0-9]\.[0-9]\.[0-9])/,
+        '$1' + pkg_version
+      ))
+      .pipe(gulp.dest('./'));
 
-  gulp.src('./readme.txt')
-    .pipe(replace(
-      // Stable tag: 1.2.3
-      /(Stable tag:.)([0-9]\.[0-9]\.[0-9])/,
-      '$1' + pkg_version
-    ))
-    .pipe(replace(
-      // == Changelog ==
-      // = 1.2.3 =
-      // * TODO
-      /(== Changelog ==\n\n)/,
-      '$1= ' + pkg_version + ' =' + "\r" + '* TODO' + "\r\n\r\n"
-    ))
-    .pipe(gulp.dest('./'));
+    gulp.src('./readme.txt')
+      .pipe(replace(
+        // Stable tag: 1.2.3
+        /(Stable tag:.)([0-9]\.[0-9]\.[0-9])/,
+        '$1' + pkg_version
+      ))
+      .pipe(replace(
+        // == Changelog ==
+        // = 1.2.3 =
+        // * TODO
+        /(== Changelog ==\n\n)/,
+        '$1= ' + pkg_version + ' =' + "\r" + '* TODO' + "\r\n\r\n"
+      ))
+      .pipe(gulp.dest('./'));
 
-  gulp.src('./wpdtrt-plugin.php')
-    // * Version: 1.2.3
-    .pipe(replace(
-      /(\* Version:\s+)([0-9]\.[0-9]\.[0-9])/,
-      '$1' + pkg_version
-    ))
-    // define( 'WPDTRT_TEST_VERSION', '1.2.3' );
-    .pipe(replace(
-      /(define\( 'WPDTRT_TEST_VERSION', ')([0-9]\.[0-9]\.[0-9])(.+;)/,
-      '$1' + pkg_version + '$3'
-    ))
-    .pipe(gulp.dest('./'));
+    gulp.src('./wpdtrt-plugin.php')
+      // * Version: 1.2.3
+      .pipe(replace(
+        /(\* Version:\s+)([0-9]\.[0-9]\.[0-9])/,
+        '$1' + pkg_version
+      ))
+      // define( 'WPDTRT_TEST_VERSION', '1.2.3' );
+      .pipe(replace(
+        /(define\( 'WPDTRT_TEST_VERSION', ')([0-9]\.[0-9]\.[0-9])(.+;)/,
+        '$1' + pkg_version + '$3'
+      ))
+      .pipe(gulp.dest('./'));
 
-  // update composer.lock
-  // else WPDTRT_Test_Plugin fails with fatal error
-  gulp.src(dummyFile, {read: false})
-    .pipe(shell([
-      'composer update --no-interaction'
-    ])
-  );
+    // update composer.lock
+    // else WPDTRT_Test_Plugin fails with fatal error
+    gulp.src(dummyFile, {read: false})
+      .pipe(shell([
+        'composer update --no-interaction'
+      ])
+    );
+  }
 });
 
 gulp.task('install', function(callback) {
