@@ -111,6 +111,7 @@ if( ! defined( 'WPDTRT_TEST_URL' ) ) {
 
   // sub classes
   require_once(WPDTRT_TEST_PATH . 'src/class-wpdtrt-test-plugin.php');
+  require_once(WPDTRT_TEST_PATH . 'src/class-wpdtrt-test-widgets.php');
 
   // log & trace helpers
   global $debug;
