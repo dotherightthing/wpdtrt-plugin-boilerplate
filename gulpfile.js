@@ -70,7 +70,7 @@ gulp.Gulp.prototype._runTask = function(task) {
 
 function taskheader(task, message) {
 
-  if ( message === 'undefined' ) {
+  if ( typeof(message) === 'undefined' ) {
     message = '';
   }
   else {
