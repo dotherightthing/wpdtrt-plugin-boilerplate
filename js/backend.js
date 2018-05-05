@@ -46,7 +46,7 @@ jQuery(document).ready(function($) {
 			$.post(
 				ajaxurl,
 				{
-					'action': 'refresh_api_data',
+					'action': prefix + '_refresh_api_data',
 					'format': 'data'
 				},
 				function(response) {
