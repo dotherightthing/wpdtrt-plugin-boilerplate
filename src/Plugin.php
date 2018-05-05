@@ -127,7 +127,7 @@ if ( !class_exists( 'Plugin' ) ) {
       add_action( 'post_type_link',           [$this, 'render_cpt_permalink_placeholders'], 10, 3 ); // Custom Post Type
 
       // call the server side PHP function through admin-ajax.php.
-      add_action( 'wp_ajax_refresh_api_data',  [$this, 'refresh_api_data'] );
+      add_action( 'wp_ajax_' . $this->get_prefix() . '_refresh_api_data',  [$this, 'refresh_api_data'] );
 
       $plugin_root_relative_to_plugin_folder =  $this->get_slug() . '/' . $this->get_slug() . '.php'; // plugin_basename(__FILE__)
       add_filter( 'plugin_action_links_' . $plugin_root_relative_to_plugin_folder, [$this, 'render_settings_link'] );
@@ -1381,6 +1381,7 @@ if ( !class_exists( 'Plugin' ) ) {
       wp_localize_script( $this->get_prefix() . '_backend',
         'wpdtrt_plugin_config',
         array(
+          'prefix' => $this->get_prefix(),
           'ajaxurl' => admin_url( 'admin-ajax.php' ),
           'messages' => $this->get_messages(),
           'force_refresh' => $plugin_data_options['force_refresh'],

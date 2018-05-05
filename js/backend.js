@@ -16,6 +16,7 @@ jQuery(document).ready(function($) {
 	// but we can only view one settings page at a time
 	var config = wpdtrt_plugin_config;
 	var loading_message = config.messages.loading;
+	var prefix = config.prefix;
 	var ajaxurl = config.ajaxurl;
 
 	if ( config.refresh_api_data === 'true' ) {
@@ -31,7 +32,7 @@ jQuery(document).ready(function($) {
 			.append('<div class="spinner is-active">' + loading_message + '</div>');
 
 		var data = $.post( ajaxurl, {
-				'action': 'refresh_api_data',
+				'action': prefix + '_refresh_api_data',
 				'format': 'ui'
 			},
 			function(response) {
