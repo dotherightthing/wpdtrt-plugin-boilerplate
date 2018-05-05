@@ -35,6 +35,9 @@ if ( !class_exists( 'Plugin' ) ) {
    */
   class Plugin {
 
+    // https://secure.php.net/manual/en/language.oop5.constants.php
+    const WPPLUGIN_VERSION = '1.3.6';
+
     /**
      * Initialise the object's properties when it is instantiated,
      * using new DoTheRightThing\WPPluginPlugin
@@ -1438,12 +1441,7 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function render_library_link( $links ) {
 
-      if ( defined( 'WPDTRT_PLUGIN_VERSION' ) ) {
-
-        $library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin/releases/tag/' . WPDTRT_PLUGIN_VERSION . '">DTRT WP Plugin ' . WPDTRT_PLUGIN_VERSION . '</a>';
-
-        array_push( $links, $library_link );
-      }
+      $library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin/releases/tag/' . self::WPPLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPPLUGIN_VERSION . '</a>';
 
       return $links;
     }
