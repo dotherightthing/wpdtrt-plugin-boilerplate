@@ -6,7 +6,7 @@ Tags: boilerplate,
 Requires at least: 4.8.1
 Tested up to: 4.9.5
 Requires PHP: 5.6.30
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,11 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 == Changelog ==
+
+= 1.4.1 =
+* Fix library link output on Plugins page
+* 'Namespace' CSS, style settings page field hint
+* Add gulp bump_parent to update the version of wpdtrt-plugin files, using the version in package.json
 
 = 1.4.0 =
 * Add widgets include to test plugin
