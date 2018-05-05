@@ -7,7 +7,7 @@
  * @version   1.0.1
  */
 
-namespace DoTheRightThing\WPPlugin;
+namespace DoTheRightThing\WPPlugin\r_1_4_0;
 
 if ( !class_exists( 'Plugin' ) ) {
 
