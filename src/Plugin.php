@@ -36,7 +36,7 @@ if ( !class_exists( 'Plugin' ) ) {
   class Plugin {
 
     // https://secure.php.net/manual/en/language.oop5.constants.php
-    const WPPLUGIN_VERSION = '1.3.6';
+    const WPPLUGIN_VERSION = '1.4.0';
 
     /**
      * Initialise the object's properties when it is instantiated,
