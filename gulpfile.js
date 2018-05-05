@@ -501,6 +501,14 @@ gulp.task('bump_parent', function() {
       '$1' + pkg_version + '$3'
     ))
     .pipe(gulp.dest('./'));
+
+  // update composer.lock
+  // else WPDTRT_Test_Plugin fails with fatal error
+  gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'composer update --no-interaction'
+    ])
+  );
 });
 
 gulp.task('install', function(callback) {
