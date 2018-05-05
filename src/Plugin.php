@@ -1443,6 +1443,8 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin/releases/tag/' . self::WPPLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPPLUGIN_VERSION . '</a>';
 
+      array_push( $links, $library_link );
+
       return $links;
     }
 
