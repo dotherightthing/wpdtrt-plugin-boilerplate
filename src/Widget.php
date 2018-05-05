@@ -189,7 +189,7 @@ if ( !class_exists( 'Widget' ) ) {
       $nameStr = $name;
 
       // widget admin layout
-      $label_start = '<p>';
+      $label_start = '<p class="wpdtrt-plugin--widget-field">';
       $label_end   = '';
       $field_start = '';
       $field_end   = '</p>';

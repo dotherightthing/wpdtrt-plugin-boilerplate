@@ -13,32 +13,57 @@
 // Plugin options page
 // -------------------------------------------------------------------
 
-// restyle WP .spinner
-.wpdtrt-plugin-ajax-response .spinner {
-  float: none;
-  width: auto;
-  padding-left: 27px;
-  margin-left: 0;
-}
+.wpdtrt-plugin {
 
-.wpdtrt-plugin-version {
-  // copied from dashboard-widgets-suite plugin
-  color: #c7c7c7;
-  font-size: 90%;
-}
+  &--options {
 
-.wpdtrt-plugin-date {
-  font-size: .95em;
+    // restyle WP .spinner
+    .wpdtrt-plugin-ajax-response .spinner {
+      float: none;
+      width: auto;
+      padding-left: 27px;
+      margin-left: 0;
+    }
+
+    .wpdtrt-plugin-version {
+      // copied from dashboard-widgets-suite plugin
+      color: #c7c7c7;
+      font-size: 90%;
+    }
+
+    .wpdtrt-plugin-date {
+      font-size: .95em;
+    }
+
+    .form-table {
+      .description {
+        @extend %wpdtrt-plugin--input-hint-text; 
+      }
+    }
+  }
 }
 
 // -------------------------------------------------------------------
 // Widget page
 // -------------------------------------------------------------------
 
-.widget {
-  .wpdtrt-plugin-tip {
-    display: block;
-    padding-top: 4px;
+.wpdtrt-plugin {
+
+  &--widget-field {
+    .description {
+      @extend %wpdtrt-plugin--input-hint-text;
+    }
+  }
+}
+
+// -------------------------------------------------------------------
+// Terms page
+// -------------------------------------------------------------------
+
+.wpdtrt-plugin {
+
+  &--taxonomy-form-field {
+    //
   }
 }
 
@@ -68,11 +93,8 @@
 }
 
 .compat-attachment-fields {
-
   // reduce size of help text, to compress custom fields
   p.help {
-    font-size: 11px;
-    font-style: normal;
-    margin-top: 3px;
+    @extend %wpdtrt-plugin--input-hint-text;
   }
 }

@@ -408,7 +408,7 @@ if ( !class_exists( 'Taxonomy' ) ) {
     }
 
     /**
-     * Form field templating for the widget admin page
+     * Form field templating for the taxonomy admin page
      * @param       string $name
      * @param       array $attributes
      * @param       string $term_id Taxonomy term ID (available in edit_options)
@@ -450,7 +450,7 @@ if ( !class_exists( 'Taxonomy' ) ) {
       $classname   = '';
 
       if ( isset( $term_id ) ) {
-        $label_start = '<tr class="form-field term-group-wrap"><th scope="row">';
+        $label_start = '<tr class="form-field term-group-wrap wpdtrt-plugin--taxonomy-form-field"><th scope="row">';
         $label_end   = '</th>';
         $field_start = '<td>';
         $field_end   = '</td></tr>';

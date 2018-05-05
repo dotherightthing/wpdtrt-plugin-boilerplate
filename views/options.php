@@ -40,7 +40,7 @@
   }
 ?>
 
-<div class="wrap">
+<div class="wrap wpdtrt-plugin--options">
 
   <div id="icon-options-general" class="icon32"></div>
   <h1>
