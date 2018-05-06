@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoTheRightThing\\WPPlugin\\r_1_4_2\\": "src"
+            "DoTheRightThing\\WPPlugin\\r_1_4_3\\": "src"
         }
     },
     "minimum-stability": "stable",
