@@ -25,7 +25,7 @@ Please install and use via the [WordPress Plugin Boilerplate Generator](https://
 = 1.4.1 =
 * Fix library link output on Plugins page
 * 'Namespace' CSS, style settings page field hint
-* Add gulp bump_parent to update the version of wpdtrt-plugin files, using the version in package.json
+* Add gulp bump to update the version of wpdtrt-plugin files, using the version in package.json
 
 = 1.4.0 =
 * Add widgets include to test plugin
