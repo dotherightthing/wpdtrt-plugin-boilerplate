@@ -461,15 +461,27 @@ gulp.task('bump', function() {
     taskheader(this, pkg_name + ' to ' + pkg_version + ' using package.json' );
 
     // DoTheRightThing\WPPlugin\r_1_2_3
-    gulp.src('./src/*.php')
+    gulp.src([
+        './src/class-wpdtrt-test-plugin.php',
+        './src/class-wpdtrt-test-widgets.php',
+        './src/Shortcode.php',
+        './src/Taxonomy.php',
+        './src/TemplateLoader.php',
+        './src/Widget.php'
+      ])
       .pipe(replace(
         /(DoTheRightThing\\WPPlugin\\r_)([0-9]_[0-9]_[0-9])/,
         '$1' + namespace_version
       ))
       .pipe(gulp.dest('./src/'));
 
-    // const WPPLUGIN_VERSION = '1.2.3';
     gulp.src('./src/Plugin.php')
+      // DoTheRightThing\WPPlugin\r_1_2_3
+      .pipe(replace(
+        /(DoTheRightThing\\WPPlugin\\r_)([0-9]_[0-9]_[0-9])/,
+        '$1' + namespace_version
+      ))
+      // const WPPLUGIN_VERSION = '1.2.3';
       .pipe(replace(
         /(const WPPLUGIN_VERSION = ')([0-9]\.[0-9]\.[0-9])(';)/,
         '$1' + pkg_version + '$3'
