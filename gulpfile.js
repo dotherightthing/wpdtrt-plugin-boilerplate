@@ -488,8 +488,8 @@ gulp.task('bump', function() {
     wpdtrt_plugin_pkg_version_escaped = wpdtrt_plugin_pkg.version.split('.').join('\\.');
     wpdtrt_plugin_pkg_version_namespaced = wpdtrt_plugin_pkg.version.split('.').join('_');
 
-    // bump wpdtrt-plugin namespaces in wpdtrt-foo to 1.2.3 using wpdtrt-plugin/package.json
-    taskheader(this, 'wpdtrt-plugin namespaces in ' + root_pkg.name + ' to ' + wpdtrt_plugin_pkg.version + ' using wpdtrt-plugin/package.json' );
+    // bump wpdtrt-foo to 0.1.2 and wpdtrt-plugin 1.2.3 using package.json
+    taskheader(this, root_pkg.name + ' to ' + root_pkg.version + ' and ' + wpdtrt_plugin_pkg.name + ' ' + wpdtrt_plugin_pkg.version + ' using package.json' );
 
     // DoTheRightThing\WPPlugin\r_1_2_3
     gulp.src([
@@ -502,13 +502,48 @@ gulp.task('bump', function() {
       ))
       .pipe(gulp.dest('./src/'));
 
-    // DoTheRightThing\WPPlugin\r_1_2_3
+    // * @version 1.2.3
+    gulp.src('./gulpfile.js')
+      .pipe(replace(
+        /(\* @version\s+)([0-9]\.[0-9]\.[0-9])/,
+        '$1' + root_pkg.version
+      ))
+      .pipe(gulp.dest('./'));
+
+    gulp.src('./readme.txt')
+      .pipe(replace(
+        // Stable tag: 1.2.3
+        /(Stable tag:.)([0-9]\.[0-9]\.[0-9])/,
+        '$1' + root_pkg.version
+      ))
+      .pipe(replace(
+        // == Changelog ==
+        //
+        // = 1.2.3 =
+        //
+        // @see https://github.com/dotherightthing/wpdtrt-plugin/issues/101
+        /(== Changelog ==\n\n= )([0-9]\.[0-9]\.[0-9])+( =\n)/,
+        "$1" + root_pkg.version + " =\r\r= $2$3"
+      ))
+      .pipe(gulp.dest('./'));
+
     gulp.src([
         './' + root_pkg.name + '.php'
       ])
+      // DoTheRightThing\WPPlugin\r_1_2_3
       .pipe(replace(
         /(DoTheRightThing\\WPPlugin\\r_)([0-9]_[0-9]_[0-9])/,
         '$1' + wpdtrt_plugin_pkg_version_namespaced
+      ))
+      // * Version: 1.2.3
+      .pipe(replace(
+        /(\* Version:\s+)([0-9]\.[0-9]\.[0-9])/,
+        '$1' + root_pkg.version
+      ))
+      // define( 'WPDTRT_TEST_VERSION', '1.2.3' );
+      .pipe(replace(
+        /(define\( 'WPDTRT_TEST_VERSION', ')([0-9]\.[0-9]\.[0-9])(.+;)/,
+        '$1' + root_pkg.version + '$3'
       ))
       .pipe(gulp.dest('./'));
   }
