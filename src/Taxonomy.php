@@ -6,7 +6,7 @@
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_5;
+namespace DoTheRightThing\WPPlugin\r_1_4_6;
 
 if ( !class_exists( 'Taxonomy' ) ) {
 
