@@ -511,11 +511,10 @@ gulp.task('bump', function() {
       ))
       .pipe(gulp.dest('./'));
 
-    // update composer.lock
-    // else WPDTRT_Test_Plugin fails with fatal error
+    // regenerate autoload files
     gulp.src(dummyFile, {read: false})
       .pipe(shell([
-        'composer update --no-interaction'
+        'composer dump-autoload --no-interaction'
       ])
     );
   }
