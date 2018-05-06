@@ -571,9 +571,9 @@ gulp.task('bump_replace', function() {
         /(\* Version:\s+)([0-9]\.[0-9]\.[0-9])/,
         '$1' + root_pkg.version
       ))
-      // define( 'WPDTRT_TEST_VERSION', '1.2.3' );
+      // define( 'WPDTRT_FOO_VERSION', '1.2.3' );
       .pipe(replace(
-        /(define\( 'WPDTRT_TEST_VERSION', ')([0-9]\.[0-9]\.[0-9])(.+;)/,
+        /(define\( '[A-Z_]+_VERSION', ')([0-9]\.[0-9]\.[0-9])(.+;)/,
         '$1' + root_pkg.version + '$3'
       ))
       .pipe(gulp.dest('./'));
@@ -655,9 +655,9 @@ gulp.task('bump_replace', function() {
         /(\* Version:\s+)([0-9]\.[0-9]\.[0-9])/,
         '$1' + wpdtrt_plugin_pkg.version
       ))
-      // define( 'WPDTRT_TEST_VERSION', '1.2.3' );
+      // define( 'WPDTRT_FOO_VERSION', '1.2.3' );
       .pipe(replace(
-        /(define\( 'WPDTRT_TEST_VERSION', ')([0-9]\.[0-9]\.[0-9])(.+;)/,
+        /(define\( '[A-Z_]+_VERSION', ')([0-9]\.[0-9]\.[0-9])(.+;)/,
         '$1' + wpdtrt_plugin_pkg.version + '$3'
       ))
       .pipe(gulp.dest('./'));
