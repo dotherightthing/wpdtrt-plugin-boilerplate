@@ -467,6 +467,14 @@ gulp.task('bump', function() {
       ))
       .pipe(gulp.dest('./src/'));
 
+    // "DoTheRightThing\\WPPlugin\\r_1_2_3\\": "src"
+    gulp.src('./composer.json')
+      .pipe(replace(
+        /("DoTheRightThing\\\\WPPlugin\\\\r_)([0-9]_[0-9]_[0-9])(\\\\")/,
+        '$1' + namespace_version + '$3'
+      ))
+      .pipe(gulp.dest('./'));
+
     // * @version 1.2.3
     gulp.src('./index.php')
       .pipe(replace(
