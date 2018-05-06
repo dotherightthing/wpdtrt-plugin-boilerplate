@@ -518,7 +518,7 @@ gulp.task('bump_replace', function() {
     wpdtrt_plugin_pkg_version_namespaced = wpdtrt_plugin_pkg.version.split('.').join('_');
 
     // bump wpdtrt-foo to 0.1.2 and wpdtrt-plugin 1.2.3 using package.json
-    taskheader(this, root_pkg.name + ' to ' + root_pkg.version + ' and ' + wpdtrt_plugin_pkg.name + ' ' + wpdtrt_plugin_pkg.version + ' using package.json' );
+    taskheader(this, '| bump ' + root_pkg.name + ' to ' + root_pkg.version + ' and ' + wpdtrt_plugin_pkg.name + ' ' + wpdtrt_plugin_pkg.version + ' using package.json' );
 
     // DoTheRightThing\WPPlugin\r_1_2_3
     gulp.src([
@@ -584,7 +584,7 @@ gulp.task('bump_replace', function() {
     wpdtrt_plugin_pkg_version_escaped = wpdtrt_plugin_pkg.version.split('.').join('\\.');
     wpdtrt_plugin_pkg_version_namespaced = wpdtrt_plugin_pkg.version.split('.').join('_');
 
-    taskheader(this, wpdtrt_plugin_pkg.name + ' to ' + wpdtrt_plugin_pkg.version + ' using package.json' );
+    taskheader(this, '| bump ' + wpdtrt_plugin_pkg.name + ' to ' + wpdtrt_plugin_pkg.version + ' using package.json' );
 
     // DoTheRightThing\WPPlugin\r_1_2_3
     gulp.src([
