@@ -453,11 +453,12 @@ gulp.task('bump', function() {
 
 
   if ( pkg_name === 'wpdtrt-plugin' ) {
-    taskheader(this, pkg_name + ' to ' + pkg_version + ' using package.json' );
 
     pkg_version = pkg.version;
     escaped_version = pkg_version.split('.').join('\\.');
     namespace_version = pkg_version.split('.').join('_');
+
+    taskheader(this, pkg_name + ' to ' + pkg_version + ' using package.json' );
 
     // DoTheRightThing\WPPlugin\r_1_2_3
     gulp.src('./src/*.php')
