@@ -83,6 +83,13 @@ Please install and use via the [WordPress Plugin Boilerplate Generator](https://
 
 = 1.2.20 =
 * Make any content between the shortcode tags available to the shortcode template
+* Use Private Packagist (premium), falls back to original sources
+
+= 1.2.19 =
+* Make any content between the shortcode tags available to the shortcode template
+
+= 1.2.18 =
+* Install test framework via Travis 
 
 = 0.1 =
 * Initial version
