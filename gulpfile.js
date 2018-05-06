@@ -21,8 +21,6 @@
 
 // package
 var pkg = require('./package.json');
-var pkg_version = pkg.version;
-var namespace_version = pkg_version.split('.').join('_');
 
 // dependencies
 
@@ -448,8 +446,13 @@ gulp.task('watch', function () {
 
 gulp.task('bump', function() {
 
-  if ( pkg.name === 'wpdtrt-plugin' ) {
-    taskheader(this, '| bump ' + pkg.name + ' to ' + pkg_version + ' using package.json' );
+  var pkg_name = pkg.name;
+  var pkg_version = pkg.version;
+  var escaped_version = pkg_version.split('.').join('\\.');
+  var namespace_version = pkg_version.split('.').join('_');
+
+  if ( pkg_name === 'wpdtrt-plugin' ) {
+    taskheader(this, pkg_name + ' to ' + pkg_version + ' using package.json' );
 
     // DoTheRightThing\WPPlugin\r_1_2_3
     gulp.src('./src/*.php')
@@ -491,10 +494,12 @@ gulp.task('bump', function() {
       ))
       .pipe(replace(
         // == Changelog ==
+        //
         // = 1.2.3 =
-        // * TODO
-        /(== Changelog ==\n\n)/,
-        '$1= ' + pkg_version + ' =' + "\r" + '* TODO' + "\r\n\r\n"
+        //
+        // @see https://github.com/dotherightthing/wpdtrt-plugin/issues/101
+        /(== Changelog ==\n\n= )([0-9]\.[0-9]\.[0-9])+( =\n)/,
+        "$1" + pkg_version + " =\r\r= $2$3"
       ))
       .pipe(gulp.dest('./'));
 
