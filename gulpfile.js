@@ -464,6 +464,8 @@ gulp.task('bump', function(callback) {
 
 gulp.task('bump_update', function() {
 
+  taskheader(this);
+
   var wpdtrt_plugin_is_dependency = false;
 
   if ( moduleIsAvailable( '../../../package.json' ) ) {
