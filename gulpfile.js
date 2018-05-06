@@ -451,37 +451,66 @@ gulp.task('watch', function () {
   gulp.watch( phpFiles, ['phplint'] );
 });
 
-gulp.task('bump', function() {
+gulp.task('bump', function(callback) {
 
-  var root_pkg,
-      wpdtrt_plugin_pkg,
-      wpdtrt_plugin_is_dependency,
-      wpdtrt_plugin_pkg_version_escaped,
-      wpdtrt_plugin_pkg_version_namespaced;
+  taskheader(this);
 
-  // get the root package.json
-  // require() is relative to the active gulpfile not to the CWD
-  // as it is wpdtrt-plugin/gulpfile.js which is always run
-  // ./package.json will always be wpdtrt-plugin/package.json
+  runSequence(
+    'bump_update',
+    'bump_replace',
+    callback
+  );
+});
+
+gulp.task('bump_update', function() {
+
+  var wpdtrt_plugin_is_dependency = false;
 
   if ( moduleIsAvailable( '../../../package.json' ) ) {
     wpdtrt_plugin_is_dependency = true;
-  }
-  else {
-    wpdtrt_plugin_is_dependency = false;
   }
 
   // wpdtrt-foo
   if ( wpdtrt_plugin_is_dependency ) {
 
     // get the latest release of wpdtrt-plugin
-    gulp.src(dummyFile, {read: false})
+    // this has to run before bump_replace
+    // so that the correct version information is available
+    //
+    // return stream or promise for run-sequence
+    return gulp.src(dummyFile, {read: false})
       .pipe(shell([
         'composer update dotherightthing/wpdtrt-plugin --no-interaction'
       ])
-    );    
+    );
+  }
+  else {
+    // return stream or promise for run-sequence
+    return;
+  }
+});
 
-    // after getting the latest version
+gulp.task('bump_replace', function() {
+
+  // require() is relative to the active gulpfile not to the CWD
+  // as it is wpdtrt-plugin/gulpfile.js which is always run
+  // ./package.json will always be wpdtrt-plugin/package.json
+  // therefore we differentiate between root_pkg & wpdtrt_plugin_pkg
+
+  var root_pkg,
+      wpdtrt_plugin_pkg,
+      wpdtrt_plugin_pkg_version_escaped,
+      wpdtrt_plugin_pkg_version_namespaced,
+      wpdtrt_plugin_is_dependency = false;
+
+  if ( moduleIsAvailable( '../../../package.json' ) ) {
+    wpdtrt_plugin_is_dependency = true;
+  }
+
+  // wpdtrt-foo
+  if ( wpdtrt_plugin_is_dependency ) {
+
+    // after getting the latest version via bump_update
     // get the latest release number
     root_pkg = require('../../../package.json');
     wpdtrt_plugin_pkg = require('./package.json');
