@@ -601,7 +601,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @param       array
      */
-    protected function set_plugin_dependencies( $new_plugin_dependencies ) {
+    public function set_plugin_dependencies( $new_plugin_dependencies ) {
 
       // old options stored in database
       $old_plugin_dependencies = $this->get_plugin_dependencies();
