@@ -16,7 +16,7 @@
  * @since       1.0.0
  * @version 	1.0.0
  */
-class WPDTRT_Test_Plugin extends DoTheRightThing\WPPlugin\r_1_4_8\Plugin {
+class WPDTRT_Test_Plugin extends DoTheRightThing\WPPlugin\r_1_4_9\Plugin {
 
     /**
      * Hook the plugin in to WordPress
