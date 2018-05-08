@@ -6,7 +6,7 @@ Tags: boilerplate,
 Requires at least: 4.8.1
 Tested up to: 4.9.5
 Requires PHP: 5.6.30
-Stable tag: 1.4.9
+Stable tag: 1.4.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,15 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 == Changelog ==
+
+= 1.4.10 =
+* Data options can't be altered by the user so replace rather than merge them
+* Move unset option to unit tests
+* Don't update options if new options weren't passed in
+* Set last_updated without affecting force_refresh
+* Check for force_refresh before using it
+* Don't set default data options
+* Make unset_options available to unit tests
 
 = 1.4.9 =
 * Replace instance options rather than merging them, as the values are not stored as config options
