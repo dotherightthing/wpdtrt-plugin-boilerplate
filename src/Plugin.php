@@ -828,7 +828,7 @@ if ( !class_exists( 'Plugin' ) ) {
       $child_plugin_filter = $this->get_prefix() . '_set_api_endpoint';
       $endpoint = apply_filters( $child_plugin_filter, $endpoint );
 
-      $data = false;
+      $api_data = false;
 
       if ( $endpoint !== '' ) {
 
@@ -846,16 +846,17 @@ if ( !class_exists( 'Plugin' ) ) {
         * Return the body, not the header
         * Note: There is an optional boolean argument, which returns an associative array if TRUE
         */
-        $data = json_decode( $response['body'], true );
+        $api_data = json_decode( $response['body'], true );
 
         // Save the data and retrieval time
-        $this->set_plugin_data( $data );
-        $this->set_plugin_data_options( array(
-            'last_updated' => time()
-        ));
+        $plugin_data_options = $this->get_plugin_data_options();
+        $plugin_data_options['last_updated'] = time();
+
+        $this->set_plugin_data( $api_data );
+        $this->set_plugin_data_options( $plugin_data_options );
       }
       
-      return $data;
+      return $api_data;
     }
 
     /**
