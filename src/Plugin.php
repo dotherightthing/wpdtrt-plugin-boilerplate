@@ -501,7 +501,7 @@ if ( !class_exists( 'Plugin' ) ) {
      *
      * @since 1.0.0
      */
-    protected function unset_options() {
+    public function unset_options() {
       delete_option( $this->get_prefix() );
     }
 
