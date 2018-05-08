@@ -566,7 +566,9 @@ if ( !class_exists( 'Plugin' ) ) {
     // PLUGIN DEPENDENCIES
 
     /**
-     * Store a plugin dependency for loading via TGMA
+     * Store a plugin dependency for loading via TGMPA
+     *  This runs after set_plugin_dependencies(), as required,
+     *  but is confusing and may be removed.
      *
      * @since       1.0.0
      * @version     1.0.0
@@ -574,44 +576,46 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_dependency( $new_plugin_dependency ) {
+
+      // these are the dependencies set by set_plugin_dependencies()
       $old_plugin_dependencies = $this->get_plugin_dependencies();
 
       foreach( $old_plugin_dependencies as $key => $value ) {
+        // if the new dependency already exists
         if ( $value['slug'] === $new_plugin_dependency['slug'] ) {
           // remove the old entry so we can set it again below
+          // with the updated version
+          // or at least the one set last
           unset( $old_plugin_dependencies[$key] );
         }
       }
+
+      // this changes the array order, but that's not important to us
+      array_push( $old_plugin_dependencies, $new_plugin_dependency );
 
       /**
        * Merge old options with new options
        * This overwrites the old values with any new values
        */
       $options = $this->get_options();
-      $options['plugin_dependencies'] = array_merge( $old_plugin_dependencies, array( $new_plugin_dependency ) );
+      $options['plugin_dependencies'] = $old_plugin_dependencies;
       $this->set_options($options);
     }
 
     /**
-     * Store all plugin dependencies for loading via TGMA
-     *  Merges new dependencies with any old ones
+     * Store all plugin dependencies for loading via TGMPA
+     *  Replaces old dependencies with any old ones
      *
      * @since       1.0.0
-     * @version     1.0.0
+     * @version     1.1.0
      *
      * @param       array
      */
     public function set_plugin_dependencies( $new_plugin_dependencies ) {
 
-      // old options stored in database
-      $old_plugin_dependencies = $this->get_plugin_dependencies();
-
-      // new array to save to database
-      $merged_plugin_dependencies = $this->helper_merge_option_arrays( $old_plugin_dependencies, $new_plugin_dependencies );
-
-      // Save the merged options
+      // Save the new options
       $options = $this->get_options();
-      $options['plugin_dependencies'] = $merged_plugin_dependencies;
+      $options['plugin_dependencies'] = $new_plugin_dependencies;
 
       $this->set_options($options);
 
@@ -620,7 +624,7 @@ if ( !class_exists( 'Plugin' ) ) {
     }
 
     /**
-     * Get a list of plugin dependencies to load via TGMA
+     * Get a list of plugin dependencies to load via TGMPA
      *
      * @since       1.0.0
      * @version     1.0.0

@@ -141,6 +141,26 @@ class PluginTest extends WP_UnitTestCase {
             'instance_options' => array(),
             'plugin_dependencies' => array()
         );
+
+        $this->mock_plugin_dependencies_old = array(
+            array(
+                'name'          => 'DTRT Content Sections',
+                'slug'          => 'wpdtrt-contentsections',
+                'source'        => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.0.1/release.zip',
+                'version'       => '0.0.1',
+                'external_url'  => 'https://github.com/dotherightthing/wpdtrt-contentsections',
+                'required'      => true,
+            )
+        );
+
+        $this->mock_plugin_dependency_new = array(
+            'name'          => 'DTRT Content Sections',
+            'slug'          => 'wpdtrt-contentsections',
+            'source'        => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.0.2/release.zip',
+            'version'       => '0.0.2',
+            'external_url'  => 'https://github.com/dotherightthing/wpdtrt-contentsections',
+            'required'      => true,
+        );
     }
 
     // ########## TESTS ########## //
@@ -741,4 +761,33 @@ class PluginTest extends WP_UnitTestCase {
     either by user input
     or by the config (unusual but possible)
     */
+    /**
+     * Test that setting a single dependency
+     *  will supercede an outdated -duplicate set as part of a group
+     */
+    public function test_set_plugin_dependency() {
+
+        global $wpdtrt_test_plugin;
+
+        $wpdtrt_test_plugin->set_plugin_dependencies( $this->mock_plugin_dependencies_old );
+
+        $wpdtrt_test_plugin->set_plugin_dependency( $this->mock_plugin_dependency_new );
+
+        $new_plugin_dependencies = $wpdtrt_test_plugin->get_plugin_dependencies();
+
+        // reindex array (only required in this test)
+        $new_plugin_dependencies = array_values($new_plugin_dependencies);
+
+        $this->assertEquals(
+            '0.0.1',
+            $this->mock_plugin_dependencies_old[0]['version'],
+            'Expected old plugin dependency version'
+        );
+
+        $this->assertEquals(
+            '0.0.2',
+            $new_plugin_dependencies[0]['version'],
+            'Expected old plugin dependency to be replaced with new version'
+        );
+    }
 }
