@@ -1371,13 +1371,15 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $demo_shortcode_params = $this->get_demo_shortcode_params();
 
+      $force_refresh = isset( $plugin_data_options['force_refresh'] ) ? $plugin_data_options['force_refresh'] : false;
+
       wp_localize_script( $this->get_prefix() . '_backend',
         'wpdtrt_plugin_config',
         array(
           'prefix' => $this->get_prefix(),
           'ajaxurl' => admin_url( 'admin-ajax.php' ),
           'messages' => $this->get_messages(),
-          'force_refresh' => $plugin_data_options['force_refresh'],
+          'force_refresh' => $force_refresh,
           'refresh_api_data' => isset( $demo_shortcode_params ) ? 'true' : 'false'
         )
       );
