@@ -66,7 +66,6 @@ if ( !class_exists( 'Plugin' ) ) {
       // to avoid overwriting existing user settings
       $plugin_options = null;
       $plugin_data = null;
-      $plugin_data_options = null;
       $instance_options = null;
       $plugin_dependencies = null;
 
@@ -91,12 +90,9 @@ if ( !class_exists( 'Plugin' ) ) {
       // store option arrays
       $this->set_plugin_options( $plugin_options, true );
       $this->set_plugin_data( $plugin_data );
-      $this->set_plugin_data_options( isset($plugin_data_options) ? $plugin_data_options : array() );
+      $this->set_plugin_data_options( $plugin_data_options );
       $this->set_instance_options( $instance_options );
       $this->set_plugin_dependencies( isset($plugin_dependencies) ? $plugin_dependencies : array() );
-
-      // defaults
-      $plugin_data_options['force_refresh'] = false;
 
       // hook in to WordPress
       $this->wp_setup();
@@ -705,14 +701,8 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_data_options( $new_plugin_data_options ) {
-      $old_plugin_data_options = $this->get_plugin_data_options();
-
-      /**
-       * Merge old options with new options
-       * This overwrites the old values with any new values
-       */
       $options = $this->get_options();
-      $options['plugin_data_options'] = array_merge( $old_plugin_data_options, $new_plugin_data_options );
+      $options['plugin_data_options'] = $new_plugin_data_options;
       $this->set_options($options);
     }
 
