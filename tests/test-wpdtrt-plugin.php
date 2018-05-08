@@ -29,7 +29,9 @@ class PluginTest extends WP_UnitTestCase {
         global $wpdtrt_test_plugin;
 
     	parent::tearDown();
-        //$wpdtrt_test_plugin->set_plugin_options( array() );
+
+        // remove any previously saved options
+        $wpdtrt_test_plugin->set_plugin_options( array(), true );
     }
 
     // ########## MOCK DATA ########## //
@@ -39,7 +41,7 @@ class PluginTest extends WP_UnitTestCase {
         $this->plugin_option_types = array(
             'checkbox_input' => array(
                 'type' => 'checkbox',
-                'label' => esc_html__('Field label', 'text-domain'),
+                'label' => __('Field label', 'text-domain'),
                 'tip' => __('Helper text', 'text-domain')
             ),
             'file_input' => array(
@@ -166,303 +168,144 @@ class PluginTest extends WP_UnitTestCase {
     // ########## TESTS ########## //
 
 	/**
-	 * Test set_plugin_options() and get_plugin_options()
-     * These plugin methods manage keys/values which appear
-     * and are authored on the plugin options page
+	 * Test that the raw config is saved as-is, sans values.
+     *  For each option, the 'value' attribute is deliberately omitted,
+     *  this is to aid the checking of this value by helper_get_default_value().
+     *  If the value was set to '' by default,
+     *  it could erase a user value when the new and old options were merged -
+     *  or, if blank values were ignored
+     *  it would prevent the user from erasing values they no longer required
      *
      * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
      */
-	public function test__set_plugin_options__get_plugin_options() {
+	public function test__set_plugin_options() {
 
         global $wpdtrt_test_plugin;
 
-        // when the page is first loaded,
-        // we get the plugin options out of the coded config
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
+        // save the raw config
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues, true );
+
+        // get config + user values (none)
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
+        // assertions
         $this->assertArrayHasKey(
             'type',
             $plugin_options['google_static_maps_api_key']
         );  
+
+        $this->assertEquals(
+            'text',
+            $plugin_options['google_static_maps_api_key']['type']
+        );
 
         $this->assertArrayHasKey(
             'label',
             $plugin_options['google_static_maps_api_key']
         );  
 
+        $this->assertEquals(
+            'Google Static Maps API Key',
+            $plugin_options['google_static_maps_api_key']['label']
+        );
+
         $this->assertArrayHasKey(
             'size',
             $plugin_options['google_static_maps_api_key']
         );  
 
+        $this->assertEquals(
+            '50',
+            $plugin_options['google_static_maps_api_key']['size']
+        );
+
         $this->assertArrayHasKey(
             'tip',
             $plugin_options['google_static_maps_api_key']
         );  
+
+        $this->assertEquals(
+            'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
+            $plugin_options['google_static_maps_api_key']['tip']
+        );
 
 		$this->assertArrayNotHasKey(
             'value',
 			$plugin_options['google_static_maps_api_key'],
-            'When the page is first loaded the user value should not exist'
+            'The raw config should exclude user values'
 		);	
+    }
 
-        // the user enters values and saves the page
-        // we expect their entry to be saved in a new 'value' key
+    /**
+     * Test that the user values are correctly merged into the config
+     *
+     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+     */
+    public function test__set_plugin_option_values() {
+
+        global $wpdtrt_test_plugin;
+
+        // save the raw config
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues, true );
+
+        // save the user values
         $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_user_values );
+
+        // get config + user values
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
+        // assertions
         $this->assertArrayHasKey(
             'type',
             $plugin_options['google_static_maps_api_key']
         );  
+
+        $this->assertEquals(
+            'text',
+            $plugin_options['google_static_maps_api_key']['type']
+        );
 
         $this->assertArrayHasKey(
             'label',
             $plugin_options['google_static_maps_api_key']
         );  
 
-        $this->assertArrayHasKey(
-            'size',
-            $plugin_options['google_static_maps_api_key']
-        );  
-
-        $this->assertArrayHasKey(
-            'tip',
-            $plugin_options['google_static_maps_api_key']
-        );  
-
-        $this->assertArrayHasKey(
-            'value',
-            $plugin_options['google_static_maps_api_key'],
-            'When the user submits the form, the user value should persist'
-        );  
-
-        // the page is reloaded
-        // we expect the user's entry to be persistent
-        // rather than be replaced by the old subset of options
-        // TODO: how are old options are saved over the top of new options?
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
-        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
-
-        $this->assertArrayHasKey(
-            'type',
-            $plugin_options['google_static_maps_api_key']
-        );  
-
-        $this->assertArrayHasKey(
-            'label',
-            $plugin_options['google_static_maps_api_key']
-        );  
+        $this->assertEquals(
+            'Google Static Maps API Key',
+            $plugin_options['google_static_maps_api_key']['label']
+        );
 
         $this->assertArrayHasKey(
             'size',
             $plugin_options['google_static_maps_api_key']
         );  
 
+        $this->assertEquals(
+            '50',
+            $plugin_options['google_static_maps_api_key']['size']
+        );
+
         $this->assertArrayHasKey(
             'tip',
             $plugin_options['google_static_maps_api_key']
         );  
 
+        $this->assertEquals(
+            'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
+            $plugin_options['google_static_maps_api_key']['tip']
+        );
+
         $this->assertArrayHasKey(
             'value',
             $plugin_options['google_static_maps_api_key'],
-            'When the page is reloaded, the user value should persist'
+            'The raw config should exclude user values'
         );  
+
+        $this->assertEquals(
+            'abc12345',
+            $plugin_options['google_static_maps_api_key']['value']
+        );
 	}
-
-    /**
-     * Test array_merge()
-     * This is the PHP function used in several plugin methods
-     * to blend old data (especially old keys) with new data (especially values)
-     * This approach fails, but array_merge_recursive works.
-     *
-     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
-     */
-    public function archived_test__array_merge() {
-
-        global $wpdtrt_test_plugin;
-
-        $options = array_merge( $this->all_options_config, $this->all_options_user );
-
-        $this->assertArrayHasKey(
-            'plugin_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'google_static_maps_api_key',
-            $options['plugin_options']
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'instance_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_dependencies',
-            $options
-        );  
-
-        // passes
-        $this->assertArrayHasKey(
-            'value',
-            $options['plugin_options']['google_static_maps_api_key'],
-            'When old and new values are merged, new values are lost'
-        ); 
-
-        /**
-         * Test array_merge in reverse
-         * When the page is subsequently reloaded
-         * the plugin appears to reapply the original config
-         * causing user data to be erased
-         */
-
-        $options = array_merge( $this->all_options_user, $this->all_options_config );
-
-         $this->assertArrayHasKey(
-            'plugin_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'google_static_maps_api_key',
-            $options['plugin_options']
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'instance_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_dependencies',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'value',
-            $options['plugin_options']['google_static_maps_api_key'],
-            'When new and old values are merged, new values are lost'
-        ); 
-    }
-
-    /**
-     * Test array_merge_recursive()
-     * A potential replacement for array_merge
-     *
-     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
-     */
-    public function test__array_merge_recursive() {
-
-        global $wpdtrt_test_plugin;
-
-        $options = array_merge_recursive( $this->all_options_config, $this->all_options_user );
-
-        $this->assertArrayHasKey(
-            'plugin_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'google_static_maps_api_key',
-            $options['plugin_options']
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'instance_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_dependencies',
-            $options
-        );  
-
-        // passes
-        $this->assertArrayHasKey(
-            'value',
-            $options['plugin_options']['google_static_maps_api_key'],
-            'When old and new values are merged, new values are lost'
-        ); 
-
-        /**
-         * Test array_merge in reverse
-         * When the page is subsequently reloaded
-         * the plugin appears to reapply the original config
-         * causing user data to be erased
-         */
-
-        $options = array_merge_recursive( $this->all_options_user, $this->all_options_config );
-
-         $this->assertArrayHasKey(
-            'plugin_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'google_static_maps_api_key',
-            $options['plugin_options']
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_data_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'instance_options',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'plugin_dependencies',
-            $options
-        );  
-
-        $this->assertArrayHasKey(
-            'value',
-            $options['plugin_options']['google_static_maps_api_key'],
-            'When new and old values are merged, new values are lost'
-        ); 
-    }
 
     /**
      * Test update_option()
@@ -551,38 +394,6 @@ class PluginTest extends WP_UnitTestCase {
     }
 
     /**
-     * Test whether single calls to set and get plugin options
-     * result in duplicate keys
-     *
-     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
-     */
-    public function test__set_plugin_options__get_plugin_options__single() {
-
-        global $wpdtrt_test_plugin;
-
-        // when the page is first loaded,
-        // we get the plugin options out of the coded config
-
-        // 1
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
-        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
-
-        foreach( $plugin_options as $name => $attributes ) {
-
-            $this->assertArrayHasKey(
-                'type',
-                $attributes
-            );
-
-            $this->assertEquals(
-                'text',
-                $attributes['type'],
-                'A string is expected for the field type'
-            );
-        }
-    }
-
-    /**
      * Test whether multiple calls to set and get plugin options
      * result in duplicate keys
       *
@@ -596,7 +407,7 @@ class PluginTest extends WP_UnitTestCase {
         // we get the plugin options out of the coded config
 
         // 1
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues, true );
         $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         // 2
@@ -623,34 +434,6 @@ class PluginTest extends WP_UnitTestCase {
     }
 
     /**
-     * Test initial plugin options config
-     *  For each option, the 'value' attribute is deliberately omitted,
-     *  this is to aid the checking of this value by helper_get_default_value().
-     *  If the value was set to '' by default,
-     *  it could erase a user value when the new and old options were merged -
-     *  or, if blank values were ignored
-     *  it would prevent the user from erasing values they no longer required
-     *  Note: 'value' attributes MAY be added for unit tests.
-     * @todo helper_get_default_value
-     */
-    public function test__plugin_options_config_novalue() {
-
-        global $wpdtrt_test_plugin;
-
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues );
-        $plugin_options = $wpdtrt_test_plugin->get_plugin_options();
-
-        foreach( $plugin_options as $name => $attributes ) {
-
-            $this->assertArrayNotHasKey(
-                'value',
-                $attributes,
-                'Config should not set a value for plugin options'
-            );
-        }
-    }
-
-    /**
      * Test that form element values are correctly set
      * when a form element is rendered
      * for a plugin option which doesn't have a value attribute yet
@@ -668,7 +451,7 @@ class PluginTest extends WP_UnitTestCase {
 
         global $wpdtrt_test_plugin;
 
-        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_option_types );
+        $wpdtrt_test_plugin->set_plugin_options( $this->plugin_option_types, true );
         $stored_plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
         $this->assertEquals(
@@ -753,14 +536,6 @@ class PluginTest extends WP_UnitTestCase {
         );
     }
 
-    /*
-    TODO
-    so the value does not exist until it is created
-    via user input
-    once created it can be updated
-    either by user input
-    or by the config (unusual but possible)
-    */
     /**
      * Test that setting a single dependency
      *  will supercede an outdated -duplicate set as part of a group
