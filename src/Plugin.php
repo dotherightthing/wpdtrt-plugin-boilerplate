@@ -523,6 +523,10 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function set_plugin_options( $new_plugin_options, $is_raw_config_options=false ) {
 
+      if ( ! isset( $new_plugin_options ) ) {
+        return;
+      }
+
       // old options stored in database
       $old_plugin_options = $this->get_plugin_options();
 
@@ -578,6 +582,10 @@ if ( !class_exists( 'Plugin' ) ) {
      */
     public function set_plugin_dependency( $new_plugin_dependency ) {
 
+      if ( ! isset( $new_plugin_dependency ) ) {
+        return;
+      }
+
       // these are the dependencies set by set_plugin_dependencies()
       $old_plugin_dependencies = $this->get_plugin_dependencies();
 
@@ -613,6 +621,10 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_plugin_dependencies( $new_plugin_dependencies ) {
+
+      if ( ! isset( $new_plugin_dependencies ) ) {
+        return;
+      }
 
       // Save the new options
       $options = $this->get_options();
