@@ -1089,41 +1089,55 @@ if ( !class_exists( 'Plugin' ) ) {
 
       $merged_options = array();
 
-      if ( empty( $old_options ) ) {
-        $merged_options = $new_options;
+      // remove duplicate entries in old data
+
+      if ( is_array( $old_options ) ) {
+        $old_options = array_unique( $old_options, SORT_REGULAR );
       }
       else {
+        $old_options = array();
+      }
 
-        // all existing 'old' options, e.g. 'google_maps_api_key' etc
-        foreach( $old_options as $option_name => $option_value ) {
+      if ( is_array( $new_options ) ) {
+        $new_options = array_unique( $new_options, SORT_REGULAR );
+      }
+      else {
+        $new_options = array();
+      }
 
-          // each option describes a form input using an array
-          if ( is_array( $option_value ) ) {
+      // all existing 'old' options, e.g. 'google_maps_api_key' etc
+      foreach( $old_options as $option_name => $option_value ) {
 
-            // the form input attributes: 'type', 'label', 'size', 'value' etc
-            foreach( $option_value as $attribute => $value) {
+        // each option describes a form input using an array
+        if ( is_array( $option_value ) ) {
 
+          // the form input attributes: 'type', 'label', 'size', 'value' etc
+          foreach( $option_value as $attribute => $value) {
+
+            if ( isset( $new_options[$option_name] ) && is_array( $new_options[$option_name] ) ) {
               // if a 'new' value is supplied for an existing attribute, use it
               if ( array_key_exists( $attribute, $new_options[$option_name] ) ) {
-               $merged_options[$option_name][$attribute] = $new_options[$option_name][$attribute];
+                $merged_options[$option_name][$attribute] = $new_options[$option_name][$attribute];
               }
-              // else use the existing value
-              else {
-                $merged_options[$option_name][$attribute] = $value;
-              }
+            }
+            // else use the existing value
+            else {
+              $merged_options[$option_name][$attribute] = $value;
             }
           }
         }
+      }
 
-        // all 'new'/unknown options
-        foreach( $new_options as $option_name => $option_value ) {
+      // all 'new'/unknown options
+      foreach( $new_options as $option_name => $option_value ) {
 
-          // each option describes a form input using an array
-          if ( is_array( $option_value ) ) {
+        // each option describes a form input using an array
+        if ( is_array( $option_value ) ) {
 
-            // the form input attributes: 'type', 'label', 'size', 'value' etc
-            foreach( $option_value as $attribute => $value) {
+          // the form input attributes: 'type', 'label', 'size', 'value' etc
+          foreach( $option_value as $attribute => $value) {
 
+            if ( isset( $merged_options[$option_name] ) && is_array( $merged_options[$option_name] ) ) {
               // if a 'new' attribute is not existing, add it
               if ( ! array_key_exists( $attribute, $merged_options[$option_name] ) ) {
                 $merged_options[$option_name][$attribute] = $value;
