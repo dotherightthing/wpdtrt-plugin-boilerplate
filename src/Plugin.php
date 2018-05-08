@@ -84,9 +84,6 @@ if ( !class_exists( 'Plugin' ) ) {
       $this->set_version( $version );
       $this->set_demo_shortcode_params( $demo_shortcode_params );
 
-      // Delete old options during testing
-      //$this->unset_options();
-
       // store option arrays
       $this->set_plugin_options( $plugin_options, true );
       $this->set_plugin_data( $plugin_data );

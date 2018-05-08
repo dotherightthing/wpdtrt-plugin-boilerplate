@@ -31,7 +31,7 @@ class PluginTest extends WP_UnitTestCase {
     	parent::tearDown();
 
         // remove any previously saved options
-        $wpdtrt_test_plugin->set_plugin_options( array(), true );
+        $wpdtrt_test_plugin->unset_options();
     }
 
     // ########## MOCK DATA ########## //
