@@ -740,6 +740,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
     /**
      * Set the value of $instance_options
+     *  replacing the existing options.
      *
      * @since       1.0.0
      * @version     1.0.0
@@ -747,14 +748,8 @@ if ( !class_exists( 'Plugin' ) ) {
      * @param       array
      */
     public function set_instance_options( $new_instance_options ) {
-      $old_instance_options = $this->get_instance_options();
-
-      /**
-       * Merge old options with new options
-       * This overwrites the old values with any new values
-       */
       $options = $this->get_options();
-      $options['instance_options'] = array_merge( $old_instance_options, $new_instance_options );
+      $options['instance_options'] = $new_instance_options;
       $this->set_options($options);
     }
 
