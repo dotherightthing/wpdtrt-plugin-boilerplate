@@ -87,7 +87,7 @@ class PluginTest extends WP_UnitTestCase {
                 'type' => 'text',
                 'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
                 'size' => 50,
-                'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin')
+                'tip' => __('https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin')
             )
         );
 
@@ -96,7 +96,7 @@ class PluginTest extends WP_UnitTestCase {
                 'type' => 'text',
                 'label' => __('Google Static Maps API Key', 'wpdtrt-test-plugin'),
                 'size' => 50,
-                'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin'),
+                'tip' => __('https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin'),
                 'value' => 'abc12345'
             )
         );
@@ -115,7 +115,7 @@ class PluginTest extends WP_UnitTestCase {
                     'type' => 'text',
                     'label' => 'Google Static Maps API Key',
                     'size' => 50,
-                    'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin'),
+                    'tip' => __('https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin'),
                 )
             ),
             'plugin_data' => array(),
@@ -132,7 +132,7 @@ class PluginTest extends WP_UnitTestCase {
                     'type' => 'text',
                     'label' => 'Google Static Maps API Key',
                     'size' => 50,
-                    'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test-plugin'),
+                    'tip' => __('https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin'),
                     'value' => 'abc12345'
                 )
             ),
@@ -225,7 +225,7 @@ class PluginTest extends WP_UnitTestCase {
         );  
 
         $this->assertEquals(
-            'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
+            'https://developers.google.com/maps/documentation/maps-static/get-api-key',
             $plugin_options['google_static_maps_api_key']['tip']
         );
 
@@ -291,7 +291,7 @@ class PluginTest extends WP_UnitTestCase {
         );  
 
         $this->assertEquals(
-            'https://developers.google.com/maps/documentation/static-maps/ > GET A KEY',
+            'https://developers.google.com/maps/documentation/maps-static/get-api-key',
             $plugin_options['google_static_maps_api_key']['tip']
         );
 
