@@ -488,17 +488,21 @@ gulp.task('bump_replace', function() {
   // gulp bump
   var wpdtrt_plugin_input_path = '',
       wpdtrt_plugin_output_path = '',
-      wpdtrt_plugin_package = process.cwd() + '/' + wpdtrt_plugin_input_path + 'package.json',
-      root_input_path = wpdtrt_plugin_input_path,
-      root_output_path = wpdtrt_plugin_output_path,
-      root_package = wpdtrt_plugin_package;
+      wpdtrt_plugin_package = process.cwd() + '/package.json',
+      root_input_path = '',
+      root_output_path = '',
+      root_package = process.cwd() + '/package.json';
 
   // if run from a child plugin:
   // gulp bump --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
   if ( moduleIsAvailable( '../../../package.json' ) ) {
-    root_input_path = '../../../';
-    root_output_path = '../../../';
-    root_package = root_input_path + 'package.json';
+
+      wpdtrt_plugin_input_path = 'vendor/dotherightthing/wpdtrt-plugin/',
+      wpdtrt_plugin_output_path = 'vendor/dotherightthing/wpdtrt-plugin/',
+      wpdtrt_plugin_package = process.cwd() + '/vendor/dotherightthing/wpdtrt-plugin/package.json',
+      root_input_path = '',
+      root_output_path = '',
+      root_package = process.cwd() + '/package.json';
   }
 
   return wpdtrtPluginBump({
