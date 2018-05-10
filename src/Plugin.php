@@ -7,7 +7,7 @@
  * @version   1.0.1
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_12;
+namespace DoTheRightThing\WPPlugin\r_1_4_13;
 
 if ( !class_exists( 'Plugin' ) ) {
 
@@ -36,7 +36,7 @@ if ( !class_exists( 'Plugin' ) ) {
   class Plugin {
 
     // https://secure.php.net/manual/en/language.oop5.constants.php
-    const WPPLUGIN_VERSION = '1.4.12';
+    const WPPLUGIN_VERSION = '1.4.13';
 
     /**
      * Initialise the object's properties when it is instantiated,

@@ -8,7 +8,7 @@
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_12;
+namespace DoTheRightThing\WPPlugin\r_1_4_13;
 
 if ( !class_exists( 'Widget' ) ) {
 

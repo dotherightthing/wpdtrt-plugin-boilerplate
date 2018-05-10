@@ -7,7 +7,7 @@
  * @since     0.6.0
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_12;
+namespace DoTheRightThing\WPPlugin\r_1_4_13;
 
 /**
  * Template loader sub class
