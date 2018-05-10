@@ -35,6 +35,7 @@ var replace = require('gulp-replace');
 var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
+var wpdtrtPluginBump = require('gulp-wpdtrt-plugin-bump');
 var zip = require('gulp-zip');
 
 // paths
@@ -451,17 +452,6 @@ gulp.task('watch', function () {
   gulp.watch( phpFiles, ['phplint'] );
 });
 
-gulp.task('bump', function(callback) {
-
-  taskheader(this);
-
-  runSequence(
-    'bump_update',
-    'bump_replace',
-    callback
-  );
-});
-
 gulp.task('bump_update', function() {
 
   taskheader(this);
@@ -494,181 +484,52 @@ gulp.task('bump_update', function() {
 
 gulp.task('bump_replace', function() {
 
-  // require() is relative to the active gulpfile not to the CWD
-  // as it is wpdtrt-plugin/gulpfile.js which is always run
-  // ./package.json will always be wpdtrt-plugin/package.json
-  // therefore we differentiate between root_pkg & wpdtrt_plugin_pkg
+  // if run from wpdtrt-plugin:
+  // gulp bump
+  var wpdtrt_plugin_input_path = '',
+      wpdtrt_plugin_output_path = '',
+      wpdtrt_plugin_package = process.cwd() + '/' + wpdtrt_plugin_input_path + 'package.json',
+      root_input_path = wpdtrt_plugin_input_path,
+      root_output_path = wpdtrt_plugin_output_path,
+      root_package = wpdtrt_plugin_package;
 
-  var root_pkg,
-      wpdtrt_plugin_pkg,
-      wpdtrt_plugin_pkg_version_escaped,
-      wpdtrt_plugin_pkg_version_namespaced,
-      wpdtrt_plugin_is_dependency = false;
-
+  // if run from a child plugin:
+  // gulp bump --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
   if ( moduleIsAvailable( '../../../package.json' ) ) {
-    wpdtrt_plugin_is_dependency = true;
+    root_input_path = '../../../';
+    root_output_path = '../../../';
+    root_package = root_input_path + 'package.json';
   }
 
-  // wpdtrt-foo
-  if ( wpdtrt_plugin_is_dependency ) {
+  return wpdtrtPluginBump({
+    wpdtrt_plugin_input_path: wpdtrt_plugin_input_path,
+    wpdtrt_plugin_output_path: wpdtrt_plugin_output_path,
+    wpdtrt_plugin_package: wpdtrt_plugin_package,
+    root_input_path: root_input_path,
+    root_output_path: root_output_path,
+    root_package: root_package
+  });
+});
 
-    // after getting the latest version via bump_update
-    // get the latest release number
-    root_pkg = require('../../../package.json');
-    wpdtrt_plugin_pkg = require('./package.json');
-    wpdtrt_plugin_pkg_version_escaped = wpdtrt_plugin_pkg.version.split('.').join('\\.');
-    wpdtrt_plugin_pkg_version_namespaced = wpdtrt_plugin_pkg.version.split('.').join('_');
+gulp.task('bump_update_autoload', function() {
+  // regenerate autoload files
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'composer dump-autoload --no-interaction'
+    ])
+  );
+});
 
-    // bump wpdtrt-foo to 0.1.2 and wpdtrt-plugin 1.2.3 using package.json
-    taskheader(this, '| bump ' + root_pkg.name + ' to ' + root_pkg.version + ' and ' + wpdtrt_plugin_pkg.name + ' ' + wpdtrt_plugin_pkg.version + ' using package.json' );
+gulp.task('bump', function(callback) {
 
-    // DoTheRightThing\WPPlugin\r_1_2_3
-    gulp.src([
-        './src/class-' + root_pkg.name + '-plugin.php',
-        './src/class-' + root_pkg.name + '-widgets.php'
-      ])
-      .pipe(replace(
-        /(DoTheRightThing\\WPPlugin\\r_)([0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3})/,
-        '$1' + wpdtrt_plugin_pkg_version_namespaced
-      ))
-      .pipe(gulp.dest('./src/'));
+  taskheader(this);
 
-    // * @version 1.2.3
-    gulp.src('./gulpfile.js')
-      .pipe(replace(
-        /(\* @version\s+)([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/,
-        '$1' + root_pkg.version
-      ))
-      .pipe(gulp.dest('./'));
-
-    gulp.src('./readme.txt')
-      .pipe(replace(
-        // Stable tag: 1.2.3
-        /(Stable tag:.)([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/,
-        '$1' + root_pkg.version
-      ))
-      .pipe(replace(
-        // == Changelog ==
-        //
-        // = 1.2.3 =
-        //
-        // @see https://github.com/dotherightthing/wpdtrt-plugin/issues/101
-        /(== Changelog ==\n\n= )([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})+( =\n)/,
-        "$1" + root_pkg.version + " =\r\r= $2$3"
-      ))
-      .pipe(gulp.dest('./'));
-
-    gulp.src([
-        './' + root_pkg.name + '.php'
-      ])
-      // DoTheRightThing\WPPlugin\r_1_2_3
-      .pipe(replace(
-        /(DoTheRightThing\\WPPlugin\\r_)([0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3})/,
-        '$1' + wpdtrt_plugin_pkg_version_namespaced
-      ))
-      // * Version: 1.2.3
-      .pipe(replace(
-        /(\* Version:\s+)([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/,
-        '$1' + root_pkg.version
-      ))
-      // define( 'WPDTRT_FOO_VERSION', '1.2.3' );
-      .pipe(replace(
-        /(define\( '[A-Z_]+_VERSION', ')([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(.+;)/,
-        '$1' + root_pkg.version + '$3'
-      ))
-      .pipe(gulp.dest('./'));
-  }
-  // wpdtrt-plugin
-  else {
-
-    // get the latest release number
-    wpdtrt_plugin_pkg = require('./package.json');
-    wpdtrt_plugin_pkg_version_escaped = wpdtrt_plugin_pkg.version.split('.').join('\\.');
-    wpdtrt_plugin_pkg_version_namespaced = wpdtrt_plugin_pkg.version.split('.').join('_');
-
-    taskheader(this, '| bump ' + wpdtrt_plugin_pkg.name + ' to ' + wpdtrt_plugin_pkg.version + ' using package.json' );
-
-    // DoTheRightThing\WPPlugin\r_1_2_3
-    gulp.src([
-        './src/class-wpdtrt-test-plugin.php',
-        './src/class-wpdtrt-test-widgets.php',
-        './src/Shortcode.php',
-        './src/Taxonomy.php',
-        './src/TemplateLoader.php',
-        './src/Widget.php'
-      ])
-      .pipe(replace(
-        /(DoTheRightThing\\WPPlugin\\r_)([0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3})/,
-        '$1' + wpdtrt_plugin_pkg_version_namespaced
-      ))
-      .pipe(gulp.dest('./src/'));
-
-    gulp.src('./src/Plugin.php')
-      // DoTheRightThing\WPPlugin\r_1_2_3
-      .pipe(replace(
-        /(DoTheRightThing\\WPPlugin\\r_)([0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3})/,
-        '$1' + wpdtrt_plugin_pkg_version_namespaced
-      ))
-      // const WPPLUGIN_VERSION = '1.2.3';
-      .pipe(replace(
-        /(const WPPLUGIN_VERSION = ')([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(';)/,
-        '$1' + wpdtrt_plugin_pkg.version + '$3'
-      ))
-      .pipe(gulp.dest('./src/'));
-
-    // "DoTheRightThing\\WPPlugin\\r_1_2_3\\": "src"
-    gulp.src('./composer.json')
-      .pipe(replace(
-        /("DoTheRightThing\\\\WPPlugin\\\\r_)([0-9]{1,3}_[0-9]{1,3}_[0-9]{1,3})(\\\\")/,
-        '$1' + wpdtrt_plugin_pkg_version_namespaced + '$3'
-      ))
-      .pipe(gulp.dest('./'));
-
-    // * @version 1.2.3
-    gulp.src('./index.php')
-      .pipe(replace(
-        /(\* @version\s+)([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/,
-        '$1' + wpdtrt_plugin_pkg.version
-      ))
-      .pipe(gulp.dest('./'));
-
-    gulp.src('./readme.txt')
-      .pipe(replace(
-        // Stable tag: 1.2.3
-        /(Stable tag:.)([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/,
-        '$1' + wpdtrt_plugin_pkg.version
-      ))
-      .pipe(replace(
-        // == Changelog ==
-        //
-        // = 1.2.3 =
-        //
-        // @see https://github.com/dotherightthing/wpdtrt-plugin/issues/101
-        /(== Changelog ==\n\n= )([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})+( =\n)/,
-        "$1" + wpdtrt_plugin_pkg.version + " =\r\r= $2$3"
-      ))
-      .pipe(gulp.dest('./'));
-
-    gulp.src('./wpdtrt-plugin.php')
-      // * Version: 1.2.3
-      .pipe(replace(
-        /(\* Version:\s+)([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/,
-        '$1' + wpdtrt_plugin_pkg.version
-      ))
-      // define( 'WPDTRT_FOO_VERSION', '1.2.3' );
-      .pipe(replace(
-        /(define\( '[A-Z_]+_VERSION', ')([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(.+;)/,
-        '$1' + wpdtrt_plugin_pkg.version + '$3'
-      ))
-      .pipe(gulp.dest('./'));
-
-    // regenerate autoload files
-    gulp.src(dummyFile, {read: false})
-      .pipe(shell([
-        'composer dump-autoload --no-interaction'
-      ])
-    );
-  }
+  runSequence(
+    'bump_update',
+    'bump_replace',
+    'bump_update_autoload',
+    callback
+  );
 });
 
 gulp.task('install', function(callback) {
