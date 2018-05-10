@@ -6,7 +6,7 @@ Tags: boilerplate,
 Requires at least: 4.8.1
 Tested up to: 4.9.5
 Requires PHP: 5.6.30
-Stable tag: 1.4.11
+Stable tag: 1.4.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,10 @@ Base classes for a WordPress plugin and associated shortcodes and widgets.
 Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 == Changelog ==
+
+= 1.4.12 =
+* Update demo strings
+* Move bump_replace functionality to gulp-wpdtrt-plugin-bump
 
 = 1.4.11 =
 * gulp bump - Allow for up to 3 digits in each of the major/minor/patch semver numbers
