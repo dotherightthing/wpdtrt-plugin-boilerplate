@@ -565,4 +565,16 @@ class PluginTest extends WP_UnitTestCase {
             'Expected old plugin dependency to be replaced with new version'
         );
     }
+
+    /**
+     * Test that the Settings (options) page loads without errors
+     */
+    public function __test_settings_page() {
+
+        global $wpdtrt_test_plugin;
+
+        $this->go_to(
+            get_admin_url() . 'options-general.php?page=' . $wpdtrt_test_plugin->get_slug()
+        );
+    }
 }
