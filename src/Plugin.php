@@ -86,7 +86,7 @@ if ( !class_exists( 'Plugin' ) ) {
 
       // store option arrays
       $this->set_plugin_options( $plugin_options, true );
-      $this->set_plugin_data( $plugin_data );
+      $this->set_plugin_data( isset($plugin_data) ? $plugin_data : array() );
       $this->set_instance_options( $instance_options );
       $this->set_plugin_dependencies( isset($plugin_dependencies) ? $plugin_dependencies : array() );
 
