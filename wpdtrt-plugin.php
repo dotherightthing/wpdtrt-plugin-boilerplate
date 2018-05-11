@@ -139,7 +139,26 @@ if( ! defined( 'WPDTRT_TEST_URL' ) ) {
      *
      * Changed to $taxonomy_options and retained for legacy support - may not be reqd
      */
-    $plugin_options = array();
+    $plugin_options = array(
+      'datatype' => array(
+        'type' => 'select',
+        'label' => __('Data type', 'wpdtrt-test'),
+        'options' => array(
+          'photos' => array(
+            'text' => __('Swatches', 'wpdtrt-test')
+          ),
+          'users' => array(
+            'text' => __('Maps', 'wpdtrt-test')
+          ),
+        ),
+      ),
+      'google_maps_api_key' => array(
+        'type' => 'password',
+        'label' => __('Google Static Maps API Key', 'wpdtrt-test'),
+        'size' => 50,
+        'tip' => __('https://developers.google.com/maps/documentation/static-maps/ > GET A KEY', 'wpdtrt-test')
+      )
+    );
 
     /**
      * All options available to Widgets and Shortcodes
