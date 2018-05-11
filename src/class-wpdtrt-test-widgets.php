@@ -16,6 +16,6 @@
  *
  * @param array $options Plugin options required by Widget
  */
-class WPDTRT_Test_Widget_1 extends DoTheRightThing\WPPlugin\r_1_4_14\Widget{};
+class WPDTRT_Test_Widget_1 extends DoTheRightThing\WPPlugin\r_1_4_15\Widget{};
 
 ?>
