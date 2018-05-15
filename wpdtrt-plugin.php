@@ -229,35 +229,4 @@ if( ! defined( 'WPDTRT_TEST_URL' ) ) {
 
   add_action( 'init', 'wpdtrt_test_init', 0 );
 
-  /**
-   * Register functions to be run when the plugin is activated.
-   *
-   * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
-   *
-   * @since     0.6.0
-   * @version   1.0.0
-   */
-  function wpdtrt_test_activate() {
-    // $this->set_rewrite_rules()
-    flush_rewrite_rules();
-  }
-
-  register_activation_hook(__FILE__, 'wpdtrt_test_activate');
-
-  /**
-   * Register functions to be run when the plugin is deactivated.
-   *
-   * (WordPress 2.0+)
-   *
-   * @see https://codex.wordpress.org/Function_Reference/register_deactivation_hook
-   *
-   * @since     0.6.0
-   * @version   1.0.0
-   */
-  function wpdtrt_test_deactivate() {
-    flush_rewrite_rules();
-  }
-
-  register_deactivation_hook(__FILE__, 'wpdtrt_test_deactivate');
-
 ?>

@@ -11,6 +11,10 @@ namespace DoTheRightThing\WPPlugin\r_1_4_15;
 
 if ( !class_exists( 'Plugin' ) ) {
 
+  // https://codex.wordpress.org/Function_Reference/register_activation_hook
+  register_activation_hook( dirname(__FILE__), [$this, 'helper_activate']);
+  register_deactivation_hook( dirname(__FILE__), [$this, 'helper_deactivate']);
+
   /**
    * Plugin base class
    *
@@ -111,6 +115,7 @@ if ( !class_exists( 'Plugin' ) ) {
        * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
        * @see https://tommcfarlin.com/wordpress-plugin-constructors-hooks/
        */
+
       add_action( 'admin_menu',               [$this, 'render_options_menu'] );
       add_action( 'admin_notices',            [$this, 'render_settings_errors'] );
       add_action( 'admin_notices',            [$this, 'render_admin_notices'] );
@@ -120,6 +125,8 @@ if ( !class_exists( 'Plugin' ) ) {
       add_action( 'admin_enqueue_scripts',    [$this, 'render_js_backend'] );
       add_action( 'tgmpa_register',           [$this, 'wp_register_plugin_dependencies'] );
       add_action( 'post_type_link',           [$this, 'render_cpt_permalink_placeholders'], 10, 3 ); // Custom Post Type
+
+      add_action( 'init',                     [$this, 'helper_flush_rewrite_rules'], 99 );
 
       // call the server side PHP function through admin-ajax.php.
       add_action( 'wp_ajax_' . $this->get_prefix() . '_refresh_api_data',  [$this, 'refresh_api_data'] );
@@ -930,6 +937,63 @@ if ( !class_exists( 'Plugin' ) ) {
     //// END GETTERS AND SETTERS \\\\
 
     //// START HELPERS \\\\
+
+    /**
+     * Register functions to be run when the plugin is activated.
+     *
+     * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
+     *
+     * @since     0.6.0
+     * @since     1.4.15 Moved from root plugin file to Plugin.php
+     * @version   1.0.0
+     */
+    public function helper_activate() {
+      // $this->set_rewrite_rules()
+      $this->helper_flush_rewrite_rules(true);
+    }
+
+    /**
+     * Register functions to be run when the plugin is deactivated.
+     *
+     * (WordPress 2.0+)
+     *
+     * @see https://codex.wordpress.org/Function_Reference/register_deactivation_hook
+     *
+     * @since     0.6.0
+     * @since     1.4.15 Moved from root plugin file to Plugin.php
+     * @version   1.0.0
+     */
+    public function helper_deactivate() {
+      $this->helper_flush_rewrite_rules(true);
+    }
+
+    /**
+     * Flush all plugin rewrite rules
+     *  This is run on activate and deactivate, and optionally on init
+     *  The init run is optional as this is an expensive operation.
+     *
+     * @param boolean $force Run the function in spite of the toggle setting
+     * @return boolean $flushed Whether the rules were flushed or not
+     *
+     * @since 1.4.15 Moved from root plugin file to Plugin.php and added $plugin_options
+     * @see https://carlalexander.ca/wordpress-adventurous-rewrite-api/
+     */
+    public function helper_flush_rewrite_rules( $force ) {
+
+      $flushed = false;
+      $plugin_options = $this->get_plugin_options();
+
+      if ( $force || ( $plugin_options['flush_rewrite_rules'] === true ) ) {
+
+        $flushed = true;
+        flush_rewrite_rules();
+
+        $plugin_options['flush_rewrite_rules'] = false;
+        $this->set_plugin_options( $plugin_options );
+      }
+
+      return $flushed;
+    }
 
    /**
      * Get a usable value for every form element type
