@@ -14,8 +14,6 @@
  * Exposes the plugin functionality to end users.
  * Facilitates individual registration by WordPress.
  *
- * @param array $options Plugin options required by Widget
+ * @param array $options Plugin options required by Widget.
  */
 class WPDTRT_Test_Widget_1 extends DoTheRightThing\WPPlugin\r_1_4_15\Widget{};
-
-?>

@@ -18,26 +18,23 @@
  * Remove Options from {$wpdb->prefix}_options: Yes
  * Remove Tables from wpdb: Yes
  *
- * @link https://developer.wordpress.org/plugins/the-basics/best-practices/#file-organization
- * @link https://developer.wordpress.org/plugins/the-basics/uninstall-methods/#method-2-uninstall-php
- *
- * @package     wpdtrt_plugin
- * @since       1.0.0
- * @version     1.0.0
+ * @package wpdtrt_plugin
+ * @version 1.0.0
+ * @since   1.0.0
+ * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#file-organization
+ * @see https://developer.wordpress.org/plugins/the-basics/uninstall-methods/#method-2-uninstall-php
  */
 
 // if uninstall.php is not called by WordPress, die
-if ( ! defined('WP_UNINSTALL_PLUGIN') ) {
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
-delete_option('wpdtrt_plugin');
+delete_option( 'wpdtrt_plugin' );
 
 // for site options in Multisite
-delete_site_option('wpdtrt_plugin');
+delete_site_option( 'wpdtrt_plugin' );
 
 // drop a custom database table
 //global $wpdb;
 //$wpdb->query("DROP TABLE IF EXISTS {$wpdb->prefix}mytable");
-
-?>

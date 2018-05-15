@@ -29,7 +29,7 @@ matrix:
   fast_finish: true
   include:
     - php: 5.6.30
-      env: WP_VERSION=latest WP_MULTISITE=0
+      env: WP_VERSION=latest WP_MULTISITE=0 SNIFF=1
 
 # Cache directories between builds, to store dependencies
 # which take longer to compile or download.
@@ -77,6 +77,12 @@ before_script:
 
 # Run the build task
 script:
+  # Run against WordPress Coding Standards.
+  # If you use a custom ruleset, change `--standard=WordPress` to point to your ruleset file,
+  # for example: `--standard=wpcs.xml`.
+  # You can use any of the normal PHPCS command line arguments in the command:
+  # https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage
+  - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs -p . --standard=WordPress-VIP; fi
   - gulp dist
 
 # Notifications of build results

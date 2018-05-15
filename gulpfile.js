@@ -27,7 +27,6 @@ var del = require('del');
 var jsdoc = require('gulp-jsdoc3');
 var jshint = require('gulp-jshint');
 var log = require('fancy-log');
-var phplint = require('gulp-phplint');
 var postcss = require('gulp-postcss');
 var print = require('gulp-print').default;
 var pxtorem = require('postcss-pxtorem');
@@ -260,23 +259,15 @@ gulp.task('phpdoc_require_after', function() {
   );
 });
 
-gulp.task('phplint', function () {
+gulp.task('phpcs', function() {
 
   taskheader(this);
 
-  // return stream or promise for run-sequence
-  return gulp.src(phpFiles)
-
-    // validate PHP
-    // The linter ships with PHP
-    .pipe(phplint())
-    .pipe(phplint.reporter(function(file) {
-      var report = file.phplintReport || {};
-
-      if (report.error) {
-        log.error(report.message+' on line '+report.line+' of '+report.filename);
-      }
-    }));
+  return gulp.src(dummyFile, {read: false})
+    .pipe(shell([
+      'vendor/bin/phpcs -i '
+    ])
+  );
 });
 
 gulp.task('phpunit', function() {
@@ -449,7 +440,6 @@ gulp.task('watch', function () {
 
   gulp.watch( scssFiles, ['css'] );
   gulp.watch( jsFiles, ['js'] );
-  gulp.watch( phpFiles, ['phplint'] );
 });
 
 gulp.task('bump_update', function() {
@@ -531,7 +521,7 @@ gulp.task('install', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phplint',
+    'phpcs',
     'phpdoc_doc',
     'phpdoc_require_after',
     'phpunit',
@@ -549,7 +539,7 @@ gulp.task('dev', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phplint',
+    'phpcs',
     'phpdoc_delete',
     'phpdoc_remove_before',
     'phpdoc_doc',
@@ -570,7 +560,7 @@ gulp.task('dist', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phplint',
+    'phpcs',
     'phpdoc_delete',
     'phpdoc_remove_before',
     'phpdoc_doc',
