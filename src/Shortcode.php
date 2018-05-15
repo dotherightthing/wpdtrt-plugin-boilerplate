@@ -35,7 +35,7 @@ if ( !class_exists( 'Shortcode' ) ) {
      * Hook the plugin in to WordPress
      * This constructor automatically initialises the object's properties
      * when it is instantiated,
-     * using new Widget
+     * using new Shortcode
      *
      * @param     array $options Shortcode options
      *
