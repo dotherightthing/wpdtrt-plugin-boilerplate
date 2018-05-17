@@ -104,7 +104,6 @@ require_once $project_root_path . 'index.php';
 
 // sub classes.
 require_once WPDTRT_TEST_PATH . 'src/class-wpdtrt-test-plugin.php';
-require_once WPDTRT_TEST_PATH . 'src/class-wpdtrt-test-widget.php';
 
 // log & trace helpers
 global $debug;
@@ -185,7 +184,7 @@ function wpdtrt_test_shortcode_init() {
 
 	global $wpdtrt_test_plugin;
 
-	$wpdtrt_test_shortcode = new DoTheRightThing\WPPlugin\r_1_4_15\Shortcode(
+	$wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Shortcode(
 		array(
 			'name'                      => 'wpdtrt_test_shortcode',
 			'plugin'                    => $wpdtrt_test_plugin,
@@ -214,7 +213,7 @@ function wpdtrt_test_widget_init() {
 
 	global $wpdtrt_test_plugin;
 
-	$wpdtrt_test_widget = new WPDTRT_Test_Widget(
+	$wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Widget(
 		array(
 			'name'                      => 'wpdtrt_test_widget',
 			'title'                     => __( 'Test Widget', 'wpdtrt-test' ),

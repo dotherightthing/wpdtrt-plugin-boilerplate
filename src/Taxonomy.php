@@ -27,14 +27,16 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		/**
 		 * Hook the plugin in to WordPress
 		 * This constructor automatically initialises the object's properties
-		 * when it is instantiated,
-		 * using new Widget
+		 * when it is instantiated.
+		 *
+		 * This is a public method as every plugin uses a new instance:
+		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Taxonomy {}
 		 *
 		 * @param     array $options Shortcode options.
 		 * @since     1.0.0
 		 * @version   1.1.0
 		 */
-		protected function __construct( $options ) {
+		public function __construct( $options ) {
 
 			// define variables.
 			$name                      = null;

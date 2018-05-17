@@ -42,8 +42,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 		const WPDTRT_PLUGIN_VERSION = '1.4.15';
 
 		/**
-		 * Initialise the object's properties when it is instantiated,
-		 * using new DoTheRightThing\WPDTRT_Plugin
+		 * Initialise the object's properties when it is instantiated.
+		 * This is a protected method as every plugin uses a sub class:
+		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Plugin {...}
 		 *
 		 * @param     array $settings Plugin options.
 		 * @since     1.0.0
