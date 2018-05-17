@@ -897,7 +897,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$flushed        = false;
 			$plugin_options = $this->get_plugin_options();
 
-			if ( $force || ( true === $plugin_options['flush_rewrite_rules'] ) ) {
+			if ( $force || ( array_key_exists( 'flush_rewrite_rules', $plugin_options ) && ( true === $plugin_options['flush_rewrite_rules'] ) ) ) {
 
 				$flushed = true;
 				flush_rewrite_rules();
