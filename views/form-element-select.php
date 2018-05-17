@@ -2,7 +2,7 @@
 /**
  * Template partial for Select fields.
  *
- * @package WPPlugin
+ * @package WPDTRT_Plugin
  * @version 1.0.0
  * @since   1.0.0
  * @uses    WordPress_Admin_Style

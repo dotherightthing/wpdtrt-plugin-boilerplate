@@ -2,12 +2,12 @@
 /**
  * Template loader.
  *
- * @package   WPPlugin
+ * @package   WPDTRT_Plugin
  * @version   1.0.0
  * @since     0.6.0
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_15;
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_15;
 
 /**
  * Template loader sub class

@@ -3,7 +3,7 @@
  * Template partial for Admin Options page.
  *  WP Admin > Settings > PluginName.
  *
- * @package WPPlugin
+ * @package WPDTRT_Plugin
  * @since   1.0.0
  * @version 1.0.1
  * @uses    WordPress_Admin_Style

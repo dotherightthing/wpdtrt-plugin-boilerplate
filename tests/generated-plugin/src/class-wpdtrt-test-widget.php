@@ -1,10 +1,10 @@
 <?php
 /**
- * Widget classes.
+ * Widget sub class.
  *
- * @package     wpdtrt_test
- * @since       1.0.0
- * @version     1.0.0
+ * @package WPDTRT_Test
+ * @since   1.0.0
+ * @version 1.0.0
  */
 
 /**
@@ -16,4 +16,4 @@
  *
  * @param array $options Plugin options required by Widget.
  */
-class WPDTRT_Test_Widget_1 extends DoTheRightThing\WPPlugin\r_1_4_15\Widget{};
+class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Widget {};

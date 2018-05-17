@@ -2,11 +2,11 @@
 /**
  * Plugin rewrite class.
  *
- * @package   WPPlugin
+ * @package   WPDTRT_Plugin
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_15;
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_15;
 
 if ( ! class_exists( 'Rewrite' ) ) {
 

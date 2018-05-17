@@ -90,18 +90,18 @@ class PluginTest extends WP_UnitTestCase {
 		$this->plugin_options_config_novalues = array(
 			'google_static_maps_api_key' => array(
 				'type'  => 'text',
-				'label' => __( 'Google Static Maps API Key', 'wpdtrt-test-plugin' ),
+				'label' => __( 'Google Static Maps API Key', 'wpdtrt-test' ),
 				'size'  => 50,
-				'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin' ),
+				'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test' ),
 			),
 		);
 
 		$this->plugin_options_user_values = array(
 			'google_static_maps_api_key' => array(
 				'type'  => 'text',
-				'label' => __( 'Google Static Maps API Key', 'wpdtrt-test-plugin' ),
+				'label' => __( 'Google Static Maps API Key', 'wpdtrt-test' ),
 				'size'  => 50,
-				'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin' ),
+				'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test' ),
 				'value' => 'abc12345',
 			),
 		);
@@ -120,7 +120,7 @@ class PluginTest extends WP_UnitTestCase {
 					'type'  => 'text',
 					'label' => 'Google Static Maps API Key',
 					'size'  => 50,
-					'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin' ),
+					'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test' ),
 				),
 			),
 			'plugin_data'         => array(),
@@ -137,7 +137,7 @@ class PluginTest extends WP_UnitTestCase {
 					'type'  => 'text',
 					'label' => 'Google Static Maps API Key',
 					'size'  => 50,
-					'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test-plugin' ),
+					'tip'   => __( 'https://developers.google.com/maps/documentation/maps-static/get-api-key', 'wpdtrt-test' ),
 					'value' => 'abc12345',
 				),
 			),
@@ -506,23 +506,14 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	* Test that get_api_data() returns data,
 	*  and that this is stored and retrievable.
+	*
+	* @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Data:-Loading-from-an-API#data-is-stored-in-an-associative-array
 	*/
 	public function test__get_api_data() {
 		global $wpdtrt_test_plugin;
 
 		$endpoint = 'http://jsonplaceholder.typicode.com/photos/1';
 		$data     = $wpdtrt_test_plugin->get_api_data( $endpoint );
-
-		/*
-			// Demo data format:
-			{
-				"albumId": 1,
-				"id": 1,
-				"title": "accusamus beatae ad facilis cum similique qui sunt",
-				"url": "http://placehold.it/600/92c952",
-				"thumbnailUrl": "http://placehold.it/150/92c952"
-			}
-		*/
 
 		$this->assertTrue(
 			is_array( $data ),

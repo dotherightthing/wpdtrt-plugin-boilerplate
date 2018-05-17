@@ -12,7 +12,7 @@
  *    gulp dev --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *
- * @package     WPPlugin
+ * @package     WPDTRT_Plugin
  * @version     1.3.6
  */
 

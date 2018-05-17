@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoTheRightThing\\WPPlugin\\r_1_4_15\\": "src"
+            "DoTheRightThing\\WPDTRT_Plugin\\r_1_4_15\\": "src"
         }
     },
     "minimum-stability": "stable",

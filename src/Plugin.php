@@ -2,16 +2,17 @@
 /**
  * Plugin class.
  *
- * @package   WPPlugin
+ * @package   WPDTRT_Plugin
  * @since     1.0.0
  * @version   1.0.1
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_15;
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_15;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
 	// https://codex.wordpress.org/Function_Reference/register_activation_hook.
+	// TODO: $this does not exist
 	register_activation_hook( dirname( __FILE__ ), array( $this, 'helper_activate' ) );
 	register_deactivation_hook( dirname( __FILE__ ), array( $this, 'helper_deactivate' ) );
 
@@ -38,11 +39,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 	class Plugin {
 
 		// https://secure.php.net/manual/en/language.oop5.constants.php.
-		const WPPLUGIN_VERSION = '1.4.15';
+		const WPDTRT_PLUGIN_VERSION = '1.4.15';
 
 		/**
 		 * Initialise the object's properties when it is instantiated,
-		 * using new DoTheRightThing\WPPluginPlugin
+		 * using new DoTheRightThing\WPDTRT_Plugin
 		 *
 		 * @param     array $settings Plugin options.
 		 * @since     1.0.0
@@ -141,7 +142,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * This function is hooked into `tgmpa_register`,
 		 * which is fired on the WP `init` action on priority 10.
 		 *
-		 * @version     2.6.1 for WPPlugin
+		 * @version     2.6.1 for WPDTRT_Plugin
 		 * @author      Thomas Griffin, Gary Jones, Juliette Reinders Folmer
 		 * @copyright   Copyright (c) 2011, Thomas Griffin
 		 * @license     http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
@@ -1367,7 +1368,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 		public function render_library_link( $links ) {
 
-			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin/releases/tag/' . self::WPPLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPPLUGIN_VERSION . '</a>';
+			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin/releases/tag/' . self::WPDTRT_PLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPDTRT_PLUGIN_VERSION . '</a>';
 
 			array_push( $links, $library_link );
 

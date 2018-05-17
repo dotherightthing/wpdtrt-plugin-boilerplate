@@ -2,11 +2,11 @@
 /**
  * Plugin taxonomy class.
  *
- * @package   WPPlugin
+ * @package   WPDTRT_Plugin
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPPlugin\r_1_4_15;
+//namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_15; // TODO
 
 if ( ! class_exists( 'Taxonomy' ) ) {
 
@@ -17,10 +17,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 	 *
 	 * @param       array $atts Optional taxonomy attributes specified by the user.
 	 * @return      Taxonomy
-	 *
 	 * @since       1.0.0
 	 * @version     1.0.0
-	 *
 	 * @see         http://php.net/manual/en/function.ob-start.php
 	 * @see         http://php.net/manual/en/function.ob-get-clean.php
 	 */
@@ -33,9 +31,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * using new Widget
 		 *
 		 * @param     array $options Shortcode options.
-		 *
-		 * @version   1.1.0
 		 * @since     1.0.0
+		 * @version   1.1.0
 		 */
 		protected function __construct( $options ) {
 
@@ -79,9 +76,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Initialise taxonomy options ONCE.
 		 *
 		 * @param array $default_options Default options.
-		 *
 		 * @since 1.0.0
-		 *
 		 * @see https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 * @see https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/
 		 */
@@ -113,7 +108,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Get the value of $name
 		 *
 		 * @return      string
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
@@ -125,7 +119,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Set the value of $name
 		 *
 		 * @param       string $new_name New name.
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
@@ -137,7 +130,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Get default options
 		 *
 		 * @return array
-		 *
 		 * @since 1.0.0
 		 */
 		public function get_instance_options() {
@@ -148,7 +140,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Set instance options
 		 *
 		 * @param array $instance_options Instance options.
-		 *
 		 * @since 1.0.0
 		 *
 		 */
@@ -160,7 +151,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Get the value of $labels
 		 *
 		 * @return      array
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
@@ -172,7 +162,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Set the value of $labels
 		 *
 		 * @param       array $labels Labels.
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
@@ -186,9 +175,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * This is necessary because the object does not exist until the WordPress init action has fired.
 		 *
 		 * @param object $plugin Plugin.
-		 *
 		 * @since 1.0.0
-		 *
 		 * @todo Shortcode/Widget implementation questions (#15)
 		 */
 		protected function set_plugin( $plugin ) {
@@ -199,7 +186,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Get parent plugin, which contains shortcode/widget options
 		 *
 		 * @return object
-		 *
 		 * @since 1.0.0
 		 */
 		public function get_plugin() {
@@ -210,7 +196,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Get the value of $options
 		 *
 		 * @return      array
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
@@ -222,7 +207,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Set the value of $options.
 		 *
 		 * @param       array $new_options New options.
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
@@ -239,10 +223,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *
 		 * @param       int $term_id Term ID.
 		 * @param       int $tt_id Term taxonomy ID.
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
-		 *
 		 * @see         https://developer.wordpress.org/reference/hooks/created_taxonomy/
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 */
@@ -264,10 +246,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *
 		 * @param       object $tag Current taxonomy term object.
 		 * @param       string $taxonomy Current taxonomy slug.
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
-		 *
 		 * @see         https://developer.wordpress.org/reference/hooks/taxonomy_edit_form_fields/
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 */
@@ -284,10 +264,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
-		 *
 		 * @param       int $term_id Term ID.
 		 * @param       int $tt_id Term taxonomy ID.
-		 *
 		 * @see         https://developer.wordpress.org/reference/hooks/edited_taxonomy/
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 */
@@ -308,10 +286,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *
 		 * @param       array $columns Table columns.
 		 * @return      array $columns
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
-		 *
 		 * @see         https://developer.wordpress.org/reference/?
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 */
@@ -334,10 +310,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @param       string $column_name Content name.
 		 * @param       number $term_id Term ID.
 		 * @return      string $content
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
-		 *
 		 * @see         https://developer.wordpress.org/reference/?
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 */
@@ -367,10 +341,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *
 		 * @param       array $sortable Sortable array.
 		 * @return      array $sortable
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
-		 *
 		 * @see         https://developer.wordpress.org/reference/?
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 * @todo        https://github.com/dotherightthing/wpdtrt-plugin/issues/42
@@ -395,10 +367,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Display custom meta on the term create screen
 		 *
 		 * @param       string $taxonomy The taxonomy slug.
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
-		 *
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
 		 * @see         https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/
 		 */
@@ -416,7 +386,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @param       array $attributes Attributes.
 		 * @param       string $term_id Taxonomy term ID (available in edit_options)
 		 * @return      string
-		 *
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 * @todo        Add field validation feedback (#10)
@@ -515,220 +484,149 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 				$plugin      = $this->get_plugin();
 				$text_domain = $plugin->get_slug();
-				$tax_labels  = $this->get_labels();
+				$labels      = $this->get_labels(); // TODO: finish
 
 				$labels = array(
-					/**
-					 * The same as and overridden by $tax->label.
-					 */
-					'name' => $tax_labels['plural'], 'taxonomy general name',
+					// The same as and overridden by $tax->label.
+					'name'                       => $labels['taxonomy_name'],
 
-					/**
-					 * Default: _x( 'Post Tag', 'taxonomy singular name' ).
-					 */
-					'singular_name' => $tax_labels['singular'], 'taxonomy singular name',
+					// Default: _x( 'Post Tag', 'taxonomy singular name' ).
+					'singular_name'              => $labels['taxonomy_singular_name'],
 
-					/**
-					 * Defaults to value of name label.
-					 */
-					'menu_name' => $tax_labels['plural'],
+					// Defaults to value of name label.
+					'menu_name'                  => $labels['taxonomy_menu_name'],
 
-					/**
-					 * Default:  All Tags / All Categories.
-					 */
-					'all_items' => 'All ' . $tax_labels['plural'],
+					// Default:  All Tags / All Categories.
+					'all_items'                  => 'All ' . $tax_labels['plural'],
 
-					/**
-					 * Default: Add New Tag / Add New Category.
-					 */
-					'add_new_item' => 'Add New ' . $tax_labels['singular'],
+					// Default: Add New Tag / Add New Category.
+					'add_new_item'               => 'Add New ' . $tax_labels['singular'],
 
-					/**
-					 * Default: Edit Tag / Edit Category.
-					 */
-					'edit_item' => 'Edit ' . $tax_labels['singular'],
+					// Default: Edit Tag / Edit Category.
+					'edit_item'                  => 'Edit ' . $tax_labels['singular'],
 
-					/**
-					 * Default: View Tag / View Category.
-					 */
-					'view_item' => 'View ' . $tax_labels['singular'],
+					// Default: View Tag / View Category.
+					'view_item'                  => 'View ' . $tax_labels['singular'],
 
-					/**
-					 * Default: Update Tag / Update Category.
-					 */
-					'update_item' => 'Update ' . $tax_labels['singular'],
+					// Default: Update Tag / Update Category.
+					'update_item'                => 'Update ' . $tax_labels['singular'],
 
-					/**
-					 * Default: New Tag Name / New Category Name.
-					 */
-					'new_item_name' => 'New ' . $tax_labels['singular'] . ' Name',
+					// Default: New Tag Name / New Category Name.
+					'new_item_name'              => 'New ' . $tax_labels['singular'] . ' Name',
 
-					/**
-					 * This string is not used on non-hierarchical taxonomies such as post tags.
-					 * Default: null / Parent Category
-					 */
-					'parent_item' => 'Parent ' . $tax_labels['singular'],
+					// This string is not used on non-hierarchical taxonomies such as post tags.
+					// Default: null / Parent Category
+					'parent_item'                => 'Parent ' . $tax_labels['singular'],
 
-					/**
-					 * The same as parent_item, but with colon : in the end
-					 * Default: null / Parent Category:
-					 */
-					'parent_item_colon' => 'Parent ' . $tax_labels['singular'] . ':',
+					// The same as parent_item, but with colon : in the end
+					// Default: null / Parent Category:
+					'parent_item_colon'          => 'Parent ' . $tax_labels['singular'] . ':',
 
-					/**
-					 * Default: Search Tags / Search Categories
-					 */
-					'search_items' => 'Search ' . $tax_labels['plural'],
+					// Default: Search Tags / Search Categories
+					'search_items'               => 'Search ' . $tax_labels['plural'],
 
-					/**
-					 * This string is not used on hierarchical taxonomies.
-					 * Default: null / Popular Tags
-					 */
-					'popular_items' => 'Popular ' . $tax_labels['plural'],
+					// This string is not used on hierarchical taxonomies.
+					// Default: null / Popular Tags
+					'popular_items'              => 'Popular ' . $tax_labels['plural'],
 
-					/**
-					 * Used in the taxonomy meta box.
-					 * This string is not used on hierarchical taxonomies.
-					 * Default: null / Separate tags with commas
-					 */
+					// Used in the taxonomy meta box.
+					// This string is not used on hierarchical taxonomies.
+					// Default: null / Separate tags with commas
 					'separate_items_with_commas' => 'Separate ' . $tax_labels['plural'] . ' with commas',
 
-					/**
-					 * Used in the meta box when JavaScript is disabled.
-					 * This string is not used on hierarchical taxonomies.
-					 * Default: null / Add or remove tags
-					 */
-					'add_or_remove_items' => 'Add or remove '. $tax_labels['plural'],
+					// Used in the meta box when JavaScript is disabled.
+					// This string is not used on hierarchical taxonomies.
+					// Default: null / Add or remove tags
+					'add_or_remove_items'        => 'Add or remove ' . $tax_labels['plural'],
 
-					/**
-					 * Used in the taxonomy meta box.
-					 * This string is not used on hierarchical taxonomies.
-					 * Default: null / Choose from the most used tags
-					 */
-					'choose_from_most_used' => 'Choose from the most used ' . $tax_labels['plural'],
+					// Used in the taxonomy meta box.
+					// This string is not used on hierarchical taxonomies.
+					// Default: null / Choose from the most used tags
+					'choose_from_most_used'      => 'Choose from the most used ' . $tax_labels['plural'],
 
-					/**
-					 * (3.6+) - the text displayed via clicking 'Choose from the most used tags' in the taxonomy meta box when no tags are available
-					 * and
-					 * (4.2+) - the text used in the terms list table when there are no items for a taxonomy.
-					 * Default: No tags found / No categories found
-					 */
-					'not_found' => 'No ' . $tax_labels['plural'] . ' found',
+					// (3.6+) - the text displayed via clicking 'Choose from the most used tags' in the taxonomy meta box when no tags are available
+					// (4.2+) - the text used in the terms list table when there are no items for a taxonomy.
+					// Default: No tags found / No categories found
+					'not_found'                  => 'No ' . $tax_labels['plural'] . ' found',
 				);
 
 				$args = array(
 
-					/**
-					 * Labels - defined above.
-					 */
-					'labels'   => $labels,
+					// Labels - defined above.
+					'labels'       => $labels,
 
-					/**
-					 * Whether a taxonomy is intended for use publicly
-					 * either via the admin interface or by front-end users.
-					 * Default: true
-					 */
+					// Whether a taxonomy is intended for use publicly
+					// either via the admin interface or by front-end users.
+					// Default: true
 					//'public' => true,
 
-					/**
-					 * Whether the taxonomy is publicly queryable.
-					 * Default: $public.
-					 */
+					// Whether the taxonomy is publicly queryable.
+					// Default: $public.
 					//'publicly_queryable' => true,
 
-					/**
-					 * Whether to generate a default UI for managing this taxonomy.
-					 * 3.5+ setting this to false for attachment taxonomies will hide the UI.
-					 * Default: $public.
-					 */
+					// Whether to generate a default UI for managing this taxonomy.
+					// 3.5+ setting this to false for attachment taxonomies will hide the UI.
+					// Default: $public.
 					//'show_ui' => true,
 
-					/**
-					 * Where to show the taxonomy in the admin menu.
-					 * show_ui must be true.
-					 * Default: $show_ui.
-					 */
-					//'show_in_menu' => true,
+					// Where to show the taxonomy in the admin menu.
+					// show_ui must be true.
+					// Default: $show_ui.
+					// 'show_in_menu' => true,
 
-					/**
-					 * Make this taxonomy available for selection in navigation menus.
-					 * Default: $public.
-					 */
-					//'show_in_nav_menus' => true,
+					// Make this taxonomy available for selection in navigation menus.
+					// Default: $public.
+					// 'show_in_nav_menus' => true,
 
-					/**
-					 * Make this taxonomy available for selection in navigation menus.
-					 * Default: $public.
-					 */
-					//'show_in_rest' => true,
+					// Make this taxonomy available for selection in navigation menus.
+					// Default: $public.
+					// 'show_in_rest' => true,
 
-					/**
-					 * To change the base url of REST API route.
-					 */
-					//'rest_base' => $tax_labels['slug'],
+					// To change the base url of REST API route.
+					// 'rest_base' => $tax_labels['slug'],
 
-					/**
-					 * REST API Controller class name.
-					 */
-					//'rest_controller_class' => WP_REST_Terms_Controller,
+					// REST API Controller class name.
+					// 'rest_controller_class' => WP_REST_Terms_Controller,
 
-					/**
-					 * Whether to allow the Tag Cloud widget to use this taxonomy.
-					 * Default: $show_ui.
-					 */
+					// Whether to allow the Tag Cloud widget to use this taxonomy.
+					// Default: $show_ui.
 					//'show_tagcloud' => true,
 
-					/**
-					 * 4.2+ Whether to show the taxonomy in the quick/bulk edit panel.
-					 * Default: $show_ui.
-					 */
+					// 4.2+ Whether to show the taxonomy in the quick/bulk edit panel.
+					// Default: $show_ui.
 					//'show_in_quick_edit' => true,
 
-					/**
-					 * 3.8+  Provide a callback function name for the meta box display.
-					 * No meta box is shown if set to false.
-					 * Default: null
-					 */
+					// 3.8+  Provide a callback function name for the meta box display.
+					// No meta box is shown if set to false.
+					// Default: null
 					//'meta_box_cb' => null,
 
-					/**
-					 * 3.5+  Whether to allow automatic creation of taxonomy columns on associated post-types table.
-					 * Default: false
-					 */
+					// 3.5+  Whether to allow automatic creation of taxonomy columns on associated post-types table.
+					// Default: false
 					//'show_admin_column' => false,
 
-					/**
-					 * Default: ''
-					 */
-					'description' => $tax_labels['description'],
+					// Default: ''.
+					'description'  => $tax_labels['description'],
 
-					/**
-					 * Is this taxonomy hierarchical (have descendants) like categories or not hierarchical like tags.
-					 * Default: false
-					 */
+					// Is this taxonomy hierarchical (have descendants) like categories or not hierarchical like tags.
+					// Default: false
 					'hierarchical' => true,
 
-					/**
-					 * A function name that will be called when the count of an associated $object_type, such as post, is updated.
-					 * Works much like a hook.
-					 * Default: None - but see Note
-					 * @see https://codex.wordpress.org/Function_Reference/register_taxonomy
-					 */
+					// A function name that will be called when the count of an associated $object_type, such as post, is updated.
+					// Works much like a hook.
+					// Default: None - but see Note
+					// @see https://codex.wordpress.org/Function_Reference/register_taxonomy
 					//'update_count_callback' => '_update_post_term_count',
 
-					/**
-					 * false = disable the query_var
-					 * string = use custom query_var instead of default which is $taxonomy
-					 * Default: $taxonomy
-					 */
+					// false = disable the query_var
+					// string = use custom query_var instead of default which is $taxonomy
+					// Default: $taxonomy
 					//'query_var' => true, // $tax_labels['slug'],
 
-					/**
-					 * Set to false to prevent automatic URL rewriting a.k.a. "pretty permalinks".
-					 * Pass an $args array to override default URL settings for permalinks as outlined below:
-					 * Default: true
-					 */
-					'rewrite' => array(
+					// Set to false to prevent automatic URL rewriting a.k.a. "pretty permalinks".
+					// Pass an $args array to override default URL settings for permalinks as outlined below:
+					// Default: true
+					'rewrite'      => array(
 
 						/**
 						 * Used as pretty permalink text (i.e. /tag/)
@@ -743,20 +641,15 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 						 * @todo /tours/east-asia/russia/ BUT NOT /tourdiaries/east-asia/russia/
 						 * @todo #133
 						 */
-						'slug' => $tax_labels['slug'],
+						'slug'         => $tax_labels['slug'],
 
-						/**
-						 * Allows permalinks to be prepended with front base
-						 * Default: true
-						 *
-						 * @see https://mondaybynoon.com/revisiting-custom-post-types-taxonomies-permalinks-slugs/
-						 */
-						'with_front' => false,
+						// Allows permalinks to be prepended with front base
+						// Default: true
+						// @see https://mondaybynoon.com/revisiting-custom-post-types-taxonomies-permalinks-slugs/
+						'with_front'   => false,
 
-						/**
-						 * 3.1+ Allow hierarchical urls
-						 * Default: false
-						 */
+						// 3.1+ Allow hierarchical urls
+						// Default: false
 						'hierarchical' => true,
 
 						/**
@@ -789,40 +682,32 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 					 * assign_terms / edit_posts
 					 * Default: None
 					 */
-					//'capabilities' => None,
+					// 'capabilities' => None,
 
 					/**
 					 * Whether this taxonomy should remember the order in which terms are added to objects.
 					 * Default: None
 					 */
-					//'sort' => None,
+					// 'sort' => None,
 
 					/**
 					 * Whether this taxonomy is a native or "built-in" taxonomy.
 					 * Do not edit.
 					 * Default: false
 					 */
-					//'_builtin' => false,
+					// '_builtin' => false,
 				);
 
 				register_taxonomy(
-					/**
-					 * Taxonomy Name should only contain lowercase letters and the underscore character,
-					 * and not be more than 32 characters long (database structure restriction).
-					 * Default: None
-					 */
+					// Taxonomy Name should only contain lowercase letters and the underscore character,
+					// and not be more than 32 characters long (database structure restriction).
+					// Default: None
 					$name,
-
-					/**
-					 * Object-types can be built-in Post Type or any Custom Post Type that may be registered.
-					 * Default: None
-					 */
+					// Object-types can be built-in Post Type or any Custom Post Type that may be registered.
+					// Default: None
 					$tax_labels['posttype'],
-
-					/**
-					 * Optional array of Arguments.
-					 * Default: None
-					 */
+					// Optional array of Arguments.
+					// Default: None
 					$args
 				);
 
@@ -843,16 +728,11 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 					 * @see https://mondaybynoon.com/revisiting-custom-post-types-taxonomies-permalinks-slugs/
 					 */
 					register_taxonomy_for_object_type(
-						/**
-						 * The name of the taxonomy.
-						 * Default: None
-						 */
+						// The name of the taxonomy.
+						// Default: None
 						$name,
-
-						/**
-						* A name of the object type for the taxonomy object.
-						* Default: None
-						*/
+						// A name of the object type for the taxonomy object.
+						// Default: None
 						$tax_labels['posttype']
 					);
 				}
@@ -868,14 +748,12 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @param $post See WordPress function options.
 		 * @param $leavename See WordPress function options.
 		 * @return $permalink
-		 *
 		 * @example
 		 *  // wpdtrt-dbth/library/register_post_type_tourdiaries.php
 		 *  'rewrite' => array(
 		 *    'slug' => 'tourdiaries/%tours%/%wpdtrt_tourdates_cf_daynumber%'
 		 *    'with_front' => false
 		 *  )
-		 *
 		 * @see http://shibashake.com/wordpress-theme/add-custom-taxonomy-tags-to-your-wordpress-permalinks
 		 * @see http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict
 		 * @see https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug
@@ -944,7 +822,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 					if ( ! is_wp_error( $terms ) ) {
 						foreach ( $terms as $term ) {
-							if ( !empty( $term ) && is_object( $term ) ) {
+							if ( ! empty( $term ) && is_object( $term ) ) {
 								$replacements[] = $term->slug;
 							}
 						}
@@ -958,10 +836,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 					$permalink = str_replace( ( '%' . $placeholder_name . '%' ), $replacements, $permalink );
 				}
 			}
-
 			return $permalink;
 		}
 	}
 }
-
-?>
