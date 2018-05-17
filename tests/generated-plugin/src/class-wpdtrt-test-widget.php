@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin sub class.
+ * Widget sub class.
  *
  * @package WPDTRT_Test
  * @since   1.0.0
@@ -14,12 +14,12 @@
  * @since   1.0.0
  * @version 1.0.0
  */
-class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Plugin {
+class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Widget {
 
 	/**
-	 * Supplement plugin initialisation.
+	 * Supplement widget initialisation.
 	 *
-	 * @param     array $options Plugin options.
+	 * @param     array $options Widget options.
 	 * @since     1.0.0
 	 * @version   1.1.0
 	 */
@@ -28,15 +28,5 @@ class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Plugin {
 		// edit here.
 
 		parent::__construct( $options );
-	}
-
-	/**
-	 * Supplement plugin's WordPress setup.
-	 */
-	protected function wp_setup() {
-
-		// edit here.
-
-		parent::wp_setup();
 	}
 }

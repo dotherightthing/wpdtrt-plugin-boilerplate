@@ -1,6 +1,6 @@
 <?php
 /**
- * Template loader.
+ * Plugin template loader class.
  *
  * @package   WPDTRT_Plugin
  * @version   1.0.0

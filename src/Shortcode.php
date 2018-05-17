@@ -69,6 +69,23 @@ if ( ! class_exists( 'Shortcode' ) ) {
 
 			$this->set_name( $name ); // for render_shortcode.
 
+			// hook in to WordPress.
+			$this->wp_setup();
+		}
+
+		/**
+		 * ====== WordPress Integration ======
+		 */
+
+		/**
+		 * Initialise shortcode options ONCE.
+		 *
+		 * @since 1.4.16
+		 */
+		protected function wp_setup() {
+
+			$name = $this->get_name();
+
 			add_shortcode( $name, array( $this, 'render_shortcode' ) );
 		}
 

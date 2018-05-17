@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin sub class.
+ * Taxonomy sub class.
  *
  * @package WPDTRT_Test
  * @since   1.0.0
@@ -14,12 +14,12 @@
  * @since   1.0.0
  * @version 1.0.0
  */
-class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Plugin {
+class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Taxonomy {
 
 	/**
-	 * Supplement plugin initialisation.
+	 * Supplement taxonomy initialisation.
 	 *
-	 * @param     array $options Plugin options.
+	 * @param     array $options Taxonomy options.
 	 * @since     1.0.0
 	 * @version   1.1.0
 	 */
@@ -31,7 +31,7 @@ class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Plugin {
 	}
 
 	/**
-	 * Supplement plugin's WordPress setup.
+	 * Supplement taxonomy's WordPress setup.
 	 */
 	protected function wp_setup() {
 

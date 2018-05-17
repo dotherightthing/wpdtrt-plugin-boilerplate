@@ -6,7 +6,7 @@
  * @version   1.0.0
  */
 
-//namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_15; // TODO
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_15;
 
 if ( ! class_exists( 'Taxonomy' ) ) {
 
