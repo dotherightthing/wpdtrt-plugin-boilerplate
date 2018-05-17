@@ -118,7 +118,12 @@ $debug = new DoTheRightThing\WPDebug\Debug;
  */
 add_action( 'init', 'wpdtrt_test_plugin_init', 0 );
 add_action( 'init', 'wpdtrt_test_shortcode_init', 100 );
+add_action( 'init', 'wpdtrt_test_taxonomy_init', 100 );
 add_action( 'widgets_init', 'wpdtrt_test_widget_init' );
+
+/**
+ * ===== Plugin config =====
+ */
 
 /**
  * Plugin initialisaton
@@ -182,6 +187,24 @@ function wpdtrt_test_plugin_init() {
 }
 
 /**
+ * ===== Rewrite config =====
+ */
+
+/**
+ * Register Rewrite
+ */
+function wpdtrt_test_rewrite_init() {
+
+	global $wpdtrt_test_plugin;
+
+	$wpdtrt_test_rewrite = new WPDTRT_Test_Rewrite();
+}
+
+/**
+ * ===== Shortcode config =====
+ */
+
+/**
  * Register Shortcode
  */
 function wpdtrt_test_shortcode_init() {
@@ -197,6 +220,69 @@ function wpdtrt_test_shortcode_init() {
 		)
 	);
 }
+
+/**
+ * ===== Taxonomy config =====
+ */
+
+/**
+ * Register Taxonomy
+ *
+ * @return object Taxonomy/
+ */
+function wpdtrt_test_taxonomy_init() {
+
+	global $wpdtrt_test_plugin;
+
+	$wpdtrt_test_taxonomy = new WPDTRT_Test_Taxonomy(
+		array(
+			'name'                      => 'wpdtrt_test_taxonomy',
+			'plugin'                    => $wpdtrt_test_plugin,
+			'selected_instance_options' => array(),
+			'taxonomy_options'          => array(
+				'option1' => array(
+					'type'              => 'text',
+					'label'             => esc_html__( 'Option 1', 'wpdtrt-test' ),
+					'admin_table'       => true,
+					'admin_table_label' => esc_html__( 'Opt 1', 'wpdtrt-test ' ),
+					'admin_table_sort'  => true,
+					'tip'               => 'Enter something',
+					'todo_condition'    => 'foo !== "bar"',
+				),
+			),
+			'labels'                    => array(
+				'slug'                       => 'tours',
+				'description'                => __( 'Multiday rides', 'wpdtrt-test ' ),
+				'posttype'                   => 'tourdiaries',
+				'name'                       => __( 'Tours', 'taxonomy general name' ),
+				'singular_name'              => _x( 'Tour', 'taxonomy singular name' ),
+				'menu_name'                  => __( 'Tours', 'wpdtrt-test' ),
+				'all_items'                  => __( 'All Tours', 'wpdtrt-test' ),
+				'add_new_item'               => __( 'Add New Tour', 'wpdtrt-test' ),
+				'edit_item'                  => __( 'Edit Tour', 'wpdtrt-test' ),
+				'view_item'                  => __( 'View Tour', 'wpdtrt-test' ),
+				'update_item'                => __( 'Update Tour', 'wpdtrt-test' ),
+				'new_item_name'              => __( 'New Tour Name', 'wpdtrt-test' ),
+				'parent_item'                => __( 'Parent Tour', 'wpdtrt-test' ),
+				'parent_item_colon'          => __( 'Parent Tour:', 'wpdtrt-test' ),
+				'search_items'               => __( 'Search Tours', 'wpdtrt-test' ),
+				'popular_items'              => __( 'Populars', 'wpdtrt-test' ),
+				'separate_items_with_commas' => __( 'Separate Tours with commas', 'wpdtrt-test' ),
+				'add_or_remove_items'        => __( 'Add or remove Tours', 'wpdtrt-test' ),
+				'choose_from_most_used'      => __( 'Choose from most used Tours', 'wpdtrt-test' ),
+				'not_found'                  => __( 'No Tours found', 'wpdtrt-test' ),
+				'separate_items_with_commas' => __( 'Separate Tours with commas', 'wpdtrt-test' ),
+			),
+		)
+	);
+
+	// return a reference for unit testing.
+	return $wpdtrt_test_taxonomy;
+}
+
+/**
+ * ===== Widget config =====
+ */
 
 /**
  * Register a WordPress widget, passing in an instance of our custom widget class

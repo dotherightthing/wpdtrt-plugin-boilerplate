@@ -166,6 +166,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @param       array $labels Labels.
 		 * @since       1.0.0
 		 * @version     1.0.0
+		 * @todo        Limit to allowed labels
 		 */
 		protected function set_labels( $labels ) {
 			$this->labels = $labels;
@@ -335,7 +336,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			}
 
 			// return $content - fails for me.
-			echo $content;
+			echo esc_html( $content );
 		}
 
 		/**
@@ -477,6 +478,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * for WordPress to build the URL correctly
 		 * @see https://cnpagency.com/blog/the-right-way-to-do-wordpress-custom-taxonomy-rewrites/
 		 * @see https://mondaybynoon.com/revisiting-custom-post-types-taxonomies-permalinks-slugs/
+		 * @todo Test how redundant it is to specify the advanced options here (#126)
 		 */
 		public function register_taxonomy() {
 
@@ -486,70 +488,70 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 				$plugin      = $this->get_plugin();
 				$text_domain = $plugin->get_slug();
-				$labels      = $this->get_labels(); // TODO: finish
+				$tax_labels  = $this->get_labels();
 
 				$labels = array(
 					// The same as and overridden by $tax->label.
-					'name'                       => $labels['taxonomy_name'],
+					'name'                       => $tax_labels['name'],
 
-					// Default: _x( 'Post Tag', 'taxonomy singular name' ).
-					'singular_name'              => $labels['taxonomy_singular_name'],
+					// Default: Post Tag
+					'singular_name'              => $tax_labels['singular_name'],
 
 					// Defaults to value of name label.
-					'menu_name'                  => $labels['taxonomy_menu_name'],
+					'menu_name'                  => $tax_labels['menu_name'],
 
 					// Default:  All Tags / All Categories.
-					'all_items'                  => 'All ' . $tax_labels['plural'],
+					'all_items'                  => $tax_labels['all_items'],
 
 					// Default: Add New Tag / Add New Category.
-					'add_new_item'               => 'Add New ' . $tax_labels['singular'],
+					'add_new_item'               => $tax_labels['add_new_item'],
 
 					// Default: Edit Tag / Edit Category.
-					'edit_item'                  => 'Edit ' . $tax_labels['singular'],
+					'edit_item'                  => $tax_labels['edit_item'],
 
 					// Default: View Tag / View Category.
-					'view_item'                  => 'View ' . $tax_labels['singular'],
+					'view_item'                  => $tax_labels['view_item'],
 
 					// Default: Update Tag / Update Category.
-					'update_item'                => 'Update ' . $tax_labels['singular'],
+					'update_item'                => $tax_labels['update_item'],
 
 					// Default: New Tag Name / New Category Name.
-					'new_item_name'              => 'New ' . $tax_labels['singular'] . ' Name',
+					'new_item_name'              => $tax_labels['new_item_name'],
 
 					// This string is not used on non-hierarchical taxonomies such as post tags.
 					// Default: null / Parent Category
-					'parent_item'                => 'Parent ' . $tax_labels['singular'],
+					'parent_item'                => $tax_labels['parent_item'],
 
 					// The same as parent_item, but with colon : in the end
 					// Default: null / Parent Category:
-					'parent_item_colon'          => 'Parent ' . $tax_labels['singular'] . ':',
+					'parent_item_colon'          => $tax_labels['parent_item_colon'],
 
 					// Default: Search Tags / Search Categories
-					'search_items'               => 'Search ' . $tax_labels['plural'],
+					'search_items'               => $tax_labels['search_items'],
 
 					// This string is not used on hierarchical taxonomies.
 					// Default: null / Popular Tags
-					'popular_items'              => 'Popular ' . $tax_labels['plural'],
+					'popular_items'              => $tax_labels['popular_items'],
 
 					// Used in the taxonomy meta box.
 					// This string is not used on hierarchical taxonomies.
 					// Default: null / Separate tags with commas
-					'separate_items_with_commas' => 'Separate ' . $tax_labels['plural'] . ' with commas',
+					'separate_items_with_commas' => $tax_labels['separate_items_with_commas'],
 
 					// Used in the meta box when JavaScript is disabled.
 					// This string is not used on hierarchical taxonomies.
 					// Default: null / Add or remove tags
-					'add_or_remove_items'        => 'Add or remove ' . $tax_labels['plural'],
+					'add_or_remove_items'        => $tax_labels['add_or_remove_items'],
 
 					// Used in the taxonomy meta box.
 					// This string is not used on hierarchical taxonomies.
 					// Default: null / Choose from the most used tags
-					'choose_from_most_used'      => 'Choose from the most used ' . $tax_labels['plural'],
+					'choose_from_most_used'      => $tax_labels['choose_from_most_used'],
 
 					// (3.6+) - the text displayed via clicking 'Choose from the most used tags' in the taxonomy meta box when no tags are available
 					// (4.2+) - the text used in the terms list table when there are no items for a taxonomy.
 					// Default: No tags found / No categories found
-					'not_found'                  => 'No ' . $tax_labels['plural'] . ' found',
+					'not_found'                  => $tax_labels['not_found'],
 				);
 
 				$args = array(
@@ -607,7 +609,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 					// Default: false
 					//'show_admin_column' => false,
 
-					// Default: ''.
+					// Default: empty string.
 					'description'  => $tax_labels['description'],
 
 					// Is this taxonomy hierarchical (have descendants) like categories or not hierarchical like tags.
@@ -673,7 +675,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 						 * Default: EP_NONE
 						 * @see https://make.wordpress.org/plugins/2012/06/07/rewrite-endpoints-api/
 						 */
-						//'ep_mask' => EP_NONE,
+						// 'ep_mask' => EP_NONE,.
 					),
 
 					/**
@@ -684,20 +686,20 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 					 * assign_terms / edit_posts
 					 * Default: None
 					 */
-					// 'capabilities' => None,
+					// 'capabilities' => None,.
 
 					/**
 					 * Whether this taxonomy should remember the order in which terms are added to objects.
 					 * Default: None
 					 */
-					// 'sort' => None,
+					// 'sort' => None,.
 
 					/**
 					 * Whether this taxonomy is a native or "built-in" taxonomy.
 					 * Do not edit.
 					 * Default: false
 					 */
-					// '_builtin' => false,
+					// '_builtin' => false,.
 				);
 
 				register_taxonomy(
