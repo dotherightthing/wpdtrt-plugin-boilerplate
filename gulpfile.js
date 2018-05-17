@@ -265,7 +265,7 @@ gulp.task('phpcs', function() {
 
   return gulp.src(dummyFile, {read: false})
     .pipe(shell([
-      'vendor/bin/phpcs -i '
+      './vendor/bin/phpcs --ignore=/vendor/ --ignore=/vendor/ --standard=WordPress-VIP .'
     ])
   );
 });
