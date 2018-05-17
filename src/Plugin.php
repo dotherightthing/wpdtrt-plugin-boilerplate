@@ -11,11 +11,6 @@ namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_15;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
-	// https://codex.wordpress.org/Function_Reference/register_activation_hook.
-	// TODO: $this does not exist
-	register_activation_hook( dirname( __FILE__ ), array( $this, 'helper_activate' ) );
-	register_deactivation_hook( dirname( __FILE__ ), array( $this, 'helper_deactivate' ) );
-
 	/**
 	 * Plugin base class
 	 *
@@ -110,6 +105,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/24
 		 */
 		protected function wp_setup() {
+
+			// https://codex.wordpress.org/Function_Reference/register_activation_hook.
+			// @todo Test whether this is actually applied in time
+			register_activation_hook( dirname( __FILE__ ), array( $this, 'helper_activate' ) );
+			register_deactivation_hook( dirname( __FILE__ ), array( $this, 'helper_deactivate' ) );
 
 			/**
 			 * $this->render_foobar() - infers that no args are to be passed, fails
