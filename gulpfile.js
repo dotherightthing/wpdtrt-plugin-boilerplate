@@ -16,7 +16,7 @@
  * @version     1.3.6
  */
 
-/* jshint node: true */
+/* jslint node:true, stupid:true */
 /* global require, process */
 
 // dependencies
@@ -25,7 +25,7 @@ var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
 var del = require('del');
 var jsdoc = require('gulp-jsdoc3');
-var jshint = require('gulp-jshint');
+var jslint = require('gulp-jslint');
 var log = require('fancy-log');
 var phpcs = require('gulp-phpcs');
 var postcss = require('gulp-postcss');
@@ -181,9 +181,9 @@ gulp.task('js', function() {
 
   // return stream or promise for run-sequence
   return gulp.src(jsFiles)
-    .pipe(jshint())
-    .pipe(jshint.reporter('default', { verbose: true }))
-    .pipe(jshint.reporter('fail'))
+    .pipe(jslint())
+    .pipe(jslint.reporter('default', { verbose: true }))
+    //.pipe(jslint.reporter('fail'))
     // note: output cannot be piped on from jsdoc
     .pipe(jsdoc(jsdocConfig));
 });
