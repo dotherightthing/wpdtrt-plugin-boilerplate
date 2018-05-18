@@ -266,17 +266,19 @@ gulp.task('phpdoc_require_after', function () {
         ]));
 });
 
+/**
+ * PHP Code Sniffer
+ *
+ * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/89
+ */
 gulp.task('php_codesniffer', function () {
 
     taskheader(this);
 
-    // --extensions=php
-    // --ignore=/docs/,/node_modules/,/vendor/
     return gulp.src(['**/*.php', '!docs/**/*.php', '!node_modules/**/*.php', '!vendor/**/*.php'])
         // Validate files using PHP Code Sniffer
         .pipe(phpcs({
             bin: 'vendor/bin/phpcs',
-            // --standard=WordPress-VIP
             standard: 'WordPress-VIP', // 'PSR2'
             warningSeverity: 0
         }))
