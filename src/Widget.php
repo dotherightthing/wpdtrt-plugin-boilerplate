@@ -61,13 +61,12 @@ if ( ! class_exists( 'Widget' ) ) {
 			$this->set_template_name( $template );
 
 			$widget_instance_options = array(
-				// 'classname' => $classname,
 				'description' => $description,
 			);
 
 			$plugin_instance_options = $plugin->get_instance_options();
 
-			foreach( $selected_instance_options as $option_name ) {
+			foreach ( $selected_instance_options as $option_name ) {
 				$widget_instance_options[ $option_name ] = $plugin_instance_options[ $option_name ];
 			}
 
@@ -159,7 +158,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 * @version     1.0.0
 		 * @todo        Add field validation feedback (#10)
 		 */
-		public function render_form_element( $instance, $name, $attributes=array() ) {
+		public function render_form_element( $instance, $name, $attributes = array() ) {
 
 			// these options don't have attributes.
 			if ( 'description' === $name ) {
@@ -252,7 +251,6 @@ if ( ! class_exists( 'Widget' ) ) {
 			 *
 			 * @link https://kylebenk.com/how-to-wordpress-widget-id/
 			 */
-			// $instance_id = $this->id;
 
 			// merge display $args with $instance settings
 			$template_options = array_merge( $args, $instance );
@@ -288,7 +286,7 @@ if ( ! class_exists( 'Widget' ) ) {
 				'filter_prefix'             => $plugin->get_prefix(),
 				'plugin_template_directory' => 'template-parts/' . $plugin->get_slug(),
 				'theme_template_directory'  => 'template-parts/' . $plugin->get_slug(),
-				'path'                      => $plugin->get_path()
+				'path'                      => $plugin->get_path(),
 			));
 
 			// /template-parts/wpdtrt-plugin-name/content/foo.php
@@ -328,7 +326,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			}
 
 			// for each form element name.
-			foreach ( $instance_options as $name=>$attributes ) {
+			foreach ( $instance_options as $name => $attributes ) {
 
 				// these options don't have attributes
 				if ( 'description' === $name ) {
@@ -357,7 +355,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		function form( $instance ) {
 
 			// get a reference to the parent plugin.
-			$plugin = $this->get_plugin();
+			$plugin           = $this->get_plugin();
 			$instance_options = $this->get_instance_options();
 
 			/**
