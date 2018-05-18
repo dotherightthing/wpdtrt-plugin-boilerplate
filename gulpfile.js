@@ -49,7 +49,10 @@ var pluginName = process.cwd().split('/').pop();
 var cssDir = 'css';
 var distDir = pluginName;
 var dummyFile = 'README.md';
-var jsFiles = './js/*.js';
+var jsFiles = [
+    './js/*.js',
+    'gulpfile.js'
+];
 var phpFiles = [
     './**/*.php',
     '!node_modules/**/*',
@@ -448,7 +451,6 @@ gulp.task('watch', function () {
     taskheader(this);
 
     gulp.watch(scssFiles, ['css']);
-    gulp.watch(jsFiles, ['js']);
 });
 
 gulp.task('bump_update', function () {
