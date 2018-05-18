@@ -944,7 +944,7 @@ glob@^6.0.4:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@~7.1.1, glob@~7.1.2:
+glob@^7.0.0, glob@^7.0.3, glob@^7.0.5, glob@~7.1.1:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -1632,15 +1632,6 @@ jslint@0.10.3:
     glob "^7.0.3"
     nopt "~3.0.1"
     readable-stream "~2.1.2"
-
-jslint@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/jslint/-/jslint-0.12.0.tgz#39780c8575cd2de7a5a6f4836a9b00326ffd1948"
-  dependencies:
-    exit "~0.1.2"
-    glob "~7.1.2"
-    nopt "~3.0.1"
-    readable-stream "~2.1.5"
 
 json-schema-traverse@^0.3.0:
   version "0.3.1"
@@ -2453,7 +2444,7 @@ readable-stream@~1.1.9:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@~2.1.2, readable-stream@~2.1.5:
+readable-stream@~2.1.2:
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.1.5.tgz#66fa8b720e1438b364681f2ad1a63c618448c9d0"
   dependencies:

@@ -173,7 +173,17 @@ gulp.task('finish', function () {
   taskheader(this);
 });
 
-gulp.task('js', function() {
+gulp.task('jslint', function() {
+
+  taskheader(this);
+
+  // return stream or promise for run-sequence
+  return gulp.src(jsFiles)
+    .pipe(jslint())
+    .pipe(jslint.reporter('stylish', { verbose: true }))
+});
+
+gulp.task('jsdoc', function() {
 
   taskheader(this);
 
@@ -181,9 +191,6 @@ gulp.task('js', function() {
 
   // return stream or promise for run-sequence
   return gulp.src(jsFiles)
-    .pipe(jslint())
-    .pipe(jslint.reporter('default', { verbose: true }))
-    //.pipe(jslint.reporter('fail'))
     // note: output cannot be piped on from jsdoc
     .pipe(jsdoc(jsdocConfig));
 });
@@ -528,7 +535,8 @@ gulp.task('install', function(callback) {
     'composer',
     'add_dev_dependencies',
     'css',
-    'js',
+    'jslint',
+    'jsdoc',
     'php_codesniffer',
     'phpdoc_doc',
     'phpdoc_require_after',
@@ -546,7 +554,8 @@ gulp.task('dev', function(callback) {
     'composer',
     'add_dev_dependencies',
     'css',
-    'js',
+    'jslint',
+    'jsdoc',
     'php_codesniffer',
     'phpdoc_delete',
     'phpdoc_remove_before',
@@ -567,7 +576,8 @@ gulp.task('dist', function(callback) {
     'composer',
     'add_dev_dependencies',
     'css',
-    'js',
+    'jslint',
+    'jsdoc',
     'php_codesniffer',
     'phpdoc_delete',
     'phpdoc_remove_before',

@@ -24,7 +24,6 @@
     "gulp-wpdtrt-plugin-bump": "https://github.com/dotherightthing/gulp-wpdtrt-plugin-bump",
     "gulp-zip": "^4.1.0",
     "include-media": "^1.4.9",
-    "jslint": "^0.12.0",
     "postcss-pxtorem": "^4.0.1",
     "run-sequence": "^2.2.1"
   },
