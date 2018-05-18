@@ -27,6 +27,7 @@ var del = require('del');
 var jsdoc = require('gulp-jsdoc3');
 var jshint = require('gulp-jshint');
 var log = require('fancy-log');
+var phpcs = require('gulp-phpcs');
 var postcss = require('gulp-postcss');
 var print = require('gulp-print').default;
 var pxtorem = require('postcss-pxtorem');
@@ -259,15 +260,22 @@ gulp.task('phpdoc_require_after', function() {
   );
 });
 
-gulp.task('phpcs', function() {
+gulp.task('php_codesniffer', function() {
 
   taskheader(this);
 
-  return gulp.src(dummyFile, {read: false})
-    .pipe(shell([
-      './vendor/bin/phpcs --ignore=/vendor/ --ignore=/vendor/ --standard=WordPress-VIP .'
-    ])
-  );
+  // --extensions=php
+  // --ignore=/docs/,/node_modules/,/vendor/
+  return gulp.src(['**/*.php', '!docs/**/*.php','!node_modules/**/*.php', '!vendor/**/*.php'])
+    // Validate files using PHP Code Sniffer
+    .pipe(phpcs({
+      bin: 'vendor/bin/phpcs',
+      // --standard=WordPress-VIP
+      standard: 'WordPress-VIP', // 'PSR2'
+      warningSeverity: 0
+    }))
+    // Log all problems that were found
+    .pipe(phpcs.reporter('log'));
 });
 
 gulp.task('phpunit', function() {
@@ -521,7 +529,7 @@ gulp.task('install', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phpcs',
+    'php_codesniffer',
     'phpdoc_doc',
     'phpdoc_require_after',
     'phpunit',
@@ -539,7 +547,7 @@ gulp.task('dev', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phpcs',
+    'php_codesniffer',
     'phpdoc_delete',
     'phpdoc_remove_before',
     'phpdoc_doc',
@@ -560,7 +568,7 @@ gulp.task('dist', function(callback) {
     'add_dev_dependencies',
     'css',
     'js',
-    'phpcs',
+    'php_codesniffer',
     'phpdoc_delete',
     'phpdoc_remove_before',
     'phpdoc_doc',
