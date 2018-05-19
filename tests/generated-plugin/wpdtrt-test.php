@@ -29,8 +29,8 @@
  * plugin_dir_path()
  * plugin_basename()
  *
- * @link https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Constants
- * @link https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Plugins
+ * @see https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Constants
+ * @see https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Plugins
  */
 
 if ( ! defined( 'WPDTRT_TEST_VERSION' ) ) {
@@ -40,11 +40,10 @@ if ( ! defined( 'WPDTRT_TEST_VERSION' ) ) {
 	 * WP provides get_plugin_data(), but it only works within WP Admin,
 	 * so we define a constant instead.
 	 *
-	 * @example $plugin_data = get_plugin_data( __FILE__ ); $plugin_version = $plugin_data['Version'];
-	 * @link https://wordpress.stackexchange.com /questions/18268/i-want-to-get-a-plugin-version-number-dynamically
-	 *
 	 * @since     1.0.0
 	 * @version   1.0.0
+	 * @see $plugin_data = get_plugin_data( __FILE__ ); $plugin_version = $plugin_data['Version'];
+	 * @see https://wordpress.stackexchange.com/questions/18268/i-want-to-get-a-plugin-version-number-dynamically
 	 */
 	define( 'WPDTRT_TEST_VERSION', '1.4.15' );
 }
@@ -55,12 +54,10 @@ if ( ! defined( 'WPDTRT_TEST_PATH' ) ) {
 	 *
 	 * @param string $file
 	 * @return The filesystem directory path (with trailing slash)
-	 *
-	 * @link https://developer.wordpress.org/reference/functions/plugin_dir_path/
-	 * @link https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
-	 *
 	 * @since     1.0.0
 	 * @version   1.0.0
+	 * @see https://developer.wordpress.org/reference/functions/plugin_dir_path/
+	 * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
 	 */
 	define( 'WPDTRT_TEST_PATH', plugin_dir_path( __FILE__ ) );
 }
@@ -71,12 +68,10 @@ if ( ! defined( 'WPDTRT_TEST_URL' ) ) {
 	 *
 	 * @param string $file
 	 * @return The URL (with trailing slash)
-	 *
-	 * @link https://codex.wordpress.org/Function_Reference/plugin_dir_url
-	 * @link https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
-	 *
 	 * @since     1.0.0
 	 * @version   1.0.0
+	 * @see https://codex.wordpress.org/Function_Reference/plugin_dir_url
+	 * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
 	 */
 	define( 'WPDTRT_TEST_URL', plugin_dir_url( __FILE__ ) );
 }
@@ -85,15 +80,28 @@ if ( ! defined( 'WPDTRT_TEST_URL' ) ) {
  * ===== Dependencies =====
  */
 
-if ( defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
-	$project_root_path = realpath( __DIR__ . '/../../..' ) . '/';
-} else {
-	// Note: path changed for wpdtrt-test.php only.
-	$project_root_path = realpath( __DIR__ . '/../..' ) . '/';
+/**
+ * Determine the correct path, from wpdtrt-plugin to the PSR-4 autoloader
+ *
+ * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/51
+ */
+if ( ! defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
+	define( 'WPDTRT_PLUGIN_CHILD', true );
 }
 
-// wpdtrt-plugin's root file loads Composer's autoloader.
-require_once $project_root_path . 'index.php';
+/**
+ * Determine the correct path, from wpdtrt-foobar to the PSR-4 autoloader
+ *
+ * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/104
+ * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies
+ */
+if ( defined( 'WPDTRT_TEST_TEST_DEPENDENCY' ) ) {
+	$project_root_path = realpath( __DIR__ . '/../../..' ) . '/';
+} else {
+	$project_root_path = '';
+}
+
+require_once $project_root_path . 'vendor/autoload.php';
 
 // sub classes, not loaded via PSR-4.
 // comment out the ones you don't need, edit the ones you do.
@@ -175,16 +183,25 @@ function wpdtrt_test_plugin_init() {
 	global $wpdtrt_test_plugin;
 
 	/**
-	 * Admin settings.
-	 *  Changed to $taxonomy_options and retained for legacy support - may not be reqd
+	 * Global options
+	 *
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-global-options
 	 */
 	$plugin_options = array();
 
 	/**
-	 * All options available to Widgets and Shortcodes
+	 * Shortcode or Widget options
+	 *
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-shortcode-or-widget-options
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies
 	 */
 	$instance_options = array();
 
+	/**
+	 * Plugin configuration
+	 *
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies
+	 */
 	$wpdtrt_test_plugin = new WPDTRT_Test_Plugin(
 		array(
 			'url'              => WPDTRT_TEST_URL,
@@ -283,27 +300,26 @@ function wpdtrt_test_taxonomy_init() {
 				),
 			),
 			'labels'                    => array(
-				'slug'                       => 'tours',
-				'description'                => __( 'Multiday rides', 'wpdtrt-test ' ),
-				'posttype'                   => 'tourdiaries',
-				'name'                       => __( 'Tours', 'taxonomy general name' ),
-				'singular_name'              => _x( 'Tour', 'taxonomy singular name' ),
-				'menu_name'                  => __( 'Tours', 'wpdtrt-test' ),
-				'all_items'                  => __( 'All Tours', 'wpdtrt-test' ),
-				'add_new_item'               => __( 'Add New Tour', 'wpdtrt-test' ),
-				'edit_item'                  => __( 'Edit Tour', 'wpdtrt-test' ),
-				'view_item'                  => __( 'View Tour', 'wpdtrt-test' ),
-				'update_item'                => __( 'Update Tour', 'wpdtrt-test' ),
-				'new_item_name'              => __( 'New Tour Name', 'wpdtrt-test' ),
-				'parent_item'                => __( 'Parent Tour', 'wpdtrt-test' ),
-				'parent_item_colon'          => __( 'Parent Tour:', 'wpdtrt-test' ),
-				'search_items'               => __( 'Search Tours', 'wpdtrt-test' ),
-				'popular_items'              => __( 'Populars', 'wpdtrt-test' ),
-				'separate_items_with_commas' => __( 'Separate Tours with commas', 'wpdtrt-test' ),
-				'add_or_remove_items'        => __( 'Add or remove Tours', 'wpdtrt-test' ),
-				'choose_from_most_used'      => __( 'Choose from most used Tours', 'wpdtrt-test' ),
-				'not_found'                  => __( 'No Tours found', 'wpdtrt-test' ),
-				'separate_items_with_commas' => __( 'Separate Tours with commas', 'wpdtrt-test' ),
+				'slug'                       => 'wpdtrt_test_thing',
+				'description'                => __( 'Things', 'wpdtrt-test ' ),
+				'posttype'                   => 'post', // tourdiaries
+				'name'                       => __( 'Things', 'taxonomy general name' ),
+				'singular_name'              => _x( 'Thing', 'taxonomy singular name' ),
+				'menu_name'                  => __( 'Things', 'wpdtrt-test' ),
+				'all_items'                  => __( 'All Things', 'wpdtrt-test' ),
+				'add_new_item'               => __( 'Add New Thing', 'wpdtrt-test' ),
+				'edit_item'                  => __( 'Edit Thing', 'wpdtrt-test' ),
+				'view_item'                  => __( 'View Thing', 'wpdtrt-test' ),
+				'update_item'                => __( 'Update Thing', 'wpdtrt-test' ),
+				'new_item_name'              => __( 'New Thing Name', 'wpdtrt-test' ),
+				'parent_item'                => __( 'Parent Thing', 'wpdtrt-test' ),
+				'parent_item_colon'          => __( 'Parent Thing:', 'wpdtrt-test' ),
+				'search_items'               => __( 'Search Things', 'wpdtrt-test' ),
+				'popular_items'              => __( 'Popular Things', 'wpdtrt-test' ),
+				'separate_items_with_commas' => __( 'Separate Things with commas', 'wpdtrt-test' ),
+				'add_or_remove_items'        => __( 'Add or remove Things', 'wpdtrt-test' ),
+				'choose_from_most_used'      => __( 'Choose from most used Things', 'wpdtrt-test' ),
+				'not_found'                  => __( 'No Things found', 'wpdtrt-test' ),
 			),
 		)
 	);
@@ -339,7 +355,7 @@ function wpdtrt_test_widget_init() {
 		array(
 			'name'                      => 'wpdtrt_test_widget',
 			'title'                     => __( 'Test Widget', 'wpdtrt-test' ),
-			'description'               => __( 'Demo plugin which uses wpdtrt-plugin.', 'wpdtrt-test' ),
+			'description'               => __( 'Widget description.', 'wpdtrt-test' ),
 			'plugin'                    => $wpdtrt_test_plugin,
 			'template'                  => 'test',
 			'selected_instance_options' => array(),
