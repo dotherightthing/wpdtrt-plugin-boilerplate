@@ -857,7 +857,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ===== Start Helpers =====
+		 * ===== Helpers =====
 		 */
 
 		/**

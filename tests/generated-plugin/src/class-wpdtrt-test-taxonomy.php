@@ -31,7 +31,14 @@ class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Taxono
 	}
 
 	/**
+	 * ====== WordPress Integration ======
+	 */
+
+	/**
 	 * Supplement taxonomy's WordPress setup.
+	 * Note: Default priority is 10. A higher priority runs later.
+	 *
+	 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
 	 */
 	protected function wp_setup() {
 
@@ -39,4 +46,20 @@ class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Taxono
 
 		parent::wp_setup();
 	}
+
+	/**
+	 * ====== Getters and Setters ======
+	 */
+
+	/**
+	 * ===== Renderers =====
+	 */
+
+	/**
+	 * ===== Filters =====
+	 */
+
+	/**
+	 * ===== Helpers =====
+	 */
 }

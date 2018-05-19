@@ -32,9 +32,6 @@ class PluginTest extends WP_UnitTestCase {
 
 		// remove any previously saved options.
 		$wpdtrt_test_plugin->unset_options();
-
-		// https://coderwall.com/p/ka6o8a/catch-php-warnings-and-notices-when-unit-testing.
-		restore_error_handler();
 	}
 
 	/**

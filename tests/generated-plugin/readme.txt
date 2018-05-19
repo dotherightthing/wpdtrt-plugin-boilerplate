@@ -18,6 +18,21 @@ Test plugin using the wpdtrt-plugin base classes.
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/wpdtrt-test` directory
+1. Upload the plugin files to the `/wp-content/plugins/wpdtrt-test` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Use the Settings->DTRT Plugin Test screen to configure the plugin
+
+== Screenshots ==
+
+1. The caption for ./images/screenshot-1.(png|jpg|jpeg|gif)
+2. The caption for ./images/screenshot-2.(png|jpg|jpeg|gif)
+
+== Changelog ==
+
+= <%= defaultVersion %> =
+* Initial version
+
+== Upgrade Notice ==
+
+= <%= defaultVersion %> =
+* Initial release
