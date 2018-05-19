@@ -41,6 +41,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * This is a protected method as every plugin uses a sub class:
 		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_15\Plugin {...}
 		 *
+		 * A plugin-specific instance of this class is created on init:
+		 * add_action( 'init', '<%= nameSafe %>_init', 0 );
+		 * so this construct CANNOT contain anything that needs to run
+		 * BEFORE the WordPress 'init'
+		 *
 		 * @param     array $settings Plugin options.
 		 * @since     1.0.0
 		 * @version   1.1.0
@@ -99,17 +104,15 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Initialise plugin options ONCE.
 		 *
-		 * @since 1.0.0
+		 * Notes:
+		 *  Default priority is 10. A higher priority runs later.
+		 *  register_activation_hook() is run before any of the provided hooks
 		 *
-		 * @see https://wordpress.stackexchange.com/a/209772
-		 * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/24
+		 * @since 1.0.0
+		 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
+		 * @see https://wordpress.stackexchange.com/a/209772 Trying to get class to instantiate ONCE
 		 */
 		protected function wp_setup() {
-
-			// https://codex.wordpress.org/Function_Reference/register_activation_hook.
-			// @todo Test whether this is actually applied in time
-			register_activation_hook( dirname( __FILE__ ), array( $this, 'helper_activate' ) );
-			register_deactivation_hook( dirname( __FILE__ ), array( $this, 'helper_deactivate' ) );
 
 			/**
 			 * $this->render_foobar() - infers that no args are to be passed, fails
@@ -858,39 +861,19 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 
 		/**
-		 * Register functions to be run when the plugin is activated.
-		 *
-		 * @since     0.6.0
-		 * @since     1.4.15 Moved from root plugin file to Plugin.php
-		 * @version   1.0.0
-		 * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
-		 */
-		public function helper_activate() {
-			$this->helper_flush_rewrite_rules( true );
-		}
-
-		/**
-		 * Register functions to be run when the plugin is deactivated.
-		 * (WordPress 2.0+)
-		 *
-		 * @since     0.6.0
-		 * @since     1.4.15 Moved from root plugin file to Plugin.php
-		 * @version   1.0.0
-		 * @see https://codex.wordpress.org/Function_Reference/register_deactivation_hook
-		 */
-		public function helper_deactivate() {
-			$this->helper_flush_rewrite_rules( true );
-		}
-
-		/**
 		 * Flush all plugin rewrite rules
-		 *  This is run on activate and deactivate, and optionally on init
-		 *  The init run is optional as this is an expensive operation.
+		 *  This is hooked into the init action,
+		 *  but as flushing is an expensive operation,
+		 *  and the init action fires once on every page load.
+		 *  this is only run if $plugin_options['flush_rewrite_rules'].
+		 *  This could also be called on activation and deactivation,
+		 *  but see #128.
 		 *
 		 * @param boolean $force Run the function in spite of the toggle setting.
 		 * @return boolean $flushed Whether the rules were flushed or not
-		 * @since 1.4.15 Moved from root plugin file to Plugin.php and added $plugin_options
-		 * @see https://carlalexander.ca/wordpress-adventurous-rewrite-api/
+		 * @since 1.4.16
+		 * @see https://carlalexander.ca/wordpress-adventurous-rewrite-api/ - "How do call flush_rewrite_rules?"
+		 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/128
 		 */
 		public function helper_flush_rewrite_rules( $force ) {
 

@@ -109,15 +109,53 @@ $debug = new DoTheRightThing\WPDebug\Debug;
 
 /**
  * ===== WordPress Integration =====
+ *
+ * Notes:
+ *  Default priority is 10. A higher priority runs later.
+ *  register_activation_hook() is run before any of the provided hooks
+ *
+ * @see https://developer.wordpress.org/plugins/hooks/actions/#priority
+ * @see https://codex.wordpress.org/Function_Reference/register_activation_hook.
  */
+register_activation_hook( dirname( __FILE__ ), 'wpdtrt_test_helper_activate' );
+
 add_action( 'init', 'wpdtrt_test_plugin_init', 0 );
 add_action( 'init', 'wpdtrt_test_shortcode_init', 100 );
 add_action( 'init', 'wpdtrt_test_taxonomy_init', 100 );
-add_action( 'widgets_init', 'wpdtrt_test_widget_init' );
+add_action( 'widgets_init', 'wpdtrt_test_widget_init', 10 );
+
+register_deactivation_hook( dirname( __FILE__ ), 'wpdtrt_test_helper_deactivate' );
 
 /**
  * ===== Plugin config =====
  */
+
+/**
+ * Register functions to be run when the plugin is activated.
+ *
+ * @since     0.6.0
+ * @version   1.0.0
+ * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
+ * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/128
+ * @see See also Plugin::helper_flush_rewrite_rules()
+ */
+function wpdtrt_test_helper_activate() {
+	flush_rewrite_rules();
+}
+
+/**
+ * Register functions to be run when the plugin is deactivated.
+ * (WordPress 2.0+)
+ *
+ * @since     0.6.0
+ * @version   1.0.0
+ * @see https://codex.wordpress.org/Function_Reference/register_deactivation_hook
+ * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/128
+ * @see See also Plugin::helper_flush_rewrite_rules()
+ */
+function wpdtrt_test_helper_deactivate() {
+	flush_rewrite_rules();
+}
 
 /**
  * Plugin initialisaton
