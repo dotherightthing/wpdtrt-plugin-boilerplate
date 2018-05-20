@@ -72,7 +72,8 @@ gulp.Gulp.prototype._runTask = function (task) {
 
 function taskheader(task, message) {
 
-    if (message === 'undefined') {
+    // https://stackoverflow.com/a/34012027/6850747
+    if (message === undefined) {
         message = '';
     } else {
         message += ' ';
