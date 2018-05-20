@@ -40,8 +40,6 @@ if ( ! defined( 'WPDTRT_TEST_VERSION' ) ) {
 	 * WP provides get_plugin_data(), but it only works within WP Admin,
 	 * so we define a constant instead.
 	 *
-	 * @since     1.0.0
-	 * @version   1.0.0
 	 * @see $plugin_data = get_plugin_data( __FILE__ ); $plugin_version = $plugin_data['Version'];
 	 * @see https://wordpress.stackexchange.com/questions/18268/i-want-to-get-a-plugin-version-number-dynamically
 	 */
@@ -54,8 +52,7 @@ if ( ! defined( 'WPDTRT_TEST_PATH' ) ) {
 	 *
 	 * @param string $file
 	 * @return The filesystem directory path (with trailing slash)
-	 * @since     1.0.0
-	 * @version   1.0.0
+	 *
 	 * @see https://developer.wordpress.org/reference/functions/plugin_dir_path/
 	 * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
 	 */
@@ -68,8 +65,7 @@ if ( ! defined( 'WPDTRT_TEST_URL' ) ) {
 	 *
 	 * @param string $file
 	 * @return The URL (with trailing slash)
-	 * @since     1.0.0
-	 * @version   1.0.0
+	 *
 	 * @see https://codex.wordpress.org/Function_Reference/plugin_dir_url
 	 * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
 	 */
@@ -141,8 +137,6 @@ register_deactivation_hook( dirname( __FILE__ ), 'wpdtrt_test_helper_deactivate'
 /**
  * Register functions to be run when the plugin is activated.
  *
- * @since     0.6.0
- * @version   1.0.0
  * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
  * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/128
  * @see See also Plugin::helper_flush_rewrite_rules()
@@ -155,8 +149,6 @@ function wpdtrt_test_helper_activate() {
  * Register functions to be run when the plugin is deactivated.
  * (WordPress 2.0+)
  *
- * @since     0.6.0
- * @version   1.0.0
  * @see https://codex.wordpress.org/Function_Reference/register_deactivation_hook
  * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/128
  * @see See also Plugin::helper_flush_rewrite_rules()
@@ -337,8 +329,6 @@ function wpdtrt_test_taxonomy_init() {
  * The plugin does not require registration, but widgets and shortcodes do.
  * Note: widget_init fires before init, unless init has a priority of 0
  *
- * @since       0.7.6
- * @version     0.0.1
  * @uses        ../../../../wp-includes/widgets.php
  * @see         https://codex.wordpress.org/Function_Reference/register_widget#Example
  * @see         https://wp-mix.com/wordpress-widget_init-not-working/
