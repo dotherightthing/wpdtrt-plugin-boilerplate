@@ -316,17 +316,18 @@ gulp.task('add_dev_dependencies', function () {
         // @see https://stackoverflow.com/a/23643087/6850747
         var composer_json = require('./composer.json'),
             dev_packages = composer_json['require-dev'],
-            dev_packages_str = '',
-            pkg;
+            dev_packages_str = '';
 
         // convert the require-dev list into a space-separated string
         // foo/bar:1.2.3
         // @see https://stackoverflow.com/a/1963179/6850747
-        for (pkg in dev_packages) {
-            if (dev_packages.hasOwnProperty(pkg)) {
-                dev_packages_str += (' ' + pkg + ':' + dev_packages[pkg]);
-            }
-        }
+        // Replaced with Object.keys as reqd by JSLint
+        // @see https://jsperf.com/fastest-way-to-iterate-object
+        Object.keys(dev_packages).forEach(function (element, key) {
+            // element is the name of the key.
+            // key is just a numerical value for the array
+            dev_packages_str += (' ' + element + ':' + key);
+        });
 
         // add each dependency from the parent's require-dev
         // to the child's require-dev
