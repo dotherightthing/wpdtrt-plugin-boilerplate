@@ -314,7 +314,7 @@ gulp.task('add_dev_dependencies', function () {
         // @see https://stackoverflow.com/a/1963179/6850747
         // Replaced with Object.keys as reqd by JSLint
         // @see https://jsperf.com/fastest-way-to-iterate-object
-        Object.keys(dev_packages).forEach(function (element, key) {
+        Object.keys(dev_packages).forEach(function (element) {
             // element is the name of the key.
             // key is just a numerical value for the array
             dev_packages_str += (' ' + element + ':' + dev_packages[element]);
