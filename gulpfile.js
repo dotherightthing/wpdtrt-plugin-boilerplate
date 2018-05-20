@@ -317,7 +317,7 @@ gulp.task('add_dev_dependencies', function () {
         Object.keys(dev_packages).forEach(function (element, key) {
             // element is the name of the key.
             // key is just a numerical value for the array
-            dev_packages_str += (' ' + element + ':' + key);
+            dev_packages_str += (' ' + element + ':' + dev_packages[element]);
         });
 
         // add each dependency from the parent's require-dev
