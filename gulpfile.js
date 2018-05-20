@@ -18,7 +18,7 @@
  * @version     1.4.16
  */
 
-/*jslint node:true, nomen:true*/
+/*jslint node:true */
 
 "use strict";
 
@@ -56,24 +56,10 @@ var scssFiles = './scss/*.scss';
 
 // helpers
 
-// @see: https://stackoverflow.com/a/27535245/6850747
-gulp.Gulp.prototype.__runTask = gulp.Gulp.prototype._runTask;
-gulp.Gulp.prototype._runTask = function (task) {
-    this.currentTask = task;
-    this.__runTask(task);
-};
-
-function taskheader(task, message) {
-
-    // https://stackoverflow.com/a/34012027/6850747
-    if (message === undefined) {
-        message = '';
-    } else {
-        message += ' ';
-    }
+function taskheader(task_name) {
 
     log(' ');
-    log('========== ' + task.currentTask.name + ' ' + message + '==========');
+    log('========== ' + task_name + ' ==========');
     log(' ');
 }
 
@@ -91,7 +77,7 @@ function moduleIsAvailable(path) {
 
 gulp.task('yarn', function () {
 
-    taskheader(this);
+    taskheader('yarn');
 
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
@@ -102,7 +88,7 @@ gulp.task('yarn', function () {
 
 gulp.task('yarn_dist', function () {
 
-    taskheader(this);
+    taskheader('yarn_dist');
 
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
@@ -113,7 +99,7 @@ gulp.task('yarn_dist', function () {
 
 gulp.task('composer', function () {
 
-    taskheader(this);
+    taskheader('composer');
 
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
@@ -124,7 +110,7 @@ gulp.task('composer', function () {
 
 gulp.task('css', function () {
 
-    taskheader(this);
+    taskheader('css');
 
     var processors = [
         autoprefixer({
@@ -166,22 +152,27 @@ gulp.task('css', function () {
 
 gulp.task('finish', function () {
 
-    taskheader(this);
+    taskheader('finish');
 });
 
 gulp.task('jslint', function () {
 
-    taskheader(this);
+    taskheader('jslint');
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
-        .pipe(jslint())
+        .pipe(jslint({
+            node: true,
+            es6: true,
+            white: false, // true if the whitespace rules should be ignored.
+            nomen: true
+        }))
         .pipe(jslint.reporter('stylish', {verbose: true}));
 });
 
 gulp.task('jsdoc', function () {
 
-    taskheader(this);
+    taskheader('jsdoc');
 
     var jsdocConfig = require('./jsdocConfig');
 
@@ -193,7 +184,7 @@ gulp.task('jsdoc', function () {
 
 gulp.task('phpdoc_delete', function () {
 
-    taskheader(this);
+    taskheader('phpdoc_delete');
 
     // return stream or promise for run-sequence
     return del([
@@ -203,7 +194,7 @@ gulp.task('phpdoc_delete', function () {
 
 gulp.task('phpdoc_remove_before', function () {
 
-    taskheader(this);
+    taskheader('phpdoc_remove_before');
 
     // Read the extra data from the parent's composer.json
     // The require function is relative to this gulpfile || node_modules
@@ -226,7 +217,7 @@ gulp.task('phpdoc_remove_before', function () {
 
 gulp.task('phpdoc_doc', function () {
 
-    taskheader(this);
+    taskheader('phpdoc_doc');
 
     // return stream or promise for run-sequence
     // note: src files are not used,
@@ -240,7 +231,7 @@ gulp.task('phpdoc_doc', function () {
 
 gulp.task('phpdoc_require_after', function () {
 
-    taskheader(this);
+    taskheader('phpdoc_require_after');
 
     // Read the extra data from the parent's composer.json
     // The require function is relative to this gulpfile || node_modules
@@ -267,7 +258,7 @@ gulp.task('phpdoc_require_after', function () {
  */
 gulp.task('php_codesniffer', function () {
 
-    taskheader(this);
+    taskheader('php_codesniffer');
 
     return gulp.src(['**/*.php', '!docs/**/*.php', '!node_modules/**/*.php', '!vendor/**/*.php'])
         // Validate files using PHP Code Sniffer
@@ -282,7 +273,7 @@ gulp.task('php_codesniffer', function () {
 
 gulp.task('phpunit', function () {
 
-    taskheader(this);
+    taskheader('phpunit');
 
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
@@ -292,7 +283,7 @@ gulp.task('phpunit', function () {
 
 gulp.task('release_delete_pre', function () {
 
-    taskheader(this);
+    taskheader('release_delete_pre');
 
     // return stream or promise for run-sequence
     return del([
@@ -316,7 +307,7 @@ gulp.task('release_delete_pre', function () {
  */
 gulp.task('add_dev_dependencies', function () {
 
-    taskheader(this);
+    taskheader('add_dev_dependencies');
 
     if (pluginName !== 'wpdtrt-plugin') {
 
@@ -350,7 +341,7 @@ gulp.task('add_dev_dependencies', function () {
 
 gulp.task('remove_dev_dependencies', function () {
 
-    taskheader(this);
+    taskheader('remove_dev_dependencies');
 
     /**
     * Remove dev packages once we've used them
@@ -364,7 +355,7 @@ gulp.task('remove_dev_dependencies', function () {
 
 gulp.task('release_delete_post', function () {
 
-    taskheader(this);
+    taskheader('release_delete_post');
 
     // return stream or promise for run-sequence
     return del([
@@ -374,7 +365,7 @@ gulp.task('release_delete_post', function () {
 
 gulp.task('release_copy', function () {
 
-    taskheader(this);
+    taskheader('release_copy');
 
     // @see http://www.globtester.com/
     var releaseFiles = [
@@ -407,7 +398,7 @@ gulp.task('release_copy', function () {
 
 gulp.task('release_zip', function () {
 
-    taskheader(this);
+    taskheader('release_zip');
 
     // return stream or promise for run-sequence
     // https://stackoverflow.com/a/32188928/6850747
@@ -420,7 +411,7 @@ gulp.task('release_zip', function () {
 
 gulp.task('release', function (callback) {
 
-    taskheader(this);
+    taskheader('release');
 
     runSequence(
         'release_delete_pre',
@@ -433,7 +424,7 @@ gulp.task('release', function (callback) {
 
 gulp.task('start', function () {
 
-    taskheader(this);
+    taskheader('start');
 });
 
 /**
@@ -444,14 +435,14 @@ gulp.task('start', function () {
 
 gulp.task('watch', function () {
 
-    taskheader(this);
+    taskheader('watch');
 
     gulp.watch(scssFiles, ['css']);
 });
 
 gulp.task('bump_update', function () {
 
-    taskheader(this);
+    taskheader('bump_update');
 
     var wpdtrt_plugin_is_dependency = false;
 
@@ -478,6 +469,8 @@ gulp.task('bump_update', function () {
 
 gulp.task('bump_replace', function () {
 
+    taskheader('bump_replace');
+
     // if run from wpdtrt-plugin:
     // gulp bump
     var root_input_path = '',
@@ -497,6 +490,9 @@ gulp.task('bump_replace', function () {
 });
 
 gulp.task('bump_update_autoload', function () {
+
+    taskheader('bump_update_autoload');
+
     // regenerate autoload files
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
@@ -506,7 +502,7 @@ gulp.task('bump_update_autoload', function () {
 
 gulp.task('bump', function (callback) {
 
-    taskheader(this);
+    taskheader('bump');
 
     runSequence(
         'bump_update',
