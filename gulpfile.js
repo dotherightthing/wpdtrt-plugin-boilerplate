@@ -34,7 +34,6 @@ var phpcs = require('gulp-phpcs');
 var postcss = require('gulp-postcss');
 var print = require('gulp-print').default;
 var pxtorem = require('postcss-pxtorem');
-var replace = require('gulp-replace');
 var runSequence = require('run-sequence');
 var sass = require('gulp-sass');
 var shell = require('gulp-shell');
@@ -52,12 +51,6 @@ var dummyFile = 'README.md';
 var jsFiles = [
     './js/*.js',
     'gulpfile.js'
-];
-var phpFiles = [
-    './**/*.php',
-    '!node_modules/**/*',
-    '!vendor/**/*',
-    '!' + pluginName + '/**/*' // release folder
 ];
 var scssFiles = './scss/*.scss';
 
@@ -183,7 +176,7 @@ gulp.task('jslint', function () {
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
         .pipe(jslint())
-        .pipe(jslint.reporter('stylish', { verbose: true }));
+        .pipe(jslint.reporter('stylish', {verbose: true}));
 });
 
 gulp.task('jsdoc', function () {
@@ -407,7 +400,7 @@ gulp.task('release_copy', function () {
 
     // return stream or promise for run-sequence
     // https://stackoverflow.com/a/32188928/6850747
-    return gulp.src(releaseFiles, { base: '.' })
+    return gulp.src(releaseFiles, {base: '.'})
         .pipe(print())
         .pipe(gulp.dest(distDir));
 });
@@ -420,7 +413,7 @@ gulp.task('release_zip', function () {
     // https://stackoverflow.com/a/32188928/6850747
     return gulp.src([
         './' + distDir + '/**/*'
-    ], { base: '.' })
+    ], {base: '.'})
         .pipe(zip('release.zip'))
         .pipe(gulp.dest('./'));
 });
