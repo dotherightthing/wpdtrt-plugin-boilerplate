@@ -15,7 +15,7 @@
  *    gulp install --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *
  * @package     WPDTRT_Plugin
- * @version     1.4.16
+ * @version     1.4.17
  */
 
 /*jslint node:true*/

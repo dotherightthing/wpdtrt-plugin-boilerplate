@@ -7,7 +7,7 @@
  * @version   1.0.1
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_16;
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_17;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
@@ -34,12 +34,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 	class Plugin {
 
 		// https://secure.php.net/manual/en/language.oop5.constants.php.
-		const WPDTRT_PLUGIN_VERSION = '1.4.16';
+		const WPDTRT_PLUGIN_VERSION = '1.4.17';
 
 		/**
 		 * Initialise the object's properties when it is instantiated.
 		 * This is a protected method as every plugin uses a sub class:
-		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_16\Plugin {...}
+		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_17\Plugin {...}
 		 *
 		 * A plugin-specific instance of this class is created on init:
 		 * add_action( 'init', '<%= nameSafe %>_init', 0 );

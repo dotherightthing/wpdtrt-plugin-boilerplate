@@ -6,7 +6,7 @@
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_16;
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_17;
 
 if ( ! class_exists( 'Shortcode' ) ) {
 
@@ -35,7 +35,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin\r_1_4_16\Shortcode {}
+		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin\r_1_4_17\Shortcode {}
 		 *
 		 * @param     array $options Shortcode options.
 		 * @since     1.0.0
