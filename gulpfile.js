@@ -247,9 +247,9 @@ gulp.task('phpdoc_require_after', function () {
  *
  * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/89
  */
-gulp.task('php_codesniffer', function () {
+gulp.task('phpcs', function () {
 
-    taskheader('php_codesniffer');
+    taskheader('phpcs');
 
     return gulp.src(['**/*.php', '!docs/**/*.php', '!node_modules/**/*.php', '!vendor/**/*.php'])
         // Validate files using PHP Code Sniffer
@@ -506,7 +506,7 @@ gulp.task('install', function (callback) {
         'css',
         'jslint',
         'jsdoc',
-        'php_codesniffer',
+        'phpcs',
         'phpdoc_doc',
         'phpdoc_require_after',
         'phpunit',
@@ -525,7 +525,7 @@ gulp.task('dev', function (callback) {
         'css',
         'jslint',
         'jsdoc',
-        'php_codesniffer',
+        'phpcs',
         'phpdoc_delete',
         'phpdoc_remove_before',
         'phpdoc_doc',
@@ -547,7 +547,7 @@ gulp.task('dist', function (callback) {
         'css',
         'jslint',
         'jsdoc',
-        'php_codesniffer',
+        'phpcs',
         'phpdoc_delete',
         'phpdoc_remove_before',
         'phpdoc_doc',
