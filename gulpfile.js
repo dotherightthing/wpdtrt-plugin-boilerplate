@@ -18,7 +18,7 @@
  * @version     1.4.16
  */
 
-/*jslint node:true */
+/*jslint node:true*/
 
 "use strict";
 
@@ -69,6 +69,7 @@ function moduleIsAvailable(path) {
         require.resolve(path);
         return true;
     } catch (e) {
+        log(e);
         return false;
     }
 }
