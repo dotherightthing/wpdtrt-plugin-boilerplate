@@ -29,10 +29,10 @@ Test plugin using the wpdtrt-plugin base classes.
 
 == Changelog ==
 
-= <%= defaultVersion %> =
+= 0.1.0 =
 * Initial version
 
 == Upgrade Notice ==
 
-= <%= defaultVersion %> =
+= 0.1.0 =
 * Initial release
