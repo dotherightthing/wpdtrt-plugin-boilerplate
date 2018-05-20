@@ -27,6 +27,7 @@
 var gulp = require('gulp');
 var autoprefixer = require('autoprefixer');
 var del = require('del');
+var fs = require('fs');
 var jsdoc = require('gulp-jsdoc3');
 var jslint = require('gulp-jslint');
 var log = require('fancy-log');
@@ -61,17 +62,6 @@ function taskheader(task_name) {
     log(' ');
     log('========== ' + task_name + ' ==========');
     log(' ');
-}
-
-// @see: https://stackoverflow.com/a/48616491/6850747
-function moduleIsAvailable(path) {
-    try {
-        require.resolve(path);
-        return true;
-    } catch (e) {
-        log(e);
-        return false;
-    }
 }
 
 // tasks
@@ -446,15 +436,8 @@ gulp.task('bump_update', function () {
 
     taskheader('bump_update');
 
-    var wpdtrt_plugin_is_dependency = false;
-
-    if (moduleIsAvailable('../../../package.json')) {
-        wpdtrt_plugin_is_dependency = true;
-    }
-
-    // wpdtrt-foo
-    if (wpdtrt_plugin_is_dependency) {
-
+    // if wpdtrt-plugin is loaded as a dependency
+    if (fs.exists('../../../package.json')) {
         // get the latest release of wpdtrt-plugin
         // this has to run before bump_replace
         // so that the correct version information is available
@@ -480,7 +463,7 @@ gulp.task('bump_replace', function () {
 
     // if run from a child plugin:
     // gulp bump --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
-    if (moduleIsAvailable('../../../package.json')) {
+    if (fs.exists('../../../package.json')) {
         root_input_path = '';
         wpdtrt_plugin_input_path = 'vendor/dotherightthing/wpdtrt-plugin/';
     }
