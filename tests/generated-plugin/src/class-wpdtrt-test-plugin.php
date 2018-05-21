@@ -14,7 +14,7 @@
  * @since   1.0.0
  * @version 1.0.0
  */
-class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_18\Plugin {
+class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_19\Plugin {
 
 	/**
 	 * Supplement plugin initialisation.
