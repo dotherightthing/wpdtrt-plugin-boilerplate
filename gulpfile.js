@@ -12,7 +12,7 @@
  *    --gulpfile ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js --cwd ./
  *
  * @package     WPDTRT_Plugin_Boilerplate
- * @version     1.4.21
+ * @version     1.4.22
  */
 
 /*jshint node:true*/

@@ -1163,8 +1163,8 @@ gulp-util@^3.0.0, gulp-util@^3.0.7:
     vinyl "^0.5.0"
 
 "gulp-wpdtrt-plugin-bump@https://github.com/dotherightthing/gulp-wpdtrt-plugin-bump":
-  version "0.0.9"
-  resolved "https://github.com/dotherightthing/gulp-wpdtrt-plugin-bump#ad0e62b87ae8dcdffe0a63c705ff0b3a9f6f6fd9"
+  version "0.1.0"
+  resolved "https://github.com/dotherightthing/gulp-wpdtrt-plugin-bump#f53df2d1c971bbe73a7a27226e7b74b186fedb6a"
   dependencies:
     gulp "^3.9.1"
     gulp-replace "^0.6.1"
