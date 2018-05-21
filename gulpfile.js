@@ -25,7 +25,6 @@
 var gulp = require("gulp");
 var autoprefixer = require("autoprefixer");
 var del = require("del");
-var fs = require("fs");
 var jsdoc = require("gulp-jsdoc3");
 var jshint = require("gulp-jshint");
 var log = require("fancy-log");
@@ -560,7 +559,7 @@ gulp.task("bump_update", function () {
     );
 
     // if wpdtrt-plugin is loaded as a dependency
-    if (fs.exists("../../../package.json")) {
+    if (pluginName !== "wpdtrt-plugin") {
         // get the latest release of wpdtrt-plugin
         // this has to run before bump_replace
         // so that the correct version information is available
@@ -593,7 +592,7 @@ gulp.task("bump_replace", function () {
     // if run from a child plugin:
     // gulp bump
     // --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
-    if (fs.exists("../../../package.json")) {
+    if (pluginName !== "wpdtrt-plugin") {
         root_input_path = "";
         wpdtrt_plugin_input_path = "vendor/dotherightthing/wpdtrt-plugin/";
     }
