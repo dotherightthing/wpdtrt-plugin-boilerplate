@@ -3,7 +3,7 @@
  * Widget sub class.
  *
  * @package WPDTRT_Test
- * @since   1.0.0
+ * @since   0.7.16
  * @version 1.0.0
  */
 
