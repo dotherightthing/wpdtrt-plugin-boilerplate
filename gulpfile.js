@@ -654,14 +654,14 @@ gulp.task("install", function (callback) {
         // lint code for errors
         "jshint",
         // "phpcs",
+        // bump version
+        "bump_replace",
         // generate documentation
         "jsdoc",
         "phpdoc_doc",
         "phpdoc_require_after",
         // run unit tests in a WordPress environment
-        "phpunit",
-        // bump version
-        "bump_replace"
+        "phpunit"
     );
 
     callback();
@@ -723,7 +723,9 @@ gulp.task("dist", function (callback) {
         "css",
         // lint code for errors
         "jshint",
-        // "phpcs",
+        // "phpcs"
+        // bump version
+        "bump_replace",
         // generate documentation
         "jsdoc",
         "phpdoc_delete",
@@ -732,8 +734,6 @@ gulp.task("dist", function (callback) {
         "phpdoc_require_after",
         // run unit tests in a WordPress environment
         "phpunit",
-        // bump version
-        "bump_replace",
         // package release
         "remove_dev_dependencies",
         "yarn_dist",
