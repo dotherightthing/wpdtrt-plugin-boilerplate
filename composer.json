@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoTheRightThing\\WPDTRT_Plugin\\r_1_4_18\\": "src"
+            "DoTheRightThing\\WPDTRT_Plugin\\r_1_4_20\\": "src"
         }
     },
     "minimum-stability": "stable",

@@ -7,7 +7,7 @@
  * @since     0.6.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_19;
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_20;
 
 if ( ! class_exists( 'TemplateLoader' ) ) {
 
@@ -31,7 +31,7 @@ if ( ! class_exists( 'TemplateLoader' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin\r_1_4_19\TemplateLoader {}
+		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin\r_1_4_20\TemplateLoader {}
 		 *
 		 * @param     array $options Plugin options.
 		 * @since     1.0.0
