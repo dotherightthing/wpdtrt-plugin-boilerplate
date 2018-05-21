@@ -654,7 +654,7 @@ gulp.task("install", function (callback) {
         "jshint",
         // "phpcs",
         // bump version
-        "bump_replace",
+        "bump",
         // generate documentation
         "jsdoc",
         "phpdoc_doc",
@@ -709,7 +709,7 @@ gulp.task("dist", function (callback) {
     taskheader(
         "Installation",
         "Dist Install",
-        "Package for release"
+        "Install and package for release"
     );
 
     runSequence(
@@ -724,7 +724,7 @@ gulp.task("dist", function (callback) {
         "jshint",
         // "phpcs"
         // bump version
-        "bump_replace",
+        "bump",
         // generate documentation
         "jsdoc",
         "phpdoc_delete",
