@@ -1,6 +1,6 @@
 {
-    "name": "dotherightthing/wpdtrt-plugin",
-    "description": "Base classes for a plugin, plugin shortcode, and plugin widget.",
+    "name": "dotherightthing/wpdtrt-plugin-boilerplate",
+    "description": "Boilerplate for WordPress plugin development.",
     "type": "library",
     "keywords": ["boilerplate", "framework"],
     "license": "ISC",
@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoTheRightThing\\WPDTRT_Plugin\\r_1_4_21\\": "src"
+            "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_4_21\\": "src"
         }
     },
     "minimum-stability": "stable",

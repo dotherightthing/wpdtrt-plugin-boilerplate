@@ -91,7 +91,7 @@ notifications:
 # api_key is generated via: travis setup releases
 # which requires my GH username and password
 # and creates a Personal Access Token at https://github.com/settings/tokens
-# named 'automatic releases for dotherightthing/wpdtrt-plugin' 
+# named 'automatic releases for dotherightthing/wpdtrt-plugin-boilerplate' 
 # https://docs.travis-ci.com/user/deployment/releases/
 deploy:
   provider: releases
@@ -102,7 +102,7 @@ deploy:
   # which deletes all changes made during the build 
   skip_cleanup: true
   on:
-    repo: dotherightthing/wpdtrt-plugin
+    repo: dotherightthing/wpdtrt-plugin-boilerplate
     tags: true
     # https://stackoverflow.com/a/27775257/6850747
     all_branches: true

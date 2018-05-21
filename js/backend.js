@@ -2,7 +2,7 @@
  * Scripts for the plugin settings page
  *
  * This file contains JavaScript.
- *    PHP variables are provided in wpdtrt_plugin_config.
+ *    PHP variables are provided in wpdtrt_plugin_boilerplate_config.
  *
  * @since   1.0.0
  * @version 1.0.1
@@ -10,15 +10,15 @@
 
 /*jshint browser:true*/
 /*jslint browser:true*/
-/*global jQuery, wpdtrt_plugin_config*/
+/*global jQuery, wpdtrt_plugin_boilerplate_config*/
 
 jQuery(document).ready(function ($) {
 
     "use strict";
 
-    // wpdtrt_plugin_config is generic
+    // wpdtrt_plugin_boilerplate_config is generic
     // but we can only view one settings page at a time
-    var config = wpdtrt_plugin_config;
+    var config = wpdtrt_plugin_boilerplate_config;
     var loading_message = config.messages.loading;
     var prefix = config.prefix;
     var ajaxurl = config.ajaxurl;
@@ -28,9 +28,9 @@ jQuery(document).ready(function ($) {
 
     if (config.refresh_api_data === "true") {
         $ajax_container_data =
-                $(".wpdtrt-plugin-ajax-response[data-format=\"data\"]");
+                $(".wpdtrt-plugin-boilerplate-ajax-response[data-format=\"data\"]");
         $ajax_container_ui =
-                $(".wpdtrt-plugin-ajax-response[data-format=\"ui\"]");
+                $(".wpdtrt-plugin-boilerplate-ajax-response[data-format=\"ui\"]");
 
         $ajax_container_data
             .empty()

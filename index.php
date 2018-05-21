@@ -2,7 +2,7 @@
 /**
  * PSR-4 Autoloader
  *
- * @package WPDTRT_Plugin
+ * @package WPDTRT_Plugin_Boilerplate
  * @version 1.4.21
  * @see     http://phpenthusiast.com/blog/how-to-autoload-with-composer
  */
@@ -15,8 +15,8 @@
  *
  * @see https://www.php-fig.org/psr/psr-4/
  * @see https://stackoverflow.com/a/37952183/6850747
- * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/51
- * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/124
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51
+ * @todo https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/124
  */
 if ( defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
 	$project_root_path = realpath( __DIR__ . '/../../..' ) . '/';

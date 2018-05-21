@@ -1,7 +1,7 @@
 //
 // Styles for the admin back-end
 //
-// @package     WPDTRT_Plugin
+// @package     WPDTRT_Plugin_Boilerplate
 // @since       1.0.0
 //
 
@@ -13,31 +13,31 @@
 // Plugin options page
 // -------------------------------------------------------------------
 
-.wpdtrt-plugin {
+.wpdtrt-plugin-boilerplate {
 
   &--options {
 
     // restyle WP .spinner
-    .wpdtrt-plugin-ajax-response .spinner {
+    .wpdtrt-plugin-boilerplate-ajax-response .spinner {
       float: none;
       width: auto;
       padding-left: 27px;
       margin-left: 0;
     }
 
-    .wpdtrt-plugin-version {
+    .wpdtrt-plugin-boilerplate-version {
       // copied from dashboard-widgets-suite plugin
       color: #c7c7c7;
       font-size: 90%;
     }
 
-    .wpdtrt-plugin-date {
+    .wpdtrt-plugin-boilerplate-date {
       font-size: .95em;
     }
 
     .form-table {
       .description {
-        @extend %wpdtrt-plugin--input-hint-text; 
+        @extend %wpdtrt-plugin-boilerplate--input-hint-text; 
       }
     }
   }
@@ -47,11 +47,11 @@
 // Widget page
 // -------------------------------------------------------------------
 
-.wpdtrt-plugin {
+.wpdtrt-plugin-boilerplate {
 
   &--widget-field {
     .description {
-      @extend %wpdtrt-plugin--input-hint-text;
+      @extend %wpdtrt-plugin-boilerplate--input-hint-text;
     }
   }
 }
@@ -60,7 +60,7 @@
 // Terms page
 // -------------------------------------------------------------------
 
-.wpdtrt-plugin {
+.wpdtrt-plugin-boilerplate {
 
   &--taxonomy-form-field {
     //
@@ -95,6 +95,6 @@
 .compat-attachment-fields {
   // reduce size of help text, to compress custom fields
   p.help {
-    @extend %wpdtrt-plugin--input-hint-text;
+    @extend %wpdtrt-plugin-boilerplate--input-hint-text;
   }
 }

@@ -3,7 +3,7 @@
  * Template partial for Admin Options page.
  *  WP Admin > Settings > PluginName.
  *
- * @package WPDTRT_Plugin
+ * @package WPDTRT_Plugin_Boilerplate
  * @since   1.0.0
  * @version 1.0.1
  * @uses    WordPress_Admin_Style
@@ -37,12 +37,12 @@ if ( $demo_display ) {
 }
 ?>
 
-<div class="wrap wpdtrt-plugin--options">
+<div class="wrap wpdtrt-plugin-boilerplate--options">
 
 	<div id="icon-options-general" class="icon32"></div>
 		<h1>
 			<?php echo esc_html( $plugin_title ); ?>
-			<span class="wpdtrt-plugin-version">
+			<span class="wpdtrt-plugin-boilerplate-version">
 				<?php echo esc_html( $plugin_version ); ?>
 			</span>
 		</h1>
@@ -57,7 +57,7 @@ if ( $demo_display ) {
 		<form name="data_form" method="post" action="">
 
 			<?php //hidden field is used by options_saved() ?>
-			<input type="hidden" name="wpdtrt_plugin_form_submitted" value="Y" />
+			<input type="hidden" name="wpdtrt_plugin_boilerplate_form_submitted" value="Y" />
 
 			<h2 class="title">
 				<?php echo esc_html( $options_form_title ); ?>
@@ -127,7 +127,7 @@ if ( $demo_display ) {
 			<?php echo esc_html( $demo_data_displayed_length ); ?>:
 		</p>
 
-		<div class="wpdtrt-plugin-ajax-response" data-format="ui"></div>
+		<div class="wpdtrt-plugin-boilerplate-ajax-response" data-format="ui"></div>
 
 			<h2>
 				<span>
@@ -139,9 +139,9 @@ if ( $demo_display ) {
 				<?php echo esc_html( $demo_data_description ); ?>.
 			</p>
 
-			<div class="wpdtrt-plugin-ajax-response" data-format="data"></div>
+			<div class="wpdtrt-plugin-boilerplate-ajax-response" data-format="data"></div>
 
-			<p class="wpdtrt-plugin-date">
+			<p class="wpdtrt-plugin-boilerplate-date">
 				<em>
 					<?php echo esc_html( $demo_date_last_updated . ': ' . $demo_date_last_updated_date ); ?>
 				</em>

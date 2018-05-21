@@ -2,12 +2,12 @@
 /**
  * Plugin rewrite class.
  *
- * @package   WPDTRT_Plugin
+ * @package   WPDTRT_Plugin_Boilerplate
  * @version   1.0.0
  * @since     1.4.16
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_21;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21;
 
 if ( ! class_exists( 'Rewrite' ) ) {
 
@@ -27,7 +27,7 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * when it is instantiated,
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin\r_1_4_21\Rewrite {}
+		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21\Rewrite {}
 		 *
 		 * @param     array $options Rewrite options
 		 * @since     1.0.0

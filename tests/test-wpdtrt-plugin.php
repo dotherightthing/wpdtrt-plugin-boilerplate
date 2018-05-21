@@ -5,7 +5,7 @@
  */
 
 /**
- * WP_UnitTestCase unit tests for wpdtrt_plugin
+ * WP_UnitTestCase unit tests for wpdtrt_plugin_boilerplate
  */
 class PluginTest extends WP_UnitTestCase {
 
@@ -180,7 +180,7 @@ class PluginTest extends WP_UnitTestCase {
 	 *  or, if blank values were ignored
 	 *  it would prevent the user from erasing values they no longer required
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
 	 */
 	public function test__set_plugin_options() {
 
@@ -243,7 +243,7 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Test that the user values are correctly merged into the config
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
 	 */
 	public function test__set_plugin_option_values() {
 
@@ -315,7 +315,7 @@ class PluginTest extends WP_UnitTestCase {
 	 * Test update_option()
 	 * This is the WordPress function which adds the merged data to the options table
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
 	 */
 	public function test__update_option__get_option() {
 
@@ -379,7 +379,7 @@ class PluginTest extends WP_UnitTestCase {
 	 * as it us used to determine the include() name
 	 * via options.php
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
 	 */
 	public function test__render_form_element() {
 
@@ -401,7 +401,7 @@ class PluginTest extends WP_UnitTestCase {
 	 * Test whether multiple calls to set and get plugin options
 	 * result in duplicate keys
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
 	 */
 	public function test__set_plugin_options__get_plugin_options__multi() {
 
@@ -494,7 +494,7 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Test that the options page fields display the correct attributes
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/84
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
 	 */
 	public function todo__test__render_options_page_field() {
 		//
@@ -504,7 +504,7 @@ class PluginTest extends WP_UnitTestCase {
 	* Test that get_api_data() returns data,
 	*  and that this is stored and retrievable.
 	*
-	* @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Data:-Loading-from-an-API#data-is-stored-in-an-associative-array
+	* @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Data:-Loading-from-an-API#data-is-stored-in-an-associative-array
 	*/
 	public function test__get_api_data() {
 		global $wpdtrt_test_plugin;

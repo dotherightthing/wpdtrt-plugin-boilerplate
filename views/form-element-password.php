@@ -2,7 +2,7 @@
 /**
  * Template partial for Password fields.
  *
- * @package WPDTRT_Plugin
+ * @package WPDTRT_Plugin_Boilerplate
  * @version 1.0.0
  * @since   1.0.0
  * @uses    WordPress_Admin_Style

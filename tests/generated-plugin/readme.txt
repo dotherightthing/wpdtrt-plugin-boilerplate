@@ -10,11 +10,11 @@ Stable tag: 1.4.21
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Test plugin using the wpdtrt-plugin base classes.
+Test plugin using the wpdtrt-plugin-boilerplate base classes.
 
 == Description ==
 
-Test plugin using the wpdtrt-plugin base classes.
+Test plugin using the wpdtrt-plugin-boilerplate base classes.
 
 == Installation ==
 
@@ -40,7 +40,7 @@ Test plugin using the wpdtrt-plugin base classes.
 = 1.4.17 =
 
 = 1.4.16 =
-* Sync with wpdtrt-plugin version
+* Sync with wpdtrt-plugin-boilerplate version
 
 = 0.1.0 =
 * Initial version

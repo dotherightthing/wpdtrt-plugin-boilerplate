@@ -4,11 +4,11 @@
  *
  * Boilerplate to generate a widget, which is configured in WP Admin, and can be displayed in sidebars.
  *
- * @package   WPDTRT_Plugin
+ * @package   WPDTRT_Plugin_Boilerplate
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_21;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21;
 
 if ( ! class_exists( 'Widget' ) ) {
 
@@ -34,7 +34,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin\r_1_4_21\Widget {}
+		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21\Widget {}
 		 *
 		 *
 		 * @param     array $options Widget options.
@@ -179,7 +179,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			$name_str = $name;
 
 			// widget admin layout
-			$label_start = '<p class="wpdtrt-plugin--widget-field">';
+			$label_start = '<p class="wpdtrt-plugin-boilerplate--widget-field">';
 			$label_end   = '';
 			$field_start = '';
 			$field_end   = '</p>';
@@ -229,7 +229,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			 */
 			ob_start();
 
-			require $plugin->get_path() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php';
+			require $plugin->get_path() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/views/form-element-' . $type . '.php';
 
 			/**
 			 * Get current buffer contents and delete current output buffer
@@ -289,7 +289,7 @@ if ( ! class_exists( 'Widget' ) ) {
 				'path'                      => $plugin->get_path(),
 			));
 
-			// /template-parts/wpdtrt-plugin-name/content/foo.php
+			// /template-parts/wpdtrt-plugin-boilerplate-name/content/foo.php
 			$templates->get_template_part( 'content', $this->get_template_name() );
 
 			/**
@@ -378,7 +378,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			 */
 			echo $this->render_form_element( $instance, 'title', array(
 				'type'  => 'text',
-				'label' => 'Title', // esc_html__('Title', 'wpdtrt-plugin')
+				'label' => 'Title', // esc_html__('Title', 'wpdtrt-plugin-boilerplate')
 			));
 
 			foreach ( $instance_options as $name => $attributes ) {

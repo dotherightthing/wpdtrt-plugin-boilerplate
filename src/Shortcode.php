@@ -2,11 +2,11 @@
 /**
  * Plugin shortcode class.
  *
- * @package   WPDTRT_Plugin
+ * @package   WPDTRT_Plugin_Boilerplate
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_21;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21;
 
 if ( ! class_exists( 'Shortcode' ) ) {
 
@@ -35,7 +35,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin\r_1_4_21\Shortcode {}
+		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21\Shortcode {}
 		 *
 		 * @param     array $options Shortcode options.
 		 * @since     1.0.0
@@ -235,7 +235,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 				'content' => $content, // content between shortcode tags.
 			);
 
-			// /template-parts/wpdtrt-plugin-name/content/foo.php.
+			// /template-parts/wpdtrt-plugin-boilerplate-name/content/foo.php.
 			// $plugin_data is loaded in template.
 			$templates
 				->set_template_data( $template_data, 'context' )

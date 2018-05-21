@@ -9,9 +9,9 @@
  * @example usage from child plugin:
  *    gulp
  *    install | dev | dist
- *    --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+ *    --gulpfile ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js --cwd ./
  *
- * @package     WPDTRT_Plugin
+ * @package     WPDTRT_Plugin_Boilerplate
  * @version     1.4.21
  */
 
@@ -303,7 +303,7 @@ gulp.task("phpdoc_require_after", function () {
 /**
  * PHP Code Sniffer
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/89
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/89
  */
 gulp.task("phpcs", function () {
 
@@ -376,8 +376,8 @@ gulp.task("release_delete_pre", function () {
  *
  * See also "Command Line Configuration", above.
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/47
- * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/51
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51
  */
 gulp.task("add_dev_dependencies", function () {
 
@@ -389,7 +389,7 @@ gulp.task("add_dev_dependencies", function () {
         "Composer (PHP)"
     );
 
-    if (pluginName !== "wpdtrt-plugin") {
+    if (pluginName !== "wpdtrt-plugin-boilerplate") {
 
         // Read the require-dev list from the parent"s composer.json
         // The require function is relative to this gulpfile || node_modules
@@ -432,7 +432,7 @@ gulp.task("remove_dev_dependencies", function () {
 
     /**
     * Remove dev packages once we"ve used them
-    * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/47
+    * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
@@ -477,9 +477,9 @@ gulp.task("release_copy", function () {
         "./languages/**/*",
         "./node_modules/**/*",
         // Yarn environment symlink:
-        "!./node_modules/wpdtrt-plugin",
+        "!./node_modules/wpdtrt-plugin-boilerplate",
         // Yarn environment symlink contents:
-        "!./node_modules/wpdtrt-plugin/**/*",
+        "!./node_modules/wpdtrt-plugin-boilerplate/**/*",
         "./src/**/*",
         "./template-parts/**/*",
         "./vendor/**/*",
@@ -532,7 +532,7 @@ gulp.task("release", function (callback) {
 /**
  * Tasks
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/60
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/60
  */
 
 gulp.task("watch", function () {
@@ -555,19 +555,19 @@ gulp.task("bump_update", function () {
     taskheader(
         "Version",
         "Bump",
-        "Update wpdtrt-plugin"
+        "Update wpdtrt-plugin-boilerplate"
     );
 
-    // if wpdtrt-plugin is loaded as a dependency
-    if (pluginName !== "wpdtrt-plugin") {
-        // get the latest release of wpdtrt-plugin
+    // if wpdtrt-plugin-boilerplate is loaded as a dependency
+    if (pluginName !== "wpdtrt-plugin-boilerplate") {
+        // get the latest release of wpdtrt-plugin-boilerplate
         // this has to run before bump_replace
         // so that the correct version information is available
         //
         // return stream or promise for run-sequence
         return gulp.src(dummyFile, {read: false})
             .pipe(shell([
-                "composer update dotherightthing/wpdtrt-plugin --no-interaction"
+                "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction"
             ]));
     }
 
@@ -584,22 +584,22 @@ gulp.task("bump_replace", function () {
         "Replace version strings"
     );
 
-    // if run from wpdtrt-plugin:
+    // if run from wpdtrt-plugin-boilerplate:
     // gulp bump
     var root_input_path = "";
-    var wpdtrt_plugin_input_path = "";
+    var wpdtrt_plugin_boilerplate_input_path = "";
 
     // if run from a child plugin:
     // gulp bump
-    // --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
-    if (pluginName !== "wpdtrt-plugin") {
+    // --gulpfile ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js --cwd ./
+    if (pluginName !== "wpdtrt-plugin-boilerplate") {
         root_input_path = "";
-        wpdtrt_plugin_input_path = "vendor/dotherightthing/wpdtrt-plugin/";
+        wpdtrt_plugin_boilerplate_input_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
     }
 
     return wpdtrtPluginBump({
         root_input_path: root_input_path,
-        wpdtrt_plugin_input_path: wpdtrt_plugin_input_path
+        wpdtrt_plugin_boilerplate_input_path: wpdtrt_plugin_boilerplate_input_path
     });
 });
 
@@ -646,7 +646,7 @@ gulp.task("install", function (callback) {
         // install dependencies
         "yarn",
         "composer",
-        // add dev dependencies from wpdtrt-plugin
+        // add dev dependencies from wpdtrt-plugin-boilerplate
         "add_dev_dependencies",
         // compile CSS
         "css",
@@ -680,7 +680,7 @@ gulp.task("dev", function (callback) {
         // install dependencies
         "yarn",
         "composer",
-        // add dev dependencies from wpdtrt-plugin
+        // add dev dependencies from wpdtrt-plugin-boilerplate
         "add_dev_dependencies",
         // compile CSS
         "css",
@@ -716,7 +716,7 @@ gulp.task("dist", function (callback) {
         // install dependencies
         "yarn",
         "composer",
-        // add dev dependencies from wpdtrt-plugin
+        // add dev dependencies from wpdtrt-plugin-boilerplate
         "add_dev_dependencies",
         // compile CSS
         "css",

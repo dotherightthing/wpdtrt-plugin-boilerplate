@@ -18,7 +18,7 @@
  * Remove Options from {$wpdb->prefix}_options: Yes
  * Remove Tables from wpdb: Yes
  *
- * @package wpdtrt_plugin
+ * @package wpdtrt_plugin_boilerplate
  * @version 1.0.0
  * @since   1.0.0
  * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#file-organization
@@ -30,10 +30,10 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
-delete_option( 'wpdtrt_plugin' );
+delete_option( 'wpdtrt_plugin_boilerplate' );
 
 // for site options in Multisite
-delete_site_option( 'wpdtrt_plugin' );
+delete_site_option( 'wpdtrt_plugin_boilerplate' );
 
 // drop a custom database table
 //global $wpdb;

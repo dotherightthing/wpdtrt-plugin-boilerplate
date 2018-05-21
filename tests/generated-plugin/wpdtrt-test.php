@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:  DTRT Test
- * Plugin URI:   https://github.com/dotherightthing/wpdtrt-plugin
- * Description:  Test plugin using the wpdtrt-plugin base classes.
+ * Plugin URI:   https://github.com/dotherightthing/wpdtrt-plugin-boilerplate
+ * Description:  Test plugin using the wpdtrt-plugin-boilerplate base classes.
  * Version:      1.4.21
  * Author:       Dan Smith
  * Author URI:   https://profiles.wordpress.org/dotherightthingnz
@@ -77,9 +77,9 @@ if ( ! defined( 'WPDTRT_TEST_URL' ) ) {
  */
 
 /**
- * Determine the correct path, from wpdtrt-plugin to the PSR-4 autoloader
+ * Determine the correct path, from wpdtrt-plugin-boilerplate to the PSR-4 autoloader
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/51
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51
  */
 if ( ! defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
 	define( 'WPDTRT_PLUGIN_CHILD', true );
@@ -88,8 +88,8 @@ if ( ! defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
 /**
  * Determine the correct path, from wpdtrt-foobar to the PSR-4 autoloader
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/104
- * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/104
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
  */
 if ( defined( 'WPDTRT_TEST_TEST_DEPENDENCY' ) ) {
 	$project_root_path = realpath( __DIR__ . '/../../..' ) . '/';
@@ -138,7 +138,7 @@ register_deactivation_hook( dirname( __FILE__ ), 'wpdtrt_test_helper_deactivate'
  * Register functions to be run when the plugin is activated.
  *
  * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
- * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/128
+ * @todo https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128
  * @see See also Plugin::helper_flush_rewrite_rules()
  */
 function wpdtrt_test_helper_activate() {
@@ -150,7 +150,7 @@ function wpdtrt_test_helper_activate() {
  * (WordPress 2.0+)
  *
  * @see https://codex.wordpress.org/Function_Reference/register_deactivation_hook
- * @todo https://github.com/dotherightthing/wpdtrt-plugin/issues/128
+ * @todo https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128
  * @see See also Plugin::helper_flush_rewrite_rules()
  */
 function wpdtrt_test_helper_deactivate() {
@@ -177,21 +177,21 @@ function wpdtrt_test_plugin_init() {
 	/**
 	 * Global options
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-global-options Options: Adding global options
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-global-options Options: Adding global options
 	 */
 	$plugin_options = array();
 
 	/**
 	 * Shortcode or Widget options
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-shortcode-or-widget-options Options: Adding shortcode or widget options
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-shortcode-or-widget-options Options: Adding shortcode or widget options
 	 */
 	$instance_options = array();
 
 	/**
 	 * Plugin dependencies
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies Options: Adding WordPress plugin dependencies
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies Options: Adding WordPress plugin dependencies
 	 */
 	$plugin_dependencies = array();
 
@@ -219,7 +219,7 @@ function wpdtrt_test_plugin_init() {
 	/**
 	 * Demo shortcode
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Settings-page:-Adding-a-demo-shortcode Settings page: Adding a demo shortcode
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Settings-page:-Adding-a-demo-shortcode Settings page: Adding a demo shortcode
 	 */
 	$demo_shortcode_params = array();
 

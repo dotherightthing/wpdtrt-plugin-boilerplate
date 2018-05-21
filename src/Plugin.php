@@ -2,12 +2,12 @@
 /**
  * Plugin class.
  *
- * @package   WPDTRT_Plugin
+ * @package   WPDTRT_Plugin_Boilerplate
  * @since     1.0.0
  * @version   1.0.1
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_21;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
@@ -39,7 +39,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Initialise the object's properties when it is instantiated.
 		 * This is a protected method as every plugin uses a sub class:
-		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin\r_1_4_21\Plugin {...}
+		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21\Plugin {...}
 		 *
 		 * A plugin-specific instance of this class is created on init:
 		 * add_action( 'init', '<%= nameSafe %>_init', 0 );
@@ -146,7 +146,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * This function is hooked into `tgmpa_register`,
 		 * which is fired on the WP `init` action on priority 10.
 		 *
-		 * @version     2.6.1 for WPDTRT_Plugin
+		 * @version     2.6.1 for WPDTRT_Plugin_Boilerplate
 		 * @author      Thomas Griffin, Gary Jones, Juliette Reinders Folmer
 		 * @copyright   Copyright (c) 2011, Thomas Griffin
 		 * @license     http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
@@ -873,7 +873,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @return boolean $flushed Whether the rules were flushed or not
 		 * @since 1.4.16
 		 * @see https://carlalexander.ca/wordpress-adventurous-rewrite-api/ - "How do call flush_rewrite_rules?"
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/128
+		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128
 		 */
 		public function helper_flush_rewrite_rules( $force ) {
 
@@ -979,10 +979,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		public function helper_options_saved() {
 			$helper_options_saved = false;
 
-			if ( isset( $_POST['wpdtrt_plugin_form_submitted'] ) ) {
+			if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) {
 
 				// check that the form submission was legitimate.
-				$hidden_field = esc_html( $_POST['wpdtrt_plugin_form_submitted'] );
+				$hidden_field = esc_html( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] );
 
 				if ( 'Y' === $hidden_field ) {
 					$helper_options_saved = true;
@@ -1093,7 +1093,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @see http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict
 		 * @see https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug
 		 * @see https://kellenmace.com/edit-slug-button-missing-in-wordpress/
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/44 - Permalink Edit button missing
+		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44 - Permalink Edit button missing
 		 */
 		public function render_cpt_permalink_placeholders( $permalink, $post, $leavename ) {
 
@@ -1279,7 +1279,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$attach_to_footer = true;
 
 			wp_enqueue_script( $this->get_prefix() . '_backend',
-				$this->get_url() . 'vendor/dotherightthing/wpdtrt-plugin/js/backend.js',
+				$this->get_url() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/js/backend.js',
 				array(
 					// load these registered dependencies first.
 					'jquery',
@@ -1295,7 +1295,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$force_refresh = isset( $plugin_data_options['force_refresh'] ) ? $plugin_data_options['force_refresh'] : false;
 
 			wp_localize_script( $this->get_prefix() . '_backend',
-				'wpdtrt_plugin_config',
+				'wpdtrt_plugin_boilerplate_config',
 				array(
 					'prefix'           => $this->get_prefix(),
 					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
@@ -1344,7 +1344,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Display a link to the wpdtrt-plugin library
+		 * Display a link to the wpdtrt-plugin-boilerplate library
 		 *
 		 * @param array $links Links.
 		 * @return array $links
@@ -1352,7 +1352,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 		public function render_library_link( $links ) {
 
-			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin/releases/tag/' . self::WPDTRT_PLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPDTRT_PLUGIN_VERSION . '</a>';
+			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases/tag/' . self::WPDTRT_PLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPDTRT_PLUGIN_VERSION . '</a>';
 
 			array_push( $links, $library_link );
 
@@ -1433,7 +1433,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			 * includng $this
 			 * $plugin_options are retrieved afresh inside the template
 			 */
-			require_once $this->get_path() . 'vendor/dotherightthing/wpdtrt-plugin/views/options.php';
+			require_once $this->get_path() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/views/options.php';
 		}
 
 		/**
@@ -1493,7 +1493,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			 */
 			ob_start();
 
-			require $this->get_path() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php';
+			require $this->get_path() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/views/form-element-' . $type . '.php';
 
 			/**
 			 * Get current buffer contents and delete current output buffer.
@@ -1527,7 +1527,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 			if ( 'settings_page_' . $this->get_slug() === $screen->id ) :
 
-				if ( isset( $_POST['wpdtrt_plugin_form_submitted'] ) ) :
+				if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) :
 			?>
 					<div class="notice notice-success is-dismissible">
 						<p>

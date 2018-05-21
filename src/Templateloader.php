@@ -2,12 +2,12 @@
 /**
  * Plugin template loader class.
  *
- * @package   WPDTRT_Plugin
+ * @package   WPDTRT_Plugin_Boilerplate
  * @version   1.0.0
  * @since     0.6.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_21;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21;
 
 if ( ! class_exists( 'TemplateLoader' ) ) {
 
@@ -31,7 +31,7 @@ if ( ! class_exists( 'TemplateLoader' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin\r_1_4_21\TemplateLoader {}
+		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21\TemplateLoader {}
 		 *
 		 * @param     array $options Plugin options.
 		 * @since     1.0.0

@@ -1,13 +1,13 @@
 //
 // SCSS silent @extends (Helpers)
 //
-// @package     WPDTRT_Plugin
+// @package     WPDTRT_Plugin_Boilerplate
 // @since       1.0.0
 //
 
 // ex twentysixteen/style.css
-%wpdtrt-plugin--screen-reader-text,
-.wpdtrt-plugin-screen-reader-text {
+%wpdtrt-plugin-boilerplate--screen-reader-text,
+.wpdtrt-plugin-boilerplate-screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);
   height: 1px;
   overflow: hidden;
@@ -16,7 +16,7 @@
   word-wrap: normal !important;
 }
 
-%wpdtrt-plugin--clear,
+%wpdtrt-plugin-boilerplate--clear,
 .clear {
 	&::after {
 	    content: "";
@@ -25,20 +25,20 @@
 	}
 }
 
-%wpdtrt-plugin--fieldset-reset {
+%wpdtrt-plugin-boilerplate--fieldset-reset {
   padding: 0;
   border: 0;
   margin: 0;
 }
 
-%wpdtrt-plugin--list-reset,
+%wpdtrt-plugin-boilerplate--list-reset,
 .list-reset {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-%wpdtrt-plugin--text-sharpen,
+%wpdtrt-plugin-boilerplate--text-sharpen,
 .text-sharpen {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -47,7 +47,7 @@
 // embedresponsively.com
 // scales iframe height proportionally
 
-%wpdtrt-plugin--embedresponsively {
+%wpdtrt-plugin-boilerplate--embedresponsively {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
@@ -64,13 +64,13 @@
 }
 
 // add a divider after the last attachment field added by a plugin
-%wpdtrt-plugin--last-attachment-field-divider {
+%wpdtrt-plugin-boilerplate--last-attachment-field-divider {
   padding-bottom: 5px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 15px;
 }
 
-%wpdtrt-plugin--input-hint-text {
+%wpdtrt-plugin-boilerplate--input-hint-text {
   display: block;
   font-size: 13px;
   font-style: normal;

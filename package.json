@@ -1,7 +1,7 @@
 {
-  "name": "wpdtrt-plugin",
+  "name": "wpdtrt-plugin-boilerplate",
   "version": "1.4.21",
-  "description": "Classes providing boilerplate functionality for WordPress plugins, including dependent widgets and shortcodes.",
+  "description": "Boilerplate for WordPress plugin development.",
   "main": "index.php",
   "person": {
     "name": "Dan Smith",
@@ -32,13 +32,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "git@github.com:dotherightthing/wpdtrt-plugin.git",
+  "repository": "git@github.com:dotherightthing/wpdtrt-plugin-boilerplate.git",
   "browserslist": [
     "last 2 versions",
     "ie >= 11"
   ],
   "license": "ISC",
-  "homepage": "https://github.com/dotherightthing/wpdtrt-plugin",
-  "srcDir": "/Volumes/DanBackup/Websites/wpdtrt-plugin",
+  "homepage": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate",
+  "srcDir": "/Volumes/DanBackup/Websites/wpdtrt-plugin-boilerplate",
   "author": "Dan Smith <dev@dotherightthing.co.nz>"
 }

@@ -2,11 +2,11 @@
 /**
  * Plugin taxonomy class.
  *
- * @package   WPDTRT_Plugin
+ * @package   WPDTRT_Plugin_Boilerplate
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_21;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21;
 
 if ( ! class_exists( 'Taxonomy' ) ) {
 
@@ -30,7 +30,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin\r_1_4_21\Taxonomy {}
+		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_21\Taxonomy {}
 		 *
 		 * @param     array $options Shortcode options.
 		 * @since     1.0.0
@@ -348,7 +348,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @version     1.0.0
 		 * @see         https://developer.wordpress.org/reference/?
 		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
-		 * @todo        https://github.com/dotherightthing/wpdtrt-plugin/issues/42
+		 * @todo        https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/42
 		 */
 		public function options_columns_sortable( $sortable ) {
 			$taxonomy_options = $this->get_options();
@@ -424,7 +424,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			$classname   = '';
 
 			if ( isset( $term_id ) ) {
-				$label_start = '<tr class="form-field term-group-wrap wpdtrt-plugin--taxonomy-form-field"><th scope="row">';
+				$label_start = '<tr class="form-field term-group-wrap wpdtrt-plugin-boilerplate--taxonomy-form-field"><th scope="row">';
 				$label_end   = '</th>';
 				$field_start = '<td>';
 				$field_end   = '</td></tr>';
@@ -454,7 +454,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			 */
 			ob_start();
 
-			require $plugin->get_path() . 'vendor/dotherightthing/wpdtrt-plugin/views/form-element-' . $type . '.php';
+			require $plugin->get_path() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/views/form-element-' . $type . '.php';
 
 			/**
 			 * Get current buffer contents and delete current output buffer.
@@ -762,7 +762,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @see http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict
 		 * @see https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug
 		 * @see https://kellenmace.com/edit-slug-button-missing-in-wordpress/
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/44 - Permalink Edit button missing
+		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44 - Permalink Edit button missing
 		 * @todo make this less generic as this class is instantiated for EACH taxonomy
 		 */
 		public function replace_taxonomy_in_cpt_permalinks( $permalink, $post, $leavename ) {

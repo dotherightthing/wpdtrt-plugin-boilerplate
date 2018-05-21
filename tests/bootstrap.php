@@ -20,7 +20,7 @@ require_once $_tests_dir . '/includes/functions.php';
 
 /**
  * Manually load the plugin being tested, and any dependencies.
- * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
  */
 function _manually_load_plugin() {
 	require 'generated-plugin/wpdtrt-test.php';
