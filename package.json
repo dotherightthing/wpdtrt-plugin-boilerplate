@@ -14,7 +14,7 @@
     "fancy-log": "^1.3.2",
     "gulp": "^3.9.1",
     "gulp-jsdoc3": "^2.0.0",
-    "gulp-jslint": "^1.0.10",
+    "gulp-jshint": "^2.1.0",
     "gulp-phpcs": "^2.1.0",
     "gulp-postcss": "^7.0.1",
     "gulp-print": "^5.0.0",
@@ -24,6 +24,8 @@
     "gulp-wpdtrt-plugin-bump": "https://github.com/dotherightthing/gulp-wpdtrt-plugin-bump",
     "gulp-zip": "^4.1.0",
     "include-media": "^1.4.9",
+    "jshint": "^2.9.5",
+    "jshint-stylish": "^2.2.1",
     "postcss-pxtorem": "^4.0.1",
     "run-sequence": "^2.2.1"
   },

@@ -4,59 +4,56 @@
  *
  * @example usage from parent plugin:
  *    gulp
- *    gulp dev
- *    gulp dist
- *    gulp install
+ *    install | dev | dist
  *
  * @example usage from child plugin:
- *    gulp --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
- *    gulp dev --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
- *    gulp dist --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
- *    gulp install --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+ *    gulp
+ *    install | dev | dist
+ *    --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
  *
  * @package     WPDTRT_Plugin
  * @version     1.4.17
  */
 
-/*jslint node:true*/
-
-"use strict";
+/*jshint node:true*/
+/*jshint node:true*/
 
 /**
  * ===== dependencies =====
  */
 
-var gulp             = require('gulp');
-var autoprefixer     = require('autoprefixer');
-var del              = require('del');
-var fs               = require('fs');
-var jsdoc            = require('gulp-jsdoc3');
-var jslint           = require('gulp-jslint');
-var log              = require('fancy-log');
-var phpcs            = require('gulp-phpcs');
-var postcss          = require('gulp-postcss');
-var print            = require('gulp-print').default;
-var pxtorem          = require('postcss-pxtorem');
-var runSequence      = require('run-sequence');
-var sass             = require('gulp-sass');
-var shell            = require('gulp-shell');
-var wpdtrtPluginBump = require('gulp-wpdtrt-plugin-bump');
-var zip              = require('gulp-zip');
+var gulp = require("gulp");
+var autoprefixer = require("autoprefixer");
+var del = require("del");
+var fs = require("fs");
+var jsdoc = require("gulp-jsdoc3");
+var jshint = require("gulp-jshint");
+var log = require("fancy-log");
+var phpcs = require("gulp-phpcs");
+var postcss = require("gulp-postcss");
+var print = require("gulp-print").default;
+var pxtorem = require("postcss-pxtorem");
+var runSequence = require("run-sequence");
+var sass = require("gulp-sass");
+var shell = require("gulp-shell");
+var stylish = require("jshint-stylish");
+var wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
+var zip = require("gulp-zip");
 
 /**
  * ===== paths =====
  */
 
 // pop() - remove the last element from the path array and return it
-var pluginName = process.cwd().split('/').pop();
-var cssDir    = 'css';
-var distDir   = pluginName;
-var dummyFile = 'README.md';
-var jsFiles   = [
-    './js/*.js',
-    'gulpfile.js'
+var pluginName = process.cwd().split("/").pop();
+var cssDir = "css";
+var distDir = pluginName;
+var dummyFile = "README.md";
+var jsFiles = [
+    "./js/*.js",
+    "gulpfile.js"
 ];
-var scssFiles = './scss/*.scss';
+var scssFiles = "./scss/*.scss";
 
 /**
  * ===== helpers =====
@@ -64,70 +61,79 @@ var scssFiles = './scss/*.scss';
 
 function taskheader(task_category, task_action, task_detail) {
 
-    log(' ');
-    log('========================================')
-    log(task_category + ':');
-    log('=> ' + task_action + ':');
-    log('-> ' + task_detail);
-    log('----------------------------------------')
-    log(' ');
+    "use strict";
+
+    log(" ");
+    log("========================================");
+    log(task_category + ":");
+    log("=> " + task_action + ": " + task_detail);
+    log("----------------------------------------");
+    log(" ");
 }
 
 /**
  * ===== tasks =====
  */
 
-gulp.task('yarn', function () {
+gulp.task("yarn", function () {
+
+    "use strict";
 
     taskheader(
-        'Dependencies',
-        'Install',
-        'Yarn (Node / ex-Bower)'
+        "Dependencies",
+        "Install",
+        "Yarn (Node / ex-Bower)"
     );
 
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            'yarn install --non-interactive'
+            "yarn install --non-interactive"
         ]));
 });
 
-gulp.task('yarn_dist', function () {
+gulp.task("yarn_dist", function () {
+
+    "use strict";
 
     taskheader(
-        'Dependencies',
-        'Uninstall dev dependencies',
-        'Yarn (Node / ex-Bower)'
+        "Dependencies",
+        "Uninstall dev dependencies",
+        "Yarn (Node / ex-Bower)"
     );
 
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            'yarn install --non-interactive --production'
+            "yarn install --non-interactive --production"
         ]));
 });
 
-gulp.task('composer', function () {
+gulp.task("composer", function () {
+
+    "use strict";
 
     taskheader(
-        'Dependencies',
-        'Install',
-        'Composer (PHP)'
+        "Dependencies",
+        "Install",
+        "Composer (PHP)"
     );
 
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            'composer install --prefer-dist --no-interaction'
+            "composer install --prefer-dist --no-interaction"
         ]));
 });
 
-gulp.task('css', function () {
+gulp.task("css", function () {
+
+    "use strict";
 
     taskheader(
-        'Assets',
-        'Compile',
-        'SCSS -> CSS'
+        "Assets",
+        "Compile",
+        "SCSS -> CSS"
     );
 
     var processors = [
@@ -138,21 +144,21 @@ gulp.task('css', function () {
             rootValue: 16,
             unitPrecision: 5,
             propList: [
-                'font',
-                'font-size',
-                'padding',
-                'padding-top',
-                'padding-right',
-                'padding-bottom',
-                'padding-left',
-                'margin',
-                'margin-top',
-                'margin-right',
-                'margin-bottom',
-                'margin-left',
-                'bottom',
-                'top',
-                'max-width'
+                "font",
+                "font-size",
+                "padding",
+                "padding-top",
+                "padding-right",
+                "padding-bottom",
+                "padding-left",
+                "margin",
+                "margin-top",
+                "margin-right",
+                "margin-bottom",
+                "margin-left",
+                "bottom",
+                "top",
+                "max-width"
             ],
             selectorBlackList: [],
             replace: false,
@@ -163,39 +169,38 @@ gulp.task('css', function () {
 
     // return stream or promise for run-sequence
     return gulp.src(scssFiles)
-        .pipe(sass({outputStyle: 'expanded'}))
+        .pipe(sass({outputStyle: "expanded"}))
         .pipe(postcss(processors))
         .pipe(gulp.dest(cssDir));
 });
 
-gulp.task('jslint', function () {
+gulp.task("jshint", function () {
+
+    "use strict";
 
     taskheader(
-        'QA',
-        'Lint',
-        'JS'
+        "QA",
+        "Lint",
+        "JS"
     );
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
-        .pipe(jslint({
-            node: true,
-            es6: true,
-            white: false, // true if the whitespace rules should be ignored.
-            nomen: true
-        }))
-        .pipe(jslint.reporter('stylish', {verbose: true}));
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('jsdoc', function () {
+gulp.task("jsdoc", function () {
+
+    "use strict";
 
     taskheader(
-        'Documentation',
-        'Generate',
-        'JS'
+        "Documentation",
+        "Generate",
+        "JS"
     );
 
-    var jsdocConfig = require('./jsdocConfig');
+    var jsdocConfig = require("./jsdocConfig");
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
@@ -203,34 +208,38 @@ gulp.task('jsdoc', function () {
         .pipe(jsdoc(jsdocConfig));
 });
 
-gulp.task('phpdoc_delete', function () {
+gulp.task("phpdoc_delete", function () {
+
+    "use strict";
 
     taskheader(
-        'Documentation',
-        'Delete',
-        'PHP'
+        "Documentation",
+        "Delete",
+        "PHP"
     );
 
     // return stream or promise for run-sequence
     return del([
-        'docs/phpdoc'
+        "docs/phpdoc"
     ]);
 });
 
-gulp.task('phpdoc_remove_before', function () {
+gulp.task("phpdoc_remove_before", function () {
+
+    "use strict";
 
     taskheader(
-        'Documentation',
-        'Uninstall',
-        'Problematic packages'
+        "Documentation",
+        "Uninstall",
+        "Problematic packages"
     );
 
-    // Read the extra data from the parent's composer.json
+    // Read the extra data from the parent"s composer.json
     // The require function is relative to this gulpfile || node_modules
     // @see https://stackoverflow.com/a/23643087/6850747
-    var composer_json = require('./composer.json'),
-        phpdoc_remove_before = composer_json.extra[0]['require-after-phpdoc'],
-        phpdoc_remove_before_no_version = phpdoc_remove_before.split(':')[0];
+    var composer_json = require("./composer.json");
+    var phpdoc_remove_before = composer_json.extra[0]["require-after-phpdoc"];
+    var phpdoc_remove_before_no_version = phpdoc_remove_before.split(":")[0];
 
     // return stream or promise for run-sequence
     // note: src files are not used,
@@ -240,16 +249,18 @@ gulp.task('phpdoc_remove_before', function () {
         .pipe(shell([
             // install plugin which generates Fatal Error (#12)
             // if previously installed via package.json
-            'composer remove ' + phpdoc_remove_before_no_version
+            "composer remove " + phpdoc_remove_before_no_version
         ]));
 });
 
-gulp.task('phpdoc_doc', function () {
+gulp.task("phpdoc_doc", function () {
+
+    "use strict";
 
     taskheader(
-        'Documentation',
-        'Generate',
-        'PHP'
+        "Documentation",
+        "Generate",
+        "PHP"
     );
 
     // return stream or promise for run-sequence
@@ -258,23 +269,25 @@ gulp.task('phpdoc_doc', function () {
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            'vendor/bin/phpdoc -d . -t ./docs/phpdoc'
+            "vendor/bin/phpdoc -d . -t ./docs/phpdoc"
         ]));
 });
 
-gulp.task('phpdoc_require_after', function () {
+gulp.task("phpdoc_require_after", function () {
+
+    "use strict";
 
     taskheader(
-        'Documentation',
-        'Re-install',
-        'Problematic packages'
+        "Documentation",
+        "Re-install",
+        "Problematic packages"
     );
 
-    // Read the extra data from the parent's composer.json
+    // Read the extra data from the parent"s composer.json
     // The require function is relative to this gulpfile || node_modules
     // @see https://stackoverflow.com/a/23643087/6850747
-    var composer_json = require('./composer.json'),
-        phpdoc_require_after = composer_json.extra[0]['require-after-phpdoc'];
+    var composer_json = require("./composer.json");
+    var phpdoc_require_after = composer_json.extra[0]["require-after-phpdoc"];
 
     // return stream or promise for run-sequence
     // note: src files are not used,
@@ -284,7 +297,7 @@ gulp.task('phpdoc_require_after', function () {
         .pipe(shell([
             // install plugin which generates Fatal Error (#12)
             // if previously installed via package.json
-            'composer require ' + phpdoc_require_after
+            "composer require " + phpdoc_require_after
         ]));
 });
 
@@ -293,83 +306,98 @@ gulp.task('phpdoc_require_after', function () {
  *
  * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/89
  */
-gulp.task('phpcs', function () {
+gulp.task("phpcs", function () {
+
+    "use strict";
 
     taskheader(
-        'QA',
-        'Lint',
-        'PHP'
+        "QA",
+        "Lint",
+        "PHP"
     );
 
-    return gulp.src(['**/*.php', '!docs/**/*.php', '!node_modules/**/*.php', '!vendor/**/*.php'])
+    return gulp.src([
+        "**/*.php",
+        "!docs/**/*.php",
+        "!node_modules/**/*.php",
+        "!vendor/**/*.php"
+    ])
         // Validate files using PHP Code Sniffer
         .pipe(phpcs({
-            bin: 'vendor/bin/phpcs',
-            standard: 'WordPress-VIP', // 'PSR2'
+            bin: "vendor/bin/phpcs",
+            standard: "WordPress-VIP", // "PSR2"
             warningSeverity: 0
         }))
         // Log all problems that were found
-        .pipe(phpcs.reporter('log'));
+        .pipe(phpcs.reporter("log"));
 });
 
-gulp.task('phpunit', function () {
+gulp.task("phpunit", function () {
+
+    "use strict";
 
     taskheader(
-        'QA',
-        'Test',
-        'PHP'
+        "QA",
+        "Test",
+        "PHP"
     );
 
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            'phpunit'
+            "phpunit"
         ]));
 });
 
-gulp.task('release_delete_pre', function () {
+gulp.task("release_delete_pre", function () {
+
+    "use strict";
 
     taskheader(
-        'Release',
-        'Delete',
-        'Previous release'
+        "Release",
+        "Delete",
+        "Previous release"
     );
 
     // return stream or promise for run-sequence
     return del([
-        'release.zip'
+        "release.zip"
     ]);
 });
 
 /**
  * The parent plugin has various dev dependencies
  * which need to be made available to the child plugin for install tasks.
- * Composer projects only install dev dependencies listed in their own require-dev,
- * so we copy in the parent dev dependencies so that these are available to the child too.
+ * Composer projects only install dev dependencies
+ * listed in their own require-dev,
+ * so we copy in the parent dev dependencies
+ * so that these are available to the child too.
  * This approach allows us to easily remove all dev dependencies,
  * before zipping project files,
  * by re-running the composer install with the --no-dev flag.
  *
- * See also 'Command Line Configuration', above.
+ * See also "Command Line Configuration", above.
  *
  * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/47
  * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/51
  */
-gulp.task('add_dev_dependencies', function () {
+gulp.task("add_dev_dependencies", function () {
+
+    "use strict";
 
     taskheader(
-        'Dependencies',
-        'Install dev dependencies',
-        'Composer (PHP)'
+        "Dependencies",
+        "Install dev dependencies",
+        "Composer (PHP)"
     );
 
-    if (pluginName !== 'wpdtrt-plugin') {
+    if (pluginName !== "wpdtrt-plugin") {
 
-        // Read the require-dev list from the parent's composer.json
+        // Read the require-dev list from the parent"s composer.json
         // The require function is relative to this gulpfile || node_modules
         // @see https://stackoverflow.com/a/23643087/6850747
-        var composer_json = require('./composer.json'),
-            dev_packages = composer_json['require-dev'],
-            dev_packages_str = '';
+        var composer_json = require("./composer.json");
+        var dev_packages = composer_json["require-dev"];
+        var dev_packages_str = "";
 
         // convert the require-dev list into a space-separated string
         // foo/bar:1.2.3
@@ -379,44 +407,48 @@ gulp.task('add_dev_dependencies', function () {
         Object.keys(dev_packages).forEach(function (element) {
             // element is the name of the key.
             // key is just a numerical value for the array
-            dev_packages_str += (' ' + element + ':' + dev_packages[element]);
+            dev_packages_str += (" " + element + ":" + dev_packages[element]);
         });
 
-        // add each dependency from the parent's require-dev
-        // to the child's require-dev
+        // add each dependency from the parent"s require-dev
+        // to the child"s require-dev
         return gulp.src(dummyFile, {read: false})
             .pipe(shell([
-                'composer require' + dev_packages_str + ' --dev'
+                "composer require" + dev_packages_str + " --dev"
             ]));
     }
 
     return;
 });
 
-gulp.task('remove_dev_dependencies', function () {
+gulp.task("remove_dev_dependencies", function () {
+
+    "use strict";
 
     taskheader(
-        'Dependencies',
-        'Uninstall dev dependencies',
-        'Composer (PHP)'
+        "Dependencies",
+        "Uninstall dev dependencies",
+        "Composer (PHP)"
     );
 
     /**
-    * Remove dev packages once we've used them
+    * Remove dev packages once we"ve used them
     * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/47
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            'composer install --prefer-dist --no-interaction --no-dev'
+            "composer install --prefer-dist --no-interaction --no-dev"
         ]));
 });
 
-gulp.task('release_delete_post', function () {
+gulp.task("release_delete_post", function () {
+
+    "use strict";
 
     taskheader(
-        'Release',
-        'Delete',
-        'Temporary folder'
+        "Release",
+        "Delete",
+        "Temporary folder"
     );
 
     // return stream or promise for run-sequence
@@ -425,67 +457,75 @@ gulp.task('release_delete_post', function () {
     ]);
 });
 
-gulp.task('release_copy', function () {
+gulp.task("release_copy", function () {
+
+    "use strict";
 
     taskheader(
-        'Release',
-        'Copy files',
-        'To temporary folder'
+        "Release",
+        "Copy files",
+        "To temporary folder"
     );
 
     // @see http://www.globtester.com/
     var releaseFiles = [
-        './config/**/*',
-        './css/**/*',
-        './docs/**/*',
-        './images/**/*',
-        '!./images/**/*.pxm',
-        './js/**/*',
-        './languages/**/*',
-        './node_modules/**/*',
-        '!./node_modules/wpdtrt-plugin', // Yarn environment symlink
-        '!./node_modules/wpdtrt-plugin/**/*', // Yarn environment symlink contents
-        './src/**/*',
-        './template-parts/**/*',
-        './vendor/**/*',
-        './views/**/*',
-        './index.php',
-        './readme.txt',
-        './uninstall.php',
-        './' + pluginName + '.php'
+        "./config/**/*",
+        "./css/**/*",
+        "./docs/**/*",
+        "./images/**/*",
+        "!./images/**/*.pxm",
+        "./js/**/*",
+        "./languages/**/*",
+        "./node_modules/**/*",
+        // Yarn environment symlink:
+        "!./node_modules/wpdtrt-plugin",
+        // Yarn environment symlink contents:
+        "!./node_modules/wpdtrt-plugin/**/*",
+        "./src/**/*",
+        "./template-parts/**/*",
+        "./vendor/**/*",
+        "./views/**/*",
+        "./index.php",
+        "./readme.txt",
+        "./uninstall.php",
+        "./" + pluginName + ".php"
     ];
 
     // return stream or promise for run-sequence
     // https://stackoverflow.com/a/32188928/6850747
-    return gulp.src(releaseFiles, {base: '.'})
+    return gulp.src(releaseFiles, {base: "."})
         .pipe(print())
         .pipe(gulp.dest(distDir));
 });
 
-gulp.task('release_zip', function () {
+gulp.task("release_zip", function () {
+
+    "use strict";
 
     taskheader(
-        'Release',
-        'Generate',
-        'ZIP file'
+        "Release",
+        "Generate",
+        "ZIP file"
     );
 
     // return stream or promise for run-sequence
     // https://stackoverflow.com/a/32188928/6850747
     return gulp.src([
-        './' + distDir + '/**/*'
-    ], {base: '.'})
-        .pipe(zip('release.zip'))
-        .pipe(gulp.dest('./'));
+        "./" + distDir + "/**/*"
+    ], {base: "."})
+        .pipe(zip("release.zip"))
+        .pipe(gulp.dest("./"));
 });
 
-gulp.task('release', function (callback) {
+gulp.task("release", function (callback) {
+
+    "use strict";
 
     runSequence(
-        'release_delete_pre',
-        'release_copy',
-        'release_zip',
-        'release_delete_post',
+        "release_delete_pre",
+        "release_copy",
+        "release_zip",
+        "release_delete_post",
         callback
     );
 });
@@ -496,27 +536,31 @@ gulp.task('release', function (callback) {
  * @see https://github.com/dotherightthing/wpdtrt-plugin/issues/60
  */
 
-gulp.task('watch', function () {
+gulp.task("watch", function () {
+
+    "use strict";
 
     taskheader(
-        'Assets',
-        'Compile',
-        'Watch SCSS'
+        "Assets",
+        "Compile",
+        "Watch SCSS"
     );
 
-    gulp.watch(scssFiles, ['css']);
+    gulp.watch(scssFiles, ["css"]);
 });
 
-gulp.task('bump_update', function () {
+gulp.task("bump_update", function () {
+
+    "use strict";
 
     taskheader(
-        'Version',
-        'Bump',
-        'Update wpdtrt-plugin'
+        "Version",
+        "Bump",
+        "Update wpdtrt-plugin"
     );
 
     // if wpdtrt-plugin is loaded as a dependency
-    if (fs.exists('../../../package.json')) {
+    if (fs.exists("../../../package.json")) {
         // get the latest release of wpdtrt-plugin
         // this has to run before bump_replace
         // so that the correct version information is available
@@ -524,31 +568,34 @@ gulp.task('bump_update', function () {
         // return stream or promise for run-sequence
         return gulp.src(dummyFile, {read: false})
             .pipe(shell([
-                'composer update dotherightthing/wpdtrt-plugin --no-interaction'
+                "composer update dotherightthing/wpdtrt-plugin --no-interaction"
             ]));
     }
 
     return;
 });
 
-gulp.task('bump_replace', function () {
+gulp.task("bump_replace", function () {
+
+    "use strict";
 
     taskheader(
-        'Version',
-        'Bump',
-        'Replace version strings'
+        "Version",
+        "Bump",
+        "Replace version strings"
     );
 
     // if run from wpdtrt-plugin:
     // gulp bump
-    var root_input_path = '',
-        wpdtrt_plugin_input_path = '';
+    var root_input_path = "";
+    var wpdtrt_plugin_input_path = "";
 
     // if run from a child plugin:
-    // gulp bump --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
-    if (fs.exists('../../../package.json')) {
-        root_input_path = '';
-        wpdtrt_plugin_input_path = 'vendor/dotherightthing/wpdtrt-plugin/';
+    // gulp bump
+    // --gulpfile ./vendor/dotherightthing/wpdtrt-plugin/gulpfile.js --cwd ./
+    if (fs.exists("../../../package.json")) {
+        root_input_path = "";
+        wpdtrt_plugin_input_path = "vendor/dotherightthing/wpdtrt-plugin/";
     }
 
     return wpdtrtPluginBump({
@@ -557,135 +604,145 @@ gulp.task('bump_replace', function () {
     });
 });
 
-gulp.task('bump_update_autoload', function () {
+gulp.task("bump_update_autoload", function () {
+
+    "use strict";
 
     taskheader(
-        'Version',
-        'Generate',
-        'List of classes to be autoloaded'
+        "Version",
+        "Generate",
+        "List of classes to be autoloaded"
     );
 
     // regenerate autoload files
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            'composer dump-autoload --no-interaction'
+            "composer dump-autoload --no-interaction"
         ]));
 });
 
-gulp.task('bump', function (callback) {
+gulp.task("bump", function (callback) {
+
+    "use strict";
 
     runSequence(
-        'bump_update',
-        'bump_replace',
-        'bump_update_autoload',
+        "bump_update",
+        "bump_replace",
+        "bump_update_autoload",
         callback
     );
 });
 
-gulp.task('install', function (callback) {
+gulp.task("install", function (callback) {
+
+    "use strict";
 
     taskheader(
-        'Installation',
-        'Install',
-        ''
+        "Installation",
+        "Install",
+        ""
     );
 
     runSequence(
         // install dependencies
-        'yarn',
-        'composer',
+        "yarn",
+        "composer",
         // add dev dependencies from wpdtrt-plugin
-        'add_dev_dependencies',
+        "add_dev_dependencies",
         // compile CSS
-        'css',
+        "css",
         // lint code for errors
-        'jslint',
-        // 'phpcs',
+        "jshint",
+        // "phpcs",
         // generate documentation
-        'jsdoc',
-        'phpdoc_doc',
-        'phpdoc_require_after',
+        "jsdoc",
+        "phpdoc_doc",
+        "phpdoc_require_after",
         // run unit tests in a WordPress environment
-        'phpunit',
+        "phpunit",
         // bump version
-        'bump_replace'
+        "bump_replace"
     );
 
     callback();
 });
 
-gulp.task('dev', function (callback) {
+gulp.task("dev", function (callback) {
+
+    "use strict";
 
     taskheader(
-        'Installation',
-        'Dev Install',
-        'Re-install dev dependencies'
+        "Installation",
+        "Dev Install",
+        "Re-install dev dependencies"
     );
 
     runSequence(
         // install dependencies
-        'yarn',
-        'composer',
+        "yarn",
+        "composer",
         // add dev dependencies from wpdtrt-plugin
-        'add_dev_dependencies',
+        "add_dev_dependencies",
         // compile CSS
-        'css',
+        "css",
         // lint code for errors
-        'jslint',
-        // 'phpcs',
+        "jshint",
+        // "phpcs",
         // generate documentation
-        'jsdoc',
-        'phpdoc_delete',
-        'phpdoc_remove_before',
-        'phpdoc_doc',
-        'phpdoc_require_after',
+        "jsdoc",
+        "phpdoc_delete",
+        "phpdoc_remove_before",
+        "phpdoc_doc",
+        "phpdoc_require_after",
         // run unit tests in a WordPress environment
-        'phpunit',
+        "phpunit",
         // watch for CSS changes
-        'watch'
+        "watch"
     );
 
     callback();
 });
 
-gulp.task('dist', function (callback) {
+gulp.task("dist", function (callback) {
+
+    "use strict";
 
     taskheader(
-        'Installation',
-        'Dist Install',
-        'Package for release'
+        "Installation",
+        "Dist Install",
+        "Package for release"
     );
 
     runSequence(
         // install dependencies
-        'yarn',
-        'composer',
+        "yarn",
+        "composer",
         // add dev dependencies from wpdtrt-plugin
-        'add_dev_dependencies',
+        "add_dev_dependencies",
         // compile CSS
-        'css',
+        "css",
         // lint code for errors
-        'jslint',
-        // 'phpcs',
+        "jshint",
+        // "phpcs",
         // generate documentation
-        'jsdoc',
-        'phpdoc_delete',
-        'phpdoc_remove_before',
-        'phpdoc_doc',
-        'phpdoc_require_after',
+        "jsdoc",
+        "phpdoc_delete",
+        "phpdoc_remove_before",
+        "phpdoc_doc",
+        "phpdoc_require_after",
         // run unit tests in a WordPress environment
-        'phpunit',
+        "phpunit",
         // bump version
-        'bump_replace',
+        "bump_replace",
         // package release
-        'remove_dev_dependencies',
-        'yarn_dist',
-        'release'
+        "remove_dev_dependencies",
+        "yarn_dist",
+        "release"
     );
 
     callback();
 });
 
-gulp.task('default', [
-    'install'
+gulp.task("default", [
+    "install"
 ]);
