@@ -177,52 +177,70 @@ function wpdtrt_test_plugin_init() {
 	/**
 	 * Global options
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-global-options
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-global-options Options: Adding global options
 	 */
 	$plugin_options = array();
 
 	/**
 	 * Shortcode or Widget options
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-shortcode-or-widget-options
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-shortcode-or-widget-options Options: Adding shortcode or widget options
 	 */
 	$instance_options = array();
 
 	/**
-	 * Plugin configuration
+	 * Plugin dependencies
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Options:-Adding-WordPress-plugin-dependencies Options: Adding WordPress plugin dependencies
+	 */
+	$plugin_dependencies = array();
+
+	/**
+	 *  UI Messages
+	 */
+	$ui_messages = array(
+		'demo_data_description'       => __( 'This demo was generated from the following data', 'wpdtrt-test' ),
+		'demo_data_displayed_length'  => __( 'results displayed', 'wpdtrt-test' ),
+		'demo_data_length'            => __( 'results', 'wpdtrt-test' ),
+		'demo_data_title'             => __( 'Demo data', 'wpdtrt-test' ),
+		'demo_date_last_updated'      => __( 'Data last updated', 'wpdtrt-test' ),
+		'demo_sample_title'           => __( 'Demo sample', 'wpdtrt-test' ),
+		'demo_shortcode_title'        => __( 'Demo shortcode', 'wpdtrt-test' ),
+		'insufficient_permissions'    => __( 'Sorry, you do not have sufficient permissions to access this page.', 'wpdtrt-test' ),
+		'no_options_form_description' => __( 'There aren\'t currently any options.', 'wpdtrt-test' ),
+		'noscript_warning'            => __( 'Please enable JavaScript', 'wpdtrt-test' ),
+		'options_form_description'    => __( 'Please enter your preferences.', 'wpdtrt-test' ),
+		'options_form_submit'         => __( 'Save Changes', 'wpdtrt-test' ),
+		'options_form_title'          => __( 'General Settings', 'wpdtrt-test' ),
+		'loading'                     => __( 'Loading latest data...', 'wpdtrt-test' ),
+		'success'                     => __( 'settings successfully updated', 'wpdtrt-test' ),
+	);
+
+	/**
+	 * Demo shortcode
+	 *
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin/wiki/Settings-page:-Adding-a-demo-shortcode Settings page: Adding a demo shortcode
+	 */
+	$demo_shortcode_params = array();
+
+	/**
+	 * Plugin configuration
 	 */
 	$wpdtrt_test_plugin = new WPDTRT_Test_Plugin(
 		array(
-			'url'              => WPDTRT_TEST_URL,
-			'prefix'           => 'wpdtrt_test',
-			'slug'             => 'wpdtrt-test',
-			'menu_title'       => __( 'Test', 'wpdtrt-test' ),
-			'settings_title'   => __( 'Settings', 'wpdtrt-test' ),
-			'developer_prefix' => 'DTRT',
-			'path'             => WPDTRT_TEST_PATH,
-			'messages'         => array(
-				'loading'                     => __( 'Loading latest data...', 'wpdtrt-test' ),
-				'success'                     => __( 'settings successfully updated', 'wpdtrt-test' ),
-				'insufficient_permissions'    => __( 'Sorry, you do not have sufficient permissions to access this page.', 'wpdtrt-test' ),
-				'options_form_title'          => __( 'General Settings', 'wpdtrt-test' ),
-				'options_form_description'    => __( 'Please enter your preferences.', 'wpdtrt-test' ),
-				'no_options_form_description' => __( 'There aren\'t currently any options.', 'wpdtrt-test' ),
-				'options_form_submit'         => __( 'Save Changes', 'wpdtrt-test' ),
-				'noscript_warning'            => __( 'Please enable JavaScript', 'wpdtrt-test' ),
-				'demo_sample_title'           => __( 'Demo sample', 'wpdtrt-test' ),
-				'demo_data_title'             => __( 'Demo data', 'wpdtrt-test' ),
-				'demo_shortcode_title'        => __( 'Demo shortcode', 'wpdtrt-test' ),
-				'demo_data_description'       => __( 'This demo was generated from the following data', 'wpdtrt-test' ),
-				'demo_date_last_updated'      => __( 'Data last updated', 'wpdtrt-test' ),
-				'demo_data_length'            => __( 'results', 'wpdtrt-test' ),
-				'demo_data_displayed_length'  => __( 'results displayed', 'wpdtrt-test' ),
-			),
-			'plugin_options'   => $plugin_options,
-			'instance_options' => $instance_options,
-			'version'          => WPDTRT_TEST_VERSION,
+			'path'                  => WPDTRT_TEST_PATH,
+			'url'                   => WPDTRT_TEST_URL,
+			'version'               => WPDTRT_TEST_VERSION,
+			'prefix'                => 'wpdtrt_test',
+			'slug'                  => 'wpdtrt-test',
+			'menu_title'            => __( 'Test', 'wpdtrt-test' ),
+			'settings_title'        => __( 'Settings', 'wpdtrt-test' ),
+			'developer_prefix'      => 'DTRT',
+			'messages'              => $ui_messages,
+			'plugin_options'        => $plugin_options,
+			'instance_options'      => $instance_options,
+			'plugin_dependencies'   => $plugin_dependencies,
+			'demo_shortcode_params' => $demo_shortcode_params,
 		)
 	);
 }
@@ -238,7 +256,9 @@ function wpdtrt_test_rewrite_init() {
 
 	global $wpdtrt_test_plugin;
 
-	$wpdtrt_test_rewrite = new WPDTRT_Test_Rewrite();
+	$wpdtrt_test_rewrite = new WPDTRT_Test_Rewrite(
+		array()
+	);
 }
 
 /**
