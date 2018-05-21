@@ -24,13 +24,14 @@ jQuery(document).ready(function ($) {
     var ajaxurl = config.ajaxurl;
     var $ajax_container_data;
     var $ajax_container_ui;
+    var abbr = 'wpdtrt-plugin-boilerplate';
     var data;
 
     if (config.refresh_api_data === "true") {
         $ajax_container_data =
-                $(".wpdtrt-plugin-boilerplate-ajax-response[data-format=\"data\"]");
+                $("." + abbr + "-ajax-response[data-format=\"data\"]");
         $ajax_container_ui =
-                $(".wpdtrt-plugin-boilerplate-ajax-response[data-format=\"ui\"]");
+                $("." + abbr + "-ajax-response[data-format=\"ui\"]");
 
         $ajax_container_data
             .empty()
