@@ -3,7 +3,7 @@
  * Plugin Name:  DTRT Test
  * Plugin URI:   https://github.com/dotherightthing/wpdtrt-plugin
  * Description:  Test plugin using the wpdtrt-plugin base classes.
- * Version:      1.4.17
+ * Version:      1.4.18
  * Author:       Dan Smith
  * Author URI:   https://profiles.wordpress.org/dotherightthingnz
  * License:      GPLv2 or later
@@ -43,7 +43,7 @@ if ( ! defined( 'WPDTRT_TEST_VERSION' ) ) {
 	 * @see $plugin_data = get_plugin_data( __FILE__ ); $plugin_version = $plugin_data['Version'];
 	 * @see https://wordpress.stackexchange.com/questions/18268/i-want-to-get-a-plugin-version-number-dynamically
 	 */
-	define( 'WPDTRT_TEST_VERSION', '1.4.17' );
+	define( 'WPDTRT_TEST_VERSION', '1.4.18' );
 }
 
 if ( ! defined( 'WPDTRT_TEST_PATH' ) ) {

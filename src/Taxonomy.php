@@ -6,7 +6,7 @@
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_17;
+namespace DoTheRightThing\WPDTRT_Plugin\r_1_4_18;
 
 if ( ! class_exists( 'Taxonomy' ) ) {
 
@@ -30,7 +30,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin\r_1_4_17\Taxonomy {}
+		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin\r_1_4_18\Taxonomy {}
 		 *
 		 * @param     array $options Shortcode options.
 		 * @since     1.0.0
