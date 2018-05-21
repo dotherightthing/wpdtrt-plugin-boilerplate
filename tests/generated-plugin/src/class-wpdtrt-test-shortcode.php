@@ -3,7 +3,7 @@
  * Shortcode sub class.
  *
  * @package WPDTRT_Test
- * @since   0.7.16
+ * @since   0.7.16 DTRT WordPress Plugin Boilerplate Generator
  * @version 1.0.0
  */
 
