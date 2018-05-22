@@ -6,7 +6,7 @@ Boilerplate for WordPress plugin development.
 
 ## Installation
 
-Please install and use via the [WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
+Please install and use via the [DTRT WordPress Plugin Boilerplate Generator](https://github.com/dotherightthing/generator-wp-plugin-boilerplate)
 
 ## Usage
 
