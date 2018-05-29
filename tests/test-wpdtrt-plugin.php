@@ -10,6 +10,24 @@
 class PluginTest extends WP_UnitTestCase {
 
 	/**
+	 * Compare two HTML fragments.
+	 *
+	 * @param string $expected Expected value
+	 * @param string $actual Actual value
+	 * @param string $error_message Message to show when strings don't match
+	 * @uses https://stackoverflow.com/a/26727310/6850747
+	 */
+	protected function assertEqualHtml( $expected, $actual, $error_message ) {
+		$from = [ '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s' ];
+		$to   = [ '>', '<', '\\1', '><' ];
+		$this->assertEquals(
+			preg_replace( $from, $to, $expected ),
+			preg_replace( $from, $to, $actual ),
+			$error_message
+		);
+	}
+
+	/**
 	 * SetUp.
 	 * Automatically called by PHPUnit before each test method is run.
 	 */
@@ -30,8 +48,40 @@ class PluginTest extends WP_UnitTestCase {
 
 		parent::tearDown();
 
+		wp_delete_post( $this->post_id_1, true );
+
 		// remove any previously saved options.
 		$wpdtrt_test_plugin->unset_options();
+	}
+
+	/**
+	 * Create post
+	 *
+	 * @param string $post_title Post title
+	 * @param string $post_date Post date
+	 * @param array $term_ids Taxonomy term IDs
+	 * @return number $post_id
+	 * @see https://developer.wordpress.org/reference/functions/wp_insert_post/
+	 * @see https://wordpress.stackexchange.com/questions/37163/proper-formatting-of-post-date-for-wp-insert-post
+	 * @see https://codex.wordpress.org/Function_Reference/wp_update_post
+	 */
+	public function create_post( $options ) {
+
+		$post_title   = null;
+		$post_date    = null;
+		$post_content = null;
+
+		extract( $options, EXTR_IF_EXISTS );
+
+		$post_id = $this->factory->post->create([
+			'post_title'   => $post_title,
+			'post_date'    => $post_date,
+			'post_content' => $post_content,
+			'post_type'    => 'post',
+			'post_status'  => 'publish',
+		]);
+
+		return $post_id;
 	}
 
 	/**
@@ -39,6 +89,12 @@ class PluginTest extends WP_UnitTestCase {
 	 */
 
 	public function mock_data() {
+
+		// Post (for testing manually entered, naked shortcode)
+		$this->post_id_1 = $this->create_post( array(
+			'post_title'   => 'DTRT Test shortcode test',
+			'post_content' => '[wpdtrt_test_shortcode]Text to hide[/wpdtrt_test_shortcode]',
+		));
 
 		$this->plugin_option_types = array(
 			'checkbox_input' => array(
@@ -557,6 +613,26 @@ class PluginTest extends WP_UnitTestCase {
 			'0.0.2',
 			$new_plugin_dependencies[0]['version'],
 			'Expected old plugin dependency to be replaced with new version'
+		);
+	}
+
+	/**
+	 * Test shortcode
+	 */
+	public function test_shortcode() {
+
+		$this->go_to(
+			get_post_permalink( $this->post_id_1 )
+		);
+
+		// https://stackoverflow.com/a/22270259/6850747
+		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_1 ) );
+
+		// default value is '' = unchecked = show
+		$this->assertEqualHtml(
+			'<span class="wpdtrt-test wpdtrt-test_show">Text to hide</span>',
+			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
+			'wpdtrt_text_shortcode does not wrap text'
 		);
 	}
 

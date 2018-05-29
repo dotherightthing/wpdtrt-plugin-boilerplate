@@ -179,14 +179,25 @@ function wpdtrt_test_plugin_init() {
 	 *
 	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-global-options Options: Adding global options
 	 */
-	$plugin_options = array();
+	$plugin_options = array(
+		'api_key' => array(
+			'type'  => 'password',
+			'label' => __( 'API Key', 'wpdtrt-test' ),
+			'size'  => 50,
+		),
+	);
 
 	/**
 	 * Shortcode or Widget options
 	 *
 	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-shortcode-or-widget-options Options: Adding shortcode or widget options
 	 */
-	$instance_options = array();
+	$instance_options = array(
+		'hide' => array(
+			'type'  => 'checkbox',
+			'label' => esc_html__( 'Hide?', 'wpdtrt-test' ),
+		),
+	);
 
 	/**
 	 * Plugin dependencies
@@ -221,7 +232,11 @@ function wpdtrt_test_plugin_init() {
 	 *
 	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Settings-page:-Adding-a-demo-shortcode Settings page: Adding a demo shortcode
 	 */
-	$demo_shortcode_params = array();
+	$demo_shortcode_params = array(
+		'name'   => 'wpdtrt_test_shortcode',
+		'hide'   => 1,
+		'number' => 1,
+	);
 
 	/**
 	 * Plugin configuration
@@ -277,7 +292,9 @@ function wpdtrt_test_shortcode_init() {
 			'name'                      => 'wpdtrt_test_shortcode',
 			'plugin'                    => $wpdtrt_test_plugin,
 			'template'                  => 'test',
-			'selected_instance_options' => array(),
+			'selected_instance_options' => array(
+				'hide',
+			),
 		)
 	);
 }
@@ -368,7 +385,9 @@ function wpdtrt_test_widget_init() {
 			'description'               => __( 'Widget description.', 'wpdtrt-test' ),
 			'plugin'                    => $wpdtrt_test_plugin,
 			'template'                  => 'test',
-			'selected_instance_options' => array(),
+			'selected_instance_options' => array(
+				'hide',
+			),
 		)
 	);
 
