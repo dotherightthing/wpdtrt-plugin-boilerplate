@@ -6,7 +6,7 @@
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_22;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_23;
 
 if ( ! class_exists( 'Taxonomy' ) ) {
 
@@ -30,7 +30,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_22\Taxonomy {}
+		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_23\Taxonomy {}
 		 *
 		 * @param     array $options Shortcode options.
 		 * @since     1.0.0
@@ -768,7 +768,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		public function replace_taxonomy_in_cpt_permalinks( $permalink, $post, $leavename ) {
 
 			// Get post.
-			$post_id = $post->ID;
+			$post_id          = $post->ID;
 			$placeholder_name = $this->get_name();
 
 			if ( strpos( $permalink, '%' . $placeholder_name . '%' ) === false ) {

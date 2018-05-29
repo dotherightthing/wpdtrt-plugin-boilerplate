@@ -3,7 +3,7 @@
  * PSR-4 Autoloader
  *
  * @package WPDTRT_Plugin_Boilerplate
- * @version 1.4.22
+ * @version 1.4.23
  * @see     http://phpenthusiast.com/blog/how-to-autoload-with-composer
  */
 
