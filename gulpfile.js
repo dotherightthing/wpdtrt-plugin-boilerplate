@@ -471,6 +471,7 @@ gulp.task("release_copy", function () {
         "./config/**/*",
         "./css/**/*",
         "./docs/**/*",
+        "./icons/**/*",
         "./images/**/*",
         "!./images/**/*.pxm",
         "./js/**/*",
