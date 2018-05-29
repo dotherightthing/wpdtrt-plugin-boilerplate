@@ -50,7 +50,6 @@ if ( ! class_exists( 'Widget' ) ) {
 			$plugin                    = null;
 			$template                  = null;
 			$selected_instance_options = null;
-			// $classname              = null;
 
 			// extract variables.
 			extract( $options, EXTR_IF_EXISTS );

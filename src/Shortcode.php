@@ -215,10 +215,10 @@ if ( ! class_exists( 'Shortcode' ) ) {
 			set_query_var( 'options', $template_options );
 
 			/**
-			 * Turn on output buffering.
-			 *  This stores the HTML template in the buffer
-			 *  so that it can be output into the content
-			 *  rather than at the top of the page.
+			 * Turn on output buffering
+			 * This stores the HTML template in the buffer
+			 * so that it can be output into the content
+			 * rather than at the top of the page.
 			 */
 			ob_start();
 
