@@ -9,7 +9,7 @@
 
 namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_23;
 
-if ( ! class_exists( 'TemplateLoader' ) ) {
+if ( ! class_exists( 'Templateloader' ) ) {
 
 	/**
 	 * Template loader sub class
@@ -23,7 +23,7 @@ if ( ! class_exists( 'TemplateLoader' ) ) {
 	 * @uses    https://github.com/wpexplorer/page-templater
 	 * @see     http://www.wpexplorer.com/wordpress-page-templates-plugin/
 	 */
-	class TemplateLoader extends \Gamajo_Template_Loader {
+	class Templateloader extends \Gamajo_Template_Loader {
 
 		/**
 		 * Pass options to Gamajo class
@@ -31,7 +31,7 @@ if ( ! class_exists( 'TemplateLoader' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_23\TemplateLoader {}
+		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_23\Templateloader {}
 		 *
 		 * @param     array $options Plugin options.
 		 * @since     1.0.0
