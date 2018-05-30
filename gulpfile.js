@@ -268,7 +268,7 @@ gulp.task("phpdoc_doc", function () {
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "vendor/bin/phpdoc -d . -t ./docs/phpdoc"
+            "vendor/bin/phpdoc --config phpdoc.dist.xml"
         ]));
 });
 
