@@ -209,7 +209,7 @@ gulp.task("jsdoc", function () {
         .pipe(jsdoc(jsdocConfig));
 });
 
-gulp.task("phpdoc_delete", function () {
+gulp.task("doc_delete", function () {
 
     "use strict";
 
@@ -221,11 +221,12 @@ gulp.task("phpdoc_delete", function () {
 
     // return stream or promise for run-sequence
     return del([
+        "docs/jsdoc",
         "docs/phpdoc"
     ]);
 });
 
-gulp.task("phpdoc_doc", function () {
+gulp.task("phpdoc", function () {
 
     "use strict";
 
@@ -245,13 +246,14 @@ gulp.task("phpdoc_doc", function () {
         ]));
 });
 
-gulp.task("phpdoc", function (callback) {
+gulp.task("docs", function (callback) {
 
     "use strict";
 
     runSequence(
-        "phpdoc_delete",
-        "phpdoc_doc",
+        "jsdoc",
+        "doc_delete",
+        "phpdoc",
         callback
     );
 });
@@ -376,7 +378,7 @@ gulp.task("add_dev_dependencies", function () {
     return;
 });
 
-gulp.task("remove_dev_dependencies", function () {
+gulp.task("composer_dist", function () {
 
     "use strict";
 
@@ -481,6 +483,8 @@ gulp.task("release", function (callback) {
     "use strict";
 
     runSequence(
+        "composer_dist",
+        "yarn_dist",
         "release_delete_pre",
         "release_copy",
         "release_zip",
@@ -618,8 +622,7 @@ gulp.task("install", function (callback) {
         // bump version
         "bump",
         // generate documentation
-        "jsdoc",
-        "phpdoc",
+        "docs",
         // run unit tests in a WordPress environment
         "phpunit"
     );
@@ -649,8 +652,7 @@ gulp.task("dev", function (callback) {
         "jshint",
         // "phpcs",
         // generate documentation
-        "jsdoc",
-        "phpdoc",
+        "docs",
         // run unit tests in a WordPress environment
         "phpunit",
         // watch for CSS changes
@@ -684,13 +686,10 @@ gulp.task("dist", function (callback) {
         // bump version
         "bump",
         // generate documentation
-        "jsdoc",
-        "phpdoc",
+        "docs",
         // run unit tests in a WordPress environment
         "phpunit",
         // package release
-        "remove_dev_dependencies",
-        "yarn_dist",
         "release"
     );
 
