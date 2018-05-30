@@ -57,9 +57,7 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Create post
 	 *
-	 * @param string $post_title Post title
-	 * @param string $post_date Post date
-	 * @param array $term_ids Taxonomy term IDs
+	 * @param array $options Options [$post_title, $post_date, $post_content]
 	 * @return number $post_id
 	 * @see https://developer.wordpress.org/reference/functions/wp_insert_post/
 	 * @see https://wordpress.stackexchange.com/questions/37163/proper-formatting-of-post-date-for-wp-insert-post

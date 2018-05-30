@@ -13,9 +13,8 @@
  *   tip' => __('Helper text', 'text-domain')
  * )
  */
-?>
 
-<?php echo $label_start; ?>
+echo $label_start; ?>
 	<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?>:</label>
 <?php echo $label_end; ?>
 
