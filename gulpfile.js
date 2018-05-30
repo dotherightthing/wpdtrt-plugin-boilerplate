@@ -429,6 +429,7 @@ gulp.task("release_copy", function () {
         "./css/**/*",
         "./docs/**/*",
         "!./docs/phpdoc/phpdoc-cache-*",
+        "!./docs/phpdoc/phpdoc-cache-*/**/*",
         "./icons/**/*",
         "./images/**/*",
         "!./images/**/*.pxm",
