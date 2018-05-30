@@ -9,7 +9,9 @@
  * @example usage from child plugin:
  *    gulp
  *    install | dev | dist
- *    --gulpfile ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js --cwd ./
+ *    --gulpfile
+ *    ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
+ *    --cwd ./
  *
  * @package     WPDTRT_Plugin_Boilerplate
  * @version     1.4.23
@@ -375,7 +377,8 @@ gulp.task("remove_dev_dependencies", function () {
 
     /**
     * Remove dev packages once we"ve used them
-    * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47
+    * 
+    * @see #47
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
@@ -535,7 +538,9 @@ gulp.task("bump_replace", function () {
 
     // if run from a child plugin:
     // gulp bump
-    // --gulpfile ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js --cwd ./
+    // --gulpfile
+    // ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
+    // --cwd ./
     if (pluginName !== "wpdtrt-plugin-boilerplate") {
         root_input_path = "";
         wpdtrt_plugin_boilerplate_input_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";

@@ -24,7 +24,7 @@ jQuery(document).ready(function ($) {
     var ajaxurl = config.ajaxurl;
     var $ajax_container_data;
     var $ajax_container_ui;
-    var abbr = 'wpdtrt-plugin-boilerplate';
+    var abbr = "wpdtrt-plugin-boilerplate";
     var data;
 
     if (config.refresh_api_data === "true") {
