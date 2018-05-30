@@ -223,35 +223,6 @@ gulp.task("phpdoc_delete", function () {
     ]);
 });
 
-gulp.task("phpdoc_remove_before", function () {
-
-    "use strict";
-
-    taskheader(
-        "Documentation",
-        "Uninstall",
-        "Problematic packages"
-    );
-
-    // Read the extra data from the parent"s composer.json
-    // The require function is relative to this gulpfile || node_modules
-    // @see https://stackoverflow.com/a/23643087/6850747
-    var composer_json = require("./composer.json");
-    var phpdoc_remove_before = composer_json.extra[0]["require-after-phpdoc"];
-    var phpdoc_remove_before_no_version = phpdoc_remove_before.split(":")[0];
-
-    // return stream or promise for run-sequence
-    // note: src files are not used,
-    // this structure is only used
-    // to include the preceding log()
-    return gulp.src(dummyFile, {read: false})
-        .pipe(shell([
-            // install plugin which generates Fatal Error (#12)
-            // if previously installed via package.json
-            "composer remove " + phpdoc_remove_before_no_version
-        ]));
-});
-
 gulp.task("phpdoc_doc", function () {
 
     "use strict";
@@ -269,34 +240,6 @@ gulp.task("phpdoc_doc", function () {
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
             "vendor/bin/phpdoc --config phpdoc.dist.xml"
-        ]));
-});
-
-gulp.task("phpdoc_require_after", function () {
-
-    "use strict";
-
-    taskheader(
-        "Documentation",
-        "Re-install",
-        "Problematic packages"
-    );
-
-    // Read the extra data from the parent"s composer.json
-    // The require function is relative to this gulpfile || node_modules
-    // @see https://stackoverflow.com/a/23643087/6850747
-    var composer_json = require("./composer.json");
-    var phpdoc_require_after = composer_json.extra[0]["require-after-phpdoc"];
-
-    // return stream or promise for run-sequence
-    // note: src files are not used,
-    // this structure is only used
-    // to include the preceding log()
-    return gulp.src(dummyFile, {read: false})
-        .pipe(shell([
-            // install plugin which generates Fatal Error (#12)
-            // if previously installed via package.json
-            "composer require " + phpdoc_require_after
         ]));
 });
 
@@ -659,7 +602,6 @@ gulp.task("install", function (callback) {
         // generate documentation
         "jsdoc",
         "phpdoc_doc",
-        "phpdoc_require_after",
         // run unit tests in a WordPress environment
         "phpunit"
     );
@@ -691,9 +633,7 @@ gulp.task("dev", function (callback) {
         // generate documentation
         "jsdoc",
         "phpdoc_delete",
-        "phpdoc_remove_before",
         "phpdoc_doc",
-        "phpdoc_require_after",
         // run unit tests in a WordPress environment
         "phpunit",
         // watch for CSS changes
@@ -729,9 +669,7 @@ gulp.task("dist", function (callback) {
         // generate documentation
         "jsdoc",
         "phpdoc_delete",
-        "phpdoc_remove_before",
         "phpdoc_doc",
-        "phpdoc_require_after",
         // run unit tests in a WordPress environment
         "phpunit",
         // package release
