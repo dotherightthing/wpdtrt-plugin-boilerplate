@@ -15,57 +15,52 @@
 
 .wpdtrt-plugin-boilerplate {
 
-  &--options {
+    &--options {
 
-    // restyle WP .spinner
-    .wpdtrt-plugin-boilerplate-ajax-response .spinner {
-      float: none;
-      width: auto;
-      padding-left: 27px;
-      margin-left: 0;
-    }
+        // restyle WP .spinner
+        .wpdtrt-plugin-boilerplate-ajax-response .spinner {
+            float: none;
+            width: auto;
+            padding-left: 27px;
+            margin-left: 0;
+        }
 
-    .wpdtrt-plugin-boilerplate-version {
-      // copied from dashboard-widgets-suite plugin
-      color: #c7c7c7;
-      font-size: 90%;
-    }
+        .wpdtrt-plugin-boilerplate-version {
+            // copied from dashboard-widgets-suite plugin
+            color: #c7c7c7;
+            font-size: 90%;
+        }
 
-    .wpdtrt-plugin-boilerplate-date {
-      font-size: .95em;
-    }
+        .wpdtrt-plugin-boilerplate-date {
+            font-size: .95em;
+        }
 
-    .form-table {
-      .description {
-        @extend %wpdtrt-plugin-boilerplate--input-hint-text; 
-      }
+        .form-table {
+            .description {
+                @extend %wpdtrt-plugin-boilerplate--input-hint-text;
+            }
+        }
     }
-  }
-}
 
 // -------------------------------------------------------------------
 // Widget page
 // -------------------------------------------------------------------
 
-.wpdtrt-plugin-boilerplate {
-
-  &--widget-field {
-    .description {
-      @extend %wpdtrt-plugin-boilerplate--input-hint-text;
+    &--widget-field {
+        .description {
+            @extend %wpdtrt-plugin-boilerplate--input-hint-text;
+        }
     }
-  }
-}
 
 // -------------------------------------------------------------------
 // Terms page
 // -------------------------------------------------------------------
 
-.wpdtrt-plugin-boilerplate {
+    &--taxonomy-form-field {
+        //
+    }
 
-  &--taxonomy-form-field {
-    //
-  }
-}
+} // end .wpdtrt-plugin-boilerplat
 
 // -------------------------------------------------------------------
 // Attachment page
@@ -76,25 +71,25 @@
     > [data-setting="url"],
     > [data-setting="title"],
     > [data-setting="description"] {
-     display: none;
+        display: none;
     }
 }
 
 // hide redundant warning, to show custom fields sooner
 .media-types-required-info {
-  display: none;
+    display: none;
 }
 
 // create a visual separator before the custom fields
-.compat-item table.compat-attachment-fields {
+.compat-item table.compat-attachment-fields { // scss-lint:disable QualifyingElement
     padding-top: 5px;
     border-top: 1px solid #ddd;
     margin-top: 15px;
 }
 
 .compat-attachment-fields {
-  // reduce size of help text, to compress custom fields
-  p.help {
-    @extend %wpdtrt-plugin-boilerplate--input-hint-text;
-  }
+    // reduce size of help text, to compress custom fields
+    p.help { // scss-lint:disable QualifyingElement
+        @extend %wpdtrt-plugin-boilerplate--input-hint-text;
+    }
 }

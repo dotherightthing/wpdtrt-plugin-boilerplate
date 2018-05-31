@@ -35,6 +35,7 @@ var print = require("gulp-print").default;
 var pxtorem = require("postcss-pxtorem");
 var runSequence = require("run-sequence");
 var sass = require("gulp-sass");
+var scsslint = require("gulp-scss-lint");
 var shell = require("gulp-shell");
 var stylish = require("jshint-stylish");
 var wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
@@ -492,6 +493,23 @@ gulp.task("release", function (callback) {
     );
 });
 
+gulp.task("scss-lint", function() {
+
+    "use strict";
+
+    taskheader(
+       "QA",
+        "Lint",
+        "SCSS"
+    );
+
+    return gulp.src(scssFiles)
+        .pipe(scsslint({
+            "bundleExec": true,
+            "config": ".scss-lint.yml",
+        }));
+});
+
 /**
  * Tasks
  *
@@ -614,6 +632,7 @@ gulp.task("install", function (callback) {
         // add dev dependencies from wpdtrt-plugin-boilerplate
         "add_dev_dependencies",
         // compile CSS
+        "scss-lint",
         "css",
         // lint code for errors
         "jshint",
@@ -646,6 +665,7 @@ gulp.task("dev", function (callback) {
         // add dev dependencies from wpdtrt-plugin-boilerplate
         "add_dev_dependencies",
         // compile CSS
+        "scss-lint",
         "css",
         // lint code for errors
         "jshint",
@@ -678,6 +698,7 @@ gulp.task("dist", function (callback) {
         // add dev dependencies from wpdtrt-plugin-boilerplate
         "add_dev_dependencies",
         // compile CSS
+        "scss-lint",
         "css",
         // lint code for errors
         "jshint",

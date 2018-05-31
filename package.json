@@ -20,6 +20,7 @@
     "gulp-print": "^5.0.0",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^4.0.1",
+    "gulp-scss-lint": "^0.6.1",
     "gulp-shell": "^0.6.5",
     "gulp-wpdtrt-plugin-bump": "https://github.com/dotherightthing/gulp-wpdtrt-plugin-bump",
     "gulp-zip": "^4.1.0",

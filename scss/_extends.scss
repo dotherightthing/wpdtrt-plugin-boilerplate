@@ -8,71 +8,71 @@
 // ex twentysixteen/style.css
 %wpdtrt-plugin-boilerplate--screen-reader-text,
 .wpdtrt-plugin-boilerplate-screen-reader-text {
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  overflow: hidden;
-  position: absolute !important;
-  width: 1px;
-  word-wrap: normal !important;
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+    word-wrap: normal !important;
+    overflow: hidden;
 }
 
 %wpdtrt-plugin-boilerplate--clear,
 .clear {
-	&::after {
-	    content: "";
-	    display: block;
-	    clear: both;
-	}
+    &::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
 }
 
 %wpdtrt-plugin-boilerplate--fieldset-reset {
-  padding: 0;
-  border: 0;
-  margin: 0;
+    padding: 0;
+    border: 0;
+    margin: 0;
 }
 
 %wpdtrt-plugin-boilerplate--list-reset,
 .list-reset {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 %wpdtrt-plugin-boilerplate--text-sharpen,
 .text-sharpen {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
 }
 
 // embedresponsively.com
 // scales iframe height proportionally
 
 %wpdtrt-plugin-boilerplate--embedresponsively {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  overflow: hidden;
-  max-width: 100%;
+    position: relative;
+    height: 0;
+    max-width: 100%;
+    padding-bottom: 56.25%;
+    overflow: hidden;
 
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;    
-  }
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 // add a divider after the last attachment field added by a plugin
 %wpdtrt-plugin-boilerplate--last-attachment-field-divider {
-  padding-bottom: 5px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
 }
 
 %wpdtrt-plugin-boilerplate--input-hint-text {
-  display: block;
-  font-size: 13px;
-  font-style: normal;
-  margin-top: 4px;
+    display: block;
+    font-size: 13px;
+    font-style: normal;
+    margin-top: 4px;
 }
