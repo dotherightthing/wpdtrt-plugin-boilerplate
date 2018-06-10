@@ -16,7 +16,7 @@ php:
 # https://docs.travis-ci.com/user/environment-variables
 # https://github.com/meitar/wordpress-plugin-skeleton/blob/master/.travis.yml
 env:
-  - WP_VERSION=latest WP_MULTISITE=0 WPUNIT_DB_USER=root WPUNIT_DB_PASS="" WPUNIT_DB_HOST=localhost
+  - WP_VERSION=latest WP_MULTISITE=0
 
 # Build Matrix
 # consisting of specific runtime/env/exclude/include combinations.
@@ -29,7 +29,7 @@ matrix:
   fast_finish: true
   include:
     - php: 5.6.30
-      env: WP_VERSION=latest WP_MULTISITE=0 WPUNIT_DB_USER=root WPUNIT_DB_PASS="" WPUNIT_DB_HOST=localhost
+      env: WP_VERSION=latest WP_MULTISITE=0
 
 # Cache directories between builds, to store dependencies
 # which take longer to compile or download.
@@ -74,8 +74,15 @@ install:
   - bundle install
 
 # https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
+# Exporting a variable causes the variable to be inherited:
+# This is the most common way of setting variables for use
+# of subsequently started processes in a shell
+# https://askubuntu.com/a/205698
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - export WPUNIT_DB_USER=root
+  - export WPUNIT_DB_PASS=""
+  - export WPUNIT_DB_HOST=localhost
 
 # Run the build task
 script:
