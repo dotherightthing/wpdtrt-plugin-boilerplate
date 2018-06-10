@@ -80,9 +80,9 @@ install:
 # https://askubuntu.com/a/205698
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - export WPUNIT_DB_USER=root
+  - export WPUNIT_DB_USER="root"
   - export WPUNIT_DB_PASS=""
-  - export WPUNIT_DB_HOST=localhost
+  - export WPUNIT_DB_HOST="localhost"
 
 # Run the build task
 script:
