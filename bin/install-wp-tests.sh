@@ -1,16 +1,35 @@
 #!/usr/bin/env bash
 
-if [ $# -lt 3 ]; then
-	echo "usage: $0 <db-name> <db-user> <db-pass> [db-host] [wp-version] [skip-database-creation]"
+if [ $# -lt 1 ]; then
+	echo "usage: $0 <db-name> [wp-version] [skip-database-creation]"
 	exit 1
 fi
 
 DB_NAME=$1
-DB_USER=$2
-DB_PASS=$3
-DB_HOST=${4-localhost}
-WP_VERSION=${5-latest}
-SKIP_DB_CREATE=${6-false}
+WP_VERSION=${2-latest}
+SKIP_DB_CREATE=${3-false}
+
+# Environmental variables
+# See https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables 
+
+if [[ -z "$WPUNIT_DB_USER" ]]; then
+	echo "WPUNIT_DB_USER not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
+	exit 1
+fi
+
+if [[ -z "$WPUNIT_DB_PASS" ]]; then
+	echo "WPUNIT_DB_PASS not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
+	exit 1
+fi
+
+if [[ -z "$WPUNIT_DB_HOST" ]]; then
+	echo "WPUNIT_DB_HOST not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
+	exit 1
+fi
+
+DB_USER=$WPUNIT_DB_USER
+DB_PASS=$WPUNIT_DB_PASS
+DB_HOST=$WPUNIT_DB_HOST
 
 TMPDIR=${TMPDIR-/tmp}
 TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
@@ -144,6 +163,7 @@ install_db() {
 	fi
 
 	# create database
+	# Warning: Using a password on the command line interface can be insecure.
 	mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
 }
 

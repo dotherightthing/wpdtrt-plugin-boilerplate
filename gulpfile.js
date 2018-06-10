@@ -4,11 +4,9 @@
  *
  * @example usage from parent plugin:
  *    gulp
- *    install | dev | dist
  *
  * @example usage from child plugin:
  *    gulp
- *    install | dev | dist
  *    --gulpfile
  *    ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
  *    --cwd ./
@@ -47,6 +45,7 @@ var zip = require("gulp-zip");
 
 // pop() - remove the last element from the path array and return it
 var pluginName = process.cwd().split("/").pop();
+var pluginNameSafe = pluginName.replace(/-/g, "_");
 var cssDir = "css";
 var distDir = pluginName;
 var dummyFile = "README.md";
@@ -55,6 +54,9 @@ var jsFiles = [
     "gulpfile.js"
 ];
 var scssFiles = "./scss/*.scss";
+
+// https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
+var travis = (typeof process.env.TRAVIS !== "undefined");
 
 /**
  * ===== helpers =====
@@ -289,6 +291,30 @@ gulp.task("phpcs", function () {
         .pipe(phpcs.reporter("log"));
 });
 
+/**
+ * Install WPUnit test suite
+ * 
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables
+ */
+gulp.task("wpunit_install", function () {
+
+    "use strict";
+
+    taskheader(
+        "QA",
+        "Setup",
+        "WPUnit"
+    );
+    
+    var db_name = pluginNameSafe + "_wpunit_" + Date.now();
+    var wp_version = "latest";
+
+    return gulp.src(dummyFile, {read: false})
+        .pipe(shell([
+            "bash bin/install-wp-tests.sh " + db_name + " " + wp_version
+        ]));
+});
+
 gulp.task("phpunit", function () {
 
     "use strict";
@@ -482,15 +508,23 @@ gulp.task("release", function (callback) {
 
     "use strict";
 
-    runSequence(
-        "composer_dist",
-        "yarn_dist",
-        "release_delete_pre",
-        "release_copy",
-        "release_zip",
-        "release_delete_post",
-        callback
-    );
+    if ( travis ) {
+        runSequence(
+            "composer_dist",
+            "yarn_dist",
+            "release_delete_pre",
+            "release_copy",
+            "release_zip",
+            "release_delete_post",
+            callback
+        );
+    } else {
+        runSequence(
+            callback
+        );
+    }
+
+
 });
 
 gulp.task("scss-lint", function() {
@@ -526,7 +560,10 @@ gulp.task("watch", function () {
         "Watch SCSS"
     );
 
-    gulp.watch(scssFiles, ["css"]);
+    if ( ! travis ) {
+        gulp.watch(scssFiles, ["css"]);        
+    }
+
 });
 
 gulp.task("bump_update", function () {
@@ -607,78 +644,18 @@ gulp.task("bump", function (callback) {
 
     "use strict";
 
-    runSequence(
-        "bump_update",
-        "bump_replace",
-        "bump_update_autoload",
-        callback
-    );
-});
-
-gulp.task("install", function (callback) {
-
-    "use strict";
-
-    taskheader(
-        "Installation",
-        "Install",
-        ""
-    );
-
-    runSequence(
-        // install dependencies
-        "yarn",
-        "composer",
-        // add dev dependencies from wpdtrt-plugin-boilerplate
-        "add_dev_dependencies",
-        // compile CSS
-        "scss-lint",
-        "css",
-        // lint code for errors
-        "jshint",
-        // "phpcs",
-        // bump version
-        "bump",
-        // generate documentation
-        "docs",
-        // run unit tests in a WordPress environment
-        "phpunit"
-    );
-
-    callback();
-});
-
-gulp.task("dev", function (callback) {
-
-    "use strict";
-
-    taskheader(
-        "Installation",
-        "Dev Install",
-        "Re-install dev dependencies"
-    );
-
-    runSequence(
-        // install dependencies
-        "yarn",
-        "composer",
-        // add dev dependencies from wpdtrt-plugin-boilerplate
-        "add_dev_dependencies",
-        // compile CSS
-        "scss-lint",
-        "css",
-        // lint code for errors
-        "jshint",
-        // "phpcs",
-        // generate documentation
-        "docs",
-        // run unit tests in a WordPress environment
-        "phpunit",
-        // watch for CSS changes
-        "watch"
-    );
-
-    callback();
+    if ( travis ) {
+        runSequence(
+            "bump_update",
+            "bump_replace",
+            "bump_update_autoload",
+            callback
+        );
+    } else {
+        runSequence(
+            callback
+        );
+    }
 });
 
 gulp.task("dist", function (callback) {
@@ -687,8 +664,8 @@ gulp.task("dist", function (callback) {
 
     taskheader(
         "Installation",
-        "Dist Install",
-        "Install and package for release"
+        "Gulp Dist",
+        "Install" + (travis ? " and package for release" : "")
     );
 
     runSequence(
@@ -703,19 +680,32 @@ gulp.task("dist", function (callback) {
         // lint code for errors
         "jshint",
         // "phpcs"
-        // bump version
+        // bump version (only travis)
         "bump",
         // generate documentation
         "docs",
         // run unit tests in a WordPress environment
+        "wpunit_install",
         "phpunit",
-        // package release
-        "release"
+        // package release (only travis)
+        "release",
+        // watch for CSS changes (not travis)
+        "watch"
     );
 
     callback();
 });
 
 gulp.task("default", [
-    "install"
+    "dist"
+]);
+
+// TODO remove once all legacy calls have been removed from generated plugins
+gulp.task("dev", [
+    "dist"
+]);
+
+// TODO remove once all legacy calls have been removed from generated plugins
+gulp.task("install", [
+    "dist"
 ]);
