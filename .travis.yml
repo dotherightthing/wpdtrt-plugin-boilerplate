@@ -3,7 +3,7 @@
 # To skip a build, add [ci skip] to the commit message.
 # This file has been linted using: http://lint.travis-ci.org/
 
-# Use PHP, to run unit tests
+# Use PHP, to use Composer, WordPress and PHPUnit
 language: php
 
 # PHP versions to test against
@@ -44,12 +44,12 @@ cache:
 #    - $HOME/.composer/cache/files
     - $HOME/.npm 
 
-# Install a Second Programming Language (Node, to run Gulp tasks)
-# We need to specify a newer version than the Travis default
-# in order to avoid the build error "Use of const in strict mode"
-# https://docs.travis-ci.com/user/customizing-the-build/#Installing-a-Second-Programming-language
-# https://stackoverflow.com/a/44250453/6850747
 before_install:
+  # Install a Second Programming Language (Node, to run Gulp tasks)
+  # We need to specify a newer version than the Travis default
+  # in order to avoid the build error "Use of const in strict mode"
+  # https://docs.travis-ci.com/user/customizing-the-build/#Installing-a-Second-Programming-language
+  # https://stackoverflow.com/a/44250453/6850747
   - nvm install 8.11.1
   # Disable XDebug which is only required for Code Coverage reports
   # https://johnblackbourn.com/reducing-travis-ci-build-times-for-wordpress-projects/
@@ -73,18 +73,18 @@ install:
   - gem install bundler
   - bundle install
 
-# https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
 # Exporting a variable causes it to be inherited
 # by subsequently started processes in the shell session
 # See https://askubuntu.com/a/205698
 # See https://stackoverflow.com/a/3035445/6850747
+# See https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
   - export WPUNIT_DB_USER="root"
   - export WPUNIT_DB_PASS=""
   - export WPUNIT_DB_HOST="localhost"
 
-# Run the build task
+# Run the build script
 script:
   - gulp
 
