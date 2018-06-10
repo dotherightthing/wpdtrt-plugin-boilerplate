@@ -74,15 +74,15 @@ install:
   - bundle install
 
 # https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
-# Exporting a variable causes the variable to be inherited:
-# This is the most common way of setting variables for use
-# of subsequently started processes in a shell
-# https://askubuntu.com/a/205698
+# Exporting a variable causes it to be inherited
+# by subsequently started processes in the shell session
+# See https://askubuntu.com/a/205698
+# See https://stackoverflow.com/a/3035445/6850747
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - export WPUNIT_DB_USER=root
+  - export WPUNIT_DB_USER="root"
   - export WPUNIT_DB_PASS=""
-  - export WPUNIT_DB_HOST=localhost
+  - export WPUNIT_DB_HOST="localhost"
 
 # Run the build task
 script:

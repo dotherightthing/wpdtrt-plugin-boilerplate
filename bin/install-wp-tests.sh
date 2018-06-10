@@ -19,14 +19,14 @@ if [[ -z "$WPUNIT_DB_USER" ]]; then
 	echo "WPUNIT_DB_USER not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
 	exit 1
 else
-	DB_PASS=$WPUNIT_DB_PASS
+	DB_USER=$WPUNIT_DB_USER
 fi
 
 if [[ -z "$WPUNIT_DB_PASS" ]]; then
 	echo "WPUNIT_DB_PASS not found & set to ''"
 	DB_PASS=""
 else
-	DB_USER=$WPUNIT_DB_USER
+	DB_PASS=$WPUNIT_DB_PASS
 fi
 
 if [[ -z "$WPUNIT_DB_HOST" ]]; then
