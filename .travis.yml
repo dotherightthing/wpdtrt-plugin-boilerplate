@@ -16,7 +16,10 @@ php:
 # https://docs.travis-ci.com/user/environment-variables
 # https://github.com/meitar/wordpress-plugin-skeleton/blob/master/.travis.yml
 env:
-  - WP_VERSION=latest WP_MULTISITE=0 WPUNIT_DB_USER=root WPUNIT_DB_PASS="" WPUNIT_DB_HOST=localhost
+  - WP_VERSION=latest WP_MULTISITE=0
+  - WPUNIT_DB_USER=root
+  - WPUNIT_DB_PASS=""
+  - WPUNIT_DB_HOST=localhost
 
 # Build Matrix
 # consisting of specific runtime/env/exclude/include combinations.
