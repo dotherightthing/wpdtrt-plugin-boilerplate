@@ -12,25 +12,29 @@ SKIP_DB_CREATE=${3-false}
 # Environmental variables
 # See https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables 
 # See http://timmurphy.org/2010/05/19/checking-for-empty-string-in-bash/
-
+# See https://www.cyberciti.biz/faq/linux-unix-howto-check-if-bash-variable-defined-not/
+# -z operator returns TRUE if the Length of STRING is zero
+# 
 if [[ -z "$WPUNIT_DB_USER" ]]; then
 	echo "WPUNIT_DB_USER not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
 	exit 1
+else
+	DB_PASS=$WPUNIT_DB_PASS
 fi
 
-if [[ -n "$WPUNIT_DB_PASS" ]]; then
-	echo "WPUNIT_DB_PASS not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
-	exit 1
+if [[ -z "$WPUNIT_DB_PASS" ]]; then
+	echo "WPUNIT_DB_PASS not found & set to ''"
+	DB_PASS=""
+else
+	DB_USER=$WPUNIT_DB_USER
 fi
 
 if [[ -z "$WPUNIT_DB_HOST" ]]; then
 	echo "WPUNIT_DB_HOST not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
 	exit 1
+else
+	DB_HOST=$WPUNIT_DB_HOST
 fi
-
-DB_USER=$WPUNIT_DB_USER
-DB_PASS=$WPUNIT_DB_PASS
-DB_HOST=$WPUNIT_DB_HOST
 
 TMPDIR=${TMPDIR-/tmp}
 TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
