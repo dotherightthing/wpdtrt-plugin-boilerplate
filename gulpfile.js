@@ -11,7 +11,7 @@
  *    ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
  *    --cwd ./
  *
- * @version     1.4.24
+ * @version     1.4.25
  */
 
 /*jshint node:true*/
@@ -379,12 +379,12 @@ gulp.task("version", function (callback) {
         ""
     );
 
-        runSequence(
-            "version_update",
-            "version_replace",
-            "version_update_autoload",
-            callback
-        );
+    runSequence(
+        "version_update",
+        "version_replace",
+        "version_update_autoload",
+        callback
+    );
 });
 
 gulp.task("version_update", function () {
