@@ -109,7 +109,7 @@ gulp.task("install_dependencies_yarn", function () {
         "1a",
         "Dependencies",
         "Install",
-        "Yarn (Node / ex-Bower)"
+        "Yarn"
     );
 
     // return stream or promise for run-sequence
@@ -472,7 +472,7 @@ gulp.task("docs", function (callback) {
     taskheader(
         "5",
         "Documentation",
-        "Generate",
+        "",
         ""
     );
 
@@ -553,7 +553,7 @@ gulp.task("unit_test", function (callback) {
     taskheader(
         "6",
         "QA",
-        "Setup",
+        "",
         ""
     );
 
@@ -617,8 +617,8 @@ gulp.task("release", function (callback) {
     taskheader(
         "7",
         "Release",
-        "Uninstall dev dependencies",
-        "Composer (PHP)"
+        "Generate",
+        ""
     );
 
     if ( travis ) {
@@ -668,7 +668,7 @@ gulp.task("release_yarn_dist", function () {
         "7b",
         "Release",
         "Uninstall dev dependencies",
-        "Yarn (Node / ex-Bower)"
+        "Yarn"
     );
 
     // return stream or promise for run-sequence
