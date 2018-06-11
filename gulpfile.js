@@ -97,6 +97,15 @@ gulp.task("install_dependencies", function(callback) {
         "install_dependencies_yarn",
         "install_dependencies_composer",
         "install_dependencies_boilerplate",
+        // By returning a stream,
+        // the task system is able to plan the execution of those streams.
+        // But sometimes, especially when you're in callback hell
+        // or calling some streamless plugin,
+        // you aren't able to return a stream.
+        // That's what the callback is for.
+        // To let the task system know that you're finished
+        // and to move on to the next call in the execution chain.
+        // see https://stackoverflow.com/a/29299107/6850747
         callback
     );
 });
@@ -370,18 +379,12 @@ gulp.task("version", function (callback) {
         ""
     );
 
-    if ( travis ) {
         runSequence(
             "version_update",
             "version_replace",
             "version_update_autoload",
             callback
         );
-    } else {
-        runSequence(
-            callback
-        );
-    }
 });
 
 gulp.task("version_update", function () {
@@ -632,9 +635,7 @@ gulp.task("release", function (callback) {
             callback
         );
     } else {
-        runSequence(
-            callback
-        );
+        callback();
     }
 });
 
