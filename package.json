@@ -31,7 +31,12 @@
     "run-sequence": "^2.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp",
+    "install": "gulp install_dependencies && gulp wpunit_install",
+    "package": "gulp docs && gulp release",
+    "test": "gulp lint && gulp wpunit_run",
+    "version": "gulp version",
+    "watch": "gulp compile && gulp watch"
   },
   "repository": "git@github.com:dotherightthing/wpdtrt-plugin-boilerplate.git",
   "browserslist": [
