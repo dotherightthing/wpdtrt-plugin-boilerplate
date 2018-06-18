@@ -585,10 +585,15 @@ gulp.task("wpunit_install", function () {
 
     var db_name = pluginNameSafe + "_wpunit_" + Date.now();
     var wp_version = "latest";
+    var installer_path = "bin/";
+
+    if (pluginName !== "wpdtrt-plugin-boilerplate") {
+        installer_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/bin/";
+    }
 
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "bash bin/install-wp-tests.sh " + db_name + " " + wp_version
+            "bash " + installer_path + "install-wp-tests.sh " + db_name + " " + wp_version
         ]));
 });
 
