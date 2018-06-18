@@ -16,7 +16,7 @@ SKIP_DB_CREATE=${3-false}
 # -z operator returns TRUE if the Length of STRING is zero
 # 
 if [[ -z "$WPUNIT_DB_USER" ]]; then
-	echo "WPUNIT_DB_USER not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
+	echo "WPUNIT_DB_USER not found. Please add export statement to your ~/.bash_profile"
 	exit 1
 else
 	DB_USER=$WPUNIT_DB_USER
@@ -30,7 +30,7 @@ else
 fi
 
 if [[ -z "$WPUNIT_DB_HOST" ]]; then
-	echo "WPUNIT_DB_HOST not found. Please add export statement to your ~/.bash_profile, or run source ~/.bash_profile"
+	echo "WPUNIT_DB_HOST not found. Please add export statement to your ~/.bash_profile"
 	exit 1
 else
 	DB_HOST=$WPUNIT_DB_HOST
