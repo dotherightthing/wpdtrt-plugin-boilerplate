@@ -33,7 +33,7 @@
   },
   "scripts": {
     "build": "gulp",
-    "install": "gulp install_dependencies && gulp wpunit_install",
+    "install_deps": "gulp install_dependencies && gulp wpunit_install",
     "package": "gulp docs && gulp release",
     "test": "gulp lint && gulp wpunit_run",
     "version": "gulp version",
