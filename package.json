@@ -20,7 +20,7 @@
     "gulp-print": "^5.0.0",
     "gulp-replace": "^0.6.1",
     "gulp-sass": "^4.0.1",
-    "gulp-scss-lint": "^0.6.1",
+    "gulp-sass-lint": "^1.4.0",
     "gulp-shell": "^0.6.5",
     "gulp-wpdtrt-plugin-bump": "https://github.com/dotherightthing/gulp-wpdtrt-plugin-bump",
     "gulp-zip": "^4.1.0",
@@ -28,7 +28,8 @@
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "postcss-pxtorem": "^4.0.1",
-    "run-sequence": "^2.2.1"
+    "run-sequence": "^2.2.1",
+    "sass-lint": "^1.12.1"
   },
   "scripts": {
     "build": "gulp",

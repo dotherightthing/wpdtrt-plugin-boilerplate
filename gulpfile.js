@@ -33,7 +33,7 @@ var print = require("gulp-print").default;
 var pxtorem = require("postcss-pxtorem");
 var runSequence = require("run-sequence");
 var sass = require("gulp-sass");
-var scsslint = require("gulp-scss-lint");
+var sassLint = require("gulp-sass-lint");
 var shell = require("gulp-shell");
 var stylish = require("jshint-stylish");
 var wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
@@ -220,14 +220,14 @@ gulp.task("lint", function(callback) {
     );
 
     runSequence(
-        "lint_scss",
+        "lint_sass",
         "lint_js",
         // "lint_php"
         callback
     );
 });
 
-gulp.task("lint_scss", function() {
+gulp.task("lint_sass", function() {
 
     "use strict";
 
@@ -235,14 +235,13 @@ gulp.task("lint_scss", function() {
         "2a",
         "QA",
         "Lint",
-        "SCSS"
+        "Sass"
     );
 
     return gulp.src(scssFiles)
-        .pipe(scsslint({
-            "bundleExec": true,
-            "config": ".scss-lint.yml",
-        }));
+        .pipe(sassLint())
+        .pipe(sassLint.format());
+        // .pipe(sassLint.failOnError())
 });
 
 gulp.task("lint_js", function () {

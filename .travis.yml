@@ -70,8 +70,6 @@ install:
   - yarn install --non-interactive
   - yarn global add gulp-cli
   # Install Ruby Gems specified in the Gemfile
-  - gem install bundler
-  - bundle install
 
 # Exporting a variable causes it to be inherited
 # by subsequently started processes in the shell session
