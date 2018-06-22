@@ -534,13 +534,19 @@ gulp.task("docs_php", function () {
         "PHP"
     );
 
+    var config_path = "";
+
+    if (pluginName !== "wpdtrt-plugin-boilerplate") {
+        config_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+    }
+
     // return stream or promise for run-sequence
     // note: src files are not used,
     // this structure is only used
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "vendor/bin/phpdoc --config phpdoc.dist.xml"
+            "vendor/bin/phpdoc --config " + config_path + "phpdoc.dist.xml"
         ]));
 });
 
