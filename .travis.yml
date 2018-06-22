@@ -88,9 +88,10 @@ script:
 
 # Notifications of build results
 # https://docs.travis-ci.com/user/notifications/
+# https://github.com/travis-ci/travis-ci/issues/6387 - $SLACK_AUTH not supported
 notifications:
   email: false
-  slack: $SLACK_AUTH
+  secure: ZNBGnCpiLYlm42Ibw3PetLhs6bVL1NZnL/nAOwtZ2Mw56gLs7TS8fJgX6xVoqcnL5QfszrCs4fv2+KsAW1dvePoxIBEA6SCH8rbSOtiK2LvvF2gU1sZUUEdfxWAUyNWAQu+N8aZyOf4Ewyuaqbnbmed8zU/AXSWUJ97WD446fFg/GU+ctRV/DR8H5avWW44wL7d6otUHU/n5qlnIkpj8qkE7uchJzE06wGBvTMOjMuoGfRo1Ko1j5akBwK2iuQ+DdCc5QFL4dIbK2tV+wbSIwzXEDxH7yK9zmQobM3HniL1OAesgDDhrX/bvfnFMvOMBbOKBzMKMz+g45CjH4C7xpqu1uI3NFytERD+M8Ke+tKJhsdxrUCc/nsWPiYjH8CXqn9WbAYpLJewqHTbMLkM37OS9zvWCPDW8s4Bzb6UvK7jkHvqULIIFp84DDXXn55eOCf/PYdE1sNDPmZg5JymCK+sGiAXFdbq6zjeRAziBzw+aEISeABjgDZuFwe+3JSqMzWKrtokdsLCYAGgOPfbuDPgmSPB3MpkTXB662qH0fG9UtYd4OU7N/Q88S7a+Xf0fuVL0oFfemnhhpziSTM0u6gpCJHDuOlwLykylN/hbkiVNm2z4xC2dWPfRoa640W42sFw8X/tEJfFxgmnGqkipyI+2Dv+AE8y9z+brxFNwfQU=
 
 # Deploy code to Github as a 'release'
 # This is run after a tagged commit triggers a successful build
