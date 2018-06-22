@@ -16,7 +16,7 @@
     }
   ],
   "bugs": {
-    "url" : "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues"
+    "url": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues"
   },
   "keywords": [
     "boilerplate",
@@ -32,6 +32,7 @@
     "gulp": "^3.9.1",
     "gulp-eslint": "^4.0.2",
     "gulp-jsdoc3": "^2.0.0",
+    "gulp-nice-package": "^1.1.0",
     "gulp-phpcs": "^2.1.0",
     "gulp-postcss": "^7.0.1",
     "gulp-print": "^5.0.0",

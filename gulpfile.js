@@ -34,6 +34,7 @@ var runSequence = require("run-sequence");
 var sass = require("gulp-sass");
 var sassLint = require("gulp-sass-lint");
 var shell = require("gulp-shell");
+var validate = require("gulp-nice-package");
 var wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
 var zip = require("gulp-zip");
 
@@ -221,6 +222,7 @@ gulp.task("lint", function(callback) {
     runSequence(
         "lint_sass",
         "lint_js",
+        "lint_package_json",
         // "lint_php"
         callback
     );
@@ -261,6 +263,24 @@ gulp.task("lint_js", function () {
         // .pipe(eslint.failAfterError());
 });
 
+gulp.task("lint_package_json", function () {
+
+    "use strict";
+
+    taskheader(
+        "2c",
+        "QA",
+        "Lint",
+        "package.json"
+    );
+
+    // return stream or promise for run-sequence
+    return gulp.src("package.json")
+        .pipe(validate({
+            recommendations: false
+        }));
+});
+
 /**
  * PHP Code Sniffer
  *
@@ -271,7 +291,7 @@ gulp.task("lint_php", function () {
     "use strict";
 
     taskheader(
-        "2c",
+        "2d",
         "QA",
         "Lint",
         "PHP"
