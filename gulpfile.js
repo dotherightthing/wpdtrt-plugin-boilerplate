@@ -42,6 +42,7 @@ var zip = require("gulp-zip");
  */
 
 // pop() - remove the last element from the path array and return it
+var vendorName = "dotherightthing";
 var pluginName = process.cwd().split("/").pop();
 var pluginNameSafe = pluginName.replace(/-/g, "_");
 var cssDir = "css";
@@ -405,7 +406,9 @@ gulp.task("version_update", function () {
         // return stream or promise for run-sequence
         return gulp.src(dummyFile, {read: false})
             .pipe(shell([
-                "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction"
+                /* eslint-disable max-len */
+                "composer update " + vendorName + "/" + pluginName + " --no-interaction"
+                /* eslint-enable max-len */
             ]));
     }
 
@@ -435,12 +438,16 @@ gulp.task("version_replace", function () {
     // --cwd ./
     if (pluginName !== "wpdtrt-plugin-boilerplate") {
         root_input_path = "";
+        /* eslint-disable max-len */
         wpdtrt_plugin_boilerplate_input_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+        /* eslint-enable max-len */
     }
 
     return wpdtrtPluginBump({
         root_input_path: root_input_path,
+        /* eslint-disable max-len */
         wpdtrt_plugin_boilerplate_input_path: wpdtrt_plugin_boilerplate_input_path
+        /* eslint-enable max-len */
     });
 });
 
@@ -593,12 +600,14 @@ gulp.task("wpunit_install", function () {
     var installer_path = "bin/";
 
     if (pluginName !== "wpdtrt-plugin-boilerplate") {
-        installer_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/bin/";
+        installer_path = "vendor/" + vendorName + "/" + pluginName + "/bin/";
     }
 
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
+            /* eslint-disable max-len */
             "bash " + installer_path + "install-wp-tests.sh " + db_name + " " + wp_version
+            /* eslint-enable max-len */
         ]));
 });
 
