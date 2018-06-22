@@ -40,8 +40,10 @@
 
 %wpdtrt-plugin-boilerplate--text-sharpen,
 .text-sharpen {
+    // sass-lint:disable no-vendor-prefixes
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+    // sass-lint:enable no-vendor-prefixes
 }
 
 // embedresponsively.com

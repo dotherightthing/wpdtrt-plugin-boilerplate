@@ -18,11 +18,13 @@
     &--options {
 
         // restyle WP .spinner
-        .wpdtrt-plugin-boilerplate-ajax-response .spinner {
-            float: none;
-            width: auto;
-            padding-left: 27px;
-            margin-left: 0;
+        .wpdtrt-plugin-boilerplate-ajax-response {
+            .spinner {
+                float: none;
+                width: auto;
+                padding-left: 27px;
+                margin-left: 0;
+            }
         }
 
         .wpdtrt-plugin-boilerplate-version {
@@ -42,9 +44,9 @@
         }
     }
 
-// -------------------------------------------------------------------
-// Widget page
-// -------------------------------------------------------------------
+    // -------------------------------------------------------------------
+    // Widget page
+    // -------------------------------------------------------------------
 
     &--widget-field {
         .description {
@@ -52,15 +54,13 @@
         }
     }
 
-// -------------------------------------------------------------------
-// Terms page
-// -------------------------------------------------------------------
+    // -------------------------------------------------------------------
+    // Terms page
+    // -------------------------------------------------------------------
 
-    &--taxonomy-form-field {
-        //
-    }
+    // &--taxonomy-form-field {}
 
-} // end .wpdtrt-plugin-boilerplat
+} // end .wpdtrt-plugin-boilerplate
 
 // -------------------------------------------------------------------
 // Attachment page
@@ -68,9 +68,9 @@
 
 // hide unused core fields, to show custom fields sooner
 .attachment-details {
-    > [data-setting="url"],
-    > [data-setting="title"],
-    > [data-setting="description"] {
+    > [data-setting='url'],
+    > [data-setting='title'],
+    > [data-setting='description'] {
         display: none;
     }
 }
@@ -81,15 +81,21 @@
 }
 
 // create a visual separator before the custom fields
-.compat-item table.compat-attachment-fields { // scss-lint:disable QualifyingElement
-    padding-top: 5px;
-    border-top: 1px solid #ddd;
-    margin-top: 15px;
+.compat-item {
+    table {
+        &.compat-attachment-fields {
+            padding-top: 5px;
+            border-top: 1px solid #ddd;
+            margin-top: 15px;
+        }
+    }
 }
 
 .compat-attachment-fields {
     // reduce size of help text, to compress custom fields
-    p.help { // scss-lint:disable QualifyingElement
-        @extend %wpdtrt-plugin-boilerplate--input-hint-text;
+    p {
+        &.help {
+            @extend %wpdtrt-plugin-boilerplate--input-hint-text;
+        }
     }
 }

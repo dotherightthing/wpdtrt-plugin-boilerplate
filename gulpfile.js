@@ -569,7 +569,8 @@ gulp.task("unit_test", function (callback) {
 /**
  * Install WPUnit test suite
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables
+ * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/
+ * Testing-&-Debugging#environmental-variables
  */
 gulp.task("wpunit_install", function () {
 
