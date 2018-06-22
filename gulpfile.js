@@ -620,7 +620,9 @@ gulp.task("wpunit_install", function () {
     var installer_path = "bin/";
 
     if (pluginName !== "wpdtrt-plugin-boilerplate") {
-        installer_path = "vendor/" + vendorName + "/" + pluginName + "/bin/";
+        /* eslint-disable max-len */
+        installer_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/bin/";
+        /* eslint-enable max-len */
     }
 
     return gulp.src(dummyFile, {read: false})
