@@ -1,6 +1,6 @@
 {
   "name": "wpdtrt-plugin-boilerplate",
-  "version": "1.4.25",
+  "version": "1.4.26",
   "description": "Boilerplate for WordPress plugin development.",
   "main": "index.php",
   "person": {
@@ -8,6 +8,22 @@
     "email": "dev@dotherightthing.co.nz",
     "url": "https://profiles.wordpress.org/dotherightthingnz"
   },
+  "contributors": [
+    {
+      "name": "Dan Smith",
+      "email": "dev@dotherightthing.co.nz",
+      "url": "https://profiles.wordpress.org/dotherightthingnz"
+    }
+  ],
+  "bugs": {
+    "url" : "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues"
+  },
+  "keywords": [
+    "boilerplate",
+    "framework",
+    "plugin",
+    "WordPress"
+  ],
   "devDependencies": {
     "autoprefixer": "^8.3.0",
     "del": "^3.0.0",
@@ -39,7 +55,10 @@
     "version": "gulp version",
     "watch": "gulp compile && gulp watch"
   },
-  "repository": "git@github.com:dotherightthing/wpdtrt-plugin-boilerplate.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate"
+  },
   "browserslist": [
     "last 2 versions",
     "ie >= 11"
