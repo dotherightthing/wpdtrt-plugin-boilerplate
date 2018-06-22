@@ -14,8 +14,7 @@
  * @version     1.4.25
  */
 
-/*jshint node:true*/
-/*jshint node:true*/
+/* eslint-env node */
 
 /**
  * ===== dependencies =====
@@ -25,7 +24,7 @@ var gulp = require("gulp");
 var autoprefixer = require("autoprefixer");
 var del = require("del");
 var jsdoc = require("gulp-jsdoc3");
-var jshint = require("gulp-jshint");
+var eslint = require("gulp-eslint");
 var log = require("fancy-log");
 var phpcs = require("gulp-phpcs");
 var postcss = require("gulp-postcss");
@@ -35,7 +34,6 @@ var runSequence = require("run-sequence");
 var sass = require("gulp-sass");
 var sassLint = require("gulp-sass-lint");
 var shell = require("gulp-shell");
-var stylish = require("jshint-stylish");
 var wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
 var zip = require("gulp-zip");
 
@@ -257,8 +255,9 @@ gulp.task("lint_js", function () {
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
-        .pipe(jshint())
-        .pipe(jshint.reporter(stylish));
+        .pipe(eslint())
+        .pipe(eslint.format());
+        // .pipe(eslint.failAfterError());
 });
 
 /**

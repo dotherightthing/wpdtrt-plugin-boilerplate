@@ -8,9 +8,8 @@
  * @version 1.0.1
  */
 
-/*jshint browser:true*/
-/*jslint browser:true*/
-/*global jQuery, wpdtrt_plugin_boilerplate_config*/
+/* eslint-env browser */
+/* global jQuery, wpdtrt_plugin_boilerplate_config */
 
 jQuery(document).ready(function ($) {
 
