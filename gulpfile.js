@@ -11,7 +11,7 @@
  *    ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
  *    --cwd ./
  *
- * @version     1.4.27
+ * @version     1.4.28
  */
 
 /* eslint-env node */
