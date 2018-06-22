@@ -40,6 +40,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 			// define variables.
 			$name                      = null;
+			$register 				   = true;
 			$plugin                    = null;
 			$selected_instance_options = null;
 			$labels                    = null;
@@ -62,13 +63,14 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 			$this->set_instance_options( $taxonomy_instance_options );
 
-			$this->set_labels( $labels );
-
 			$this->set_name( $name );
 
 			$this->set_options( $taxonomy_options );
 
-			$this->register_taxonomy();
+			if ( $register === true ) {
+				$this->set_labels( $labels );
+				$this->register_taxonomy();
+			}
 
 			// hook in to WordPress.
 			$this->wp_setup();
