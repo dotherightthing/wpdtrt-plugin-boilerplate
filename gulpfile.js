@@ -561,9 +561,13 @@ gulp.task("docs_php", function () {
     );
 
     var config_path = "";
+    var directory = ".";
+    // var ignore = "";
 
     if (pluginName !== "wpdtrt-plugin-boilerplate") {
         config_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+        directory = "../../../"; // path to root from bin executable
+        // ignore = " --ignore index.php"; // ignores config ignores
     }
 
     // return stream or promise for run-sequence
@@ -572,7 +576,11 @@ gulp.task("docs_php", function () {
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "vendor/bin/phpdoc --config " + config_path + "phpdoc.dist.xml"
+            "vendor/bin/phpdoc"
+            + " --config " + config_path + "phpdoc.dist.xml"
+            + " --directory " + directory
+            // + ignore
+            + " --progressbar"
         ]));
 });
 
