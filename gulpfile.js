@@ -11,7 +11,7 @@
  *    ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
  *    --cwd ./
  *
- * @version     1.4.28
+ * @version     1.4.29
  */
 
 /* eslint-env node */
@@ -580,7 +580,6 @@ gulp.task("docs_php", function () {
             + " --config " + config_path + "phpdoc.dist.xml"
             + " --directory " + directory
             // + ignore
-            + " --progressbar"
         ]));
 });
 
