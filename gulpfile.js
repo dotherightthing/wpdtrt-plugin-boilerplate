@@ -544,7 +544,9 @@ gulp.task("docs_js", function () {
     var jsdocConfig_path = "./";
 
     if (pluginName !== "wpdtrt-plugin-boilerplate") {
+        /* eslint-disable max-len */   
         jsdocConfig_path = "./vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+        /* eslint-enable max-len */
     }
 
     var jsdocConfig = require(jsdocConfig_path + "jsdocConfig");
