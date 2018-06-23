@@ -651,9 +651,15 @@ gulp.task("wpunit_run", function () {
         "WPUnit"
     );
 
+    var config_path = "";
+
+    if (pluginName !== "wpdtrt-plugin-boilerplate") {
+        config_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+    }
+
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "phpunit"
+            "phpunit --configuration " + config_path + "phpunit.xml.dist"
         ]));
 });
 
