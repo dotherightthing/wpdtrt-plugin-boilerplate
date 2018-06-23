@@ -14,7 +14,7 @@
  * @since   1.0.0
  * @version 1.0.0
  */
-class WPDTRT_Test_Shortcode extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_29\Shortcode {
+class WPDTRT_Test_Shortcode extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_30\Shortcode {
 
 	/**
 	 * Supplement shortcode initialisation.
