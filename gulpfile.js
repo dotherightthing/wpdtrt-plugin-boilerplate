@@ -541,7 +541,13 @@ gulp.task("docs_js", function () {
         "JS"
     );
 
-    var jsdocConfig = require("./jsdocConfig");
+    var jsdocConfig_path = "./";
+
+    if (pluginName !== "wpdtrt-plugin-boilerplate") {
+        jsdocConfig_path = "./vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+    }
+
+    var jsdocConfig = require(jsdocConfig_path + "jsdocConfig");
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
