@@ -1,24 +1,24 @@
 /**
- * Gulp Task Runner
- * Compile front-end resources
+ * @file DTRT WordPress Plugin Boilerplate gulpfile.js
+ * @summary
+ *     Gulp build tasks
  *
- * @example usage from parent plugin:
- *    gulp
- *
- * @example usage from child plugin:
- *    gulp
- *    --gulpfile
- *    ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
- *    --cwd ./
+ * @example usage:
+ *    npm run build
+ *    npm run install_deps
+ *    npm run package
+ *    npm run test
+ *    npm run version
+ *    npm run watch
  *
  * @version     1.4.30
  */
 
-/* eslint-env node */
-
 /**
- * ===== dependencies =====
+ * @namespace gulp
  */
+
+/* eslint-env node */
 
 var gulp = require("gulp");
 var autoprefixer = require("autoprefixer");
@@ -39,54 +39,133 @@ var wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
 var zip = require("gulp-zip");
 
 /**
- * ===== paths =====
+ * @summary Get the pluginName from package.json
+ * @return {string} pluginName
+ * @memberOf gulp
  */
+function get_pluginName() {
+    // pop() - remove the last element from the path array and return it
+    var pluginName = process.cwd().split("/").pop();
 
-// pop() - remove the last element from the path array and return it
-var vendorName = "dotherightthing";
-var pluginName = process.cwd().split("/").pop();
-var pluginNameSafe = pluginName.replace(/-/g, "_");
-var cssDir = "css";
-var distDir = pluginName;
-var dummyFile = "README.md";
-var jsFiles = [
-    "./js/*.js",
-    "gulpfile.js"
-];
-var scssFiles = "./scss/*.scss";
-
-// https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
-var travis = (typeof process.env.TRAVIS !== "undefined");
+    return pluginName;
+}
 
 /**
- * ===== helpers =====
+ * @summary Determines whether we're in the boilerplate, or using it as a dependency
+ * @return {Boolean} True if we're in the boilerplate
+ * @memberOf gulp
  */
+function is_boilerplate() {
+    var pluginName = get_pluginName();
 
-function taskheader(step_number, task_category, task_action, task_detail) {
+    return (pluginName === "wpdtrt-plugin-boilerplate");
+}
+
+/**
+ * @summary Determines whether the current Gulp process is running on Travis CI
+ * @return {Boolean}
+ * @see https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
+ * @memberOf gulp
+ */
+function is_travis() {
+    return (typeof process.env.TRAVIS !== "undefined");
+}
+
+/**
+ * @summary Get the path to the boilerplate
+ * @return {string} path
+ * @memberOf gulp
+ */
+function get_boilerplate_path() {
+    var path = "";
+    var boilerplate = is_boilerplate();
+
+    if (! boilerplate) {
+        path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+    }
+
+    return path;
+}
+
+/**
+ * @summary Get list of JavaScript files to lint and document
+ * @return {array} jsFiles Array of files
+ * @see http://usejsdoc.org/about-including-package.html
+ * @memberOf gulp
+ */
+function get_js_files() {
+
+    var boilerplate_path = get_boilerplate_path();
+
+    if ( boilerplate_path !== "" ) {
+        boilerplate_path += "/";
+    }
+
+    var jsFiles = [
+        "./js/*.js",
+        "package.json",
+        boilerplate_path + "gulpfile.js",
+        boilerplate_path + "js/backend.js"
+    ];
+
+    return jsFiles;
+}
+
+/**
+ * @summary Displays a block comment for each task that runs
+ * @param  {string} step          Step number
+ * @param  {string} task_category Task category
+ * @param  {string} task_action   Task action
+ * @param  {string} task_detail   Task detail
+ * @return {string}               Task header
+ * @memberOf gulp
+ */
+function gulp_helper_taskheader(step, task_category, task_action, task_detail) {
 
     "use strict";
 
     log(" ");
     log("========================================");
-    log(step_number + " - " + task_category + ":");
+    log(step + " - " + task_category + ":");
     log("=> " + task_action + ": " + task_detail);
     log("----------------------------------------");
     log(" ");
 }
 
+var pluginName = get_pluginName();
+var pluginNameSafe = pluginName.replace(/-/g, "_");
+var cssDir = "css";
+var distDir = pluginName;
+var dummyFile = "README.md";
+var scssFiles = "./scss/*.scss";
+
 /**
- * ===== tasks =====
+ * @callback runSequenceCallback
+ * @summary Tells runSequence that a task has finished.
+ * @description
+ *     By returning a stream,
+ *     the task system is able to plan the execution of those streams.
+ *     But sometimes, especially when you're in callback hell
+ *     or calling some streamless plugin,
+ *     you aren't able to return a stream.
+ *     That's what the callback is for.
+ *     To let the task system know that you're finished
+ *     and to move on to the next call in the execution chain.
+ * @see https://stackoverflow.com/a/29299107/6850747
+ * @memberOf gulp
  */
 
 /**
- * ===== 1. install_dependencies =====
+ * @function install_dependencies
+ * @summary Tasks which install dependencies
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("install_dependencies", function(callback) {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "1",
         "Dependencies",
         "Install",
@@ -97,24 +176,20 @@ gulp.task("install_dependencies", function(callback) {
         "install_dependencies_yarn",
         "install_dependencies_composer",
         "install_dependencies_boilerplate",
-        // By returning a stream,
-        // the task system is able to plan the execution of those streams.
-        // But sometimes, especially when you're in callback hell
-        // or calling some streamless plugin,
-        // you aren't able to return a stream.
-        // That's what the callback is for.
-        // To let the task system know that you're finished
-        // and to move on to the next call in the execution chain.
-        // see https://stackoverflow.com/a/29299107/6850747
         callback
     );
 });
 
+/**
+ * @function install_dependencies_yarn
+ * @summary Install Yarn dependencies
+ * @memberOf gulp
+ */
 gulp.task("install_dependencies_yarn", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "1a",
         "Dependencies",
         "Install",
@@ -128,11 +203,16 @@ gulp.task("install_dependencies_yarn", function () {
         ]));
 });
 
+/**
+ * @function install_dependencies_composer
+ * @summary Install Composer dependencies
+ * @memberOf gulp
+ */
 gulp.task("install_dependencies_composer", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "1b",
         "Dependencies",
         "Install",
@@ -147,33 +227,34 @@ gulp.task("install_dependencies_composer", function () {
 });
 
 /**
- * The parent plugin has various dev dependencies
- * which need to be made available to the child plugin for install tasks.
- * Composer projects only install dev dependencies
- * listed in their own require-dev,
- * so we copy in the parent dev dependencies
- * so that these are available to the child too.
- * This approach allows us to easily remove all dev dependencies,
- * before zipping project files,
- * by re-running the composer install with the --no-dev flag.
- *
- * See also "Command Line Configuration", above.
- *
+ * @function install_dependencies_boilerplate
+ * @summary Install Boilerplate dependencies
+ * @description
+ *     The boilerplate has various dev dependencies
+ *     which need to be made available to the child plugin for install tasks.
+ *     Composer projects only install dev dependencies listed in their own `require-dev`,
+ *     so we copy in the parent dev dependencies so that these are available to the child too.
+ *     This approach allows us to easily remove all dev dependencies,
+ *     before zipping project files,
+ *     by re-running the `composer` install with the `--no-dev` flag.
  * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47
  * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51
+ * @memberOf gulp
  */
 gulp.task("install_dependencies_boilerplate", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "1c",
         "Dependencies",
         "Install dev dependencies",
         "Composer (PHP)"
     );
 
-    if (pluginName !== "wpdtrt-plugin-boilerplate") {
+    var boilerplate = is_boilerplate();
+
+    if (! boilerplate) {
 
         // Read the require-dev list from the parent"s composer.json
         // The require function is relative to this gulpfile || node_modules
@@ -205,14 +286,16 @@ gulp.task("install_dependencies_boilerplate", function () {
 });
 
 /**
- * ===== 2. lint =====
+ * @function lint
+ * @summary Tasks which lint files
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("lint", function(callback) {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "2",
         "QA",
         "Lint",
@@ -228,11 +311,16 @@ gulp.task("lint", function(callback) {
     );
 });
 
+/**
+ * @function lint_sass
+ * @summary Lint Sass files
+ * @memberOf gulp
+ */
 gulp.task("lint_sass", function() {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "2a",
         "QA",
         "Lint",
@@ -245,29 +333,41 @@ gulp.task("lint_sass", function() {
         // .pipe(sassLint.failOnError())
 });
 
+/**
+ * @function lint_js
+ * @summary Lint JavaScript files
+ * @memberOf gulp
+ */
 gulp.task("lint_js", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "2b",
         "QA",
         "Lint",
         "JS"
     );
 
+    var files = get_js_files();
+
     // return stream or promise for run-sequence
-    return gulp.src(jsFiles)
+    return gulp.src(files)
         .pipe(eslint())
         .pipe(eslint.format());
         // .pipe(eslint.failAfterError());
 });
 
+/**
+ * @function lint_package_json
+ * @summary Lint package.json
+ * @memberOf gulp
+ */
 gulp.task("lint_package_json", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "2c",
         "QA",
         "Lint",
@@ -282,15 +382,17 @@ gulp.task("lint_package_json", function () {
 });
 
 /**
- * PHP Code Sniffer
- *
+ * @function lint_php
+ * @summary Lint PHP files
+ * @see https://packagist.org/packages/squizlabs/php_codesniffer
  * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/89
+ * @memberOf gulp
  */
 gulp.task("lint_php", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "2d",
         "QA",
         "Lint",
@@ -314,14 +416,16 @@ gulp.task("lint_php", function () {
 });
 
 /**
- * ===== 3. compile =====
+ * @function compile
+ * @summary Tasks which compile
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("compile", function(callback) {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "3",
         "Assets",
         "Compile",
@@ -334,11 +438,16 @@ gulp.task("compile", function(callback) {
     );
 });
 
+/**
+ * @function compile_css
+ * @summary Compile CSS
+ * @memberOf gulp
+ */
 gulp.task("compile_css", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "3a",
         "Assets",
         "Compile",
@@ -384,14 +493,16 @@ gulp.task("compile_css", function () {
 });
 
 /**
- * ===== 4. version =====
+ * @function version
+ * @summary Tasks which version the plugin
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("version", function (callback) {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "4",
         "Version",
         "Bump",
@@ -406,28 +517,35 @@ gulp.task("version", function (callback) {
     );
 });
 
+/**
+ * @function version_update
+ * @summary Update the boilerplate dependency to the latest version
+ * @description
+ *     If wpdtrt-plugin-boilerplate is loaded as a dependency
+ *     get the latest release of wpdtrt-plugin-boilerplate.
+ *     This has to run before `version_replace`
+ *     so that the correct version information is available
+ * @memberOf gulp
+ */
 gulp.task("version_update", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "4a",
         "Version",
         "Bump",
         "Update wpdtrt-plugin-boilerplate"
     );
 
-    // if wpdtrt-plugin-boilerplate is loaded as a dependency
-    if (pluginName !== "wpdtrt-plugin-boilerplate") {
-        // get the latest release of wpdtrt-plugin-boilerplate
-        // this has to run before version_replace
-        // so that the correct version information is available
-        //
+    var boilerplate = is_boilerplate();
+
+    if (! boilerplate) {
         // return stream or promise for run-sequence
         return gulp.src(dummyFile, {read: false})
             .pipe(shell([
                 /* eslint-disable max-len */
-                "composer update " + vendorName + "/" + pluginName + " --no-interaction"
+                "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction"
                 /* eslint-enable max-len */
             ]));
     }
@@ -435,47 +553,40 @@ gulp.task("version_update", function () {
     return;
 });
 
+/**
+ * @function version_replace
+ * @summary Replace version strings using the version set in package.json
+ * @memberOf gulp
+ */
 gulp.task("version_replace", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "4b",
         "Version",
         "Bump",
         "Replace version strings"
     );
 
-    // if run from wpdtrt-plugin-boilerplate:
-    // gulp version
-    var root_input_path = "";
-    var wpdtrt_plugin_boilerplate_input_path = "";
-
-    // if run from a child plugin:
-    // gulp version
-    // --gulpfile
-    // ./vendor/dotherightthing/wpdtrt-plugin-boilerplate/gulpfile.js
-    // --cwd ./
-    if (pluginName !== "wpdtrt-plugin-boilerplate") {
-        root_input_path = "";
-        /* eslint-disable max-len */
-        wpdtrt_plugin_boilerplate_input_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
-        /* eslint-enable max-len */
-    }
+    var boilerplate_path = get_boilerplate_path();
 
     return wpdtrtPluginBump({
-        root_input_path: root_input_path,
-        /* eslint-disable max-len */
-        wpdtrt_plugin_boilerplate_input_path: wpdtrt_plugin_boilerplate_input_path
-        /* eslint-enable max-len */
+        root_input_path: "",
+        wpdtrt_plugin_boilerplate_input_path: boilerplate_path
     });
 });
 
+/**
+ * @function version_update_autoload
+ * @summary Regenerate the list of PHP classes to be autoloaded
+ * @memberOf gulp
+ */
 gulp.task("version_update_autoload", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "4c",
         "Version",
         "Generate",
@@ -490,14 +601,16 @@ gulp.task("version_update_autoload", function () {
 });
 
 /**
- * ===== 5. docs =====
+ * @function docs
+ * @summary Tasks which generate documentation
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("docs", function (callback) {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "5",
         "Documentation",
         "",
@@ -512,11 +625,16 @@ gulp.task("docs", function (callback) {
     );
 });
 
+/**
+ * @function docs_delete
+ * @summary Delete existing generated docs
+ * @memberOf gulp
+ */
 gulp.task("docs_delete", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "5a",
         "Documentation",
         "Delete",
@@ -530,53 +648,55 @@ gulp.task("docs_delete", function () {
     ]);
 });
 
+/**
+ * @function docs_js
+ * @summary Generate JavaScript documentation
+ * @memberOf gulp
+ */
 gulp.task("docs_js", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "5b",
         "Documentation",
         "Generate",
         "JS"
     );
 
-    var jsdocConfig_path = "./";
-
-    if (pluginName !== "wpdtrt-plugin-boilerplate") {
-        /* eslint-disable max-len */   
-        jsdocConfig_path = "./vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
-        /* eslint-enable max-len */
-    }
+    var files = get_js_files();
 
     // require path is relative to this gulpfile
     var jsdocConfig = require("./jsdoc.json");
 
     // return stream or promise for run-sequence
-    return gulp.src(jsFiles)
+    return gulp.src(files)
         // note: output cannot be piped on from jsdoc
         .pipe(jsdoc(jsdocConfig));
 });
 
+/**
+ * @function docs_php
+ * @summary Generate PHP documentation
+ * @memberOf gulp
+ */
 gulp.task("docs_php", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "5c",
         "Documentation",
         "Generate",
         "PHP"
     );
 
-    var config_path = "";
+    var boilerplate = is_boilerplate();
+    var boilerplate_path = get_boilerplate_path();
     var directory = ".";
-    // var ignore = "";
 
-    if (pluginName !== "wpdtrt-plugin-boilerplate") {
-        config_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
+    if (! boilerplate) {
         directory = "../../../"; // path to root from bin executable
-        // ignore = " --ignore index.php"; // ignores config ignores
     }
 
     // return stream or promise for run-sequence
@@ -586,21 +706,23 @@ gulp.task("docs_php", function () {
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
             "vendor/bin/phpdoc"
-            + " --config " + config_path + "phpdoc.dist.xml"
+            + " --config " + boilerplate_path + "phpdoc.dist.xml"
             + " --directory " + directory
-            // + ignore
+            // + " --ignore index.php" // overides all ignores in config file
         ]));
 });
 
 /**
- * ===== 6. unit_test =====
+ * @function unit_test
+ * @summary Tasks which set up or run unit tests
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("unit_test", function (callback) {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "6",
         "QA",
         "",
@@ -615,29 +737,32 @@ gulp.task("unit_test", function (callback) {
 });
 
 /**
- * Install WPUnit test suite
- *
+ * @function wpunit_install
+ * @summary Install WPUnit test suite
  * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/
  * Testing-&-Debugging#environmental-variables
+ * @memberOf gulp
  */
 gulp.task("wpunit_install", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "6a",
         "QA",
         "Setup",
         "WPUnit"
     );
 
+    var boilerplate = is_boilerplate();
+    var boilerplate_path = get_boilerplate_path();
     var db_name = pluginNameSafe + "_wpunit_" + Date.now();
     var wp_version = "latest";
     var installer_path = "bin/";
 
-    if (pluginName !== "wpdtrt-plugin-boilerplate") {
+    if (! boilerplate) {
         /* eslint-disable max-len */
-        installer_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/bin/";
+        installer_path = boilerplate_path + "bin/";
         /* eslint-enable max-len */
     }
 
@@ -649,45 +774,52 @@ gulp.task("wpunit_install", function () {
         ]));
 });
 
+/**
+ * @function wpunit_run
+ * @summary Run WPUnit tests
+ * @memberOf gulp
+ */
 gulp.task("wpunit_run", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "6b",
         "QA",
         "Run",
         "WPUnit"
     );
 
-    var config_path = "";
-
-    if (pluginName !== "wpdtrt-plugin-boilerplate") {
-        config_path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
-    }
+    var boilerplate_path = get_boilerplate_path();
 
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "phpunit --configuration " + config_path + "phpunit.xml.dist"
+            /* eslint-disable max-len */
+            "phpunit --configuration " + boilerplate_path + "phpunit.xml.dist"
+            /* eslint-enable max-len */
         ]));
 });
 
 /**
- * ===== 7. release =====
+ * @function release
+ * @summary Tasks which package a release
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("release", function (callback) {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "7",
         "Release",
         "Generate",
         ""
     );
 
-    if ( travis ) {
+    var travis = is_travis();
+
+    if (travis) {
         runSequence(
             "release_composer_dist",
             "release_yarn_dist",
@@ -702,11 +834,16 @@ gulp.task("release", function (callback) {
     }
 });
 
+/**
+ * @function release_composer_dist
+ * @summary Uninstall PHP development dependencies
+ * @memberOf gulp
+ */
 gulp.task("release_composer_dist", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "7a",
         "Release",
         "Uninstall dev dependencies",
@@ -724,11 +861,16 @@ gulp.task("release_composer_dist", function () {
         ]));
 });
 
+/**
+ * @function release_yarn_dist
+ * @summary Uninstall Yarn development dependencies
+ * @memberOf gulp
+ */
 gulp.task("release_yarn_dist", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "7b",
         "Release",
         "Uninstall dev dependencies",
@@ -742,11 +884,16 @@ gulp.task("release_yarn_dist", function () {
         ]));
 });
 
+/**
+ * @function release_delete_pre
+ * @summary Delete existing release.zip
+ * @memberOf gulp
+ */
 gulp.task("release_delete_pre", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "7c",
         "Release",
         "Delete",
@@ -759,18 +906,23 @@ gulp.task("release_delete_pre", function () {
     ]);
 });
 
+/**
+ * @function release_copy
+ * @summary Copy release files to a temporary folder
+ * @see http://www.globtester.com/
+ * @memberOf gulp
+ */
 gulp.task("release_copy", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "7d",
         "Release",
         "Copy files",
         "To temporary folder"
     );
 
-    // @see http://www.globtester.com/
     var releaseFiles = [
         "./config/**/*",
         "./css/**/*",
@@ -804,11 +956,16 @@ gulp.task("release_copy", function () {
         .pipe(gulp.dest(distDir));
 });
 
+/**
+ * @function release_zip
+ * @summary Generate release.zip for deployment by Travis/Github
+ * @memberOf gulp
+ */
 gulp.task("release_zip", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "7e",
         "Release",
         "Generate",
@@ -824,11 +981,16 @@ gulp.task("release_zip", function () {
         .pipe(gulp.dest("./"));
 });
 
+/**
+ * @function release_delete_post
+ * @summary Delete the temporary folder
+ * @memberOf gulp
+ */
 gulp.task("release_delete_post", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "7f",
         "Release",
         "Delete",
@@ -842,34 +1004,43 @@ gulp.task("release_delete_post", function () {
 });
 
 /**
- * ===== 8. watch =====
+ * @function watch
+ * @summary Watch for changes to `.scss` files
+ * @memberOf gulp
  */
-
 gulp.task("watch", function () {
 
     "use strict";
 
-    taskheader(
+    gulp_helper_taskheader(
         "8",
         "Watch",
         "Compile",
         "SCSS"
     );
 
-    if ( ! travis ) {
+    var travis = is_travis();
+
+    if (!travis) {
         gulp.watch(scssFiles, ["css"]);
     }
 });
 
 /**
- * ===== 0. run tasks =====
+ * @function default
+ * @summary Default task
+ * @example
+ * gulp
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
  */
-
 gulp.task("default", function (callback) {
 
     "use strict";
 
-    taskheader(
+    var travis = is_travis();
+
+    gulp_helper_taskheader(
         "0",
         "Installation",
         "Gulp",
@@ -898,17 +1069,38 @@ gulp.task("default", function (callback) {
     callback();
 });
 
-// TODO remove once all legacy calls have been removed from generated plugins
+/**
+ * @function dist
+ * @summary Legacy dist task
+ * @example
+ * gulp dist
+ * @todo Remove once all legacy calls have been removed from generated plugins
+ * @memberOf gulp
+ */
 gulp.task("dist", [
     "default"
 ]);
 
-// TODO remove once all legacy calls have been removed from generated plugins
+/**
+ * @function dev
+ * @summary Legacy dev task
+ * @example
+ * gulp dev
+ * @todo Remove once all legacy calls have been removed from generated plugins
+ * @memberOf gulp
+ */
 gulp.task("dev", [
     "default"
 ]);
 
-// TODO remove once all legacy calls have been removed from generated plugins
+/**
+ * @function install
+ * @summary Legacy install task
+ * @example
+ * gulp install
+ * @todo Remove once all legacy calls have been removed from generated plugins
+ * @memberOf gulp
+ */
 gulp.task("install", [
     "default"
 ]);
