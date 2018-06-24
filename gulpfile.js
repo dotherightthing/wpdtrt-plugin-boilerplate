@@ -549,7 +549,8 @@ gulp.task("docs_js", function () {
         /* eslint-enable max-len */
     }
 
-    var jsdocConfig = require(jsdocConfig_path + "jsdocConfig");
+    // require path is relative to this gulpfile
+    var jsdocConfig = require("./jsdoc.json");
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
