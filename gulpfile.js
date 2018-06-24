@@ -11,7 +11,7 @@
  *    npm run version
  *    npm run watch
  *
- * @version     1.4.30
+ * @version     1.4.31
  */
 
 /**
