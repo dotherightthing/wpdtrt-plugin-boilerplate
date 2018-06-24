@@ -88,12 +88,12 @@ function get_boilerplate_path() {
 }
 
 /**
- * @summary Get list of JavaScript files to lint and document
+ * @summary Get list of JavaScript files to document
  * @return {array} jsFiles Array of files
  * @see http://usejsdoc.org/about-including-package.html
  * @memberOf gulp
  */
-function get_js_files() {
+function get_js_doc_files() {
 
     var boilerplate_path = get_boilerplate_path();
 
@@ -104,6 +104,29 @@ function get_js_files() {
     var jsFiles = [
         "./js/*.js",
         "package.json",
+        boilerplate_path + "gulpfile.js",
+        boilerplate_path + "js/backend.js"
+    ];
+
+    return jsFiles;
+}
+
+/**
+ * @summary Get list of JavaScript files to lint
+ * @return {array} jsFiles Array of files
+ * @see http://usejsdoc.org/about-including-package.html
+ * @memberOf gulp
+ */
+function get_js_lint_files() {
+
+    var boilerplate_path = get_boilerplate_path();
+
+    if ( boilerplate_path !== "" ) {
+        boilerplate_path += "/";
+    }
+
+    var jsFiles = [
+        "./js/*.js",
         boilerplate_path + "gulpfile.js",
         boilerplate_path + "js/backend.js"
     ];
@@ -349,7 +372,7 @@ gulp.task("lint_js", function () {
         "JS"
     );
 
-    var files = get_js_files();
+    var files = get_js_lint_files();
 
     // return stream or promise for run-sequence
     return gulp.src(files)
@@ -664,7 +687,7 @@ gulp.task("docs_js", function () {
         "JS"
     );
 
-    var files = get_js_files();
+    var files = get_js_doc_files();
 
     // require path is relative to this gulpfile
     var jsdocConfig = require("./jsdoc.json");
