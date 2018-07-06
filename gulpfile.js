@@ -245,8 +245,8 @@ gulp.task("install_dependencies_yarn", function () {
 
 /**
  * @function preinstall_dependencies_github
- * @summary Expose the Githib API rate limit to aid in debugging failed builds
- * @param {runSequenceCallback} callback - The callback that handles the response
+ * @summary Expose the Github API rate limit to aid in debugging failed builds
+ * @return {Object} Rate Limit object
  * @memberOf gulp
  */
 gulp.task("preinstall_dependencies_github", function() {
@@ -257,7 +257,7 @@ gulp.task("preinstall_dependencies_github", function() {
         "1b",
         "Dependencies",
         "Pre-Install",
-        "Check current Github rate limit for automated installs"
+        "Check current Github API rate limit for automated installs"
     );
 
     if ( ! is_travis() ) {
@@ -267,7 +267,8 @@ gulp.task("preinstall_dependencies_github", function() {
     return ghRateLimit({
       token: get_gh_token()
     }).then( function(status) {
-      status;
+        log("Github API rate limit:")
+        log(status);
       /* =>
             {
               core: {
