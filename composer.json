@@ -35,15 +35,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.packagist.com/dotherightthing/"
-        },
-        {
-            "packagist.org": false
-        }
-    ],
     "config": {
         "vendor-dir": "vendor"
     }
