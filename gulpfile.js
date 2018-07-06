@@ -269,20 +269,6 @@ gulp.task("preinstall_dependencies_github", function() {
     }).then( function(status) {
         log("Github API rate limit:")
         log(status);
-      /* =>
-            {
-              core: {
-                limit: 5000,
-                remaining: 4861,
-                reset: 1451463150
-              },
-              search: {
-                limit: 30,
-                remaining: 30,
-                reset: 1451459998
-              }
-            }
-      */
     });
 });
 
