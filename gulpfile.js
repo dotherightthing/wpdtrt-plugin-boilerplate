@@ -23,6 +23,7 @@
 var gulp = require("gulp");
 var autoprefixer = require("autoprefixer");
 var del = require("del");
+var ghRateLimit = require('gh-rate-limit');
 var jsdoc = require("gulp-jsdoc3");
 var eslint = require("gulp-eslint");
 var log = require("fancy-log");
@@ -69,6 +70,21 @@ function is_boilerplate() {
  */
 function is_travis() {
     return (typeof process.env.TRAVIS !== "undefined");
+}
+
+/**
+ * @summary Get the value of the Github API access token used by Travis
+ * @return {String}
+ * @memberOf gulp
+ */
+function get_gh_token() {
+    var token  = '';
+
+    if ( is_travis() ) {
+        token = process.env.GH_TOKEN;
+    }
+
+    return (token);
 }
 
 /**
@@ -197,6 +213,7 @@ gulp.task("install_dependencies", function(callback) {
 
     runSequence(
         "install_dependencies_yarn",
+        "preinstall_dependencies_github",
         "install_dependencies_composer",
         "install_dependencies_boilerplate",
         callback
@@ -224,6 +241,48 @@ gulp.task("install_dependencies_yarn", function () {
         .pipe(shell([
             "yarn install --non-interactive"
         ]));
+});
+
+/**
+ * @function preinstall_dependencies_github
+ * @summary Expose the Githib API rate limit to aid in debugging failed builds
+ * @param {runSequenceCallback} callback - The callback that handles the response
+ * @memberOf gulp
+ */
+gulp.task("preinstall_dependencies_github", function() {
+
+    "use strict";
+
+    gulp_helper_taskheader(
+        "1b",
+        "Dependencies",
+        "Pre-Install",
+        "Check current Github rate limit for automated installs"
+    );
+
+    if ( ! is_travis() ) {
+        return true;
+    }
+
+    return ghRateLimit({
+      token: get_gh_token()
+    }).then(status => {
+      status;
+      /* =>
+            {
+              core: {
+                limit: 5000,
+                remaining: 4861,
+                reset: 1451463150
+              },
+              search: {
+                limit: 30,
+                remaining: 30,
+                reset: 1451459998
+              }
+            }
+      */
+    });
 });
 
 /**
