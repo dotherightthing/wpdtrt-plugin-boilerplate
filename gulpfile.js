@@ -23,7 +23,7 @@
 var gulp = require("gulp");
 var autoprefixer = require("autoprefixer");
 var del = require("del");
-var ghRateLimit = require('gh-rate-limit');
+var ghRateLimit = require("gh-rate-limit");
 var jsdoc = require("gulp-jsdoc3");
 var eslint = require("gulp-eslint");
 var log = require("fancy-log");
@@ -78,7 +78,7 @@ function is_travis() {
  * @memberOf gulp
  */
 function get_gh_token() {
-    var token  = '';
+    var token = "";
 
     if ( is_travis() ) {
         token = process.env.GH_TOKEN;
@@ -266,7 +266,7 @@ gulp.task("preinstall_dependencies_github", function() {
 
     return ghRateLimit({
       token: get_gh_token()
-    }).then(status => {
+    }).then( function(status) {
       status;
       /* =>
             {
