@@ -319,6 +319,10 @@ gulp.task("install_dependencies_boilerplate", function () {
 
     "use strict";
 
+    if ( is_boilerplate() ) {
+        return true;
+    }
+
     gulp_helper_taskheader(
         "1c",
         "Dependencies",
@@ -326,37 +330,30 @@ gulp.task("install_dependencies_boilerplate", function () {
         "Composer (PHP)"
     );
 
-    var boilerplate = is_boilerplate();
+    // Read the require-dev list from the parent's composer.json
+    // The require function is relative to this gulpfile || node_modules
+    // @see https://stackoverflow.com/a/23643087/6850747
+    var composer_json = require("./composer.json");
+    var dev_packages = composer_json["require-dev"];
+    var dev_packages_str = "";
 
-    if (! boilerplate) {
+    // convert the require-dev list into a space-separated string
+    // foo/bar:1.2.3
+    // @see https://stackoverflow.com/a/1963179/6850747
+    // Replaced with Object.keys as reqd by JSLint
+    // @see https://jsperf.com/fastest-way-to-iterate-object
+    Object.keys(dev_packages).forEach(function (element) {
+        // element is the name of the key.
+        // key is just a numerical value for the array
+        dev_packages_str += (" " + element + ":" + dev_packages[element]);
+    });
 
-        // Read the require-dev list from the parent"s composer.json
-        // The require function is relative to this gulpfile || node_modules
-        // @see https://stackoverflow.com/a/23643087/6850747
-        var composer_json = require("./composer.json");
-        var dev_packages = composer_json["require-dev"];
-        var dev_packages_str = "";
-
-        // convert the require-dev list into a space-separated string
-        // foo/bar:1.2.3
-        // @see https://stackoverflow.com/a/1963179/6850747
-        // Replaced with Object.keys as reqd by JSLint
-        // @see https://jsperf.com/fastest-way-to-iterate-object
-        Object.keys(dev_packages).forEach(function (element) {
-            // element is the name of the key.
-            // key is just a numerical value for the array
-            dev_packages_str += (" " + element + ":" + dev_packages[element]);
-        });
-
-        // add each dependency from the parent"s require-dev
-        // to the child"s require-dev
-        return gulp.src(dummyFile, {read: false})
-            .pipe(shell([
-                "composer require" + dev_packages_str + " --dev"
-            ]));
-    }
-
-    return;
+    // add each dependency from the parent"s require-dev
+    // to the child"s require-dev
+    return gulp.src(dummyFile, {read: false})
+        .pipe(shell([
+            "composer require" + dev_packages_str + " --dev"
+        ]));
 });
 
 /**
@@ -605,6 +602,10 @@ gulp.task("version_update", function () {
 
     "use strict";
 
+    if ( is_boilerplate() ) {
+        return true;
+    }
+
     gulp_helper_taskheader(
         "4a",
         "Version",
@@ -612,19 +613,13 @@ gulp.task("version_update", function () {
         "Update wpdtrt-plugin-boilerplate"
     );
 
-    var boilerplate = is_boilerplate();
-
-    if (! boilerplate) {
-        // return stream or promise for run-sequence
-        return gulp.src(dummyFile, {read: false})
-            .pipe(shell([
-                /* eslint-disable max-len */
-                "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction"
-                /* eslint-enable max-len */
-            ]));
-    }
-
-    return;
+    // return stream or promise for run-sequence
+    return gulp.src(dummyFile, {read: false})
+        .pipe(shell([
+            /* eslint-disable max-len */
+            "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction"
+            /* eslint-enable max-len */
+        ]));
 });
 
 /**
@@ -884,16 +879,16 @@ gulp.task("release", function (callback) {
 
     "use strict";
 
-    gulp_helper_taskheader(
-        "7",
-        "Release",
-        "Generate",
-        ""
-    );
-
     var travis = is_travis();
 
     if (travis) {
+        gulp_helper_taskheader(
+            "7",
+            "Release",
+            "Generate",
+            ""
+        );
+
         runSequence(
             "release_composer_dist",
             "release_yarn_dist",
@@ -1086,16 +1081,14 @@ gulp.task("watch", function () {
 
     "use strict";
 
-    gulp_helper_taskheader(
-        "8",
-        "Watch",
-        "Compile",
-        "SCSS"
-    );
+    if (! is_travis() ) {
+        gulp_helper_taskheader(
+            "8",
+            "Watch",
+            "Compile",
+            "SCSS"
+        );
 
-    var travis = is_travis();
-
-    if (!travis) {
         gulp.watch(scssFiles, ["css"]);
     }
 });
