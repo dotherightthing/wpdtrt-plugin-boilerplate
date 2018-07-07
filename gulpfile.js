@@ -281,6 +281,11 @@ gulp.task("install_dependencies_composer", function () {
 
     "use strict";
 
+    // Travis already runs composer install
+    if ( is_travis() ) {
+        return true;
+    }
+
     gulp_helper_taskheader(
         "1b",
         "Dependencies",
