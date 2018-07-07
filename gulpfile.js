@@ -291,7 +291,7 @@ gulp.task("install_dependencies_composer", function () {
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "composer install --prefer-dist --no-interaction"
+            "composer install --prefer-dist --no-interaction --no-suggest"
         ]));
 });
 
