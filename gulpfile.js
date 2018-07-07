@@ -569,7 +569,7 @@ gulp.task("version", (callback) => {
  */
 gulp.task("version_update", () => {
 
-    if ( is_boilerplate() ) {
+    if ( is_boilerplate() || is_travis() ) {
         return true;
     }
 
@@ -584,7 +584,7 @@ gulp.task("version_update", () => {
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
             /* eslint-disable max-len */
-            "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction"
+            "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest"
             /* eslint-enable max-len */
         ]));
 });
@@ -616,6 +616,10 @@ gulp.task("version_replace", () => {
  */
 gulp.task("version_update_autoload", () => {
 
+    if ( is_travis() ) {
+        return true;
+    }
+
     gulp_helper_taskheader(
         "4c",
         "Version",
@@ -626,7 +630,7 @@ gulp.task("version_update_autoload", () => {
     // regenerate autoload files
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "composer dump-autoload --no-interaction"
+            "composer dump-autoload --no-interaction --no-suggest"
         ]));
 });
 
@@ -861,7 +865,7 @@ gulp.task("release_composer_dist", () => {
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "composer install --prefer-dist --no-interaction --no-dev"
+            "composer install --prefer-dist --no-interaction --no-dev --no-suggest"
         ]));
 });
 
