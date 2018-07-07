@@ -865,7 +865,9 @@ gulp.task("release_composer_dist", () => {
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
+            /* eslint-disable max-len */
             "composer install --prefer-dist --no-interaction --no-dev --no-suggest"
+            /* eslint-enable max-len */
         ]));
 });
 
