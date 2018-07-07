@@ -17,5 +17,6 @@
     <ignore>tests/bootstrap.php</ignore>
     <ignore>tests/generated-plugin/src/index.php</ignore>
     <ignore>vendor/*</ignore>
+    <ignore>wordpress-content/*</ignore>
   </files>
 </phpdoc>
