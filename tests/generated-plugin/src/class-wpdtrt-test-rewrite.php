@@ -14,7 +14,7 @@
  * @since   1.0.0
  * @version 1.0.0
  */
-class WPDTRT_Test_Rewrite extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_35\Rewrite {
+class WPDTRT_Test_Rewrite extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_36\Rewrite {
 
 	/**
 	 * Supplement plugin initialisation.
