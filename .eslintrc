@@ -30,7 +30,7 @@
     ],
     "no-undef": 2,
     "no-unused-vars": 2,
-    "strict": 0,
+    "strict": 1,
     "max-params": 0,
     "max-depth": 0,
     "max-statements": 0,

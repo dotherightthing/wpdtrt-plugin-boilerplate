@@ -20,24 +20,26 @@
 
 /* eslint-env node */
 
-var gulp = require("gulp");
-var autoprefixer = require("autoprefixer");
-var del = require("del");
-var ghRateLimit = require("gh-rate-limit");
-var jsdoc = require("gulp-jsdoc3");
-var eslint = require("gulp-eslint");
-var log = require("fancy-log");
-var phpcs = require("gulp-phpcs");
-var postcss = require("gulp-postcss");
-var print = require("gulp-print").default;
-var pxtorem = require("postcss-pxtorem");
-var runSequence = require("run-sequence");
-var sass = require("gulp-sass");
-var sassLint = require("gulp-sass-lint");
-var shell = require("gulp-shell");
-var validate = require("gulp-nice-package");
-var wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
-var zip = require("gulp-zip");
+"use strict";
+
+const gulp = require("gulp");
+const autoprefixer = require("autoprefixer");
+const del = require("del");
+const ghRateLimit = require("gh-rate-limit");
+const jsdoc = require("gulp-jsdoc3");
+const eslint = require("gulp-eslint");
+const log = require("fancy-log");
+const phpcs = require("gulp-phpcs");
+const postcss = require("gulp-postcss");
+const print = require("gulp-print").default;
+const pxtorem = require("postcss-pxtorem");
+const runSequence = require("run-sequence");
+const sass = require("gulp-sass");
+const sassLint = require("gulp-sass-lint");
+const shell = require("gulp-shell");
+const validate = require("gulp-nice-package");
+const wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
+const zip = require("gulp-zip");
 
 /**
  * @summary Get the pluginName from package.json
@@ -46,7 +48,7 @@ var zip = require("gulp-zip");
  */
 function get_pluginName() {
     // pop() - remove the last element from the path array and return it
-    var pluginName = process.cwd().split("/").pop();
+    const pluginName = process.cwd().split("/").pop();
 
     return pluginName;
 }
@@ -57,7 +59,7 @@ function get_pluginName() {
  * @memberOf gulp
  */
 function is_boilerplate() {
-    var pluginName = get_pluginName();
+    const pluginName = get_pluginName();
 
     return (pluginName === "wpdtrt-plugin-boilerplate");
 }
@@ -78,7 +80,7 @@ function is_travis() {
  * @memberOf gulp
  */
 function get_gh_token() {
-    var token = "";
+    let token = "";
 
     if ( is_travis() ) {
         token = process.env.GH_TOKEN;
@@ -93,10 +95,9 @@ function get_gh_token() {
  * @memberOf gulp
  */
 function get_boilerplate_path() {
-    var path = "";
-    var boilerplate = is_boilerplate();
+    let path = "";
 
-    if (! boilerplate) {
+    if (! is_boilerplate() ) {
         path = "vendor/dotherightthing/wpdtrt-plugin-boilerplate/";
     }
 
@@ -111,13 +112,13 @@ function get_boilerplate_path() {
  */
 function get_js_doc_files() {
 
-    var boilerplate_path = get_boilerplate_path();
+    let boilerplate_path = get_boilerplate_path();
 
     if ( boilerplate_path !== "" ) {
         boilerplate_path += "/";
     }
 
-    var jsFiles = [
+    const jsFiles = [
         "./js/*.js",
         "package.json",
         boilerplate_path + "gulpfile.js",
@@ -135,13 +136,13 @@ function get_js_doc_files() {
  */
 function get_js_lint_files() {
 
-    var boilerplate_path = get_boilerplate_path();
+    let boilerplate_path = get_boilerplate_path();
 
     if ( boilerplate_path !== "" ) {
         boilerplate_path += "/";
     }
 
-    var jsFiles = [
+    const jsFiles = [
         "./js/*.js",
         boilerplate_path + "gulpfile.js",
         boilerplate_path + "js/backend.js"
@@ -161,8 +162,6 @@ function get_js_lint_files() {
  */
 function gulp_helper_taskheader(step, task_category, task_action, task_detail) {
 
-    "use strict";
-
     log(" ");
     log("========================================");
     log(step + " - " + task_category + ":");
@@ -171,12 +170,12 @@ function gulp_helper_taskheader(step, task_category, task_action, task_detail) {
     log(" ");
 }
 
-var pluginName = get_pluginName();
-var pluginNameSafe = pluginName.replace(/-/g, "_");
-var cssDir = "css";
-var distDir = pluginName;
-var dummyFile = "README.md";
-var scssFiles = "./scss/*.scss";
+const pluginName = get_pluginName();
+const pluginNameSafe = pluginName.replace(/-/g, "_");
+const cssDir = "css";
+const distDir = pluginName;
+const dummyFile = "README.md";
+const scssFiles = "./scss/*.scss";
 
 /**
  * @callback runSequenceCallback
@@ -202,8 +201,6 @@ var scssFiles = "./scss/*.scss";
  */
 gulp.task("install_dependencies", function(callback) {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "1",
         "Dependencies",
@@ -226,8 +223,6 @@ gulp.task("install_dependencies", function(callback) {
  */
 gulp.task("install_dependencies_yarn", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "1a",
         "Dependencies",
@@ -249,8 +244,6 @@ gulp.task("install_dependencies_yarn", function () {
  * @memberOf gulp
  */
 gulp.task("preinstall_dependencies_github", function() {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "1b",
@@ -277,8 +270,6 @@ gulp.task("preinstall_dependencies_github", function() {
  * @memberOf gulp
  */
 gulp.task("install_dependencies_composer", function () {
-
-    "use strict";
 
     // Travis already runs composer install
     if ( is_travis() ) {
@@ -307,8 +298,6 @@ gulp.task("install_dependencies_composer", function () {
  */
 gulp.task("lint", function(callback) {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "2",
         "QA",
@@ -332,8 +321,6 @@ gulp.task("lint", function(callback) {
  */
 gulp.task("lint_sass", function() {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "2a",
         "QA",
@@ -353,8 +340,6 @@ gulp.task("lint_sass", function() {
  * @memberOf gulp
  */
 gulp.task("lint_js", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "2b",
@@ -379,8 +364,6 @@ gulp.task("lint_js", function () {
  */
 gulp.task("lint_package_json", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "2c",
         "QA",
@@ -403,8 +386,6 @@ gulp.task("lint_package_json", function () {
  * @memberOf gulp
  */
 gulp.task("lint_php", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "2d",
@@ -437,8 +418,6 @@ gulp.task("lint_php", function () {
  */
 gulp.task("compile", function(callback) {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "3",
         "Assets",
@@ -458,8 +437,6 @@ gulp.task("compile", function(callback) {
  * @memberOf gulp
  */
 gulp.task("compile_css", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "3a",
@@ -514,8 +491,6 @@ gulp.task("compile_css", function () {
  */
 gulp.task("version", function (callback) {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "4",
         "Version",
@@ -542,8 +517,6 @@ gulp.task("version", function (callback) {
  * @memberOf gulp
  */
 gulp.task("version_update", function () {
-
-    "use strict";
 
     if ( is_boilerplate() ) {
         return true;
@@ -572,8 +545,6 @@ gulp.task("version_update", function () {
  */
 gulp.task("version_replace", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "4b",
         "Version",
@@ -595,8 +566,6 @@ gulp.task("version_replace", function () {
  * @memberOf gulp
  */
 gulp.task("version_update_autoload", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "4c",
@@ -620,8 +589,6 @@ gulp.task("version_update_autoload", function () {
  */
 gulp.task("docs", function (callback) {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "5",
         "Documentation",
@@ -644,8 +611,6 @@ gulp.task("docs", function (callback) {
  */
 gulp.task("docs_delete", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "5a",
         "Documentation",
@@ -666,8 +631,6 @@ gulp.task("docs_delete", function () {
  * @memberOf gulp
  */
 gulp.task("docs_js", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "5b",
@@ -693,8 +656,6 @@ gulp.task("docs_js", function () {
  * @memberOf gulp
  */
 gulp.task("docs_php", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "5c",
@@ -732,8 +693,6 @@ gulp.task("docs_php", function () {
  */
 gulp.task("unit_test", function (callback) {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "6",
         "QA",
@@ -756,8 +715,6 @@ gulp.task("unit_test", function (callback) {
  * @memberOf gulp
  */
 gulp.task("wpunit_install", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "6a",
@@ -793,8 +750,6 @@ gulp.task("wpunit_install", function () {
  */
 gulp.task("wpunit_run", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "6b",
         "QA",
@@ -819,8 +774,6 @@ gulp.task("wpunit_run", function () {
  * @memberOf gulp
  */
 gulp.task("release", function (callback) {
-
-    "use strict";
 
     var travis = is_travis();
 
@@ -853,8 +806,6 @@ gulp.task("release", function (callback) {
  */
 gulp.task("release_composer_dist", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "7a",
         "Release",
@@ -880,8 +831,6 @@ gulp.task("release_composer_dist", function () {
  */
 gulp.task("release_yarn_dist", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "7b",
         "Release",
@@ -903,8 +852,6 @@ gulp.task("release_yarn_dist", function () {
  */
 gulp.task("release_delete_pre", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "7c",
         "Release",
@@ -925,8 +872,6 @@ gulp.task("release_delete_pre", function () {
  * @memberOf gulp
  */
 gulp.task("release_copy", function () {
-
-    "use strict";
 
     gulp_helper_taskheader(
         "7d",
@@ -975,8 +920,6 @@ gulp.task("release_copy", function () {
  */
 gulp.task("release_zip", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "7e",
         "Release",
@@ -1000,8 +943,6 @@ gulp.task("release_zip", function () {
  */
 gulp.task("release_delete_post", function () {
 
-    "use strict";
-
     gulp_helper_taskheader(
         "7f",
         "Release",
@@ -1021,8 +962,6 @@ gulp.task("release_delete_post", function () {
  * @memberOf gulp
  */
 gulp.task("watch", function () {
-
-    "use strict";
 
     if (! is_travis() ) {
         gulp_helper_taskheader(
@@ -1045,8 +984,6 @@ gulp.task("watch", function () {
  * @memberOf gulp
  */
 gulp.task("default", function (callback) {
-
-    "use strict";
 
     var travis = is_travis();
 
