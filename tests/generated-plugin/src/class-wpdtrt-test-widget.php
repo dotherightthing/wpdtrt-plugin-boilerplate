@@ -14,7 +14,7 @@
  * @since   1.0.0
  * @version 1.0.0
  */
-class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_33\Widget {
+class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_34\Widget {
 
 	/**
 	 * Supplement widget initialisation.
