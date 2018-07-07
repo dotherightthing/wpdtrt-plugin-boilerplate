@@ -2,6 +2,8 @@
 composer.phar
 css
 docs
+backend-es5.js
+frontend-es5.js
 logs
 node_modules
 release.zip
