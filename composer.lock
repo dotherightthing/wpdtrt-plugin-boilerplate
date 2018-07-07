@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28fc6f2f8a43a1825d8e388f4bf15809",
+    "content-hash": "bf68f6b5d154b01afe1537ffbcefd8f3",
     "packages": [
         {
             "name": "dotherightthing/wpdtrt-debug",
@@ -18,13 +18,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/dotherightthing/wpdtrt-debug/zipball/38036744142f6397d3ed23191de68ffd5b2156b6",
                 "reference": "38036744142f6397d3ed23191de68ffd5b2156b6",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://repo.packagist.com/dotherightthing/dists/%package%/%version%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.6.30"
@@ -35,7 +29,6 @@
                     "DoTheRightThing\\WPDebug\\": "src"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
             "license": [
                 "ISC"
             ],
@@ -82,7 +75,7 @@
                     "class-gamajo-template-loader.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0+"
             ],
@@ -107,23 +100,52 @@
             "version": "dev-autoloader",
             "source": {
                 "type": "git",
-                "url": "https://github.com/dotherightthing/tgm-plugin-activation",
-                "reference": "autoloader"
+                "url": "https://github.com/dotherightthing/TGM-Plugin-Activation.git",
+                "reference": "270098e8d04bac9ac1b7c482c98a5d27f0080a91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://repo.packagist.com/dotherightthing/dists/tgmpa/tgm-plugin-activation/dev-autoloader/ef2f7ea77f8a01b69263bee789ff9cc3.zip",
-                "reference": "autoloader",
-                "shasum": null,
-                "mirrors": [
-                    {
-                        "url": "https://repo.packagist.com/dotherightthing/dists/%package%/%version%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/dotherightthing/TGM-Plugin-Activation/zipball/270098e8d04bac9ac1b7c482c98a5d27f0080a91",
+                "reference": "270098e8d04bac9ac1b7c482c98a5d27f0080a91",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
             },
             "type": "library",
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Griffin",
+                    "homepage": "http://thomasgriffinmedia.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Gary Jones",
+                    "homepage": "https://github.com/GaryJones",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Juliette Reinders Folmer",
+                    "homepage": "https://github.com/jrfnl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TGM Plugin Activation is a PHP library that allows you to easily require or recommend plugins for your WordPress themes (and plugins).",
+            "homepage": "http://tgmpluginactivation.com",
+            "keywords": [
+                "activation",
+                "library",
+                "plugins",
+                "theme",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/TGMPA/TGM-Plugin-Activation/issues",
+                "source": "https://github.com/TGMPA/TGM-Plugin-Activation"
+            },
             "time": "2018-05-30T03:21:48+00:00"
         }
     ],
@@ -169,7 +191,7 @@
                     "Cilex": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -221,7 +243,7 @@
                     "Cilex\\Provider\\Console": "src"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -281,7 +303,7 @@
                     "Composer\\CaBundle\\": "src"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -354,7 +376,7 @@
                     "Composer\\": "src/Composer"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -411,7 +433,7 @@
                     "Composer\\Semver\\": "src"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -473,7 +495,7 @@
                     "Composer\\Spdx\\": "src"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -525,7 +547,7 @@
                     "Interop\\Container\\": "src/Interop/Container/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -559,7 +581,7 @@
                     "XdgBaseDir\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -599,7 +621,7 @@
                     "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -669,7 +691,7 @@
                     "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -716,7 +738,7 @@
                     "Doctrine\\Common\\Lexer\\": "lib/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -769,7 +791,7 @@
                     "Parsedown": ""
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -827,7 +849,7 @@
                     "Herrera\\Json": "src/lib"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -887,7 +909,7 @@
                     "Herrera\\Phar\\Update": "src/lib"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -937,7 +959,7 @@
                     "JakubOnderka\\PhpConsoleColor": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-2-Clause"
             ],
@@ -981,7 +1003,7 @@
                     "JakubOnderka\\PhpConsoleHighlighter": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1026,7 +1048,7 @@
                     "Metadata\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1073,7 +1095,7 @@
                     "JMS\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
@@ -1200,7 +1222,7 @@
                     "JsonSchema\\": "src/JsonSchema/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1258,7 +1280,7 @@
                     "KevinGH\\Version": "src/lib/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1331,7 +1353,7 @@
                     "Monolog\\": "src/Monolog"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1378,7 +1400,7 @@
                     "Mustache": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1428,7 +1450,7 @@
                     "Spyc.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1478,7 +1500,7 @@
                     "src/DeepCopy/deep_copy.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1515,7 +1537,7 @@
                     "Oxymel": ""
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1562,7 +1584,7 @@
                     "lib/bootstrap.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -1606,7 +1628,7 @@
                     "PhpCollection": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
@@ -1656,7 +1678,7 @@
                     ]
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1698,7 +1720,7 @@
                     ]
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1784,7 +1806,7 @@
                     ]
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1839,7 +1861,7 @@
                     ]
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1890,7 +1912,7 @@
                     ]
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1933,7 +1955,7 @@
                     "PhpOption\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache2"
             ],
@@ -1988,7 +2010,7 @@
                     "Prophecy\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2058,7 +2080,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2106,7 +2128,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2148,7 +2170,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2197,7 +2219,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2247,7 +2269,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2326,7 +2348,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2386,7 +2408,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2433,7 +2455,7 @@
                     "Pimple": "lib/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2479,7 +2501,7 @@
                     "Psr\\Cache\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2525,7 +2547,7 @@
                     "Psr\\Container\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2574,7 +2596,7 @@
                     "Psr\\Log\\": "Psr/Log/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2621,7 +2643,7 @@
                     "Psr\\SimpleCache\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2739,7 +2761,7 @@
                     "src/array_column.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2784,7 +2806,7 @@
                     "Requests": "library/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "ISC"
             ],
@@ -2838,7 +2860,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2885,7 +2907,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2947,7 +2969,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -2999,7 +3021,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3051,7 +3073,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3119,7 +3141,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3168,7 +3190,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3213,7 +3235,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3263,7 +3285,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3305,7 +3327,7 @@
                     "src/"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -3348,7 +3370,7 @@
                     "Seld\\CliPrompt\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3397,7 +3419,7 @@
                     "Seld\\JsonLint\\": "src/Seld/JsonLint/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3445,7 +3467,7 @@
                     "Seld\\PharUtils\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3889,7 +3911,7 @@
                     "bootstrap.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3947,7 +3969,7 @@
                     "bootstrap.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4363,7 +4385,7 @@
                     "Twig\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4418,7 +4440,7 @@
                     "lib/cli/cli.php"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4497,7 +4519,7 @@
                     "php/export"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -4578,7 +4600,7 @@
                     "Zend\\Cache\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4636,7 +4658,7 @@
                     "Zend\\Config\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4688,7 +4710,7 @@
                     "Zend\\EventManager\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4753,7 +4775,7 @@
                     "Zend\\Filter\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4812,7 +4834,7 @@
                     "Zend\\Hydrator\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4879,7 +4901,7 @@
                     "Zend\\I18n\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4929,7 +4951,7 @@
                     "Zend\\Json\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -4986,7 +5008,7 @@
                     "Zend\\Serializer\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -5098,7 +5120,7 @@
                     "Zend\\Stdlib\\": "src/"
                 }
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -5133,7 +5155,7 @@
                     "src"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -5199,7 +5221,7 @@
                     "src"
                 ]
             },
-            "notification-url": "https://repo.packagist.com/dotherightthing/downloads/",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],

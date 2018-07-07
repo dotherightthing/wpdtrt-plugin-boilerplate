@@ -33,6 +33,16 @@
             "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_4_31\\": "src"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/dotherightthing/wpdtrt-debug"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/dotherightthing/tgm-plugin-activation"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
