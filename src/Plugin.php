@@ -1238,7 +1238,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			 */
 
 			wp_enqueue_script( $this->get_prefix(),
-				$this->get_url() . 'js/frontend.js',
+				$this->get_url() . 'js/frontend-es5.js',
 				array(
 					// load these registered dependencies first.
 					'jquery',
@@ -1279,7 +1279,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$attach_to_footer = true;
 
 			wp_enqueue_script( $this->get_prefix() . '_backend',
-				$this->get_url() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/js/backend.js',
+				$this->get_url() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/js/backend-es5.js',
 				array(
 					// load these registered dependencies first.
 					'jquery',

@@ -13,65 +13,62 @@
 /**
  * @namespace wpdtrt_plugin_boilerplate_admin_ui
  */
-var wpdtrt_plugin_boilerplate_admin_ui = {
+const wpdtrt_plugin_boilerplate_admin_ui = {
 
     /**
      * Load front-end content via Ajax
      * @param {object} $ jQuery
      */
-    ajax_init: function($) {
+    ajax_init: ($) => {
+
         "use strict";
 
         // wpdtrt_plugin_boilerplate_config is generic
         // but we can only view one settings page at a time
-        var config = wpdtrt_plugin_boilerplate_config;
-        var loading_message = config.messages.loading;
-        var prefix = config.prefix;
-        var ajaxurl = config.ajaxurl;
-        var $ajax_container_data;
-        var $ajax_container_ui;
-        var abbr = "wpdtrt-plugin-boilerplate";
-        var data;
+        const config = wpdtrt_plugin_boilerplate_config;
+        const loading_message = config.messages.loading;
+        const prefix = config.prefix;
+        const ajaxurl = config.ajaxurl;
+        const abbr = "wpdtrt-plugin-boilerplate";
+        let $ajax_container_data = $();
+        let $ajax_container_ui = $();
+        let data = {};
 
         if (config.refresh_api_data === "true") {
             $ajax_container_data =
-                    $("." + abbr + "-ajax-response[data-format=\"data\"]");
+                    $(`.${abbr}-ajax-response[data-format="data"]`);
             $ajax_container_ui =
-                    $("." + abbr + "-ajax-response[data-format=\"ui\"]");
+                    $(`.${abbr}-ajax-response[data-format="ui"]`);
 
             $ajax_container_data
                 .empty()
                 .append(
-                    "<div class=\"spinner is-active\">" +
-                    loading_message +
-                    "</div>"
+                    `<div class="spinner is-active">${loading_message}</div>`
                 );
 
             $ajax_container_ui
                 .empty()
                 .append(
-                    "<div class=\"spinner is-active\">" +
-                    loading_message +
-                    "</div>"
+                    `<div class="spinner is-active">${loading_message}</div>`
                 );
 
             data = $.post(ajaxurl, {
-                "action": prefix + "_refresh_api_data",
+                "action": `${prefix}_refresh_api_data`,
                 "format": "ui"
-            }, function (response) {
+            }, (response) => {
                 $ajax_container_ui
                     .empty()
                     .html(response);
             });
 
-            data.done(function () {
+            data.done( () => {
                 $.post(
                     ajaxurl,
                     {
-                        "action": prefix + "_refresh_api_data",
+                        "action": `${prefix}_refresh_api_data`,
                         "format": "data"
                     },
-                    function (response) {
+                    (response) => {
                         $ajax_container_data
                             .empty()
                             .html(response);
@@ -82,6 +79,8 @@ var wpdtrt_plugin_boilerplate_admin_ui = {
     }
 }
 
-jQuery(document).ready(function ($) {
+jQuery(document).ready( ($) => {
+    "use strict";
+
     wpdtrt_plugin_boilerplate_admin_ui.ajax_init($);
 });

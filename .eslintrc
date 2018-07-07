@@ -42,7 +42,7 @@
         "ignoreComments": true
       }
     ],
-    "no-var": 0,
+    "no-var": 1,
     "semi": 0,
     "no-cond-assign": 0,
     "no-debugger": 0,
@@ -66,6 +66,8 @@
     "dot-notation": 2,
     "no-new-func": 0,
     "no-new-wrappers": 0,
-    "no-invalid-this": 0
+    "no-invalid-this": 0,
+    "prefer-arrow-callback": 1,
+    "prefer-template": 1
   }
 }
