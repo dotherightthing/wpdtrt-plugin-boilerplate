@@ -11,7 +11,7 @@
  *    npm run version
  *    npm run watch
  *
- * @version     1.4.34
+ * @version     1.4.35
  */
 
 /**
@@ -630,7 +630,7 @@ gulp.task("version_update_autoload", () => {
     // regenerate autoload files
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "composer dump-autoload --no-interaction --no-suggest"
+            "composer dump-autoload --no-interaction"
         ]));
 });
 
