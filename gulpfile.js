@@ -168,7 +168,7 @@ function get_js_es6_files() {
     }
 
     const jsFiles = [
-        `${boilerplate_path}js/frontend.js`
+        `${boilerplate_path}js/frontend.js`,
         `${boilerplate_path}js/backend.js`
     ];
 
