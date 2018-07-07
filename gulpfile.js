@@ -215,7 +215,6 @@ gulp.task("install_dependencies", function(callback) {
         "install_dependencies_yarn",
         "preinstall_dependencies_github",
         "install_dependencies_composer",
-        "install_dependencies_boilerplate",
         callback
     );
 });
@@ -297,62 +296,6 @@ gulp.task("install_dependencies_composer", function () {
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
             "composer install --prefer-dist --no-interaction --no-suggest"
-        ]));
-});
-
-/**
- * @function install_dependencies_boilerplate
- * @summary Install Boilerplate dependencies
- * @description
- *     The boilerplate has various dev dependencies
- *     which need to be made available to the child plugin for install tasks.
- *     Composer projects only install dev dependencies listed in their own `require-dev`,
- *     so we copy in the parent dev dependencies so that these are available to the child too.
- *     This approach allows us to easily remove all dev dependencies,
- *     before zipping project files,
- *     by re-running the `composer` install with the `--no-dev` flag.
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51
- * @memberOf gulp
- */
-gulp.task("install_dependencies_boilerplate", function () {
-
-    "use strict";
-
-    if ( is_boilerplate() ) {
-        return true;
-    }
-
-    gulp_helper_taskheader(
-        "1c",
-        "Dependencies",
-        "Install dev dependencies",
-        "Composer (PHP)"
-    );
-
-    // Read the require-dev list from the parent's composer.json
-    // The require function is relative to this gulpfile || node_modules
-    // @see https://stackoverflow.com/a/23643087/6850747
-    var composer_json = require("./composer.json");
-    var dev_packages = composer_json["require-dev"];
-    var dev_packages_str = "";
-
-    // convert the require-dev list into a space-separated string
-    // foo/bar:1.2.3
-    // @see https://stackoverflow.com/a/1963179/6850747
-    // Replaced with Object.keys as reqd by JSLint
-    // @see https://jsperf.com/fastest-way-to-iterate-object
-    Object.keys(dev_packages).forEach(function (element) {
-        // element is the name of the key.
-        // key is just a numerical value for the array
-        dev_packages_str += (" " + element + ":" + dev_packages[element]);
-    });
-
-    // add each dependency from the parent"s require-dev
-    // to the child"s require-dev
-    return gulp.src(dummyFile, {read: false})
-        .pipe(shell([
-            "composer require" + dev_packages_str + " --dev"
         ]));
 });
 
