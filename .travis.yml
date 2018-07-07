@@ -83,7 +83,7 @@ before_script:
 
 # Run the build script
 script:
-  - gulp
+  - yarn run build
 
 # Notifications of build results
 # https://docs.travis-ci.com/user/notifications/
