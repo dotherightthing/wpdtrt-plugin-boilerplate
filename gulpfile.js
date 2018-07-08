@@ -85,7 +85,7 @@ function get_gh_token() {
     let token = "";
 
     if ( is_travis() ) {
-        token = process.env.GH_TOKEN;
+        token = (process.env.GH_TOKEN ? process.env.GH_TOKEN : "");
     }
 
     return (token);
