@@ -86,8 +86,6 @@ function get_gh_token() {
 
     if ( is_travis() ) {
         token = process.env.GH_TOKEN;
-        log("token");
-        log(token);
     }
 
     return (token);
