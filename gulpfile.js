@@ -281,6 +281,12 @@ gulp.task("preinstall_dependencies_github", () => {
         return true;
     }
 
+    const token = get_gh_token();
+
+    if ( token === "" ) {
+        return true;
+    }
+
     return ghRateLimit({
       token: get_gh_token()
     }).then( (status) => {
