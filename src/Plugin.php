@@ -141,11 +141,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Register WordPress plugin dependencies with TGMPA, using the config in composer.json
+		 * Register WP plugin dependencies with TGMPA, load for WP Unit
 		 *
 		 * @param string $composer_json Path to composer.json
 		 * @param string $usecase Use Case ('tgmpa' | 'wpunit')
-		 * @see #141 Replace plugin_dependencies with extra field in composer.json
 		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
 		 * @todo Add unit tests
 		 */
