@@ -200,15 +200,13 @@ class PluginTest extends WP_UnitTestCase {
 			'plugin_dependencies' => array(),
 		);
 
-		$this->mock_plugin_dependencies_old = array(
-			array(
-				'name'         => 'DTRT Content Sections',
-				'slug'         => 'wpdtrt-contentsections',
-				'source'       => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.0.1/release.zip',
-				'version'      => '0.0.1',
-				'external_url' => 'https://github.com/dotherightthing/wpdtrt-contentsections',
-				'required'     => true,
-			),
+		$this->mock_plugin_dependency_old = array(
+			'name'         => 'DTRT Content Sections',
+			'slug'         => 'wpdtrt-contentsections',
+			'source'       => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.0.1/release.zip',
+			'version'      => '0.0.1',
+			'external_url' => 'https://github.com/dotherightthing/wpdtrt-contentsections',
+			'required'     => true,
 		);
 
 		$this->mock_plugin_dependency_new = array(
@@ -586,13 +584,13 @@ class PluginTest extends WP_UnitTestCase {
 
 	/**
 	 * Test that setting a single dependency,
-	 *  will supercede an outdated -duplicate set as part of a group.
+	 *  will supercede an outdated duplicate
 	 */
 	public function test_set_plugin_dependency() {
 
 		global $wpdtrt_test_plugin;
 
-		$wpdtrt_test_plugin->set_plugin_dependencies( $this->mock_plugin_dependencies_old );
+		$wpdtrt_test_plugin->set_plugin_dependency( $this->mock_plugin_dependency_old );
 
 		$wpdtrt_test_plugin->set_plugin_dependency( $this->mock_plugin_dependency_new );
 
@@ -603,7 +601,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		$this->assertEquals(
 			'0.0.1',
-			$this->mock_plugin_dependencies_old[0]['version'],
+			$this->mock_plugin_dependency_old['version'],
 			'Expected old plugin dependency version'
 		);
 
