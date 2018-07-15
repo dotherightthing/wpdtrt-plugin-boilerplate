@@ -146,32 +146,14 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @param string $composer_json Path to composer.json
 		 * @param string $usecase Use Case ('tgmpa' | 'wpunit')
 		 * @see #141 Replace plugin_dependencies with extra field in composer.json
+		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
 		 * @todo Add unit tests
-		 * @todo Update https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
 		 */
 		public static function set_wp_composer_dependencies($composer_json, $format) {
-			/*
-		    "require-dev": {
-		        "dotherightthing/wpdtrt-foo1": "^0.1.2",
-		        "bar2": "^0.3.4"
-		    },
-		    "extras": {
-		        "require-wp": [
-		            {
-		                "name": "DTRT Foo 1",
-		                "host": "github",
-		                "repository": "dotherightthing/wpdtrt-foo1",
-		                "description": "does XYZ"
-		            },
-		            {
-		                "name": "Bar 2",
-		                "host": "wpackagist",
-		                "repository": "wpackagist-plugin/bar2",
-		                "description": "provides ABC"
-		            }
-		        ]
-		    }
-		    */
+
+			if ( ! file_exists( $composer_json ) ) {
+				return;
+			}
 
 			$composer_config = file_get_contents( $composer_json );
 
@@ -238,6 +220,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 						if ( $vendor === 'dotherightthing' ) {
 							$vendor_dir = 'vendor/dotherightthing';
+
+							// CONSTANT tells `pluginroot.php` where to find Composer's `autoload.php`
 							$constant 	= strtoupper( str_replace('-', '_', $slug ) ) . '_TEST_DEPENDENCY';
 
 							if ( ! defined( $constant ) ) {
