@@ -8,7 +8,7 @@
  *
  *
  * @package WPDTRT_Plugin_Boilerplate
- * @version 1.4.38
+ * @version 1.4.39
  * @see http://phpenthusiast.com/blog/how-to-autoload-with-composer
  * @see https://www.php-fig.org/psr/psr-4/
  * @see https://stackoverflow.com/a/37952183/6850747
