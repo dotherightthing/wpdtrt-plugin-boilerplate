@@ -91,7 +91,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$this->set_plugin_options( $plugin_options, true );
 			$this->set_plugin_data( isset( $plugin_data ) ? $plugin_data : array() );
 			$this->set_instance_options( $instance_options );
-			$this->set_plugin_dependencies( isset( $plugin_dependencies ) ? $plugin_dependencies : array() );
+			$this->set_wp_composer_dependencies( '../../../../composer.json', 'tgmpa' );
 
 			// hook in to WordPress.
 			$this->wp_setup();
@@ -138,6 +138,122 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$plugin_root_relative_to_plugin_folder = $this->get_slug() . '/' . $this->get_slug() . '.php';
 			add_filter( 'plugin_action_links_' . $plugin_root_relative_to_plugin_folder, array( $this, 'render_settings_link' ) );
 			add_filter( 'plugin_action_links_' . $plugin_root_relative_to_plugin_folder, array( $this, 'render_library_link' ) );
+		}
+
+		/**
+		 * Register WordPress plugin dependencies with TGMPA, using the config in composer.json
+		 *
+		 * @param string $composer_json Path to composer.json
+		 * @param string $usecase Use Case ('tgmpa' | 'wpunit')
+		 * @see #141 Replace plugin_dependencies with extra field in composer.json
+		 * @todo Add unit tests
+		 * @todo Update https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
+		 */
+		public static function set_wp_composer_dependencies($composer_json, $format) {
+			/*
+		    "require-dev": {
+		        "dotherightthing/wpdtrt-foo1": "^0.1.2",
+		        "bar2": "^0.3.4"
+		    },
+		    "extras": {
+		        "require-wp": [
+		            {
+		                "name": "DTRT Foo 1",
+		                "host": "github",
+		                "repository": "dotherightthing/wpdtrt-foo1",
+		                "description": "does XYZ"
+		            },
+		            {
+		                "name": "Bar 2",
+		                "host": "wpackagist",
+		                "repository": "wpackagist-plugin/bar2",
+		                "description": "provides ABC"
+		            }
+		        ]
+		    }
+		    */
+
+			$composer_config = file_get_contents( $composer_json );
+
+			$obj = json_decode( $composer_config );
+
+			// an alternative to $obj->{'varname'};
+			// @see https://stackoverflow.com/a/758458 How do I access this object property with a hyphenated name?
+			$composer_vars = get_object_vars($obj);
+
+			$require_dev = $composer_vars['require-dev'];
+			$extras = $composer_vars['extras'];
+
+			$extras_vars = get_object_vars($extras);
+			$require_wp_array = $extras_vars['require-wp'];
+
+			if ( isset( $require_dev, $require_wp_array ) ) { // NULL if key doesn't exist
+
+				foreach($require_wp_array as $require_wp) {
+
+					$require_dev_vars = get_object_vars($require_dev);
+					$require_wp_vars = get_object_vars($require_wp);
+
+					$name = $require_wp_vars['name'];
+					$host = $require_wp_vars['host'];
+					$repository = $require_wp_vars['repository'];
+					$vendor = explode('/', $repository)[0];
+					$slug = explode('/', $repository)[1];
+					$version = null;
+					$source = null;
+					$external_url = null;
+					$file = $require_wp_vars['file'];
+
+					if ( isset( $require_dev_vars[$repository] ) ) {
+						$version = str_replace('^', '', $require_dev_vars[$repository]);
+					}
+
+					if ( $host === 'github' ) {
+						$source = 'https://github.com/' . $repository . '/releases/download/' . $version . '/release.zip';
+						$external_url = 'https://github.com/' . $repository;
+					}
+
+					$plugin_dependency = array(
+			            'name'          => $name,
+			            'slug'          => $slug,
+			            'required'      => true, // this is output as 1
+					);
+
+					if ( isset( $source ) ) {
+						$plugin_dependency['source'] = $source;
+					}
+
+					if ( isset( $version ) ) {
+						$plugin_dependency['version'] = $version;
+					}
+
+					if ( isset( $external_url ) ) {
+						$plugin_dependency['external_url'] = $external_url;
+					}
+
+					if ( $usecase === 'tgmpa' ) {
+						$this->set_plugin_dependency( $arr );
+					}
+					else if ( $usecase === 'wpunit' ) {
+
+						if ( $vendor === 'dotherightthing' ) {
+							$vendor_dir = 'vendor/dotherightthing';
+							$constant 	= strtoupper( str_replace('-', '_', $slug ) ) . '_TEST_DEPENDENCY';
+
+							if ( ! defined( $constant ) ) {
+								define( $constant, true );
+							}
+						}
+						else if ( $vendor === 'wpackagist-plugin' ) {
+							$vendor_dir = 'wp-content/plugins';
+						}
+
+						$include = '/' . $vendor_dir . '/' . $slug . '/' . $file . '.php';
+
+						require dirname( dirname( __FILE__ ) ) . $include;
+					}
+				}
+			}
 		}
 
 		/**
@@ -533,8 +649,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 		/**
 		 * Store a plugin dependency for loading via TGMPA
-		 *  This runs after set_plugin_dependencies(), as required,
-		 *  but is confusing and may be removed.
+		 *  This is only called by set_wp_composer_dependencies().
 		 *
 		 * @param       array $new_plugin_dependency New plugin dependency.
 		 * @since       1.0.0
@@ -569,30 +684,6 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$options                        = $this->get_options();
 			$options['plugin_dependencies'] = $old_plugin_dependencies;
 			$this->set_options( $options );
-		}
-
-		/**
-		 * Store all plugin dependencies for loading via TGMPA
-		 *  Replaces old dependencies with any old ones
-		 *
-		 * @param       array $new_plugin_dependencies New plugin dependencies.
-		 * @since       1.0.0
-		 * @version     1.1.0
-		 */
-		public function set_plugin_dependencies( $new_plugin_dependencies ) {
-
-			if ( ! isset( $new_plugin_dependencies ) ) {
-				return;
-			}
-
-			// Save the new options.
-			$options                        = $this->get_options();
-			$options['plugin_dependencies'] = $new_plugin_dependencies;
-
-			$this->set_options( $options );
-
-			// return array for unit testing.
-			return $options['plugin_dependencies'];
 		}
 
 		/**
