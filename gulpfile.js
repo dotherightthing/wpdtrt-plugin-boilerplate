@@ -168,7 +168,7 @@ function get_js_es6_files() {
     }
 
     const jsFiles = [
-        `${boilerplate_path}js/frontend.js`,
+        "./js/frontend.js",
         `${boilerplate_path}js/backend.js`
     ];
 
@@ -533,7 +533,9 @@ gulp.task("transpile_js", () => {
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
-        .pipe(babel())
+        .pipe(babel({
+            presets: ['env']
+        }))
         .pipe(rename({
             suffix: "-es5"
         }))
