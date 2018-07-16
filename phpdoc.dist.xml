@@ -2,10 +2,10 @@
 <phpdoc>
   <title>wpdtrt-plugin-boilerplate</title>
   <parser>
-    <target>docs/phpdoc</target>
+    <target>../../../docs/phpdoc</target>
   </parser>
   <transformer>
-    <target>docs/phpdoc</target>
+    <target>../../../docs/phpdoc</target>
   </transformer>
   <transformations>
 	 <template name="clean" />
