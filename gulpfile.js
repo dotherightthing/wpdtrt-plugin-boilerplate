@@ -4,12 +4,12 @@
  *     Gulp build tasks
  *
  * @example usage:
- *    npm run build
- *    npm run install_deps
- *    npm run package
- *    npm run test
- *    npm run version
- *    npm run watch
+ *    yarn run build
+ *    yarn run install_deps
+ *    yarn run package
+ *    yarn run test
+ *    yarn run version
+ *    yarn run watch
  *
  * @version     1.4.39
  */
@@ -923,8 +923,8 @@ gulp.task("release_copy", () => {
         "./config/**/*",
         "./css/**/*",
         "./docs/**/*",
-        "!./docs/phpdoc/phpdoc-cache-*",
-        "!./docs/phpdoc/phpdoc-cache-*/**/*",
+        "!phpdoc-cache-*",
+        "!phpdoc-cache-*/**/*",
         "./icons/**/*",
         "./images/**/*",
         "!./images/**/*.pxm",
@@ -942,6 +942,7 @@ gulp.task("release_copy", () => {
         "./index.php",
         "./readme.txt",
         "./uninstall.php",
+        "!**/*.less",
         `./${pluginName}.php`
     ];
 
@@ -1004,10 +1005,10 @@ gulp.task("watch", () => {
 
     if (! is_travis() ) {
         gulp_helper_taskheader(
-            "8",
+            "*",
             "Watch",
             "Lint + Compile",
-            "JS + SCSS"
+            "JS, SCSS + PHP"
         );
 
         gulp.watch(scssFiles, ["lint_sass", "compile_css"]);
@@ -1048,46 +1049,8 @@ gulp.task("default", (callback) => {
         // 6
         "unit_test",
         // 7
-        "release",
-        // 8
-        "watch"
+        "release"
     );
 
     callback();
 });
-
-/**
- * @function dist
- * @summary Legacy dist task
- * @example
- * gulp dist
- * @todo Remove once all legacy calls have been removed from generated plugins
- * @memberOf gulp
- */
-gulp.task("dist", [
-    "default"
-]);
-
-/**
- * @function dev
- * @summary Legacy dev task
- * @example
- * gulp dev
- * @todo Remove once all legacy calls have been removed from generated plugins
- * @memberOf gulp
- */
-gulp.task("dev", [
-    "default"
-]);
-
-/**
- * @function install
- * @summary Legacy install task
- * @example
- * gulp install
- * @todo Remove once all legacy calls have been removed from generated plugins
- * @memberOf gulp
- */
-gulp.task("install", [
-    "default"
-]);
