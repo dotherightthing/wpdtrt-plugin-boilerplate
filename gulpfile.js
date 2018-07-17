@@ -131,35 +131,12 @@ function get_js_doc_files() {
 }
 
 /**
- * @summary Get list of JavaScript files to lint
- * @return {array} jsFiles Array of files
- * @see http://usejsdoc.org/about-including-package.html
- * @memberOf gulp
- */
-function get_js_lint_files() {
-
-    let boilerplate_path = get_boilerplate_path();
-
-    if ( boilerplate_path !== "" ) {
-        boilerplate_path += "/";
-    }
-
-    const jsFiles = [
-        "./js/*.js",
-        `${boilerplate_path}gulpfile.js`,
-        `${boilerplate_path}js/backend.js`
-    ];
-
-    return jsFiles;
-}
-
-/**
  * @summary Get list of JavaScript files to transpile from ES6 to ES5
  * @return {array} jsFiles Array of files
  * @see http://usejsdoc.org/about-including-package.html
  * @memberOf gulp
  */
-function get_js_es6_files() {
+function get_js_files() {
 
     let boilerplate_path = get_boilerplate_path();
 
@@ -167,8 +144,11 @@ function get_js_es6_files() {
         boilerplate_path += "/";
     }
 
+    // note: es6 orignals only
     const jsFiles = [
         "./js/frontend.js",
+        "./js/backend.js",
+        `${boilerplate_path}js/frontend.js`,
         `${boilerplate_path}js/backend.js`
     ];
 
@@ -200,6 +180,13 @@ const cssDir = "css";
 const jsDir = "js";
 const distDir = pluginName;
 const dummyFile = "README.md";
+const jsFiles = get_js_files();
+const phpFiles = [
+    "**/*.php",
+    "!docs/**/*.php",
+    "!node_modules/**/*.php",
+    "!vendor/**/*.php"
+];
 const scssFiles = "./scss/*.scss";
 
 /**
@@ -340,7 +327,7 @@ gulp.task("lint", (callback) => {
         "lint_sass",
         "lint_js",
         "lint_package_json",
-        // "lint_php"
+        "lint_php",
         callback
     );
 });
@@ -379,7 +366,7 @@ gulp.task("lint_js", () => {
         "JS"
     );
 
-    const files = get_js_lint_files();
+    const files = get_js_files();
 
     // return stream or promise for run-sequence
     return gulp.src(files)
@@ -425,16 +412,13 @@ gulp.task("lint_php", () => {
         "PHP"
     );
 
-    return gulp.src([
-        "**/*.php",
-        "!docs/**/*.php",
-        "!node_modules/**/*.php",
-        "!vendor/**/*.php"
-    ])
+    return gulp.src(phpFiles)
         // Validate files using PHP Code Sniffer
+        // Ignore errors during development using:
+        // phpcs:ignore, phpcs:disable, phpcs:enable
         .pipe(phpcs({
             bin: "vendor/bin/phpcs",
-            standard: "WordPress-VIP", // "PSR2"
+            standard: "WordPress", // "PSR2"
             warningSeverity: 0
         }))
         // Log all problems that were found
@@ -529,7 +513,7 @@ gulp.task("transpile_js", () => {
         "ES6 JS -> ES5 JS"
     );
 
-    const jsFiles = get_js_es6_files();
+    const jsFiles = get_js_files();
 
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
@@ -1022,11 +1006,12 @@ gulp.task("watch", () => {
         gulp_helper_taskheader(
             "8",
             "Watch",
-            "Compile",
-            "SCSS"
+            "Lint + Compile",
+            "JS + SCSS"
         );
 
-        gulp.watch(scssFiles, ["css"]);
+        gulp.watch(scssFiles, ["lint_sass", "compile_css"]);
+        gulp.watch(jsFiles, ["lint_js", "transpile_js"]);
     }
 });
 
