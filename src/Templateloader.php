@@ -46,7 +46,7 @@ if ( ! class_exists( 'Templateloader' ) ) {
 			$path                      = null;
 
 			// extract variables.
-			extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $options, EXTR_IF_EXISTS );
 
 			$this->filter_prefix             = $filter_prefix;
 			$this->plugin_template_directory = $plugin_template_directory;

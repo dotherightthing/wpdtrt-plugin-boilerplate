@@ -15,13 +15,13 @@
  * )
  */
 
-echo $label_start; // phpcs:ignore ?>
-	<label for="<?php echo esc_attr( $id ); // phpcs:ignore ?>"><?php echo esc_html( $label ); // phpcs:ignore ?>:</label>
-<?php echo $label_end; // phpcs:ignore ?>
+echo $label_start; ?>
+	<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?>:</label>
+<?php echo $label_end; ?>
 
-<?php echo $field_start; // phpcs:ignore ?>
-	<input type="text" name="<?php echo esc_attr( $name ); // phpcs:ignore ?>" id="<?php echo esc_attr( $id ); // phpcs:ignore ?>" value="<?php echo esc_attr( $value ); // phpcs:ignore ?>" size="<?php echo esc_attr( $size ); // phpcs:ignore ?>" class="<?php echo esc_attr( $classname ); // phpcs:ignore ?>" aria-describedby="<?php echo esc_attr( $id ); // phpcs:ignore ?>-tip">
-	<<?php echo $tip_element; // phpcs:ignore ?> class="description" id="<?php echo esc_attr( $id ); // phpcs:ignore ?>-tip">
-		<?php echo $tip; // phpcs:ignore ?>
-	</<?php echo $tip_element; // phpcs:ignore ?>>
-<?php echo $field_end; // phpcs:ignore ?>
+<?php echo $field_start; ?>
+	<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $value ); ?>" size="<?php echo esc_attr( $size ); ?>" class="<?php echo esc_attr( $classname ); ?>" aria-describedby="<?php echo esc_attr( $id ); ?>-tip">
+	<<?php echo $tip_element; ?> class="description" id="<?php echo esc_attr( $id ); ?>-tip">
+		<?php echo $tip; ?>
+	</<?php echo $tip_element; ?>>
+<?php echo $field_end; ?>

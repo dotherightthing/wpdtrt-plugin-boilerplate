@@ -14,13 +14,13 @@
  * )
  */
 
-echo $label_start; // phpcs:ignore ?>
-	<label for="<?php echo esc_attr( $id ); // phpcs:ignore ?>"><?php echo esc_html( $label ); // phpcs:ignore ?>:</label>
-<?php echo $label_end; // phpcs:ignore ?>
+echo $label_start; ?>
+	<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?>:</label>
+<?php echo $label_end; ?>
 
-<?php echo $field_start; // phpcs:ignore ?>
-	<input type="checkbox" name="<?php echo esc_attr( $name ); // phpcs:ignore ?>" id="<?php echo esc_attr( $id ); // phpcs:ignore ?>" value="1" aria-describedby="<?php echo esc_attr( $id ); // phpcs:ignore ?>-tip" <?php checked( $value, '1', true ); // phpcs:ignore ?>>
-	<<?php echo $tip_element; // phpcs:ignore ?> class="description" id="<?php echo esc_attr( $id ); // phpcs:ignore ?>-tip">
-		<?php echo $tip; // phpcs:ignore ?>
-	</<?php echo $tip_element; // phpcs:ignore ?>>
-<?php echo $field_end; // phpcs:ignore ?>
+<?php echo $field_start; ?>
+	<input type="checkbox" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" value="1" aria-describedby="<?php echo esc_attr( $id ); ?>-tip" <?php checked( $value, '1', true ); ?>>
+	<<?php echo $tip_element; ?> class="description" id="<?php echo esc_attr( $id ); ?>-tip">
+		<?php echo $tip; ?>
+	</<?php echo $tip_element; ?>>
+<?php echo $field_end; ?>

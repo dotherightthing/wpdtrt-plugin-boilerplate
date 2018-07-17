@@ -50,7 +50,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			$selected_instance_options = null;
 
 			// extract variables.
-			extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $options, EXTR_IF_EXISTS );
 
 			// Store a reference to the partner plugin object,
 			// which stores global plugin options.
@@ -170,7 +170,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			$options = null;
 
 			// populate variables.
-			extract( $attributes, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $attributes, EXTR_IF_EXISTS );
 
 			// name as a string.
 			$name_str = $name;
@@ -295,7 +295,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			$content = ob_get_clean();
 
 			// echo not return.
-			echo $content; // phpcs:ignore
+			echo $content;
 		}
 
 		/**
@@ -373,15 +373,13 @@ if ( ! class_exists( 'Widget' ) ) {
 			 * @todo Currently redundant but could be used to indicate data ranges: $data = $plugin->get_api_data();
 			 * @todo Make widget form Title translateable (#16)
 			 */
-			// phpcs:disable
 			echo $this->render_form_element( $instance, 'title', array(
 				'type'  => 'text',
 				'label' => 'Title', // esc_html__('Title', 'wpdtrt-plugin-boilerplate').
 			));
-			// phpcs:enable
 
 			foreach ( $instance_options as $name => $attributes ) {
-				echo $this->render_form_element( $instance, $name, $attributes ); // phpcs:ignore
+				echo $this->render_form_element( $instance, $name, $attributes );
 			}
 		}
 	}

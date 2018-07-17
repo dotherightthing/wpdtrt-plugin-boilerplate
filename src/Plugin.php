@@ -73,7 +73,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$plugin_dependencies = null;
 
 			// overwrite options with values from the settings array.
-			extract( $settings, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $settings, EXTR_IF_EXISTS );
 
 			// store option variables.
 			$this->set_url( $url );
@@ -883,7 +883,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @see         https://codex.wordpress.org/AJAX_in_Plugins
 		 */
 		public function refresh_api_data( $format ) {
-			$format              = sanitize_text_field( $_POST['format'] ); // phpcs:ignore
+			$format              = sanitize_text_field( $_POST['format'] );
 			$plugin_data_options = $this->get_plugin_data_options();
 			$existing_data       = $this->get_plugin_data();
 			$last_updated        = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
@@ -914,9 +914,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 			// update the UI.
 			if ( 'ui' === $format ) {
 				$shortcode = $this->helper_build_demo_shortcode();
-				echo $this->render_demo_shortcode( $shortcode ); // phpcs:ignore
+				echo $this->render_demo_shortcode( $shortcode );
 			} elseif ( 'data' === $format ) {
-				echo $this->render_demo_shortcode_data(); // phpcs:ignore
+				echo $this->render_demo_shortcode_data();
 			}
 
 			/**
@@ -1051,10 +1051,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		public function helper_options_saved() {
 			$helper_options_saved = false;
 
-			if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) { // phpcs:ignore
+			if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) {
 
 				// check that the form submission was legitimate.
-				$hidden_field = esc_html( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ); // phpcs:ignore
+				$hidden_field = esc_html( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] );
 
 				if ( 'Y' === $hidden_field ) {
 					$helper_options_saved = true;
@@ -1449,7 +1449,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$insufficient_permissions_message = $messages['insufficient_permissions'];
 
 			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( $insufficient_permissions_message ); // phpcs:ignore
+				wp_die( $insufficient_permissions_message );
 			}
 
 			/**
@@ -1470,7 +1470,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				* @see https://stackoverflow.com/a/13461680/6850747
 				*/
 				foreach ( $plugin_options as $name => $attributes ) {
-					$plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] ); // phpcs:ignore
+					$plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] );
 				}
 				// If we've updated our options,
 				// get the latest data from the API.
@@ -1528,7 +1528,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$value   = null;
 
 			// populate variables.
-			extract( $attributes, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $attributes, EXTR_IF_EXISTS );
 
 			if ( ! isset( $type, $label ) ) {
 				return;
@@ -1599,12 +1599,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 			if ( 'settings_page_' . $this->get_slug() === $screen->id ) :
 
-				if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) : // phpcs:ignore
+				if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) :
 					?>
 					<div class="notice notice-success is-dismissible">
 						<p>
 							<?php
-								echo $this->get_developer_prefix() . ' ' . $this->get_menu_title() . ' ' . $this->get_success_message(); // phpcs:ignore
+								echo $this->get_developer_prefix() . ' ' . $this->get_menu_title() . ' ' . $this->get_success_message();
 							?>
 						</p>
 					</div>

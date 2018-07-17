@@ -414,12 +414,24 @@ gulp.task("lint_php", () => {
 
     return gulp.src(phpFiles)
         // Validate files using PHP Code Sniffer
-        // Ignore errors during development using:
-        // phpcs:ignore, phpcs:disable, phpcs:enable
         .pipe(phpcs({
             bin: "vendor/bin/phpcs",
-            standard: "WordPress", // "PSR2"
-            warningSeverity: 0
+            standard: "WordPress", // -Core + -Docs + -Extra + -VIP
+            warningSeverity: 0, // minimum severity required to display an error or warning.
+            showSniffCode: true,
+            exclude: [ // Temporary exclusions during development.
+                // vendor/wp-coding-standards/wpcs/WordPress-Core/ruleset.xml
+                // https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/124
+                "WordPress.Files.FileName",
+                // vendor/wp-coding-standards/wpcs/WordPress-Core/ruleset.xml
+                "WordPress.Functions.DontExtract",
+                // vendor/wp-coding-standards/wpcs/WordPress-Extra/ruleset.xml
+                "WordPress.CSRF.NonceVerification",
+                // vendor/wp-coding-standards/wpcs/WordPress-Extra/ruleset.xml
+                "WordPress.XSS.EscapeOutput",
+                // vendor/wp-coding-standards/wpcs/WordPress-VIP/ruleset.xml
+                "WordPress.VIP.ValidatedSanitizedInput"
+            ]
         }))
         // Log all problems that were found
         .pipe(phpcs.reporter("log"));

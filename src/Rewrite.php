@@ -41,7 +41,7 @@ if ( ! class_exists( 'Rewrite' ) ) {
 			$labels = null;
 
 			// extract variables.
-			extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $options, EXTR_IF_EXISTS );
 
 			// Store a reference to the partner plugin object
 			// which stores global plugin options.

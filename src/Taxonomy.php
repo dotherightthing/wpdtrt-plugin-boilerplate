@@ -47,7 +47,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			$taxonomy_options          = null;
 
 			// extract variables.
-			extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $options, EXTR_IF_EXISTS );
 
 			// Store a reference to the partner plugin object,
 			// which stores global plugin options.
@@ -237,8 +237,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
 
-				if ( isset( $_POST[ $name ] ) && '' !== $_POST[ $name ] ) { // phpcs:ignore
-					$group = sanitize_title( $_POST[ $name ] ); // phpcs:ignore
+				if ( isset( $_POST[ $name ] ) && '' !== $_POST[ $name ] ) {
+					$group = sanitize_title( $_POST[ $name ] );
 					add_term_meta( $term_id, $name, $group, false );
 				}
 			}
@@ -258,7 +258,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
-				echo $this->render_form_element( $name, $attributes, $tag->term_id ); // phpcs:ignore
+				echo $this->render_form_element( $name, $attributes, $tag->term_id );
 			}
 		}
 
@@ -277,8 +277,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
 
-				if ( isset( $_POST[ $name ] ) && '' !== $_POST[ $name ] ) { // phpcs:ignore
-					$group = sanitize_title( $_POST[ $name ] ); // phpcs:ignore
+				if ( isset( $_POST[ $name ] ) && '' !== $_POST[ $name ] ) {
+					$group = sanitize_title( $_POST[ $name ] );
 					update_term_meta( $term_id, $name, $group );
 				}
 			}
@@ -379,7 +379,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
-				echo $this->render_form_element( $name, $attributes ); // phpcs:ignore
+				echo $this->render_form_element( $name, $attributes );
 			}
 		}
 
@@ -410,7 +410,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			$options = null;
 
 			// populate variables.
-			extract( $attributes, EXTR_IF_EXISTS ); // phpcs:ignore
+			extract( $attributes, EXTR_IF_EXISTS );
 
 			// name as a string.
 			$name_str = $name;

@@ -22,20 +22,20 @@
  * )
  */
 
-echo $label_start; // phpcs:ignore ?>
-	<label for="<?php echo esc_attr( $id ); // phpcs:ignore ?>"><?php echo esc_html( $label ); // phpcs:ignore ?>:</label>
-<?php echo $label_end; // phpcs:ignore ?>
+echo $label_start; ?>
+	<label for="<?php echo esc_attr( $id ); ?>"><?php echo esc_html( $label ); ?>:</label>
+<?php echo $label_end; ?>
 
-<?php echo $field_start; // phpcs:ignore ?>
-	<select name="<?php echo esc_attr( $name ); // phpcs:ignore ?>" id="<?php echo esc_attr( $id ); // phpcs:ignore ?>" id="<?php echo esc_attr( $name ); // phpcs:ignore ?>" class="regular-text" aria-describedby="<?php echo esc_attr( $id ); // phpcs:ignore ?>-tip">
-		<option value="null"<?php echo ( null === $value ) ? ' selected' : ''; // phpcs:ignore ?>>Please select an option</option>
+<?php echo $field_start; ?>
+	<select name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" id="<?php echo esc_attr( $name ); ?>" class="regular-text" aria-describedby="<?php echo esc_attr( $id ); ?>-tip">
+		<option value="null"<?php echo ( null === $value ) ? ' selected' : ''; ?>>Please select an option</option>
 		<?php foreach ( $options as $name => $attributes ) : ?>
-		<option value="<?php echo esc_attr( $name ); // phpcs:ignore ?>"<?php echo ( $value === $name ) ? ' selected' : ''; // phpcs:ignore ?>>
-			<?php echo esc_html( $attributes['text'] ); // phpcs:ignore ?>
+		<option value="<?php echo esc_attr( $name ); ?>"<?php echo ( $value === $name ) ? ' selected' : ''; ?>>
+			<?php echo esc_html( $attributes['text'] ); ?>
 		</option>
 		<?php endforeach; ?>
 	</select>
-	<<?php echo $tip_element; // phpcs:ignore ?> class="description" id="<?php echo esc_attr( $id ); // phpcs:ignore ?>-tip">
-		<?php echo $tip; // phpcs:ignore ?>
-	</<?php echo $tip_element; // phpcs:ignore ?>>
-<?php echo $field_end; // phpcs:ignore ?>
+	<<?php echo $tip_element; ?> class="description" id="<?php echo esc_attr( $id ); ?>-tip">
+		<?php echo $tip; ?>
+	</<?php echo $tip_element; ?>>
+<?php echo $field_end; ?>

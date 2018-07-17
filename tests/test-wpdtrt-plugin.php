@@ -71,7 +71,7 @@ class PluginTest extends WP_UnitTestCase {
 		$post_date    = null;
 		$post_content = null;
 
-		extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
+		extract( $options, EXTR_IF_EXISTS );
 
 		$post_id = $this->factory->post->create([
 			'post_title'   => $post_title,

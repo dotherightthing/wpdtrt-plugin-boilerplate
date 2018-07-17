@@ -28,7 +28,7 @@ $options = get_query_var( 'options' );
 
 // Overwrite variables from array values
 // @link http://kb.network.dan/php/wordpress/extract/.
-extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
+extract( $options, EXTR_IF_EXISTS );
 
 // content between shortcode tags.
 if ( isset( $context ) ) {
@@ -56,16 +56,16 @@ if ( $is_hidden ) {
 }
 
 // WordPress widget options (not output with shortcode).
-echo $before_widget; // phpcs:ignore
-echo $before_title . $title . $after_title; // phpcs:ignore
+echo $before_widget;
+echo $before_title . $title . $after_title;
 ?>
 
-<span class="wpdtrt-test <?php echo $state_classname; // phpcs:ignore ?>">
+<span class="wpdtrt-test <?php echo $state_classname; ?>">
 	<?php
-		echo $content; // phpcs:ignore
+		echo $content;
 	?>
 </span>
 
 <?php
 // output widget customisations (not output with shortcode).
-echo $after_widget; // phpcs:ignore
+echo $after_widget;

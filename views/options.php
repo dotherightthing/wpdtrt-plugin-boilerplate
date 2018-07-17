@@ -82,7 +82,7 @@ if ( $demo_display ) {
 					<tbody>
 						<?php
 						foreach ( $plugin_options as $name => $attributes ) {
-							echo $this->render_form_element( $name, $attributes ); // phpcs:ignore
+							echo $this->render_form_element( $name, $attributes );
 						}
 						?>
 					</tbody>
@@ -92,10 +92,10 @@ if ( $demo_display ) {
 			<?php
 			if ( ! empty( $plugin_options ) ) {
 				submit_button(
-					$text             = $options_form_submit,
-					$type             = 'primary',
-					$wrap             = true, // wrap in paragraph.
-					$other_attributes = null
+					$options_form_submit, // $text.
+					'primary', // $type.
+					true, // $wrap in paragraph.
+					null // $other_attributes.
 				);
 			}
 			?>
