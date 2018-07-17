@@ -345,9 +345,9 @@ if ( ! class_exists( 'Widget' ) ) {
 
 		/**
 		 * Outputs the settings update form in wp-admin.
+		 *  Default return is 'noform'.
 		 *
 		 * @param array $instance Current settings.
-		 * @return string Default return is 'noform'.
 		 */
 		public function form( $instance ) {
 

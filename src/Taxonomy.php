@@ -312,7 +312,6 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @param       string $content Content.
 		 * @param       string $column_name Content name.
 		 * @param       number $term_id Term ID.
-		 * @return      string $content
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 * @see         https://developer.wordpress.org/reference/?

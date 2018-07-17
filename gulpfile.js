@@ -420,6 +420,8 @@ gulp.task("lint_php", () => {
             warningSeverity: 0, // minimum severity required to display an error or warning.
             showSniffCode: true,
             exclude: [ // Temporary exclusions during development.
+                // vendor/squizlabs/php_codesniffer/src/Standards/Squiz/ruleset.xml
+                "Generic.Strings.UnnecessaryStringConcat",
                 // vendor/wp-coding-standards/wpcs/WordPress-Core/ruleset.xml
                 // https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/124
                 "WordPress.Files.FileName",
