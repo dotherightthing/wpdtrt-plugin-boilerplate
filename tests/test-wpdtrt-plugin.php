@@ -2,6 +2,8 @@
 /**
  * Unit tests, using PHPUnit, wp-cli, WP_UnitTestCase.
  *  These tests are run from child plugins.
+ *
+ * @package DTRT Test
  */
 
 /**
@@ -12,9 +14,9 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Compare two HTML fragments.
 	 *
-	 * @param string $expected Expected value
-	 * @param string $actual Actual value
-	 * @param string $error_message Message to show when strings don't match
+	 * @param string $expected Expected value.
+	 * @param string $actual Actual value.
+	 * @param string $error_message Message to show when strings don't match.
 	 * @uses https://stackoverflow.com/a/26727310/6850747
 	 */
 	protected function assertEqualHtml( $expected, $actual, $error_message ) {
@@ -57,7 +59,7 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Create post
 	 *
-	 * @param array $options Options [$post_title, $post_date, $post_content]
+	 * @param array $options Options [$post_title, $post_date, $post_content].
 	 * @return number $post_id
 	 * @see https://developer.wordpress.org/reference/functions/wp_insert_post/
 	 * @see https://wordpress.stackexchange.com/questions/37163/proper-formatting-of-post-date-for-wp-insert-post
@@ -69,7 +71,7 @@ class PluginTest extends WP_UnitTestCase {
 		$post_date    = null;
 		$post_content = null;
 
-		extract( $options, EXTR_IF_EXISTS );
+		extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
 
 		$post_id = $this->factory->post->create([
 			'post_title'   => $post_title,
@@ -85,10 +87,9 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * ===== Mock Data =====
 	 */
-
 	public function mock_data() {
 
-		// Post (for testing manually entered, naked shortcode)
+		// Post (for testing manually entered, naked shortcode).
 		$this->post_id_1 = $this->create_post( array(
 			'post_title'   => 'DTRT Test shortcode test',
 			'post_content' => '[wpdtrt_test_shortcode]Text to hide[/wpdtrt_test_shortcode]',
@@ -238,13 +239,13 @@ class PluginTest extends WP_UnitTestCase {
 
 		global $wpdtrt_test_plugin;
 
-		// save the raw config
+		// save the raw config.
 		$wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues, true );
 
-		// get config + user values (none)
+		// get config + user values (none).
 		$plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
-		// assertions
+		// assertions.
 		$this->assertArrayHasKey(
 			'type',
 			$plugin_options['google_static_maps_api_key']
@@ -301,16 +302,16 @@ class PluginTest extends WP_UnitTestCase {
 
 		global $wpdtrt_test_plugin;
 
-		// save the raw config
+		// save the raw config.
 		$wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues, true );
 
-		// save the user values
+		// save the user values.
 		$wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_user_values );
 
-		// get config + user values
+		// get config + user values.
 		$plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
-		// assertions
+		// assertions.
 		$this->assertArrayHasKey(
 			'type',
 			$plugin_options['google_static_maps_api_key']
@@ -417,7 +418,7 @@ class PluginTest extends WP_UnitTestCase {
 			$options
 		);
 
-		// passes
+		// passes.
 		$this->assertArrayHasKey(
 			'value',
 			$options['plugin_options']['google_static_maps_api_key'],
@@ -461,16 +462,16 @@ class PluginTest extends WP_UnitTestCase {
 
 		// when the page is first loaded,
 		// we get the plugin options out of the coded config
-
-		// 1
+		//
+		// 1.
 		$wpdtrt_test_plugin->set_plugin_options( $this->plugin_options_config_novalues, true );
 		$plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
-		// 2
+		// 2.
 		$wpdtrt_test_plugin->set_plugin_options( $plugin_options );
 		$plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
-		// 3
+		// 3.
 		$wpdtrt_test_plugin->set_plugin_options( $plugin_options );
 		$plugin_options = $wpdtrt_test_plugin->get_plugin_options();
 
@@ -549,15 +550,15 @@ class PluginTest extends WP_UnitTestCase {
 	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
 	 */
 	public function todo__test__render_options_page_field() {
-		//
+		// .
 	}
 
 	/**
-	* Test that get_api_data() returns data,
-	*  and that this is stored and retrievable.
-	*
-	* @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Data:-Loading-from-an-API#data-is-stored-in-an-associative-array
-	*/
+	 * Test that get_api_data() returns data,
+	 *  and that this is stored and retrievable.
+	 *
+	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Data:-Loading-from-an-API#data-is-stored-in-an-associative-array
+	 */
 	public function test__get_api_data() {
 		global $wpdtrt_test_plugin;
 
@@ -596,7 +597,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		$new_plugin_dependencies = $wpdtrt_test_plugin->get_plugin_dependencies();
 
-		// reindex array (only required in this test)
+		// reindex array (only required in this test).
 		$new_plugin_dependencies = array_values( $new_plugin_dependencies );
 
 		$this->assertEquals(
@@ -621,10 +622,10 @@ class PluginTest extends WP_UnitTestCase {
 			get_post_permalink( $this->post_id_1 )
 		);
 
-		// https://stackoverflow.com/a/22270259/6850747
+		// https://stackoverflow.com/a/22270259/6850747.
 		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_1 ) );
 
-		// default value is '' = unchecked = show
+		// default value is '' = unchecked = show.
 		$this->assertEqualHtml(
 			'<span class="wpdtrt-test wpdtrt-test_show">Text to hide</span>',
 			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),

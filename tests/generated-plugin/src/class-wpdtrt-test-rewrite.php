@@ -23,10 +23,9 @@ class WPDTRT_Test_Rewrite extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_
 	 * @since     1.0.0
 	 * @version   1.1.0
 	 */
-	function __construct( $options ) {
+	public function __construct( $options ) {
 
 		// edit here.
-
 		parent::__construct( $options );
 	}
 
@@ -43,7 +42,6 @@ class WPDTRT_Test_Rewrite extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_
 	protected function wp_setup() {
 
 		// edit here.
-
 		parent::wp_setup();
 	}
 

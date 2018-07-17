@@ -23,10 +23,9 @@ class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4
 	 * @since     1.0.0
 	 * @version   1.1.0
 	 */
-	function __construct( $options ) {
+	public function __construct( $options ) {
 
 		// edit here.
-
 		parent::__construct( $options );
 	}
 }

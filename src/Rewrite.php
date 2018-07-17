@@ -29,38 +29,36 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * This is a public method as every plugin uses a new instance:
 		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_39\Rewrite {}
 		 *
-		 * @param     array $options Rewrite options
+		 * @param     array $options Rewrite options.
 		 * @since     1.0.0
 		 * @version   1.1.0
 		 */
 		public function __construct( $options ) {
 
-			// define variables
+			// define variables.
 			$name   = null;
 			$plugin = null;
 			$labels = null;
 
-			// extract variables
-			extract( $options, EXTR_IF_EXISTS );
+			// extract variables.
+			extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
 
 			// Store a reference to the partner plugin object
-			// which stores global plugin options
+			// which stores global plugin options.
 			$this->set_plugin( $plugin );
 			$this->set_labels( $labels );
 			$this->set_name( $name );
 
-			// hook in to WordPress
+			// hook in to WordPress.
 			$this->wp_setup();
 		}
 
 		/**
 		 * Initialise rewrite options ONCE.
 		 *
-		 * @param array $default_options Default options.
 		 * @since 1.0.0
 		 */
 		protected function wp_setup() {
-
 			$rewrite_name = $this->get_name();
 		}
 
@@ -82,7 +80,7 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		/**
 		 * Set the value of $name
 		 *
-		 * @param       string $new_name New name
+		 * @param       string $new_name New name.
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */

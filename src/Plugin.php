@@ -73,7 +73,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$plugin_dependencies = null;
 
 			// overwrite options with values from the settings array.
-			extract( $settings, EXTR_IF_EXISTS );
+			extract( $settings, EXTR_IF_EXISTS ); // phpcs:ignore
 
 			// store option variables.
 			$this->set_url( $url );
@@ -143,12 +143,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Register WP plugin dependencies with TGMPA, load for WP Unit
 		 *
-		 * @param string $composer_json Path to composer.json
-		 * @param string $usecase Use Case ('tgmpa' | 'wpunit')
+		 * @param string $composer_json Path to composer.json.
+		 * @param string $usecase Use Case ('tgmpa' | 'wpunit').
 		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
 		 * @todo Add unit tests
 		 */
-		public static function set_wp_composer_dependencies($composer_json, $format) {
+		public static function set_wp_composer_dependencies( $composer_json, $usecase ) {
 
 			if ( ! file_exists( $composer_json ) ) {
 				return;
@@ -160,44 +160,44 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 			// an alternative to $obj->{'varname'};
 			// @see https://stackoverflow.com/a/758458 How do I access this object property with a hyphenated name?
-			$composer_vars = get_object_vars($obj);
+			$composer_vars = get_object_vars( $obj );
 
 			$require_dev = $composer_vars['require-dev'];
 			$extras = $composer_vars['extras'];
 
-			$extras_vars = get_object_vars($extras);
+			$extras_vars = get_object_vars( $extras );
 			$require_wp_array = $extras_vars['require-wp'];
 
-			if ( isset( $require_dev, $require_wp_array ) ) { // NULL if key doesn't exist
+			if ( isset( $require_dev, $require_wp_array ) ) { // NULL if key doesn't exist.
 
-				foreach($require_wp_array as $require_wp) {
+				foreach ( $require_wp_array as $require_wp ) {
 
-					$require_dev_vars = get_object_vars($require_dev);
-					$require_wp_vars = get_object_vars($require_wp);
+					$require_dev_vars = get_object_vars( $require_dev );
+					$require_wp_vars = get_object_vars( $require_wp );
 
 					$name = $require_wp_vars['name'];
 					$host = $require_wp_vars['host'];
 					$repository = $require_wp_vars['repository'];
-					$vendor = explode('/', $repository)[0];
-					$slug = explode('/', $repository)[1];
+					$vendor = explode( '/', $repository )[0];
+					$slug = explode( '/', $repository )[1];
 					$version = null;
 					$source = null;
 					$external_url = null;
 					$file = $require_wp_vars['file'];
 
-					if ( isset( $require_dev_vars[$repository] ) ) {
-						$version = str_replace('^', '', $require_dev_vars[$repository]);
+					if ( isset( $require_dev_vars[ $repository ] ) ) {
+						$version = str_replace( '^', '', $require_dev_vars[ $repository ] );
 					}
 
-					if ( $host === 'github' ) {
+					if ( 'github' === $host ) {
 						$source = 'https://github.com/' . $repository . '/releases/download/' . $version . '/release.zip';
 						$external_url = 'https://github.com/' . $repository;
 					}
 
 					$plugin_dependency = array(
-			            'name'          => $name,
-			            'slug'          => $slug,
-			            'required'      => true, // this is output as 1
+						'name'          => $name,
+						'slug'          => $slug,
+						'required'      => true, // this is output as 1.
 					);
 
 					if ( isset( $source ) ) {
@@ -212,22 +212,20 @@ if ( ! class_exists( 'Plugin' ) ) {
 						$plugin_dependency['external_url'] = $external_url;
 					}
 
-					if ( $usecase === 'tgmpa' ) {
+					if ( 'tgmpa' === $usecase ) {
 						$this->set_plugin_dependency( $arr );
-					}
-					else if ( $usecase === 'wpunit' ) {
+					} else if ( 'wpunit' === $usecase ) {
 
-						if ( $vendor === 'dotherightthing' ) {
+						if ( 'dotherightthing' === $vendor ) {
 							$vendor_dir = 'vendor/dotherightthing';
 
-							// CONSTANT tells `pluginroot.php` where to find Composer's `autoload.php`
-							$constant 	= strtoupper( str_replace('-', '_', $slug ) ) . '_TEST_DEPENDENCY';
+							// CONSTANT tells `pluginroot.php` where to find Composer's `autoload.php`.
+							$constant = strtoupper( str_replace( '-', '_', $slug ) ) . '_TEST_DEPENDENCY';
 
 							if ( ! defined( $constant ) ) {
 								define( $constant, true );
 							}
-						}
-						else if ( $vendor === 'wpackagist-plugin' ) {
+						} else if ( 'wpackagist-plugin' === $vendor ) {
 							$vendor_dir = 'wp-content/plugins';
 						}
 
@@ -885,7 +883,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @see         https://codex.wordpress.org/AJAX_in_Plugins
 		 */
 		public function refresh_api_data( $format ) {
-			$format              = sanitize_text_field( $_POST['format'] );
+			$format              = sanitize_text_field( $_POST['format'] ); // phpcs:ignore
 			$plugin_data_options = $this->get_plugin_data_options();
 			$existing_data       = $this->get_plugin_data();
 			$last_updated        = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
@@ -916,9 +914,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 			// update the UI.
 			if ( 'ui' === $format ) {
 				$shortcode = $this->helper_build_demo_shortcode();
-				echo $this->render_demo_shortcode( $shortcode );
+				echo $this->render_demo_shortcode( $shortcode ); // phpcs:ignore
 			} elseif ( 'data' === $format ) {
-				echo $this->render_demo_shortcode_data();
+				echo $this->render_demo_shortcode_data(); // phpcs:ignore
 			}
 
 			/**
@@ -1053,10 +1051,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		public function helper_options_saved() {
 			$helper_options_saved = false;
 
-			if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) {
+			if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) { // phpcs:ignore
 
 				// check that the form submission was legitimate.
-				$hidden_field = esc_html( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] );
+				$hidden_field = esc_html( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ); // phpcs:ignore
 
 				if ( 'Y' === $hidden_field ) {
 					$helper_options_saved = true;
@@ -1451,7 +1449,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$insufficient_permissions_message = $messages['insufficient_permissions'];
 
 			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( $insufficient_permissions_message );
+				wp_die( $insufficient_permissions_message ); // phpcs:ignore
 			}
 
 			/**
@@ -1472,7 +1470,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				* @see https://stackoverflow.com/a/13461680/6850747
 				*/
 				foreach ( $plugin_options as $name => $attributes ) {
-					$plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] );
+					$plugin_options[ $name ]['value'] = esc_html( $_POST[ $name ] ); // phpcs:ignore
 				}
 				// If we've updated our options,
 				// get the latest data from the API.
@@ -1514,7 +1512,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Form field templating for the options page
 		 *
 		 * @param       string $name Name.
-		 * @param       array $attributes Attributes.
+		 * @param       array  $attributes Attributes.
 		 * @return      string
 		 * @since       1.0.0
 		 * @version     1.0.0
@@ -1530,7 +1528,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$value   = null;
 
 			// populate variables.
-			extract( $attributes, EXTR_IF_EXISTS );
+			extract( $attributes, EXTR_IF_EXISTS ); // phpcs:ignore
 
 			if ( ! isset( $type, $label ) ) {
 				return;
@@ -1601,16 +1599,16 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 			if ( 'settings_page_' . $this->get_slug() === $screen->id ) :
 
-				if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) :
-			?>
+				if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) : // phpcs:ignore
+					?>
 					<div class="notice notice-success is-dismissible">
 						<p>
 							<?php
-								echo $this->get_developer_prefix() . ' ' . $this->get_menu_title() . ' ' . $this->get_success_message()
+								echo $this->get_developer_prefix() . ' ' . $this->get_menu_title() . ' ' . $this->get_success_message(); // phpcs:ignore
 							?>
 						</p>
 					</div>
-			<?php
+					<?php
 				endif;
 			endif;
 		}

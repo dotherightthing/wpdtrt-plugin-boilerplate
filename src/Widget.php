@@ -25,7 +25,6 @@ if ( ! class_exists( 'Widget' ) ) {
 	 * @see         https://developer.wordpress.org/reference/classes/wp_widget/
 	 * @see         https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions
 	 */
-
 	class Widget extends \WP_Widget {
 
 		/**
@@ -35,7 +34,6 @@ if ( ! class_exists( 'Widget' ) ) {
 		 *
 		 * This is a public method as every plugin uses a new instance:
 		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_4_39\Widget {}
-		 *
 		 *
 		 * @param     array $options Widget options.
 		 * @since     1.0.0
@@ -52,7 +50,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			$selected_instance_options = null;
 
 			// extract variables.
-			extract( $options, EXTR_IF_EXISTS );
+			extract( $options, EXTR_IF_EXISTS ); // phpcs:ignore
 
 			// Store a reference to the partner plugin object,
 			// which stores global plugin options.
@@ -149,9 +147,9 @@ if ( ! class_exists( 'Widget' ) ) {
 		/**
 		 * Form field templating for the widget admin page
 		 *
-		 * @param       array $instance The WordPress Widget instance.
+		 * @param       array  $instance The WordPress Widget instance.
 		 * @param       string $name Name.
-		 * @param       array $attributes Attributes.
+		 * @param       array  $attributes Attributes.
 		 * @return      string
 		 * @since       1.0.0
 		 * @version     1.0.0
@@ -164,26 +162,26 @@ if ( ! class_exists( 'Widget' ) ) {
 				return;
 			}
 
-			// define variables
+			// define variables.
 			$type    = null;
 			$label   = null;
 			$size    = null;
 			$tip     = null;
 			$options = null;
 
-			// populate variables
-			extract( $attributes, EXTR_IF_EXISTS );
+			// populate variables.
+			extract( $attributes, EXTR_IF_EXISTS ); // phpcs:ignore
 
-			// name as a string
+			// name as a string.
 			$name_str = $name;
 
-			// widget admin layout
+			// widget admin layout.
 			$label_start = '<p class="wpdtrt-plugin-boilerplate--widget-field">';
 			$label_end   = '';
 			$field_start = '';
 			$field_end   = '</p>';
 			$tip_element = 'span';
-			$classname   = 'widefat'; // full width
+			$classname   = 'widefat'; // full width.
 
 			/**
 			 * Set the value to the variable with the same name as the $name string
@@ -207,7 +205,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			$name = $this->get_field_name( $name_str );
 
 			if ( 'title' === $name_str ) :
-				// Display dynamic widget title in .in-widget-title via appendTitle() in wp-admin/js/widgets.min.js;
+				// Display dynamic widget title in .in-widget-title via appendTitle() in wp-admin/js/widgets.min.js;.
 				$id = $name . '-' . $name_str;
 			else :
 				$id = $name;
@@ -243,7 +241,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 *                        'before_widget', and 'after_widget'.
 		 * @param array $instance The settings for the particular instance of the widget.
 		 */
-		function widget( $args, $instance ) {
+		public function widget( $args, $instance ) {
 
 			/**
 			 * Get the unique ID
@@ -251,14 +249,14 @@ if ( ! class_exists( 'Widget' ) ) {
 			 * @link https://kylebenk.com/how-to-wordpress-widget-id/
 			 */
 
-			// merge display $args with $instance settings
+			// merge display $args with $instance settings.
 			$template_options = array_merge( $args, $instance );
 
-			// store a reference to the parent plugin
+			// store a reference to the parent plugin.
 			$template_options['plugin'] = $this->get_plugin();
 
 			/**
-			 * apply_filters( $tag, $value );
+			 * Apply_filters( $tag, $value );
 			 * Apply the 'title' filter to get the title of the instance.
 			 * Display the title of this instance, which the user can optionally customise
 			 */
@@ -268,7 +266,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			$plugin = $this->get_plugin();
 
 			// Pass options to template-part as query var,
-			// set_query_var( $this->get_prefix() . '_options_all', $options_all );
+			// set_query_var( $this->get_prefix() . '_options_all', $options_all ).
 			set_query_var( 'options', $template_options );
 
 			/**
@@ -297,25 +295,25 @@ if ( ! class_exists( 'Widget' ) ) {
 			$content = ob_get_clean();
 
 			// echo not return.
-			echo $content;
+			echo $content; // phpcs:ignore
 		}
 
 		/**
 		 * Updates a particular instance of a widget, by replacing the old instance with data from the new instance
 		 *
 		 * @param array $new_instance New settings for this instance as input by the user via
-		*  WP_Widget::form().
+		 *  WP_Widget::form().
 		 * @param array $old_instance Old settings for this instance.
 		 * @return array Settings to save or bool false to cancel saving.
-		*/
-		function update( $new_instance, $old_instance ) {
+		 */
+		public function update( $new_instance, $old_instance ) {
 
-			// Save user input (widget options)
+			// Save user input (widget options).
 			$instance         = $old_instance;
 			$instance_options = $this->get_instance_options();
 
 			/**
-			 * strip_tags — Strip HTML and PHP tags from a string
+			 * Strip_tags — Strip HTML and PHP tags from a string
 			 *
 			 * @example string strip_tags ( string $str [, string $allowable_tags ] )
 			 * @link http://php.net/manual/en/function.strip-tags.php
@@ -327,7 +325,7 @@ if ( ! class_exists( 'Widget' ) ) {
 			// for each form element name.
 			foreach ( $instance_options as $name => $attributes ) {
 
-				// these options don't have attributes
+				// these options don't have attributes.
 				if ( 'description' === $name ) {
 					continue;
 				}
@@ -351,7 +349,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 * @param array $instance Current settings.
 		 * @return string Default return is 'noform'.
 		 */
-		function form( $instance ) {
+		public function form( $instance ) {
 
 			// get a reference to the parent plugin.
 			$plugin           = $this->get_plugin();
@@ -375,13 +373,15 @@ if ( ! class_exists( 'Widget' ) ) {
 			 * @todo Currently redundant but could be used to indicate data ranges: $data = $plugin->get_api_data();
 			 * @todo Make widget form Title translateable (#16)
 			 */
+			// phpcs:disable
 			echo $this->render_form_element( $instance, 'title', array(
 				'type'  => 'text',
-				'label' => 'Title', // esc_html__('Title', 'wpdtrt-plugin-boilerplate')
+				'label' => 'Title', // esc_html__('Title', 'wpdtrt-plugin-boilerplate').
 			));
+			// phpcs:enable
 
 			foreach ( $instance_options as $name => $attributes ) {
-				echo $this->render_form_element( $instance, $name, $attributes );
+				echo $this->render_form_element( $instance, $name, $attributes ); // phpcs:ignore
 			}
 		}
 	}

@@ -1,5 +1,13 @@
 <?php
 /**
+ * DTRT Test
+ *
+ * @package     DTRT Test
+ * @author      Dan Smith
+ * @copyright   2018 Do The Right Thing
+ * @license     GPL-2.0+
+ *
+ * @wordpress-plugin
  * Plugin Name:  DTRT Test
  * Plugin URI:   https://github.com/dotherightthing/wpdtrt-plugin-boilerplate
  * Description:  Test plugin using the wpdtrt-plugin-boilerplate base classes.
@@ -109,7 +117,7 @@ require_once WPDTRT_TEST_PATH . 'src/class-wpdtrt-test-widget.php';
 
 // log & trace helpers.
 global $debug;
-$debug = new DoTheRightThing\WPDebug\Debug;
+$debug = new DoTheRightThing\WPDebug\Debug();
 
 /**
  * ===== WordPress Integration =====
@@ -171,7 +179,7 @@ function wpdtrt_test_helper_deactivate() {
  */
 function wpdtrt_test_plugin_init() {
 	// pass object reference between classes via global
-	// because the object does not exist until the WordPress init action has fired
+	// because the object does not exist until the WordPress init action has fired.
 	global $wpdtrt_test_plugin;
 
 	/**
@@ -331,7 +339,7 @@ function wpdtrt_test_taxonomy_init() {
 			'labels'                    => array(
 				'slug'                       => 'wpdtrt_test_thing',
 				'description'                => __( 'Things', 'wpdtrt-test ' ),
-				'posttype'                   => 'post', // tourdiaries
+				'posttype'                   => 'post', // tourdiaries.
 				'name'                       => __( 'Things', 'taxonomy general name' ),
 				'singular_name'              => _x( 'Thing', 'taxonomy singular name' ),
 				'menu_name'                  => __( 'Things', 'wpdtrt-test' ),

@@ -56,7 +56,7 @@ if ( $demo_display ) {
 
 		<form name="data_form" method="post" action="">
 
-			<?php //hidden field is used by options_saved() ?>
+			<?php // hidden field is used by options_saved(). ?>
 			<input type="hidden" name="wpdtrt_plugin_boilerplate_form_submitted" value="Y" />
 
 			<h2 class="title">
@@ -82,7 +82,7 @@ if ( $demo_display ) {
 					<tbody>
 						<?php
 						foreach ( $plugin_options as $name => $attributes ) {
-							echo $this->render_form_element( $name, $attributes );
+							echo $this->render_form_element( $name, $attributes ); // phpcs:ignore
 						}
 						?>
 					</tbody>
@@ -94,7 +94,7 @@ if ( $demo_display ) {
 				submit_button(
 					$text             = $options_form_submit,
 					$type             = 'primary',
-					$wrap             = true, // wrap in paragraph
+					$wrap             = true, // wrap in paragraph.
 					$other_attributes = null
 				);
 			}
@@ -104,7 +104,7 @@ if ( $demo_display ) {
 
 		<?php
 		if ( $demo_display ) :
-		?>
+			?>
 
 		<h2>
 			<span>
@@ -147,7 +147,7 @@ if ( $demo_display ) {
 				</em>
 			</p>
 
-		<?php
+			<?php
 			endif;
 		?>
 	</div>
