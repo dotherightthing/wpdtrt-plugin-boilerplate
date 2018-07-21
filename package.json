@@ -57,7 +57,8 @@
     "build": "gulp",
     "install_deps": "gulp install_dependencies && gulp wpunit_install",
     "package": "gulp docs && gulp release",
-    "test": "gulp lint && gulp wpunit_run",
+    "lint": "gulp lint",
+    "test": "gulp wpunit_run",
     "version": "gulp version",
     "watch": "gulp compile && gulp watch"
   },
