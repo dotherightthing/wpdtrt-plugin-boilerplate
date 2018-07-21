@@ -400,7 +400,9 @@ gulp.task("lint_package_json", () => {
  * @function lint_php
  * @summary Lint PHP files
  * @see https://packagist.org/packages/squizlabs/php_codesniffer
+ * @see https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
  * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/89
+ * @see https://github.com/JustBlackBird/gulp-phpcs/issues/39
  * @memberOf gulp
  */
 gulp.task("lint_php", () => {
@@ -416,22 +418,16 @@ gulp.task("lint_php", () => {
         // Validate files using PHP Code Sniffer
         .pipe(phpcs({
             bin: "vendor/bin/phpcs",
+            // standard must be included and cannot reference phpcs.xml, which is ignored
             standard: "WordPress", // -Core + -Docs + -Extra + -VIP
             warningSeverity: 0, // minimum severity required to display an error or warning.
             showSniffCode: true,
-            exclude: [ // Temporary exclusions during development.
-                // vendor/squizlabs/php_codesniffer/src/Standards/Squiz/ruleset.xml
-                "Generic.Strings.UnnecessaryStringConcat",
-                // vendor/wp-coding-standards/wpcs/WordPress-Core/ruleset.xml
-                // https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/124
+            // phpcs.xml exclusions are duplicated below:
+            exclude: [
                 "WordPress.Files.FileName",
-                // vendor/wp-coding-standards/wpcs/WordPress-Core/ruleset.xml
                 "WordPress.Functions.DontExtract",
-                // vendor/wp-coding-standards/wpcs/WordPress-Extra/ruleset.xml
                 "WordPress.CSRF.NonceVerification",
-                // vendor/wp-coding-standards/wpcs/WordPress-Extra/ruleset.xml
                 "WordPress.XSS.EscapeOutput",
-                // vendor/wp-coding-standards/wpcs/WordPress-VIP/ruleset.xml
                 "WordPress.VIP.ValidatedSanitizedInput"
             ]
         }))

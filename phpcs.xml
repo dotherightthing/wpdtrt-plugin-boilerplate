@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="DTRT WordPress">
+    <description>WordPress standards with DTRT dev exclusions</description>
+    <!-- The WordPress ruleset cherry picks sniffs from Generic, PEAR, PSR-2, Squiz etc -->
+    <rule ref="WordPress">
+        <exclude name="WordPress.Files.FileName"/>
+        <exclude name="WordPress.Functions.DontExtract"/>
+        <exclude name="WordPress.CSRF.NonceVerification"/>
+        <exclude name="WordPress.XSS.EscapeOutput"/>
+        <exclude name="WordPress.VIP.ValidatedSanitizedInput"/>
+    </rule>
+</ruleset>
