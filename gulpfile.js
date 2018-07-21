@@ -428,7 +428,8 @@ gulp.task("lint_php", () => {
                 "WordPress.Functions.DontExtract",
                 "WordPress.CSRF.NonceVerification",
                 "WordPress.XSS.EscapeOutput",
-                "WordPress.VIP.ValidatedSanitizedInput"
+                "WordPress.VIP.ValidatedSanitizedInput",
+                "Generic.Strings.UnnecessaryStringConcat"
             ]
         }))
         // Log all problems that were found
