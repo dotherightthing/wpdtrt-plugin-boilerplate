@@ -185,7 +185,8 @@ const phpFiles = [
     "**/*.php",
     "!docs/**/*.php",
     "!node_modules/**/*.php",
-    "!vendor/**/*.php"
+    "!vendor/**/*.php",
+    "!wp-content/**/*.php"
 ];
 const scssFiles = "./scss/*.scss";
 
