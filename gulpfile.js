@@ -19,6 +19,7 @@
  */
 
 /* eslint-env node */
+/* eslint-disable max-len */
 
 "use strict";
 
@@ -120,14 +121,14 @@ function get_js_doc_files() {
         boilerplate_path += "/";
     }
 
-    const jsFiles = [
+    const jsDocFiles = [
         "./js/*.js",
         "package.json",
         `${boilerplate_path}gulpfile.js`,
         `${boilerplate_path}js/backend.js`
     ];
 
-    return jsFiles;
+    return jsDocFiles;
 }
 
 /**
@@ -528,12 +529,10 @@ gulp.task("transpile_js", () => {
         "ES6 JS -> ES5 JS"
     );
 
-    const jsFiles = get_js_files();
-
     // return stream or promise for run-sequence
     return gulp.src(jsFiles)
         .pipe(babel({
-            presets: ['env']
+            presets: ["env"]
         }))
         .pipe(rename({
             suffix: "-es5"
@@ -590,9 +589,7 @@ gulp.task("version_update", () => {
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            /* eslint-disable max-len */
             "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest"
-            /* eslint-enable max-len */
         ]));
 });
 
@@ -875,9 +872,7 @@ gulp.task("release_composer_dist", () => {
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            /* eslint-disable max-len */
             "composer install --prefer-dist --no-interaction --no-dev --no-suggest"
-            /* eslint-enable max-len */
         ]));
 });
 
@@ -1072,3 +1067,6 @@ gulp.task("default", (callback) => {
 
     callback();
 });
+
+/* eslint-enable max-len */
+
