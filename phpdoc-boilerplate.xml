@@ -2,10 +2,10 @@
 <phpdoc>
   <title>wpdtrt-plugin-boilerplate</title>
   <parser>
-    <target>../../../docs/phpdoc</target>
+    <target>docs/phpdoc</target>
   </parser>
   <transformer>
-    <target>../../../docs/phpdoc</target>
+    <target>docs/phpdoc</target>
   </transformer>
   <transformations>
 	 <template name="clean" />
@@ -15,7 +15,6 @@
     <ignore>bin/*</ignore>
     <ignore>node_modules/*</ignore>
     <ignore>tests/bootstrap.php</ignore>
-    <ignore>tests/generated-plugin/src/index.php</ignore>
     <ignore>vendor/*</ignore>
     <ignore>wp-content/plugins/*</ignore>
   </files>

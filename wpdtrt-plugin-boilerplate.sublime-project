@@ -1,15 +1,18 @@
 {
-	"SublimeLinter.linters.phpcs.args":
-	[
-		"-s",
-		"--warning-severity=0"
-	],
-	"SublimeLinter.linters.phpcs.disable": false,
-	"SublimeLinter.linters.phpcs.standard": "${folder}/phpcs.xml",
 	"folders":
 	[
 		{
 			"path": "."
 		}
-	]
+	],
+    "settings":
+    {
+ 		"SublimeLinter.linters.phpcs.args":
+		[
+			"-s",
+			"--warning-severity=0"
+		],
+		"SublimeLinter.linters.phpcs.disable": false,
+		"SublimeLinter.linters.phpcs.standard": "${folder}/phpcs.xml"
+    }
 }

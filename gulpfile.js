@@ -420,15 +420,18 @@ gulp.task("lint_php", () => {
         .pipe(phpcs({
             bin: "vendor/bin/phpcs",
             // standard must be included and cannot reference phpcs.xml, which is ignored
+            // The WordPress ruleset cherry picks sniffs from Generic, PEAR, PSR-2, Squiz etc
             standard: "WordPress", // -Core + -Docs + -Extra + -VIP
             warningSeverity: 0, // minimum severity required to display an error or warning.
             showSniffCode: true,
-            // phpcs.xml exclusions are duplicated below:
+            // phpcs.xml exclusions are duplicated here,
+            // but only 3 levels of specificity are tolerated by gulp-phpcs:
             exclude: [
                 "WordPress.Files.FileName",
                 "WordPress.Functions.DontExtract",
                 "WordPress.CSRF.NonceVerification",
                 "WordPress.XSS.EscapeOutput",
+                "WordPress.VIP.RestrictedFunctions", // term_exists_term_exists - wpdtrt-tourdates
                 "WordPress.VIP.ValidatedSanitizedInput",
                 "Generic.Strings.UnnecessaryStringConcat"
             ]
@@ -722,11 +725,15 @@ gulp.task("docs_php", () => {
     );
 
     const boilerplate = is_boilerplate();
-    const bp = get_boilerplate_path();
-    let dir = ".";
+    let configFile = "";
 
-    if (! boilerplate) {
-        dir = "../../../"; // path to root from bin executable
+    if ( boilerplate ) {
+        // use config file in boilerplate root
+        configFile = "phpdoc-boilerplate.xml";
+    } else {
+        // use config file in plugin root
+        // see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/139#issuecomment-406854915
+        configFile = "phpdoc-plugin.xml";
     }
 
     // return stream or promise for run-sequence
@@ -735,8 +742,7 @@ gulp.task("docs_php", () => {
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            `vendor/bin/phpdoc --config ${bp}phpdoc.dist.xml --directory ${dir}`
-            // + " --ignore index.php" // overides all ignores in config file
+            `vendor/bin/phpdoc --config ${configFile}`
         ]));
 });
 
@@ -935,8 +941,8 @@ gulp.task("release_copy", () => {
         "./config/**/*",
         "./css/**/*",
         "./docs/**/*",
-        "!phpdoc-cache-*",
-        "!phpdoc-cache-*/**/*",
+        "!./docs/phpdoc/phpdoc-cache-*",
+        "!./docs/phpdoc/phpdoc-cache-*/**/*",
         "./icons/**/*",
         "./images/**/*",
         "!./images/**/*.pxm",
