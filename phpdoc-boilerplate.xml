@@ -14,7 +14,7 @@
     <directory>.</directory>
     <ignore>bin/*</ignore>
     <ignore>node_modules/*</ignore>
-    <ignore>tests/bootstrap.php</ignore>
+    <ignore>tests/*</ignore>
     <ignore>vendor/*</ignore>
     <ignore>wp-content/plugins/*</ignore>
   </files>
