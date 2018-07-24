@@ -213,7 +213,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 					}
 
 					if ( 'tgmpa' === $usecase ) {
-						$this->set_plugin_dependency( $arr );
+						$this->set_plugin_dependency( $plugin_dependency );
 					} else if ( 'wpunit' === $usecase ) {
 
 						if ( 'dotherightthing' === $vendor ) {
