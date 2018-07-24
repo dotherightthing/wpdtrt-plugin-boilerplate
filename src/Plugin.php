@@ -195,7 +195,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 					}
 
 					$plugin_dependency = array(
-						'name'          => $name,
+						'name'          => $name . ' (' . $version . ')',
 						'slug'          => $slug,
 						'required'      => true, // this is output as 1.
 					);
