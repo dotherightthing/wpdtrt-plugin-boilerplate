@@ -589,7 +589,7 @@ gulp.task("version_update", () => {
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest"
+            "composer update --no-interaction --no-suggest"
         ]));
 });
 
