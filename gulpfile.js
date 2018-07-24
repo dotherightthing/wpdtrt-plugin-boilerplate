@@ -932,32 +932,62 @@ gulp.task("release_copy", () => {
         "To temporary folder"
     );
 
+    // Release files are those that are required
+    // to use the package as a WP Plugin
     const releaseFiles = [
-        "./config/**/*",
+        // Composer file, contains TGMPA dependencies object
+        "./composer.json",
+        // Compiled CSS
         "./css/**/*",
-        "./docs/**/*",
-        "!./docs/phpdoc/phpdoc-cache-*",
-        "!./docs/phpdoc/phpdoc-cache-*/**/*",
+        // Any icons
         "./icons/**/*",
+        // Any images
         "./images/**/*",
+        // Not the project logo
         "!./images/**/*.pxm",
-        "./js/**/*",
+        // Transpiled ES5 JS incl backend-es5.js from boilerplate
+        "./js/**/*-es5.js",
+        // WP i18n .pot files
         "./languages/**/*",
+        // Yarn front-end dependencies
         "./node_modules/**/*",
-        // Yarn environment symlink:
+        // Yarn environment symlink
         "!./node_modules/wpdtrt-plugin-boilerplate",
-        // Yarn environment symlink contents:
+        // Yarn environment symlink contents
         "!./node_modules/wpdtrt-plugin-boilerplate/**/*",
+        // Plugin logic
         "./src/**/*",
+        // Plugin template partials
         "./template-parts/**/*",
-        "!./tests/**/*",
+        // Any PHP dependencies
         "./vendor/**/*",
-        "!./vendor/dotherightthing/wpdtrt-plugin-boilerplate/tests/**/*",
-        "./views/**/*",
-        "./index.php",
+        // Not binary executables
+        "!./vendor/bin/**/*",
+        // Not JSON files
+        "!./vendor/**/*.json",
+        // Not Less files
+        "!./vendor/**/*.less",
+        // Not License files
+        "!./vendor/**/LICENSE",
+        // Not Markdown files
+        "!./vendor/**/*.md",
+        // Not PHP sample files
+        "!./vendor/**/*example*.php",
+        // Not Sass files
+        "!./vendor/**/*.scss",
+        // Not Sass folders
+        "!./vendor/**/*/scss",
+        // Not Tests folders
+        "!./vendor/**/*/tests",
+        // Not XML files
+        "!./vendor/**/*.xml",
+        // Not Zip files
+        "!./vendor/**/*.zip",
+        // Plugin WP Read Me
         "./readme.txt",
+        // Plugin WP Uninstaller
         "./uninstall.php",
-        "!**/*.less",
+        // Plugin root config
         `./${pluginName}.php`
     ];
 
