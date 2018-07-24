@@ -147,14 +147,28 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @param string $usecase Use Case ('tgmpa' | 'wpunit').
 		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
 		 * @todo Add unit tests
+		 * @example
+		 *  // Including TGMPA dependencies in Unit Test
+		 *  // This is why we need a static method.
+		 *  // wpdtrt-foobar/tests/bootstrap.php
+		 *  function _manually_load_plugin() {
+		 *    require dirname( dirname( __FILE__ ) ) . '/wpdtrt-foobar.php';
+		 *    WPDTRT_Foobar_Plugin::set_wp_composer_dependencies( '../composer.json', 'wpunit' );
+		 *  }
 		 */
 		public static function set_wp_composer_dependencies( $composer_json, $usecase ) {
 
-			if ( ! file_exists( $composer_json ) ) {
+			if ( defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
+				// TODO: Try with ../../../../../ as it used to be ../../../../
+				// and it still (appears to) work for the bootstrap.php copy.
+				$plugin_root = dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) );
+			}
+
+			if ( ! file_exists( $plugin_root . '/composer.json' ) ) {
 				return;
 			}
 
-			$composer_config = file_get_contents( $composer_json );
+			$composer_config = file_get_contents( $plugin_root . '/composer.json' );
 
 			$obj = json_decode( $composer_config );
 
@@ -214,6 +228,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 					}
 
 					if ( 'tgmpa' === $usecase ) {
+						// TODO we can't use $this here
+						// and can't use SELF:: due to PHP Strict standards re static methods
+						// Perhaps we need to duplicate something
+						// or just make the composer object retrieval static ??
 						$this->set_plugin_dependency( $plugin_dependency );
 					} else if ( 'wpunit' === $usecase ) {
 
