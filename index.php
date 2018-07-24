@@ -7,7 +7,7 @@
  * WPDTRT_PLUGIN_CHILD allows for child plugins, where this PHP file is nested within vendor/, see #51
  *
  * @package WPDTRT_Plugin_Boilerplate
- * @version 1.5.0
+ * @version 1.5.1
  * @see http://phpenthusiast.com/blog/how-to-autoload-with-composer
  * @see https://www.php-fig.org/psr/psr-4/
  * @see https://stackoverflow.com/a/37952183/6850747
