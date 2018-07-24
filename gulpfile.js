@@ -964,24 +964,37 @@ gulp.task("release_copy", () => {
         // Not binary executables
         "!./vendor/bin/**/*",
         // Not JSON files
+        "!./node_modules/**/*.json",
         "!./vendor/**/*.json",
         // Not Less files
+        "!./node_modules/**/*.less",
         "!./vendor/**/*.less",
         // Not License files
+        "!./node_modules/**/LICENSE",
         "!./vendor/**/LICENSE",
         // Not Markdown files
+        "!./node_modules/**/*.md",
         "!./vendor/**/*.md",
         // Not PHP sample files
+        "!./node_modules/**/*example*.php",
         "!./vendor/**/*example*.php",
         // Not Sass files
+        "!./node_modules/**/*.scss",
         "!./vendor/**/*.scss",
-        // Not Sass folders
+        // Not SCSS folders
+        "!./node_modules/**/*/scss",
         "!./vendor/**/*/scss",
-        // Not Tests folders
-        "!./vendor/**/*/tests",
+        // Not test files
+        "!./node_modules/**/test/**/*",
+        "!./vendor/**/test/**/*",
+        // Not tests files
+        "!./node_modules/**/tests/**/*",
+        "!./vendor/**/tests/**/*",
         // Not XML files
+        "!./node_modules/**/*.xml",
         "!./vendor/**/*.xml",
         // Not Zip files
+        "!./node_modules/**/*.zip",
         "!./vendor/**/*.zip",
         // Plugin WP Read Me
         "./readme.txt",
