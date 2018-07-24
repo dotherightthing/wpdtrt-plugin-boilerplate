@@ -195,7 +195,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 					}
 
 					$plugin_dependency = array(
-						'name'          => $name . ' (' . $version . ')',
+						'name'          => $name,
 						'slug'          => $slug,
 						'required'      => true, // this is output as 1.
 					);
@@ -205,6 +205,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 					}
 
 					if ( isset( $version ) ) {
+						$plugin_dependency['name'] = $name . ' (' . $version . ')';
 						$plugin_dependency['version'] = $version;
 					}
 
