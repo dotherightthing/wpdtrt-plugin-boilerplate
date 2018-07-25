@@ -644,4 +644,107 @@ class PluginTest extends WP_UnitTestCase {
 			get_admin_url() . 'options-general.php?page=' . $wpdtrt_test_plugin->get_slug()
 		);
 	}
+
+	/**
+	 * Test that plugin dependencies are correctly loaded from composer.json
+	 */
+	public function test_get_wp_composer_dependencies() {
+		$composer_json = dirname( __FILE__ ) . '/data/composer.json';
+
+		$this->assertFileExists(
+			$composer_json,
+			'File does not exist at this location'
+		);
+
+		$composer_dependencies = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
+
+		$this->assertNotEmpty(
+			$composer_dependencies,
+			'Composer dependencies not retrieved'
+		);
+
+		$this->assertTrue(
+			is_array( $composer_dependencies ),
+			'Expected Composer dependencies to be converted to an associative array'
+		);
+
+		$this->assertEquals(
+			array(
+				array(
+					'name' => 'DTRT Content Sections (0.2.2)',
+					'slug' => 'wpdtrt-contentsections',
+					'required' => true,
+					'file' => 'wpdtrt-contentsections.php',
+					'source' => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.2.2/release.zip',
+					'version' => '0.2.2',
+					'external_url' => 'https://github.com/dotherightthing/wpdtrt-contentsections',
+					'vendor' => 'dotherightthing',
+				),
+				array(
+					'name' => 'Better Anchor Links (1.7.*)',
+					'slug' => 'better-anchor-links',
+					'required' => true,
+					'file' => 'auto-anchor-list.php',
+					'version' => '1.7.*',
+					'vendor' => 'wpackagist-plugin',
+				),
+			),
+			$composer_dependencies
+		);
+	}
+
+	/**
+	 * Test that TGMPA dependencies are correctly registered
+	 */
+	public function test__set_wp_composer_dependencies_tgmpa() {
+		global $wpdtrt_test_plugin;
+
+		$composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		$updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
+
+		$this->assertNotCount(
+			0,
+			$updated_plugin_dependencies,
+			'No plugin dependencies returned, path to composer.json is bad'
+		);
+
+		$this->assertEquals(
+			array(
+				array(
+					'name' => 'DTRT Content Sections (0.2.2)',
+					'slug' => 'wpdtrt-contentsections',
+					'required' => true,
+					'version' => '0.2.2',
+					'source' => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.2.2/release.zip',
+					'external_url' => 'https://github.com/dotherightthing/wpdtrt-contentsections',
+				),
+				array(
+					'name' => 'Better Anchor Links (1.7.*)',
+					'slug' => 'better-anchor-links',
+					'required' => true,
+					'version' => '1.7.*',
+				),
+			),
+			$updated_plugin_dependencies,
+			'TGMPA plugin dependencies not updated correctly'
+		);
+	}
+
+	/**
+	 * Test static method get_wp_composer_dependencies_wpunit
+	 */
+	public function test__get_wp_composer_dependencies_wpunit() {
+		$composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		$composer_dependencies = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
+		$composer_dependencies_to_require = WPDTRT_Test_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
+
+		$this->assertEquals(
+			array(
+				dirname( dirname( __FILE__ ) ) . '/vendor/dotherightthing/wpdtrt-contentsections/wpdtrt-contentsections.php',
+				dirname( dirname( __FILE__ ) ) . '/wp-content/plugins/better-anchor-links/auto-anchor-list.php',
+			),
+			$composer_dependencies_to_require,
+			'WP Unit plugin dependencies not correct'
+		);
+	}
 }

@@ -91,7 +91,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$this->set_plugin_options( $plugin_options, true );
 			$this->set_plugin_data( isset( $plugin_data ) ? $plugin_data : array() );
 			$this->set_instance_options( $instance_options );
-			$this->set_wp_composer_dependencies( '../../../../composer.json', 'tgmpa' );
+			$this->set_wp_composer_dependencies_tgmpa( dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) ) . '/composer.json' );
 
 			// hook in to WordPress.
 			$this->wp_setup();
@@ -141,34 +141,18 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Register WP plugin dependencies with TGMPA, load for WP Unit
+		 * Get the WP plugin dependencies required for both TGMPA and WP Unit
 		 *
-		 * @param string $composer_json Path to composer.json.
-		 * @param string $usecase Use Case ('tgmpa' | 'wpunit').
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
-		 * @todo Add unit tests
-		 * @example
-		 *  // Including TGMPA dependencies in Unit Test
-		 *  // This is why we need a static method.
-		 *  // wpdtrt-foobar/tests/bootstrap.php
-		 *  function _manually_load_plugin() {
-		 *    require dirname( dirname( __FILE__ ) ) . '/wpdtrt-foobar.php';
-		 *    WPDTRT_Foobar_Plugin::set_wp_composer_dependencies( '../composer.json', 'wpunit' );
-		 *  }
+		 * @param string $composer_json Full (not relative) path to plugin's composer.json.
+		 * @return array Plugin dependencies
 		 */
-		public static function set_wp_composer_dependencies( $composer_json, $usecase ) {
+		public static function get_wp_composer_dependencies( $composer_json ) {
 
-			if ( defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
-				// TODO: Try with ../../../../../ as it used to be ../../../../
-				// and it still (appears to) work for the bootstrap.php copy.
-				$plugin_root = dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) );
+			if ( ! file_exists( $composer_json ) ) {
+				return array();
 			}
 
-			if ( ! file_exists( $plugin_root . '/composer.json' ) ) {
-				return;
-			}
-
-			$composer_config = file_get_contents( $plugin_root . '/composer.json' );
+			$composer_config = file_get_contents( $composer_json );
 
 			$obj = json_decode( $composer_config );
 
@@ -181,6 +165,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 			$extras_vars = get_object_vars( $extras );
 			$require_wp_array = $extras_vars['require-wp'];
+
+			$plugin_dependencies = array();
 
 			if ( isset( $require_dev, $require_wp_array ) ) { // NULL if key doesn't exist.
 
@@ -214,8 +200,16 @@ if ( ! class_exists( 'Plugin' ) ) {
 						'required'      => true, // this is output as 1.
 					);
 
+					if ( isset( $file ) ) {
+						$plugin_dependency['file'] = $file;
+					}
+
 					if ( isset( $source ) ) {
 						$plugin_dependency['source'] = $source;
+					}
+
+					if ( isset( $vendor ) ) {
+						$plugin_dependency['vendor'] = $vendor;
 					}
 
 					if ( isset( $version ) ) {
@@ -227,33 +221,97 @@ if ( ! class_exists( 'Plugin' ) ) {
 						$plugin_dependency['external_url'] = $external_url;
 					}
 
-					if ( 'tgmpa' === $usecase ) {
-						// TODO we can't use $this here
-						// and can't use SELF:: due to PHP Strict standards re static methods
-						// Perhaps we need to duplicate something
-						// or just make the composer object retrieval static ??
-						$this->set_plugin_dependency( $plugin_dependency );
-					} else if ( 'wpunit' === $usecase ) {
-
-						if ( 'dotherightthing' === $vendor ) {
-							$vendor_dir = 'vendor/dotherightthing';
-
-							// CONSTANT tells `pluginroot.php` where to find Composer's `autoload.php`.
-							$constant = strtoupper( str_replace( '-', '_', $slug ) ) . '_TEST_DEPENDENCY';
-
-							if ( ! defined( $constant ) ) {
-								define( $constant, true );
-							}
-						} else if ( 'wpackagist-plugin' === $vendor ) {
-							$vendor_dir = 'wp-content/plugins';
-						}
-
-						$include = '/' . $vendor_dir . '/' . $slug . '/' . $file . '.php';
-
-						require dirname( dirname( __FILE__ ) ) . $include;
-					}
+					$plugin_dependencies[] = $plugin_dependency;
 				}
 			}
+
+			return $plugin_dependencies;
+		}
+
+		/**
+		 * Register WP plugin dependencies with TGMPA
+		 *
+		 * @param string $composer_json Full (not relative) path to plugin's composer.json.
+		 * @return array Updated plugin dependencies
+		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
+		 * @example
+		 *   // wpdtrt-plugin-boilerplate/src/Plugin.php
+		 *   global $wpdtrt_test_plugin; // Access non-static methods of plugin class.
+		 *   $composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		 *   $updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
+		 */
+		public function set_wp_composer_dependencies_tgmpa( $composer_json ) {
+			$wp_composer_dependencies = $this->get_wp_composer_dependencies( $composer_json );
+			$tgmpa_props = array(
+				'name',
+				'slug',
+				'required',
+				'source',
+				'version',
+				'external_url',
+			);
+
+			// remove array keys which don't map to the TGMPA dependency config.
+			foreach ( $wp_composer_dependencies as $plugin_dependency ) {
+				$tgmpa_dependency = array();
+
+				foreach ( $tgmpa_props as $prop ) {
+					if ( array_key_exists( $prop, $plugin_dependency ) ) {
+						$tgmpa_dependency[ $prop ] = $plugin_dependency[ $prop ];
+					}
+				}
+
+				$this->set_plugin_dependency( $tgmpa_dependency );
+			}
+
+			// test that the operation was successful.
+			$plugin_dependencies = $this->get_plugin_dependencies();
+
+			return $plugin_dependencies;
+		}
+
+		/**
+		 * Get the WP plugin dependency files required by WP Unit
+		 *
+		 * @param array $plugin_dependencies Plugin dependencies.
+		 * @return array Plugin files to require
+		 * @example
+		 *   // wpdtrt-foobar/tests/bootstrap.php
+		 *   function _manually_load_plugin() {
+		 *     require dirname( dirname( __FILE__ ) ) . '/wpdtrt-foobar.php'; // Access static methods of plugin class.
+		 *     $composer_json = dirname( dirname( __FILE__ ) ) . '/composer.json';
+		 *     $composer_dependencies = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies( $composer_json );
+		 *     $composer_dependencies_to_require = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
+		 *   }
+		 */
+		public static function get_wp_composer_dependencies_wpunit( $plugin_dependencies ) {
+
+			$plugin_files_to_require = array();
+
+			foreach ( $plugin_dependencies as $plugin_dependency ) {
+				$file = $plugin_dependency['file'];
+				$slug = $plugin_dependency['slug'];
+				$vendor = $plugin_dependency['vendor'];
+
+				if ( 'dotherightthing' === $vendor ) {
+					$vendor_dir = 'vendor/dotherightthing';
+
+					// CONSTANT tells `pluginroot.php` where to find Composer's `autoload.php`.
+					$constant = strtoupper( str_replace( '-', '_', $slug ) ) . '_TEST_DEPENDENCY';
+
+					if ( ! defined( $constant ) ) {
+						define( $constant, true );
+					}
+				} elseif ( 'wpackagist-plugin' === $vendor ) {
+					$vendor_dir = 'wp-content/plugins';
+				}
+
+				$require = ( '/' . $vendor_dir . '/' . $slug . '/' . $file );
+
+				$plugin_files_to_require[] = dirname( dirname( __FILE__ ) ) . $require;
+			}
+
+			return $plugin_files_to_require;
 		}
 
 		/**
