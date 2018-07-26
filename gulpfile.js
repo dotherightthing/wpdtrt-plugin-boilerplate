@@ -280,7 +280,7 @@ gulp.task("preinstall_dependencies_github", () => {
       token: get_gh_token()
     }).then( (status) => {
         log("Github API rate limit:");
-        log(`API calls remaining: ${status.core.remaining}.green/${status.core.limit}`);
+        log(`API calls remaining: ${status.core.remaining}/${status.core.limit}`);
     });
 });
 
