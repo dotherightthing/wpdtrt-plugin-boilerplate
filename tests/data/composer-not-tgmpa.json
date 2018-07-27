@@ -1,0 +1,59 @@
+{
+    "name": "dotherightthing/wpdtrt-anchorlinks",
+    "description": "Anchor links plugin.",
+    "type": "library",
+    "keywords": ["anchor links", "content links", "menu", "navigation", "sticky", "scrollto"],
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Dan Smith",
+            "email": "dev@dotherightthing.co.nz",
+            "homepage": "https://github.com/dotherightthing/wpdtrt-anchorlinks",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "support@dotherightthing.co.nz",
+        "issues": "https://github.com/dotherightthing/wpdtrt-anchorlinks/issues"
+    },
+    "require": {
+        "dotherightthing/wpdtrt-plugin-boilerplate": "^1.5.1"
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "2.9.0",
+        "phpunit/phpunit": "^5.7",
+        "psy/psysh" : "~0.6",
+        "wp-cli/wp-cli" : "~0.22",
+        "wp-coding-standards/wpcs": "^0.14.1",
+        "DealerDirect/phpcodesniffer-composer-installer": "^0.4.4",
+        "dotherightthing/wpdtrt-contentsections": "^0.2.2",
+        "wpackagist-plugin/better-anchor-links": "1.7.*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/dotherightthing/wpdtrt-debug"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/dotherightthing/tgm-plugin-activation"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/dotherightthing/wpdtrt-contentsections"
+        },
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        }
+    ],
+    "config": {
+        "vendor-dir": "vendor"
+    }
+}

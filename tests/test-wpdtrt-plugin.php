@@ -646,10 +646,10 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test that plugin dependencies are correctly loaded from composer.json
+	 * Test that plugin dependencies are correctly loaded from composer-tgmpa.json
 	 */
 	public function test_get_wp_composer_dependencies() {
-		$composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		$composer_json = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
 
 		$this->assertFileExists(
 			$composer_json,
@@ -699,13 +699,13 @@ class PluginTest extends WP_UnitTestCase {
 	public function test__set_wp_composer_dependencies_tgmpa() {
 		global $wpdtrt_test_plugin;
 
-		$composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		$composer_json = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
 		$updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
 
 		$this->assertNotCount(
 			0,
 			$updated_plugin_dependencies,
-			'No plugin dependencies returned, path to composer.json is bad'
+			'No plugin dependencies returned, path to composer-tgmpa.json is bad'
 		);
 
 		$this->assertEquals(
@@ -731,10 +731,26 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test that no TGMPA dependencies does not cause an error
+	 */
+	public function test__not_set_wp_composer_dependencies_tgmpa() {
+		global $wpdtrt_test_plugin;
+
+		$composer_json = dirname( __FILE__ ) . '/data/composer-not-tgmpa.json';
+		$updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
+
+		$this->assertEquals(
+			array(),
+			$updated_plugin_dependencies,
+			'TGMPA plugin dependencies not updated correctly'
+		);
+	}
+
+	/**
 	 * Test static method get_wp_composer_dependencies_wpunit
 	 */
 	public function test__get_wp_composer_dependencies_wpunit() {
-		$composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		$composer_json = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
 		$composer_dependencies = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
 		$composer_dependencies_to_require = WPDTRT_Test_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
 
@@ -743,6 +759,21 @@ class PluginTest extends WP_UnitTestCase {
 				dirname( dirname( __FILE__ ) ) . '/vendor/dotherightthing/wpdtrt-contentsections/wpdtrt-contentsections.php',
 				dirname( dirname( __FILE__ ) ) . '/wp-content/plugins/better-anchor-links/auto-anchor-list.php',
 			),
+			$composer_dependencies_to_require,
+			'WP Unit plugin dependencies not correct'
+		);
+	}
+
+	/**
+	 * Test that no TGMPA dependencies does not cause an error
+	 */
+	public function test__not_get_wp_composer_dependencies_wpunit() {
+		$composer_json = dirname( __FILE__ ) . '/data/composer-not-tgmpa.json';
+		$composer_dependencies = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
+		$composer_dependencies_to_require = WPDTRT_Test_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
+
+		$this->assertEquals(
+			array(),
 			$composer_dependencies_to_require,
 			'WP Unit plugin dependencies not correct'
 		);
