@@ -584,7 +584,7 @@ gulp.task("version_update", () => {
         "4a",
         "Version",
         "Bump",
-        "Update wpdtrt-plugin-boilerplate"
+        "Update Composer dependencies"
     );
 
     // return stream or promise for run-sequence
