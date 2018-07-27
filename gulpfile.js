@@ -11,7 +11,7 @@
  *    yarn run version
  *    yarn run watch
  *
- * @version     1.5.1
+ * @version     1.5.3
  */
 
 /**
