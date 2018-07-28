@@ -726,6 +726,15 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$old_plugin_dependencies = $this->get_plugin_dependencies();
 
 			foreach ( $old_plugin_dependencies as $key => $value ) {
+
+				// clean up old, malformed dependencies
+				// possibly due to set_plugin_dependencies() called
+				// instead of set_plugin_dependency()
+				// #150.
+				if ( ! is_array( $value ) ) {
+					unset( $old_plugin_dependencies[ $key ] );
+				}
+
 				// if the new dependency already exists.
 				if ( $value['slug'] === $new_plugin_dependency['slug'] ) {
 					// remove the old entry so we can set it again below,
@@ -735,15 +744,18 @@ if ( ! class_exists( 'Plugin' ) ) {
 				}
 			}
 
+			// return all the values from the array and indexes the array numerically
+			$old_plugin_dependencies_reindexed = array_values( $old_plugin_dependencies );
+
 			// this changes the array order, but that's not important to us.
-			array_push( $old_plugin_dependencies, $new_plugin_dependency );
+			array_push( $old_plugin_dependencies_reindexed, $new_plugin_dependency );
 
 			/**
 			 * Merge old options with new options
 			 * This overwrites the old values with any new values
 			 */
 			$options                        = $this->get_options();
-			$options['plugin_dependencies'] = $old_plugin_dependencies;
+			$options['plugin_dependencies'] = $old_plugin_dependencies_reindexed;
 			$this->set_options( $options );
 		}
 
