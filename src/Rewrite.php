@@ -7,7 +7,7 @@
  * @since     1.4.16
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_3;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_4;
 
 if ( ! class_exists( 'Rewrite' ) ) {
 
@@ -27,7 +27,7 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * when it is instantiated,
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_3\Rewrite {}
+		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_4\Rewrite {}
 		 *
 		 * @param     array $options Rewrite options.
 		 * @since     1.0.0
