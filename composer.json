@@ -14,7 +14,7 @@
     ],
     "support": {
         "email": "support@dotherightthing.co.nz",
-        "issues": "https://github.com/dotherightthing/wpdtrt-tourdates/issues"
+        "issues": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues"
     },
     "require": {
         "dotherightthing/wpdtrt-debug": "^1.0.0",
