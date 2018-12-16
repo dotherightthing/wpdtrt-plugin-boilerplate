@@ -636,6 +636,9 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 						/**
 						 * Used as pretty permalink text (i.e. /tag/)
 						 * Default: $taxonomy
+						 * The full post permalink is specified when registering the Custom Post Type,
+						 * (e.g. in the theme),
+						 * see: https://gist.github.com/dotherightthing/3fa74207ffc4c3759cea47b1304e5273
 						 *
 						 * Note: if this slug matches the CPT slug, a 404 will result (POST not found)
 						 * setting 'tourdiaries' fails (like CPT)
@@ -744,9 +747,49 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
+		 * Recursively get taxonomy and its children
+		 *
+		 * @param int    $post_id - Post ID.
+		 * @param string $taxonomy - Taxonomy name.
+		 * @param int    $parent - Parent Term ID (0 == no parent / topmost term in hierarchy).
+		 * @return array Multidimensional array preserving relationship between parents and children
+		 * @see Adapted from https://www.daggerhart.com/wordpress-get-taxonomy-hierarchy-including-children/
+		 */
+		public function get_taxonomy_hierarchy( $post_id, $taxonomy, $parent = 0 ) {
+			$taxonomy = is_array( $taxonomy ) ? array_shift( $taxonomy ) : $taxonomy;
+
+			// Get all direct decendants of the $parent.
+			// If parent => 0 is passed, only top-level terms will be returned.
+			$terms = get_terms( array(
+				'object_ids' => $post_id,
+				'taxonomy' => $taxonomy,
+				'parent' => $parent,
+			) );
+
+			if ( ! is_wp_error( $terms ) ) {
+				// Prepare a new array, these are the children of $parent.
+				// We'll ultimately copy all the $terms into this new array,
+				// but only after they find their own children.
+				$children = array();
+
+				// go through all the direct decendants of $parent, and gather their children.
+				foreach ( $terms as $term ) {
+					// recurse to get the direct decendants of 'this' term.
+					$term->children = $this->get_taxonomy_hierarchy( $post_id, $taxonomy, $term->term_id );
+
+					// add the term to our new array.
+					$children[ $term->term_id ] = $term;
+				}
+
+				// send the results back to the caller.
+				return $children;
+			}
+		}
+
+		/**
 		 * Replace Taxonomy %placeholders% in Custom Post Type permalinks
 		 *  as taxonomy terms do not automatically appear in Custom Post Type permalinks.
-		 *  The placeholder will be replaced by the hierarchical term selection (parent_term/child_term)
+		 *  The placeholder will be replaced by the hierarchical term selection (parent_term/child_term/grandchild_term)
 		 *
 		 * @param string $permalink The post URL.
 		 * @param object $post      The post object.
@@ -765,6 +808,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * @see https://kellenmace.com/edit-slug-button-missing-in-wordpress/
 		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44 - Permalink Edit button missing
 		 * @todo make this less generic as this class is instantiated for EACH taxonomy
+		 * @todo Replace manual 3 level check for children with a (while?) loop
 		 */
 		public function replace_taxonomy_in_cpt_permalinks( $permalink, $post, $leavename ) {
 
@@ -772,6 +816,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 			$post_id          = $post->ID;
 			$placeholder_name = $this->get_name();
 
+			// Permalink Settings = Post name.
 			if ( strpos( $permalink, '%' . $placeholder_name . '%' ) === false ) {
 				return $permalink;
 			}
@@ -785,8 +830,10 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 				 * get_the_terms() does cache the results but doesn't implement a sort order
 				 *
 				 * If a post only belongs to one parent, one child and/or one grandchild, you can order the terms by term_id.
-				 * It is widely accepted that the parent will have a lower numbered ID than the child and the child will have a * lower numbered ID than the grandchild
-				 * This isn't true for me: East Asia is lower than China, but NZ is higher than Rainbow Road
+				 * It is widely accepted that the parent will have a lower numbered ID than the child
+				 * and the child will have a lower numbered ID than the grandchild.
+				 * This wasn't true for me, as the term hierarchy was shuffled after creation,
+				 * so this seems like a risky assumption.
 				 *
 				 * Returns Array of WP_Term objects on success
 				 * Return false if there are no terms or the post does not exist
@@ -794,29 +841,12 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 				 *
 				 * @see https://wordpress.stackexchange.com/questions/172118/get-the-term-list-by-hierarchy-order
 				 */
-				$terms = get_the_terms(
+				$terms = $this->get_taxonomy_hierarchy(
 					$post_id,
 					$placeholder_name
 				);
 
 				if ( is_array( $terms ) ) {
-
-					/**
-					* Sort terms into hierarchical order
-					*
-					* Has parent: $term->parent === n
-					* No parent: $term->parent === 0
-					* strnatcmp = Natural string comparison
-					*
-					* @see https://developer.wordpress.org/reference/functions/get_the_terms/
-					* @see https://wordpress.stackexchange.com/questions/172118/get-the-term-list-by-hierarchy-order
-					* @see https://stackoverflow.com/questions/1597736/how-to-sort-an-array-of-associative-arrays-by-value-of-a-given-key-in-php
-					* @see https://wpseek.com/function/_get_term_hierarchy/
-					* @see https://wordpress.stackexchange.com/questions/137926/sorting-attributes-order-when-using-get-the-terms
-					*/
-					uasort( $terms, function ( $term_a, $term_b ) {
-						return strnatcmp( $term_a->parent, $term_b->parent );
-					});
 
 					/**
 					 * Retrieve the slug value of the first custom taxonomy object linked to the current post.
@@ -826,9 +856,29 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 					$replacements = array();
 
 					if ( ! is_wp_error( $terms ) ) {
+
 						foreach ( $terms as $term ) {
-							if ( ! empty( $term ) && is_object( $term ) ) {
-								$replacements[] = $term->slug;
+							$term_level_1 = $term;
+
+							if ( ! empty( $term_level_1 ) && is_object( $term_level_1 ) ) {
+								// level 1.
+								$replacements[] = $term_level_1->slug;
+
+								// level 2.
+								if ( array_key_exists( 'children', $term_level_1 ) ) {
+									$children = array_keys( $term_level_1->children );
+									$term_level_2_key = $children[0];
+									$term_level_2 = $term_level_1->children[ $term_level_2_key ];
+									$replacements[] = $term_level_2->slug;
+
+									// level 3.
+									if ( array_key_exists( 'children', $term_level_2 ) ) {
+										$children = array_keys( $term_level_2->children );
+										$term_level_3_key = $children[0];
+										$term_level_3 = $term_level_2->children[ $term_level_3_key ];
+										$replacements[] = $term_level_3->slug;
+									}
+								}
 							}
 						}
 
@@ -837,10 +887,12 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 					/**
 					 * Replace the %taxonomy% tag with our custom taxonomy slug.
+					 * Permalink Settings = Post name.
 					 */
 					$permalink = str_replace( ( '%' . $placeholder_name . '%' ), $replacements, $permalink );
 				}
 			}
+
 			return $permalink;
 		}
 	}
