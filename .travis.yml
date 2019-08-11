@@ -18,6 +18,10 @@ php:
 env:
   - WP_VERSION=latest WP_MULTISITE=0
 
+# Start MySQL
+services:
+  - mysql
+
 # Build Matrix
 # consisting of specific runtime/env/exclude/include combinations.
 # Each 'include' is run as a separate job.
