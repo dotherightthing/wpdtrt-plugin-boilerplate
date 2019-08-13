@@ -28,7 +28,7 @@
         "psy/psysh" : "~0.6",
         "wp-cli/wp-cli" : "~0.22",
         "wp-coding-standards/wpcs": "^0.14.1",
-        "DealerDirect/phpcodesniffer-composer-installer": "^0.4.4"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4"
     },
     "autoload": {
         "psr-4": {

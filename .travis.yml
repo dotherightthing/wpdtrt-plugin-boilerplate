@@ -31,6 +31,10 @@ matrix:
     - php: 5.6.30
       env: WP_VERSION=latest WP_MULTISITE=0
 
+# Start MySQL
+services:
+  - mysql
+
 # Cache directories between builds, to store dependencies
 # which take longer to compile or download.
 # https://docs.travis-ci.com/user/caching#Caching-directories-(Bundler%2C-dependencies)
@@ -50,7 +54,7 @@ before_install:
   # in order to avoid the build error "Use of const in strict mode"
   # https://docs.travis-ci.com/user/customizing-the-build/#Installing-a-Second-Programming-language
   # https://stackoverflow.com/a/44250453/6850747
-  - nvm install 8.11.1
+  - nvm install 10.16.2
   # Disable XDebug which is only required for Code Coverage reports
   # https://johnblackbourn.com/reducing-travis-ci-build-times-for-wordpress-projects/
   - phpenv config-rm xdebug.ini
@@ -67,10 +71,10 @@ before_install:
 # https://www.sitepoint.com/php-continuous-integration-travis-ci/
 # https://getcomposer.org/doc/03-cli.md
 install:
-  - composer install --prefer-dist --no-interaction --no-suggest # also run via gulpfile.js
+  - composer install --prefer-dist --no-interaction --no-suggest # loads parent plugin class, which in turn runs an install via gulpfile.js
   # Adding Yarn to Travis CI - https://gist.github.com/acburdine/61f4f91bacf6554fccdaa394fd14ebbd
   - npm install -g yarn
-  - yarn install --non-interactive
+  - yarn install --non-interactive # child plugin
   - yarn global add gulp-cli
 
 # Exporting a variable causes it to be inherited
