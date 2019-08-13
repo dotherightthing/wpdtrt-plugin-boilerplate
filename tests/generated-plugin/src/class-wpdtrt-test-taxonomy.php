@@ -14,7 +14,7 @@
  * @since   1.0.0
  * @version 1.0.0
  */
-class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_5\Taxonomy {
+class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_6\Taxonomy {
 
 	/**
 	 * Supplement taxonomy initialisation.
