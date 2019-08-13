@@ -1002,7 +1002,15 @@ gulp.task("release_copy", () => {
         // Plugin WP Uninstaller
         "./uninstall.php",
         // Plugin root config
-        `./${pluginName}.php`
+        `./${pluginName}.php`,
+        // Not CSS source maps
+        "!./css/maps/**/*",
+        // Not demo files
+        "!./icons/icomoon/demo-files/**/*",
+        // Not docs
+        "!./docs/**/*",
+        // Not node module src files
+        "!./node_modules/**/src/**/*",
     ];
 
     // return stream or promise for run-sequence
