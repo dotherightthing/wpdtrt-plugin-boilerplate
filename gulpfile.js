@@ -159,6 +159,32 @@ function get_js_files() {
 }
 
 /**
+ * @summary Get list of JavaScript files to lint
+ * @return {array} jsFiles Array of files
+ * @see http://usejsdoc.org/about-including-package.html
+ * @memberOf gulp
+ */
+function get_js_files_to_lint() {
+
+    let boilerplate_path = get_boilerplate_path();
+
+    if ( boilerplate_path !== "" ) {
+        boilerplate_path += "/";
+    }
+
+    // note: es6 orignals only
+    const jsFilesToLint = [
+        "./cypress/**/*.js",
+        "./js/frontend.js",
+        "./js/backend.js",
+        `${boilerplate_path}js/frontend.js`,
+        `${boilerplate_path}js/backend.js`
+    ];
+
+    return jsFilesToLint;
+}
+
+/**
  * @summary Displays a block comment for each task that runs
  * @param  {string} step          Step number
  * @param  {string} task_category Task category
@@ -371,7 +397,7 @@ gulp.task("lint_js", () => {
         "JS"
     );
 
-    const files = get_js_files();
+    const files = get_js_files_to_lint();
 
     // return stream or promise for run-sequence
     return gulp.src(files)
