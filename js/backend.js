@@ -20,9 +20,6 @@ const wpdtrt_plugin_boilerplate_admin_ui = {
      * @param {object} $ jQuery
      */
     ajax_init: ($) => {
-
-        "use strict";
-
         // wpdtrt_plugin_boilerplate_config is generic
         // but we can only view one settings page at a time
         const config = wpdtrt_plugin_boilerplate_config;
@@ -80,7 +77,5 @@ const wpdtrt_plugin_boilerplate_admin_ui = {
 }
 
 jQuery(document).ready( ($) => {
-    "use strict";
-
     wpdtrt_plugin_boilerplate_admin_ui.ajax_init($);
 });

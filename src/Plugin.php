@@ -161,7 +161,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$composer_vars = get_object_vars( $obj );
 
 			if ( key_exists( 'extras', $composer_vars ) ) {
-				$extras = $composer_vars['extras'];
+				$extras      = $composer_vars['extras'];
 				$extras_vars = get_object_vars( $extras );
 
 				if ( key_exists( 'require-wp', $extras_vars ) ) {
@@ -169,38 +169,38 @@ if ( ! class_exists( 'Plugin' ) ) {
 				}
 			}
 
-			$require_dev = $composer_vars['require-dev'];
+			$require_dev         = $composer_vars['require-dev'];
 			$plugin_dependencies = array();
 
 			if ( isset( $require_dev, $require_wp_array ) ) {
 				foreach ( $require_wp_array as $require_wp ) {
 
 					$require_dev_vars = get_object_vars( $require_dev );
-					$require_wp_vars = get_object_vars( $require_wp );
+					$require_wp_vars  = get_object_vars( $require_wp );
 
-					$name = $require_wp_vars['name'];
-					$host = $require_wp_vars['host'];
-					$repository = $require_wp_vars['repository'];
-					$vendor = explode( '/', $repository )[0];
-					$slug = explode( '/', $repository )[1];
-					$version = null;
-					$source = null;
+					$name         = $require_wp_vars['name'];
+					$host         = $require_wp_vars['host'];
+					$repository   = $require_wp_vars['repository'];
+					$vendor       = explode( '/', $repository )[0];
+					$slug         = explode( '/', $repository )[1];
+					$version      = null;
+					$source       = null;
 					$external_url = null;
-					$file = $require_wp_vars['file'];
+					$file         = $require_wp_vars['file'];
 
 					if ( isset( $require_dev_vars[ $repository ] ) ) {
 						$version = str_replace( '^', '', $require_dev_vars[ $repository ] );
 					}
 
 					if ( 'github' === $host ) {
-						$source = 'https://github.com/' . $repository . '/releases/download/' . $version . '/release.zip';
+						$source       = 'https://github.com/' . $repository . '/releases/download/' . $version . '/release.zip';
 						$external_url = 'https://github.com/' . $repository;
 					}
 
 					$plugin_dependency = array(
-						'name'          => $name,
-						'slug'          => $slug,
-						'required'      => true, // this is output as 1.
+						'name'     => $name,
+						'slug'     => $slug,
+						'required' => true, // this is output as 1.
 					);
 
 					if ( isset( $file ) ) {
@@ -216,7 +216,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 					}
 
 					if ( isset( $version ) ) {
-						$plugin_dependency['name'] = $name . ' (' . $version . ')';
+						$plugin_dependency['name']    = $name . ' (' . $version . ')';
 						$plugin_dependency['version'] = $version;
 					}
 
@@ -245,7 +245,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 		public function set_wp_composer_dependencies_tgmpa( $composer_json ) {
 			$wp_composer_dependencies = $this->get_wp_composer_dependencies( $composer_json );
-			$tgmpa_props = array(
+			$tgmpa_props              = array(
 				'name',
 				'slug',
 				'required',
@@ -292,8 +292,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$plugin_files_to_require = array();
 
 			foreach ( $plugin_dependencies as $plugin_dependency ) {
-				$file = $plugin_dependency['file'];
-				$slug = $plugin_dependency['slug'];
+				$file   = $plugin_dependency['file'];
+				$slug   = $plugin_dependency['slug'];
 				$vendor = $plugin_dependency['vendor'];
 
 				if ( 'dotherightthing' === $vendor ) {
@@ -744,7 +744,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				}
 			}
 
-			// return all the values from the array and indexes the array numerically
+			// return all the values from the array and indexes the array numerically.
 			$old_plugin_dependencies_reindexed = array_values( $old_plugin_dependencies );
 
 			// this changes the array order, but that's not important to us.

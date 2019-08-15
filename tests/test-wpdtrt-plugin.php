@@ -671,22 +671,22 @@ class PluginTest extends WP_UnitTestCase {
 		$this->assertEquals(
 			array(
 				array(
-					'name' => 'DTRT Content Sections (0.2.2)',
-					'slug' => 'wpdtrt-contentsections',
-					'required' => true,
-					'file' => 'wpdtrt-contentsections.php',
-					'source' => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.2.2/release.zip',
-					'version' => '0.2.2',
+					'name'         => 'DTRT Content Sections (0.2.2)',
+					'slug'         => 'wpdtrt-contentsections',
+					'required'     => true,
+					'file'         => 'wpdtrt-contentsections.php',
+					'source'       => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.2.2/release.zip',
+					'version'      => '0.2.2',
 					'external_url' => 'https://github.com/dotherightthing/wpdtrt-contentsections',
-					'vendor' => 'dotherightthing',
+					'vendor'       => 'dotherightthing',
 				),
 				array(
-					'name' => 'Better Anchor Links (1.7.*)',
-					'slug' => 'better-anchor-links',
+					'name'     => 'Better Anchor Links (1.7.*)',
+					'slug'     => 'better-anchor-links',
 					'required' => true,
-					'file' => 'auto-anchor-list.php',
-					'version' => '1.7.*',
-					'vendor' => 'wpackagist-plugin',
+					'file'     => 'auto-anchor-list.php',
+					'version'  => '1.7.*',
+					'vendor'   => 'wpackagist-plugin',
 				),
 			),
 			$composer_dependencies
@@ -699,7 +699,7 @@ class PluginTest extends WP_UnitTestCase {
 	public function test__set_wp_composer_dependencies_tgmpa() {
 		global $wpdtrt_test_plugin;
 
-		$composer_json = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
+		$composer_json               = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
 		$updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
 
 		$this->assertNotCount(
@@ -711,18 +711,18 @@ class PluginTest extends WP_UnitTestCase {
 		$this->assertEquals(
 			array(
 				array(
-					'name' => 'DTRT Content Sections (0.2.2)',
-					'slug' => 'wpdtrt-contentsections',
-					'required' => true,
-					'version' => '0.2.2',
-					'source' => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.2.2/release.zip',
+					'name'         => 'DTRT Content Sections (0.2.2)',
+					'slug'         => 'wpdtrt-contentsections',
+					'required'     => true,
+					'version'      => '0.2.2',
+					'source'       => 'https://github.com/dotherightthing/wpdtrt-contentsections/releases/download/0.2.2/release.zip',
 					'external_url' => 'https://github.com/dotherightthing/wpdtrt-contentsections',
 				),
 				array(
-					'name' => 'Better Anchor Links (1.7.*)',
-					'slug' => 'better-anchor-links',
+					'name'     => 'Better Anchor Links (1.7.*)',
+					'slug'     => 'better-anchor-links',
 					'required' => true,
-					'version' => '1.7.*',
+					'version'  => '1.7.*',
 				),
 			),
 			$updated_plugin_dependencies,
@@ -736,7 +736,7 @@ class PluginTest extends WP_UnitTestCase {
 	public function test__not_set_wp_composer_dependencies_tgmpa() {
 		global $wpdtrt_test_plugin;
 
-		$composer_json = dirname( __FILE__ ) . '/data/composer-not-tgmpa.json';
+		$composer_json               = dirname( __FILE__ ) . '/data/composer-not-tgmpa.json';
 		$updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
 
 		$this->assertEquals(
@@ -750,8 +750,8 @@ class PluginTest extends WP_UnitTestCase {
 	 * Test static method get_wp_composer_dependencies_wpunit
 	 */
 	public function test__get_wp_composer_dependencies_wpunit() {
-		$composer_json = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
-		$composer_dependencies = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
+		$composer_json                    = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
+		$composer_dependencies            = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
 		$composer_dependencies_to_require = WPDTRT_Test_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
 
 		$this->assertEquals(
@@ -768,8 +768,8 @@ class PluginTest extends WP_UnitTestCase {
 	 * Test that no TGMPA dependencies does not cause an error
 	 */
 	public function test__not_get_wp_composer_dependencies_wpunit() {
-		$composer_json = dirname( __FILE__ ) . '/data/composer-not-tgmpa.json';
-		$composer_dependencies = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
+		$composer_json                    = dirname( __FILE__ ) . '/data/composer-not-tgmpa.json';
+		$composer_dependencies            = WPDTRT_Test_Plugin::get_wp_composer_dependencies( $composer_json );
 		$composer_dependencies_to_require = WPDTRT_Test_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
 
 		$this->assertEquals(
