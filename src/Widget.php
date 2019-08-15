@@ -8,7 +8,7 @@
  * @version   1.0.0
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_6;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_7;
 
 if ( ! class_exists( 'Widget' ) ) {
 
@@ -33,7 +33,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 * when it is instantiated.
 		 *
 		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_6\Widget {}
+		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_7\Widget {}
 		 *
 		 * @param     array $options Widget options.
 		 * @since     1.0.0
