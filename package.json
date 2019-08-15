@@ -1,6 +1,6 @@
 {
   "name": "wpdtrt-plugin-boilerplate",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "description": "Boilerplate for WordPress plugin development.",
   "main": "index.php",
   "person": {
