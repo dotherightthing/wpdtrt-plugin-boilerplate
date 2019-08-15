@@ -968,6 +968,9 @@ gulp.task("release_copy", () => {
         "./composer.json",
         // Compiled CSS
         "./css/**/*",
+        // Cypress.io
+        "./cypress.json",
+        "./cypress/**/*",
         // Any icons
         "./icons/**/*",
         // Any images
