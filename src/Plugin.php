@@ -19,17 +19,6 @@ if ( ! class_exists( 'Plugin' ) ) {
 	 *
 	 * Use Shortcode for dependent shortcodes.
 	 * Use Widget for dependent widgets.
-	 *
-	 * @param       array $atts Optional shortcode attributes specified by the user
-	 * @param       string $content Content within the enclosing shortcode tags
-	 * @return      Shortcode
-	 * @since       1.0.0
-	 * @version     1.0.0
-	 * @uses        ../../../../wp-includes/shortcodes.php
-	 * @see         https://codex.wordpress.org/Function_Reference/add_shortcode
-	 * @see         https://codex.wordpress.org/Shortcode_API#Enclosing_vs_self-closing_shortcodes
-	 * @see         http://php.net/manual/en/function.ob-start.php
-	 * @see         http://php.net/manual/en/function.ob-get-clean.php
 	 */
 	class Plugin {
 
