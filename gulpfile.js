@@ -124,6 +124,7 @@ function get_js_doc_files() {
     const jsDocFiles = [
         "./cypress/**/*.js",
         "./js/*.js",
+        "!/js/*-es5.js",
         "cypress.json",
         "package.json",
         `${boilerplate_path}gulpfile.js`,
