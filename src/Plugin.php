@@ -7,7 +7,7 @@
  * @version   1.0.1
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_9;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_10;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
@@ -19,27 +19,16 @@ if ( ! class_exists( 'Plugin' ) ) {
 	 *
 	 * Use Shortcode for dependent shortcodes.
 	 * Use Widget for dependent widgets.
-	 *
-	 * @param       array $atts Optional shortcode attributes specified by the user
-	 * @param       string $content Content within the enclosing shortcode tags
-	 * @return      Shortcode
-	 * @since       1.0.0
-	 * @version     1.0.0
-	 * @uses        ../../../../wp-includes/shortcodes.php
-	 * @see         https://codex.wordpress.org/Function_Reference/add_shortcode
-	 * @see         https://codex.wordpress.org/Shortcode_API#Enclosing_vs_self-closing_shortcodes
-	 * @see         http://php.net/manual/en/function.ob-start.php
-	 * @see         http://php.net/manual/en/function.ob-get-clean.php
 	 */
 	class Plugin {
 
 		// https://secure.php.net/manual/en/language.oop5.constants.php.
-		const WPDTRT_PLUGIN_VERSION = '1.5.9';
+		const WPDTRT_PLUGIN_VERSION = '1.5.10';
 
 		/**
 		 * Initialise the object's properties when it is instantiated.
 		 * This is a protected method as every plugin uses a sub class:
-		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_9\Plugin {...}
+		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_10\Plugin {...}
 		 *
 		 * A plugin-specific instance of this class is created on init:
 		 * add_action( 'init', '<%= nameSafe %>_init', 0 );
