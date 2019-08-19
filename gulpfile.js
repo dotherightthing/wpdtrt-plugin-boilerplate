@@ -358,6 +358,7 @@ gulp.task("lint", (callback) => {
     runSequence(
         "lint_sass",
         "lint_js",
+        "lint_composer_json",
         "lint_package_json",
         "lint_php",
         callback
@@ -408,6 +409,27 @@ gulp.task("lint_js", () => {
 });
 
 /**
+ * @function lint_composer_json
+ * @summary Lint composer.json
+ * @memberOf gulp
+ */
+gulp.task("lint_composer_json", () => {
+
+    gulp_helper_taskheader(
+        "2c",
+        "QA",
+        "Lint",
+        "composer.json"
+    );
+
+    // return stream or promise for run-sequence
+    return gulp.src("composer.json")
+        .pipe(shell([
+            "composer validate"
+        ]));
+});
+
+/**
  * @function lint_package_json
  * @summary Lint package.json
  * @memberOf gulp
@@ -415,7 +437,7 @@ gulp.task("lint_js", () => {
 gulp.task("lint_package_json", () => {
 
     gulp_helper_taskheader(
-        "2c",
+        "2d",
         "QA",
         "Lint",
         "package.json"
@@ -440,7 +462,7 @@ gulp.task("lint_package_json", () => {
 gulp.task("lint_php", () => {
 
     gulp_helper_taskheader(
-        "2d",
+        "2e",
         "QA",
         "Lint",
         "PHP"

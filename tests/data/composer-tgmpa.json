@@ -29,7 +29,7 @@
         "dotherightthing/wpdtrt-contentsections": "^0.2.2",
         "wpackagist-plugin/better-anchor-links": "1.7.*"
     },
-    "extras": {
+    "extra": {
         "require-wp": [
             {
                 "name": "DTRT Content Sections",

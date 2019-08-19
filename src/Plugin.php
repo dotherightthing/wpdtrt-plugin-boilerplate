@@ -149,12 +149,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 			// @see https://stackoverflow.com/a/758458 How do I access this object property with a hyphenated name?
 			$composer_vars = get_object_vars( $obj );
 
-			if ( key_exists( 'extras', $composer_vars ) ) {
-				$extras      = $composer_vars['extras'];
-				$extras_vars = get_object_vars( $extras );
+			if ( key_exists( 'extra', $composer_vars ) ) {
+				$extra      = $composer_vars['extra'];
+				$extra_vars = get_object_vars( $extra );
 
-				if ( key_exists( 'require-wp', $extras_vars ) ) {
-					$require_wp_array = $extras_vars['require-wp'];
+				if ( key_exists( 'require-wp', $extra_vars ) ) {
+					$require_wp_array = $extra_vars['require-wp'];
 				}
 			}
 
