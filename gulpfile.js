@@ -831,6 +831,7 @@ gulp.task("wpunit_install", () => {
  * @function wpunit_run
  * @summary Run WPUnit tests
  * @memberOf gulp
+ * @see https://stackoverflow.com/a/42467775/6850747
  */
 gulp.task("wpunit_run", () => {
 
@@ -845,7 +846,7 @@ gulp.task("wpunit_run", () => {
 
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            `phpunit --configuration ${boilerplate_path}phpunit.xml.dist`
+            `./vendor/bin/phpunit --configuration ${boilerplate_path}phpunit.xml.dist`
         ]));
 });
 
