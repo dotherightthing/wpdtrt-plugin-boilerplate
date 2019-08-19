@@ -9,8 +9,7 @@ language: php
 # PHP versions to test against
 # https://github.com/meitar/wordpress-plugin-skeleton/blob/master/.travis.yml
 php:
-  - 5.6.30 # MAMP
-#  - 5.5 # Sitehost - fails phpunit version requirement
+  - 7.3.7 # MAMP
 
 # Public Environment Variables
 # https://docs.travis-ci.com/user/environment-variables
@@ -28,7 +27,7 @@ matrix:
   # https://johnblackbourn.com/reducing-travis-ci-build-times-for-wordpress-projects/
   fast_finish: true
   include:
-    - php: 5.6.30
+    - php: 7.3.7
       env: WP_VERSION=latest WP_MULTISITE=0
 
 # Start MySQL
