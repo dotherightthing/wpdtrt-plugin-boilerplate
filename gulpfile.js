@@ -749,7 +749,7 @@ gulp.task("docs_all", () => {
 
     if ( is_travis() ) {
         // https://github.com/NaturalDocs/NaturalDocs/issues/39
-        const build_dir = "../";
+        const build_dir = "..";
         command = `mono ${build_dir}/NaturalDocs/NaturalDocs.exe ./config`;
     } else {
         command = "mono /Applications/Natural\ Docs/NaturalDocs.exe ./config";
