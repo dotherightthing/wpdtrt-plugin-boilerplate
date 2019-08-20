@@ -68,6 +68,9 @@ before_install:
   # https://www.howtoinstall.co/en/ubuntu/trusty/naturaldocs
   # -y flag skips the installation confirmation prompt
   - sudo apt-get install -y naturaldocs
+  # Temp: determine where naturaldocs was installed to
+  # See https://askubuntu.com/a/32509
+  - dpkg -L naturaldocs
   # Unsure if this is required here, it is needed by generated plugins.
   # See dotherightthing/generator-wpdtrt-plugin-boilerplate#88
   - composer config -g github-oauth.github.com $GH_TOKEN
