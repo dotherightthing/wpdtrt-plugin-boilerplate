@@ -57,9 +57,17 @@ before_install:
   # Disable XDebug which is only required for Code Coverage reports
   # https://johnblackbourn.com/reducing-travis-ci-build-times-for-wordpress-projects/
   - phpenv config-rm xdebug.ini
-  # Fix PHPDoc error:
-  # "Unable to find the `dot` command of the GraphViz package. Is GraphViz correctly installed and present in your path?"
-  - sudo apt-get install graphviz
+  # Install Mono (NaturalDocs dependency)
+  # https://www.mono-project.com/download/stable/#download-lin-ubuntu
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+  - sudo apt install apt-transport-https ca-certificates
+  - echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+  - sudo apt update
+  - sudo apt install mono-complete
+  # Install NaturalDocs
+  # https://www.howtoinstall.co/en/ubuntu/trusty/naturaldocs
+  # -y flag skips the installation confirmation prompt
+  - sudo apt-get install -y naturaldocs
   # Unsure if this is required here, it is needed by generated plugins.
   # See dotherightthing/generator-wpdtrt-plugin-boilerplate#88
   - composer config -g github-oauth.github.com $GH_TOKEN
