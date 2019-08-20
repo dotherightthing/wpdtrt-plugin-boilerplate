@@ -1,7 +1,9 @@
 .DS_Store
 composer.phar
+config/Working Data
 css
-docs
+docs/jsdoc
+docs/php/*
 js/*-es5.js
 logs
 node_modules
