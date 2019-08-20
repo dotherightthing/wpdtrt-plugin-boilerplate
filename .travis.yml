@@ -59,6 +59,7 @@ before_install:
   - phpenv config-rm xdebug.ini
   # Install Mono (NaturalDocs dependency)
   # https://www.mono-project.com/download/stable/#download-lin-ubuntu
+  # Installed to /usr/bin/naturaldocs
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
   - sudo apt install apt-transport-https ca-certificates
   - echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
@@ -68,9 +69,6 @@ before_install:
   # https://www.howtoinstall.co/en/ubuntu/trusty/naturaldocs
   # -y flag skips the installation confirmation prompt
   - sudo apt-get install -y naturaldocs
-  # Temp: determine where naturaldocs was installed to
-  # See https://askubuntu.com/a/32509
-  - dpkg -L naturaldocs
   # Unsure if this is required here, it is needed by generated plugins.
   # See dotherightthing/generator-wpdtrt-plugin-boilerplate#88
   - composer config -g github-oauth.github.com $GH_TOKEN
