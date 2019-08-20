@@ -772,13 +772,21 @@ gulp.task("docs_php", () => {
         "PHP"
     );
 
+    let command = "";
+
+    if ( is_travis() ) {
+        command = "mono naturaldocs/NaturalDocs.exe ./config";
+    } else {
+        command = "mono /Applications/Natural\ Docs/NaturalDocs.exe ./config";
+    }
+
     // return stream or promise for run-sequence
     // note: src files are not used,
     // this structure is only used
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            `mono naturaldocs ./config`
+            command
         ]));
 });
 
