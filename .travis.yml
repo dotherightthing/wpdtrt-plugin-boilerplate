@@ -69,7 +69,8 @@ before_install:
   # https://github.com/NaturalDocs/NaturalDocs/issues/39
   - sudo apt-get install unzip
   - wget https://naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip
-  - unzip Natural_Docs_2.0.2.zip
+  - mkdir NaturalDocs
+  - unzip Natural_Docs_2.0.2.zip -d NaturalDocs
   # Unsure if this is required here, it is needed by generated plugins.
   # See dotherightthing/generator-wpdtrt-plugin-boilerplate#88
   - composer config -g github-oauth.github.com $GH_TOKEN
