@@ -775,7 +775,7 @@ gulp.task("docs_php", () => {
     let command = "";
 
     if ( is_travis() ) {
-        command = "mono /usr/bin/naturaldocs/NaturalDocs/NaturalDocs.exe ./config";
+        command = "mono /usr/bin/naturaldocs/NaturalDocs.exe ./config";
     } else {
         command = "mono /Applications/Natural\ Docs/NaturalDocs.exe ./config";
     }
