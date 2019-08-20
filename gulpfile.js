@@ -729,8 +729,7 @@ gulp.task("docs_delete", () => {
 
     // return stream or promise for run-sequence
     return del([
-        "docs/jsdoc",
-        "docs/phpdoc"
+        "docs/jsdoc"
     ]);
 });
 
@@ -773,25 +772,13 @@ gulp.task("docs_php", () => {
         "PHP"
     );
 
-    const boilerplate = is_boilerplate();
-    let configFile = "";
-
-    if ( boilerplate ) {
-        // use config file in boilerplate root
-        configFile = "phpdoc-boilerplate.xml";
-    } else {
-        // use config file in plugin root
-        // see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/139#issuecomment-406854915
-        configFile = "phpdoc-plugin.xml";
-    }
-
     // return stream or promise for run-sequence
     // note: src files are not used,
     // this structure is only used
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            `vendor/bin/phpdoc --config ${configFile}`
+            `mono naturaldocs ./config`
         ]));
 });
 
