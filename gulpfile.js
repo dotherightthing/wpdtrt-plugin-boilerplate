@@ -28,7 +28,6 @@ const autoprefixer = require("autoprefixer");
 const babel = require("gulp-babel");
 const del = require("del");
 const ghRateLimit = require("gh-rate-limit");
-const jsdoc = require("gulp-jsdoc3");
 const eslint = require("gulp-eslint");
 const log = require("fancy-log");
 const phpcs = require("gulp-phpcs");
