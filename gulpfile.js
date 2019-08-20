@@ -707,8 +707,7 @@ gulp.task("docs", (callback) => {
 
     runSequence(
         "docs_delete",
-        "docs_js",
-        "docs_php",
+        "docs_all",
         callback
     );
 });
@@ -734,42 +733,17 @@ gulp.task("docs_delete", () => {
 });
 
 /**
- * @function docs_js
- * @summary Generate JavaScript documentation
- * @memberOf gulp
+ * Function: docs_all
+ * 
+ * Generate JS & PHP documentation.
  */
-gulp.task("docs_js", () => {
-
-    gulp_helper_taskheader(
-        "5b",
-        "Documentation",
-        "Generate",
-        "JS"
-    );
-
-    const files = get_js_doc_files();
-
-    // require path is relative to this gulpfile
-    const jsdocConfig = require("./jsdoc.json");
-
-    // return stream or promise for run-sequence
-    return gulp.src(files)
-        // note: output cannot be piped on from jsdoc
-        .pipe(jsdoc(jsdocConfig));
-});
-
-/**
- * @function docs_php
- * @summary Generate PHP documentation
- * @memberOf gulp
- */
-gulp.task("docs_php", () => {
+gulp.task("docs_all", () => {
 
     gulp_helper_taskheader(
         "5c",
         "Documentation",
         "Generate",
-        "PHP"
+        "JS & PHP"
     );
 
     let command = "";
