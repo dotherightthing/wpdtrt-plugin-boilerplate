@@ -260,6 +260,9 @@ gulp.task("install_dependencies", (callback) => {
  * Function: install_dependencies_yarn
  * 
  * Install Yarn dependencies.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("install_dependencies_yarn", () => {
 
@@ -316,7 +319,10 @@ gulp.task("preinstall_dependencies_github", () => {
 /**
  * Function: install_dependencies_composer
  * 
- * Install Composer dependencies.
+ * Install the Composer dependencies listed in composer.json.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("install_dependencies_composer", () => {
 
@@ -370,6 +376,9 @@ gulp.task("lint", (callback) => {
  * Function: lint_sass
  * 
  * Lint Sass files.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_sass", () => {
 
@@ -390,6 +399,9 @@ gulp.task("lint_sass", () => {
  * Function: lint_js
  * 
  * Lint JavaScript files.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_js", () => {
 
@@ -413,6 +425,9 @@ gulp.task("lint_js", () => {
  * Function: lint_composer_json
  * 
  * Lint composer.json.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_composer_json", () => {
 
@@ -434,6 +449,9 @@ gulp.task("lint_composer_json", () => {
  * Function: lint_package_json
  * 
  * Lint package.json.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_package_json", () => {
 
@@ -461,6 +479,9 @@ gulp.task("lint_package_json", () => {
  * * <WordPress Coding Standards for PHP_CodeSniffer: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards>
  * * <Add PHP linting (PSR-2): https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/89>
  * * <Support for phpcs.xml: https://github.com/JustBlackBird/gulp-phpcs/issues/39>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_php", () => {
 
@@ -524,6 +545,9 @@ gulp.task("compile", (callback) => {
  * Function: compile_css
  * 
  * Compile CSS.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("compile_css", () => {
 
@@ -575,7 +599,10 @@ gulp.task("compile_css", () => {
 /**
  * Function: transpile_js
 
- * Transpile JS.
+ * Transpile ES6 to ES5, so that modern code runs in old browsers.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("transpile_js", () => {
 
@@ -631,6 +658,9 @@ gulp.task("version", (callback) => {
  * get the latest release of wpdtrt-plugin-boilerplate.
  * This has to run before version_replace
  * so that the correct version information is available
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("version_update", () => {
 
@@ -655,7 +685,7 @@ gulp.task("version_update", () => {
 /**
  * Function: version_replace
  * 
- * Replace version strings using the version set in package.json.
+ * Replace version strings, using the version set in package.json.
  */
 gulp.task("version_replace", () => {
 
@@ -676,6 +706,9 @@ gulp.task("version_replace", () => {
  * Function: version_update_autoload
  * 
  * Regenerate the list of PHP classes to be autoloaded.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("version_update_autoload", () => {
 
@@ -700,10 +733,13 @@ gulp.task("version_update_autoload", () => {
 /**
  * Function: docs
  * 
- * Tasks which generate documentation.
+ * Generate JS & PHP documentation.
  *
  * Parameters:
  *   callback - The runSequenceCallback that handles the response
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("docs", (callback) => {
 
@@ -730,7 +766,6 @@ gulp.task("docs", (callback) => {
 
     /* eslint-enable quotes */
 
-    // return stream or promise for run-sequence
     // note: src files are not used,
     // this structure is only used
     // to include the preceding log()
@@ -770,6 +805,9 @@ gulp.task("unit_test", (callback) => {
  * Install WPUnit test suite.
  * 
  * See: <Testing & Debugging: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("wpunit_install", () => {
 
@@ -802,6 +840,9 @@ gulp.task("wpunit_install", () => {
  * Run WPUnit tests
  * 
  * See: <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("wpunit_run", () => {
 
@@ -869,9 +910,12 @@ gulp.task("release_composer_dist", () => {
     );
 
     /**
-    * Remove dev packages once we"ve used them
+    * Remove dev packages once we've used them
     *
-    * See: <#47
+    * See: <Reduce vendor components required for deployment: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47>
+    *
+    * Returns:
+    *   Stream or promise for run-sequence.
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
@@ -883,6 +927,9 @@ gulp.task("release_composer_dist", () => {
  * Function: release_yarn_dist
  * 
  * Uninstall Yarn development dependencies.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("release_yarn_dist", () => {
 
@@ -926,6 +973,9 @@ gulp.task("release_delete_pre", () => {
  * Copy release files to a temporary folder
  * 
  * See: <globtester: http://www.globtester.com/>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("release_copy", () => {
 
@@ -1030,6 +1080,9 @@ gulp.task("release_copy", () => {
  * Function: release_zip
  * 
  * Generate release.zip for deployment by Travis/Github.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("release_zip", () => {
 
