@@ -11,13 +11,17 @@
 /* global jQuery, wpdtrt_plugin_boilerplate_config */
 
 /**
- * @namespace wpdtrt_plugin_boilerplate_admin_ui
+ * Namespace: wpdtrt_plugin_boilerplate_admin_ui
  */
 const wpdtrt_plugin_boilerplate_admin_ui = {
 
     /**
+     * Method: ajax_init
+     * 
      * Load front-end content via Ajax
-     * @param {object} $ jQuery
+     *
+     * Parameters:
+     *   $ - jQuery object
      */
     ajax_init: ($) => {
         // wpdtrt_plugin_boilerplate_config is generic

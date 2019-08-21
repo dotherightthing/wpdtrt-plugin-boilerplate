@@ -5,6 +5,7 @@
  *
  * @example usage:
  *    yarn run build
+ *    yarn run docs
  *    yarn run install_deps
  *    yarn run package
  *    yarn run test
@@ -19,7 +20,9 @@
 const gulp = require("gulp");
 const autoprefixer = require("autoprefixer");
 const babel = require("gulp-babel");
+const color = require("gulp-color");
 const del = require("del");
+const download = require("gulp-download");
 const ghRateLimit = require("gh-rate-limit");
 const eslint = require("gulp-eslint");
 const log = require("fancy-log");
@@ -32,6 +35,7 @@ const runSequence = require("run-sequence");
 const sass = require("gulp-sass");
 const sassLint = require("gulp-sass-lint");
 const shell = require("gulp-shell");
+const unzip = require("gulp-unzip");
 const validate = require("gulp-nice-package");
 const wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
 const zip = require("gulp-zip");
@@ -98,7 +102,7 @@ function get_gh_token() {
 }
 
 /**
- * Function 
+ * Function: get_boilerplate_path
  * 
  * Get the path to the boilerplate.
  *
@@ -116,6 +120,8 @@ function get_boilerplate_path() {
 }
 
 /**
+ * Function: get_js_files
+ * 
  * Get list of JavaScript files to transpile from ES6 to ES5.
  *
  * See: <http://usejsdoc.org/about-including-package.html>.
@@ -143,6 +149,8 @@ function get_js_files() {
 }
 
 /**
+ * Function: get_js_files_to_lint
+ * 
  * Get list of JavaScript files to lint.
  *
  * See: <http://usejsdoc.org/about-including-package.html>.
@@ -171,6 +179,39 @@ function get_js_files_to_lint() {
 }
 
 /**
+ * Function: decorate_log
+ *
+ * Log a Gulp task result with emoji and colour.
+ * 
+ * Parameters:
+ *   (object) filePath, messageCount, warningCount, errorCount
+ */
+function decorate_log( {
+    textstring = "",
+    messageCount = 0,
+    warningCount = 0,
+    errorCount = 0
+} = {} ) {
+    const colors = { pass: "GREEN", message: "WHITE", warning: "YELLOW", error: "RED" };
+    const emojis = { pass: "✔", message: "✖", warning: "✖", error: "✖" };
+    let state;
+
+    if ( errorCount > 0 ) {
+        state = "error";
+    } else if ( warningCount > 0 ) {
+        state = "warning";
+    } else if ( messageCount > 0 ) {
+        state = "message";
+    } else {
+        state = "pass";
+    }
+
+    console.log( color( `${emojis[state]} ${textstring}`, `${colors[state]}` ) );
+}
+
+/**
+ * Function: gulp_helper_taskheader
+ * 
  * Displays a block comment for each task that runs.
  *
  * Parameters:
@@ -252,12 +293,13 @@ gulp.task("install_dependencies", (callback) => {
         "install_dependencies_yarn",
         "preinstall_dependencies_github",
         "install_dependencies_composer",
+        "dependencies_docs",
         callback
     );
 });
 
 /**
- * Function: install_dependencies_yarn
+ * Method: install_dependencies_yarn
  * 
  * Install Yarn dependencies.
  *
@@ -281,7 +323,7 @@ gulp.task("install_dependencies_yarn", () => {
 });
 
 /**
- * Function: preinstall_dependencies_github
+ * Method: preinstall_dependencies_github
  * 
  * Expose the Github API rate limit to aid in debugging failed builds.
  * 
@@ -317,7 +359,7 @@ gulp.task("preinstall_dependencies_github", () => {
 });
 
 /**
- * Function: install_dependencies_composer
+ * Method: install_dependencies_composer
  * 
  * Install the Composer dependencies listed in composer.json.
  *
@@ -346,7 +388,38 @@ gulp.task("install_dependencies_composer", () => {
 });
 
 /**
- * Function: lint
+ * Function: dependencies_docs
+ * 
+ * Install documentation dependencies.
+ * 
+ * Natural Docs can't be installed via Yarn
+ * as the Github release needs to be compiled,
+ * and the download archive on the website
+ * is in .zip rather than .tar format.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
+ */
+gulp.task("dependencies_docs", () => {
+
+    gulp_helper_taskheader(
+        "1c",
+        "Dependencies",
+        "Install",
+        "Docs"
+    );
+
+    const url = "https://naturaldocs.org/download/natural_docs/"
+    + "2.0.2/Natural_Docs_2.0.2.zip";
+
+    // return stream or promise for run-sequence
+    return download(url)
+        .pipe( unzip() )
+        .pipe( gulp.dest("./" ) );
+});
+
+/**
+ * Method: lint
  * 
  * Tasks which lint files.
  *
@@ -373,7 +446,7 @@ gulp.task("lint", (callback) => {
 });
 
 /**
- * Function: lint_sass
+ * Method: lint_sass
  * 
  * Lint Sass files.
  *
@@ -396,7 +469,7 @@ gulp.task("lint_sass", () => {
 });
 
 /**
- * Function: lint_js
+ * Method: lint_js
  * 
  * Lint JavaScript files.
  *
@@ -417,12 +490,23 @@ gulp.task("lint_js", () => {
     // return stream or promise for run-sequence
     return gulp.src(files)
         .pipe(eslint())
+        .pipe(eslint.result(result => {
+            const { filePath: textstring, messages, warningCount, errorCount } = result;
+            const { length: messageCount } = messages;
+            
+            decorate_log({
+                textstring,
+                messageCount,
+                warningCount,
+                errorCount
+            });
+        }))
         .pipe(eslint.format());
         // .pipe(eslint.failAfterError());
 });
 
 /**
- * Function: lint_composer_json
+ * Method: lint_composer_json
  * 
  * Lint composer.json.
  *
@@ -446,7 +530,7 @@ gulp.task("lint_composer_json", () => {
 });
 
 /**
- * Function: lint_package_json
+ * Method: lint_package_json
  * 
  * Lint package.json.
  *
@@ -470,7 +554,7 @@ gulp.task("lint_package_json", () => {
 });
 
 /**
- * Function: lint_php
+ * Method: lint_php
  * 
  * Lint PHP files.
  * 
@@ -518,7 +602,7 @@ gulp.task("lint_php", () => {
 });
 
 /**
- * Function: compile
+ * Method: compile
  * 
  * Tasks which compile.
  *
@@ -542,7 +626,7 @@ gulp.task("compile", (callback) => {
 });
 
 /**
- * Function: compile_css
+ * Method: compile_css
  * 
  * Compile CSS.
  *
@@ -597,8 +681,8 @@ gulp.task("compile_css", () => {
 });
 
 /**
- * Function: transpile_js
-
+ * Method: transpile_js
+ *
  * Transpile ES6 to ES5, so that modern code runs in old browsers.
  *
  * Returns:
@@ -625,7 +709,7 @@ gulp.task("transpile_js", () => {
 });
 
 /**
- * Function: version
+ * Method: version
  * 
  * Tasks which version the plugin.
  *
@@ -650,7 +734,7 @@ gulp.task("version", (callback) => {
 });
 
 /**
- * Function: version_update
+ * Method: version_update
  * 
  * Update the boilerplate dependency to the latest version
  * 
@@ -683,9 +767,12 @@ gulp.task("version_update", () => {
 });
 
 /**
- * Function: version_replace
+ * Method: version_replace
  * 
  * Replace version strings, using the version set in package.json.
+ *
+ * Returns:
+ *   call to wpdtrtPluginBump (gulp-wpdtrt-plugin-bump)
  */
 gulp.task("version_replace", () => {
 
@@ -703,7 +790,7 @@ gulp.task("version_replace", () => {
 });
 
 /**
- * Function: version_update_autoload
+ * Method: version_update_autoload
  * 
  * Regenerate the list of PHP classes to be autoloaded.
  *
@@ -741,23 +828,14 @@ gulp.task("version_update_autoload", () => {
 gulp.task("docs", () => {
 
     gulp_helper_taskheader(
-        "5",
+        "4",
         "Documentation",
         "Generate",
         "All (PHP & JavaScript)"
     );
 
-    let naturaldocs_path = "";
-
-    if ( is_travis() ) {
-        // Travis install
-        // https://github.com/NaturalDocs/NaturalDocs/issues/39
-        // Quotes escape space better than backslash on Travis
-        naturaldocs_path = "Natural Docs/NaturalDocs.exe"; // eslint-disable-line quotes
-    } else {
-        // Local install
-        naturaldocs_path = "/Applications/Natural Docs/NaturalDocs.exe"; // eslint-disable-line quotes
-    }
+    // Quotes escape space better than backslash on Travis
+    const naturaldocs_path = "Natural Docs/NaturalDocs.exe";
 
     // note: src files are not used,
     // this structure is only used
@@ -769,7 +847,7 @@ gulp.task("docs", () => {
 });
 
 /**
- * Function: unit_test
+ * Method: unit_test
  * 
  * Tasks which set up or run unit tests.
  *
@@ -793,7 +871,7 @@ gulp.task("unit_test", (callback) => {
 });
 
 /**
- * Function: wpunit_install
+ * Method: wpunit_install
  * 
  * Install WPUnit test suite.
  * 
@@ -828,7 +906,7 @@ gulp.task("wpunit_install", () => {
 });
 
 /**
- * Function: wpunit_run
+ * Method: wpunit_run
  * 
  * Run WPUnit tests
  * 
@@ -855,7 +933,7 @@ gulp.task("wpunit_run", () => {
 });
 
 /**
- * Function: release
+ * Method: release
  * 
  * Tasks which package a release.
  *
@@ -889,7 +967,7 @@ gulp.task("release", (callback) => {
 });
 
 /**
- * Function: release_composer_dist
+ * Method: release_composer_dist
  * 
  * Uninstall PHP development dependencies.
  */
@@ -917,7 +995,7 @@ gulp.task("release_composer_dist", () => {
 });
 
 /**
- * Function: release_yarn_dist
+ * Method: release_yarn_dist
  * 
  * Uninstall Yarn development dependencies.
  *
@@ -941,9 +1019,12 @@ gulp.task("release_yarn_dist", () => {
 });
 
 /**
- * Function: release_delete_pre
+ * Method: release_delete_pre
  * 
  * Delete existing release.zip.
+ *
+ * Returns:
+ *   (string) The release zip
  */
 gulp.task("release_delete_pre", () => {
 
@@ -961,7 +1042,7 @@ gulp.task("release_delete_pre", () => {
 });
 
 /**
- * Function: release_copy
+ * Method: release_copy
  * 
  * Copy release files to a temporary folder
  * 
@@ -1070,7 +1151,7 @@ gulp.task("release_copy", () => {
 });
 
 /**
- * Function: release_zip
+ * Method: release_zip
  * 
  * Generate release.zip for deployment by Travis/Github.
  *
@@ -1096,7 +1177,7 @@ gulp.task("release_zip", () => {
 });
 
 /**
- * Function: release_delete_post
+ * Method: release_delete_post
  * 
  * Delete the temporary folder.
  */
@@ -1116,7 +1197,7 @@ gulp.task("release_delete_post", () => {
 });
 
 /**
- * Function: watch
+ * Method: watch
  * 
  * Watch for changes to `.scss` files.
  */
@@ -1136,7 +1217,7 @@ gulp.task("watch", () => {
 });
 
 /**
- * Function: default
+ * Method: default
  * 
  * Default task
  *

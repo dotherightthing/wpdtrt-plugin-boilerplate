@@ -12,6 +12,8 @@ namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
 if ( ! class_exists( 'Plugin' ) ) {
 
 	/**
+	 * Class: Plugin
+	 *
 	 * Plugin base class
 	 *
 	 * Boilerplate functions, including
@@ -26,6 +28,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		const WPDTRT_PLUGIN_VERSION = '1.5.13';
 
 		/**
+		 * Constructor: __construct
+		 *
 		 * Initialise the object's properties when it is instantiated.
 		 * This is a protected method as every plugin uses a sub class:
 		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Plugin {...}
@@ -91,6 +95,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 
 		/**
+		 * Method: wp_setup
+		 *
 		 * Initialise plugin options ONCE.
 		 *
 		 * Notes:
@@ -130,6 +136,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
+		 * Method: get_wp_composer_dependencies
+		 *
 		 * Get the WP plugin dependencies required for both TGMPA and WP Unit
 		 *
 		 * @param string $composer_json Full (not relative) path to plugin's composer.json.
@@ -221,18 +229,26 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Register WP plugin dependencies with TGMPA
+		 * Method: set_wp_composer_dependencies_tgmpa
 		 *
-		 * @param string $composer_json Full (not relative) path to plugin's composer.json.
-		 * @return array Updated plugin dependencies
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
-		 * @example
-		 *   // wpdtrt-plugin-boilerplate/src/Plugin.php
-		 *   global $wpdtrt_test_plugin; // Access non-static methods of plugin class.
-		 *   $composer_json = dirname( __FILE__ ) . '/data/composer.json';
-		 *   $updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
+		 * Register WP plugin dependencies with TGMPA.
+		 *
+		 * See <Adding WordPress plugin dependencies: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies>.
+		 *
+		 * Parameters:
+		 *   $composer_json - Full (not relative) path to plugin's composer.json.
+		 *
+		 * Returns:
+		 *   Updated plugin dependencies
+		 *
+		 * --- PHP
+		 * // wpdtrt-plugin-boilerplate/src/Plugin.php
+		 * global $wpdtrt_test_plugin; // Access non-static methods of plugin class.
+		 * $composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		 * $updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
+		 * ---
 		 */
-		public function set_wp_composer_dependencies_tgmpa( $composer_json ) {
+		public function set_wp_composer_dependencies_tgmpa( string $composer_json ) {
 			$wp_composer_dependencies = $this->get_wp_composer_dependencies( $composer_json );
 			$tgmpa_props              = array(
 				'name',
@@ -263,20 +279,24 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get the WP plugin dependency files required by WP Unit
+		 * Method: get_wp_composer_dependencies_wpunit
 		 *
-		 * @param array $plugin_dependencies Plugin dependencies.
-		 * @return array Plugin files to require
-		 * @example
-		 *   // wpdtrt-foobar/tests/bootstrap.php
-		 *   function _manually_load_plugin() {
-		 *     require dirname( dirname( __FILE__ ) ) . '/wpdtrt-foobar.php'; // Access static methods of plugin class.
-		 *     $composer_json = dirname( dirname( __FILE__ ) ) . '/composer.json';
-		 *     $composer_dependencies = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies( $composer_json );
-		 *     $composer_dependencies_to_require = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
-		 *   }
+		 * Used in wpdtrt-foobar/tests/bootstrap.php
+		 * to get the WP plugin dependency files required by WP Unit.
+		 *
+		 * --- PHP
+		 * // wpdtrt-foobar/tests/bootstrap.php
+		 * $composer_dependencies_to_require = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
+		 * }
+		 * ---
+		 *
+		 * Parameters:
+		 *   $plugin_dependencies - Plugin dependencies.
+		 *
+		 * Returns:
+		 *   Plugin files to require
 		 */
-		public static function get_wp_composer_dependencies_wpunit( $plugin_dependencies ) {
+		public static function get_wp_composer_dependencies_wpunit( array $plugin_dependencies ) {
 
 			$plugin_files_to_require = array();
 
@@ -303,10 +323,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 				$plugin_files_to_require[] = dirname( dirname( __FILE__ ) ) . $require;
 			}
 
-			return $plugin_files_to_require;
+			return array $plugin_files_to_require;
 		}
 
 		/**
+		 * Method: wp_register_plugin_dependencies
+		 *
 		 * TGM Plugin Activation Configuration.
 		 * Registers the required plugins for this theme.
 		 * This function is hooked into `tgmpa_register`,
@@ -361,157 +383,185 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 
 		/**
+		 * Method: set_url
+		 *
 		 * Set the value of $url
 		 *
-		 * @param       string $new_url New URL.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Parameters:
+		 *   $new_url - New URL
 		 */
-		protected function set_url( $new_url ) {
+		protected function set_url( string $new_url ) {
 			$this->url = $new_url;
 		}
 
 		/**
+		 * Method: get_url
+		 *
 		 * Get the value of $url
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Returns:
+		 *
+		 *   The url which was set using
+		 *   set_url()
 		 */
 		public function get_url() {
-			return $this->url;
+			return string $this->url;
 		}
 
 		/**
-		 * Set the value of $demo_shortcode_params
+		 * Method: set_demo_shortcode_params
 		 *
-		 * @param       array $new_demo_shortcode_params New Demo Shortcode Parameters.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $demo_shortcode_params.
+		 *
+		 * Parameters:
+		 *   $new_demo_shortcode_params - New Demo Shortcode Parameters.
 		 */
-		protected function set_demo_shortcode_params( $new_demo_shortcode_params ) {
+		protected function set_demo_shortcode_params( array $new_demo_shortcode_params ) {
 			$this->demo_shortcode_params = $new_demo_shortcode_params;
 		}
 
 		/**
-		 * Get the value of $demo_shortcode_params
+		 * Method: get_demo_shortcode_params
 		 *
-		 * @return      array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $demo_shortcode_params.
+		 *
+		 * Returns:
+		 *
+		 *   The demo_shortcode_params which were set using
+		 *   set_demo_shortcode_params()
 		 */
 		public function get_demo_shortcode_params() {
-			return $this->demo_shortcode_params;
+			return array $this->demo_shortcode_params;
 		}
 
 		/**
+		 * Method: set_prefix
+		 *
 		 * Set the value of $prefix
 		 *
-		 * @param       string $new_prefix New Prefix.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Parameters:
+		 *   $new_prefix - New prefix
 		 */
-		protected function set_prefix( $new_prefix ) {
+		protected function set_prefix( string $new_prefix ) {
 			$this->prefix = $new_prefix;
 		}
 
 		/**
+		 * Method: get_prefix
+		 *
 		 * Get the value of $prefix (wpdtrt_foo)
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Returns:
+		 *
+		 *   The prefix which was set using
+		 *   set_prefix()
 		 */
 		public function get_prefix() {
-			return $this->prefix;
+			return string $this->prefix;
 		}
 
 		/**
+		 * Method: set_slug
+		 *
 		 * Set the value of $slug
 		 *
-		 * @param       string $new_slug New slug.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Parameters:
+		 *   $new_slug - New slug
 		 */
-		protected function set_slug( $new_slug ) {
+		protected function set_slug( string $new_slug ) {
 			$this->slug = $new_slug;
 		}
 
 		/**
+		 * Method: get_slug
+		 *
 		 * Get the value of $slug
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Returns:
+		 *
+		 *   The slug which was set using
+		 *   set_slug()
 		 */
 		public function get_slug() {
-			return $this->slug;
+			return string $this->slug;
 		}
 
 		/**
+		 * Method: set_menu_title
+		 *
 		 * Set the value of $menu_title
 		 *
-		 * @param       string $new_menu_title New menu title.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Parameters:
+		 *   $new_menu_title - New menu title.
 		 */
-		protected function set_menu_title( $new_menu_title ) {
+		protected function set_menu_title( string $new_menu_title ) {
 			$this->menu_title = $new_menu_title;
 		}
 
 		/**
+		 * Method: get_menu_title
+		 *
 		 * Get the value of $menu_title
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Returns:
+		 *
+		 *   The menu_title which was set using
+		 *   set_menu_title()
 		 */
 		public function get_menu_title() {
-			return $this->menu_title;
+			return string $this->menu_title;
 		}
 
 		/**
+		 * Method: set_settings_title
+		 *
 		 * Set the value of $settings_title
 		 *
-		 * @param string $new_settings_title New settings title.
-		 * @since       1.3.4
-		 * @version     1.0.0
+		 * Parameters:
+		 *   $new_settings_title - New settings title.
 		 */
-		protected function set_settings_title( $new_settings_title ) {
+		protected function set_settings_title( string $new_settings_title ) {
 			$this->settings_title = $new_settings_title;
 		}
 
 		/**
+		 * Method: get_settings_title
+		 *
 		 * Get the value of $settings_title
 		 *
-		 * @return      string
-		 * @since       1.3.4
-		 * @version     1.0.0
+		 * Returns:
+		 *
+		 *   The settings_title which was set using
+		 *   set_settings_title()
 		 */
 		public function get_settings_title() {
-			return $this->settings_title;
+			return string $this->settings_title;
 		}
 
 		/**
+		 * Method: set_developer_prefix
+		 *
 		 * Set the value of $developer_prefix
 		 *
-		 * @param       string $new_developer_prefix New developer prefix.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Parameters:
+		 *   $new_developer_prefix - New developer prefix.
 		 */
-		protected function set_developer_prefix( $new_developer_prefix ) {
+		protected function set_developer_prefix( string $new_developer_prefix ) {
 			$this->developer_prefix = $new_developer_prefix;
 		}
 
 		/**
+		 * Method: get_developer_prefix
+		 *
 		 * Get the value of $developer_prefix
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Returns:
+		 *
+		 *   The developer_prefix which was set using
+		 *   set_developer_prefix()
 		 */
 		public function get_developer_prefix() {
-			return $this->developer_prefix;
+			return string $this->developer_prefix;
 		}
 
 		/**
