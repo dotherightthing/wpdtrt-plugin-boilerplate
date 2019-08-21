@@ -727,7 +727,7 @@ gulp.task("docs_delete", () => {
 
     // return stream or promise for run-sequence
     return del([
-        "docs/jsdoc"
+        "docs"
     ]);
 });
 
@@ -742,17 +742,19 @@ gulp.task("docs_all", () => {
         "5c",
         "Documentation",
         "Generate",
-        "JS & PHP"
+        "All (PHP & JavaScript)"
     );
 
     let command = "";
 
     if ( is_travis() ) {
+        // Travis install
         // https://github.com/NaturalDocs/NaturalDocs/issues/39
-        // quotes escape space better than backslash
+        // quotes escape space better than backslash on Travis
         command = `mono "Natural Docs/NaturalDocs.exe" ./config`;
     } else {
-        command = "mono /Applications/Natural\ Docs/NaturalDocs.exe ./config";
+        // global install
+        command = `mono "Applications/Natural Docs/NaturalDocs.exe" ./config`;
     }
 
     // return stream or promise for run-sequence

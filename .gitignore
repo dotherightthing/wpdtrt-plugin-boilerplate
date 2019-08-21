@@ -2,8 +2,7 @@
 composer.phar
 config/Working Data
 css
-docs/jsdoc
-docs/php/*
+docs
 js/*-es5.js
 logs
 node_modules
