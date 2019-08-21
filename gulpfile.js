@@ -751,10 +751,10 @@ gulp.task("docs_all", () => {
         // Travis install
         // https://github.com/NaturalDocs/NaturalDocs/issues/39
         // quotes escape space better than backslash on Travis
-        command = `mono "Natural Docs/NaturalDocs.exe" ./config`;
+        command = `mono "Natural Docs/NaturalDocs.exe" ./config/naturaldocs`;
     } else {
         // global install
-        command = `mono "Applications/Natural Docs/NaturalDocs.exe" ./config`;
+        command = `mono "/Applications/Natural Docs/NaturalDocs.exe" ./config/naturaldocs`;
     }
 
     // return stream or promise for run-sequence

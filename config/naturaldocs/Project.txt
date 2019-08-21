@@ -39,7 +39,7 @@ Copyright: Copyright © 2019 Dan Smith
 # Source Code
 # ------------------------------------------------------------------------
 
-Source Folder: ..
+Source Folder: ../..
 
 
 
@@ -63,15 +63,15 @@ Source Folder: ..
 # Source Filtering
 # ------------------------------------------------------------------------
 
-Ignore Source Folder: ../bin
+Ignore Source Folder: ../../bin
 
-Ignore Source Folder: ../docs
+Ignore Source Folder: ../../docs
 
-Ignore Source Folder: ../node_modules
+Ignore Source Folder: ../../node_modules
 
-Ignore Source Folder: ../tests
+Ignore Source Folder: ../../tests
 
-Ignore Source Folder: ../vendor
+Ignore Source Folder: ../../vendor
 
 
 # If there are any subfolders in the source code that you would like Natural
@@ -94,7 +94,7 @@ Ignore Source Folder: ../vendor
 # Generated Documentation
 # ------------------------------------------------------------------------
 
-HTML Output Folder: ../docs
+HTML Output Folder: ../../docs
 
 
 # This is where you specify what kind of documentation you want Natural Docs
