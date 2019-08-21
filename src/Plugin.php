@@ -294,7 +294,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   $plugin_dependencies - Plugin dependencies.
 		 *
 		 * Returns:
-		 *   Plugin files to require
+		 *   (array) Plugin files to require
 		 */
 		public static function get_wp_composer_dependencies_wpunit( array $plugin_dependencies ) {
 
@@ -323,7 +323,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				$plugin_files_to_require[] = dirname( dirname( __FILE__ ) ) . $require;
 			}
 
-			return array $plugin_files_to_require;
+			return $plugin_files_to_require;
 		}
 
 		/**
@@ -400,12 +400,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Get the value of $url
 		 *
 		 * Returns:
-		 *
-		 *   The url which was set using
-		 *   set_url()
+		 *   (string) The url which was set using set_url()
 		 */
 		public function get_url() {
-			return string $this->url;
+			return $this->url;
 		}
 
 		/**
@@ -427,11 +425,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *
 		 * Returns:
 		 *
-		 *   The demo_shortcode_params which were set using
+		 *   (array) - The demo_shortcode_params which were set using
 		 *   set_demo_shortcode_params()
 		 */
 		public function get_demo_shortcode_params() {
-			return array $this->demo_shortcode_params;
+			return $this->demo_shortcode_params;
 		}
 
 		/**
@@ -453,11 +451,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *
 		 * Returns:
 		 *
-		 *   The prefix which was set using
+		 *   (string) The prefix which was set using
 		 *   set_prefix()
 		 */
 		public function get_prefix() {
-			return string $this->prefix;
+			return $this->prefix;
 		}
 
 		/**
@@ -478,12 +476,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Get the value of $slug
 		 *
 		 * Returns:
-		 *
-		 *   The slug which was set using
+		 *   (string) The slug which was set using
 		 *   set_slug()
 		 */
 		public function get_slug() {
-			return string $this->slug;
+			return $this->slug;
 		}
 
 		/**
@@ -504,12 +501,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Get the value of $menu_title
 		 *
 		 * Returns:
-		 *
-		 *   The menu_title which was set using
+		 *   (string) The menu_title which was set using
 		 *   set_menu_title()
 		 */
 		public function get_menu_title() {
-			return string $this->menu_title;
+			return $this->menu_title;
 		}
 
 		/**
@@ -531,11 +527,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *
 		 * Returns:
 		 *
-		 *   The settings_title which was set using
+		 *   (string) The settings_title which was set using
 		 *   set_settings_title()
 		 */
 		public function get_settings_title() {
-			return string $this->settings_title;
+			return $this->settings_title;
 		}
 
 		/**
@@ -557,11 +553,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *
 		 * Returns:
 		 *
-		 *   The developer_prefix which was set using
+		 *   (string) The developer_prefix which was set using
 		 *   set_developer_prefix()
 		 */
 		public function get_developer_prefix() {
-			return string $this->developer_prefix;
+			return $this->developer_prefix;
 		}
 
 		/**
