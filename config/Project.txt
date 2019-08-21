@@ -94,7 +94,7 @@ Ignore Source Folder: ../vendor
 # Generated Documentation
 # ------------------------------------------------------------------------
 
-HTML Output Folder: ../docs/php
+HTML Output Folder: ../docs
 
 
 # This is where you specify what kind of documentation you want Natural Docs
