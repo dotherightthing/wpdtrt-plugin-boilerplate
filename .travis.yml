@@ -69,7 +69,7 @@ before_install:
   # https://github.com/NaturalDocs/NaturalDocs/issues/39
   # Unzips to 'Natural Docs'
   - sudo apt-get install unzip
-  - curl -s -o https://naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip && unzip Natural_Docs_2.0.2.zip
+  - wget https://naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip && unzip Natural_Docs_2.0.2.zip
   # Temp
   - ls
   # Unsure if this is required here, it is needed by generated plugins.
