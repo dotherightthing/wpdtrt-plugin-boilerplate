@@ -737,7 +737,8 @@ gulp.task("docs_delete", () => {
 
     // return stream or promise for run-sequence
     return del([
-        "docs"
+        "docs/*",
+        "!docs/README.md"
     ]);
 });
 
