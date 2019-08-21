@@ -14,14 +14,7 @@
  * @version     1.5.13
  */
 
-/**
- * @namespace gulp
- */
-
-/* eslint-env node */
-/* eslint-disable max-len */
-
-"use strict";
+/* globals require, process */
 
 const gulp = require("gulp");
 const autoprefixer = require("autoprefixer");
@@ -747,6 +740,8 @@ gulp.task("docs_all", () => {
 
     let command = "";
 
+    /* eslint-disable quotes */
+
     if ( is_travis() ) {
         // Travis install
         // https://github.com/NaturalDocs/NaturalDocs/issues/39
@@ -756,6 +751,8 @@ gulp.task("docs_all", () => {
         // global install
         command = `mono "/Applications/Natural Docs/NaturalDocs.exe" ./config/naturaldocs`;
     }
+
+    /* eslint-enable quotes */
 
     // return stream or promise for run-sequence
     // note: src files are not used,

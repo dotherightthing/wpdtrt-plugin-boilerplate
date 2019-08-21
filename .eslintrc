@@ -7,6 +7,15 @@
     "cypress",
     "chai-friendly"
   ],
+  "overrides": [
+      {
+          "files": "gulpfile.js",
+          "rules": {
+              "no-unused-expressions": "off",
+              "max-len": "off"
+          }
+      }
+  ],
   "env": {
     "cypress/globals": true
   },
