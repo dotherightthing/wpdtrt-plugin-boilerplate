@@ -710,48 +710,6 @@ gulp.task("docs", (callback) => {
     gulp_helper_taskheader(
         "5",
         "Documentation",
-        "",
-        ""
-    );
-
-    runSequence(
-        "docs_delete",
-        "docs_all",
-        callback
-    );
-});
-
-/**
- * Function: docs_delete
- * 
- * Delete existing generated docs.
- */
-gulp.task("docs_delete", () => {
-
-    gulp_helper_taskheader(
-        "5a",
-        "Documentation",
-        "Delete",
-        ""
-    );
-
-    // return stream or promise for run-sequence
-    return del([
-        "docs/*",
-        "!docs/README.md"
-    ]);
-});
-
-/**
- * Function: docs_all
- * 
- * Generate JS & PHP documentation.
- */
-gulp.task("docs_all", () => {
-
-    gulp_helper_taskheader(
-        "5c",
-        "Documentation",
         "Generate",
         "All (PHP & JavaScript)"
     );
