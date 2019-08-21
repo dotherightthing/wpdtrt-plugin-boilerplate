@@ -62,6 +62,7 @@
     "build": "gulp",
     "install_deps": "gulp install_dependencies && gulp wpunit_install",
     "package": "gulp release",
+    "docs": "gulp docs",
     "lint": "gulp lint",
     "test": "gulp wpunit_run",
     "version": "gulp version",

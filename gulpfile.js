@@ -735,13 +735,10 @@ gulp.task("version_update_autoload", () => {
  * 
  * Generate JS & PHP documentation.
  *
- * Parameters:
- *   callback - The runSequenceCallback that handles the response
- *
  * Returns:
  *   Stream or promise for run-sequence.
  */
-gulp.task("docs", (callback) => {
+gulp.task("docs", () => {
 
     gulp_helper_taskheader(
         "5",
@@ -750,28 +747,24 @@ gulp.task("docs", (callback) => {
         "All (PHP & JavaScript)"
     );
 
-    let command = "";
-
-    /* eslint-disable quotes */
+    let naturaldocs_path = "";
 
     if ( is_travis() ) {
         // Travis install
         // https://github.com/NaturalDocs/NaturalDocs/issues/39
-        // quotes escape space better than backslash on Travis
-        command = `mono "Natural Docs/NaturalDocs.exe" ./config/naturaldocs`;
+        // Quotes escape space better than backslash on Travis
+        naturaldocs_path = "Natural Docs/NaturalDocs.exe"; // eslint-disable-line quotes
     } else {
-        // global install
-        command = `mono "/Applications/Natural Docs/NaturalDocs.exe" ./config/naturaldocs`;
+        // Local install
+        naturaldocs_path = "/Applications/Natural Docs/NaturalDocs.exe"; // eslint-disable-line quotes
     }
-
-    /* eslint-enable quotes */
 
     // note: src files are not used,
     // this structure is only used
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            command
+            `mono "${naturaldocs_path}" ./config/naturaldocs`
         ]));
 });
 

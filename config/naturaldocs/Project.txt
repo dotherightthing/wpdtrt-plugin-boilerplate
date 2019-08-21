@@ -8,8 +8,8 @@
 # Project Information
 # ------------------------------------------------------------------------
 
-Title: DTRT WordPress Plugin Boilerplate
-Subtitle: Version 1.5.13
+Title: Documentation
+Subtitle: DTRT WordPress Plugin Boilerplate (1.5.13)
 
 Copyright: Copyright © 2019 Dan Smith
 
