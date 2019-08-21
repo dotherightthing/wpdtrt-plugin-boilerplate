@@ -168,6 +168,7 @@ function get_js_files_to_lint() {
 
     // note: es6 orignals only
     const jsFilesToLint = [
+        "./gulpfile.js",
         "./cypress/**/*.js",
         "./js/frontend.js",
         "./js/backend.js",
