@@ -956,10 +956,8 @@ gulp.task("release", (callback) => {
         runSequence(
             "release_composer_dist",
             "release_yarn_dist",
-            "release_delete_pre",
             "release_copy",
             "release_zip",
-            "release_delete_post",
             callback
         );
     } else {
@@ -1020,29 +1018,6 @@ gulp.task("release_yarn_dist", () => {
 });
 
 /**
- * Method: release_delete_pre
- * 
- * Delete existing release.zip.
- *
- * Returns:
- *   (string) The release zip
- */
-gulp.task("release_delete_pre", () => {
-
-    gulp_helper_taskheader(
-        "7c",
-        "Release",
-        "Delete",
-        "Previous release"
-    );
-
-    // return stream or promise for run-sequence
-    return del([
-        "release.zip"
-    ]);
-});
-
-/**
  * Method: release_copy
  * 
  * Copy release files to a temporary folder
@@ -1055,7 +1030,7 @@ gulp.task("release_delete_pre", () => {
 gulp.task("release_copy", () => {
 
     gulp_helper_taskheader(
-        "7d",
+        "7c",
         "Release",
         "Copy files",
         "To temporary folder"
@@ -1162,7 +1137,7 @@ gulp.task("release_copy", () => {
 gulp.task("release_zip", () => {
 
     gulp_helper_taskheader(
-        "7e",
+        "7d",
         "Release",
         "Generate",
         "ZIP file"
@@ -1175,26 +1150,6 @@ gulp.task("release_zip", () => {
     ], {base: "."})
         .pipe(zip("release.zip"))
         .pipe(gulp.dest("./"));
-});
-
-/**
- * Method: release_delete_post
- * 
- * Delete the temporary folder.
- */
-gulp.task("release_delete_post", () => {
-
-    gulp_helper_taskheader(
-        "7f",
-        "Release",
-        "Delete",
-        "Temporary folder"
-    );
-
-    // return stream or promise for run-sequence
-    return del([
-        distDir
-    ]);
 });
 
 /**
