@@ -66,7 +66,7 @@
     "docs": "gulp docs",
     "lint": "gulp lint",
     "release": "gulp release",
-    "tests": "gulp testsWpUnit",
+    "tests": "gulp tests",
     "version": "gulp version",
     "watch": "gulp compile && gulp watch"
   },
