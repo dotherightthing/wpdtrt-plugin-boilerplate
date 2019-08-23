@@ -5,6 +5,7 @@
  *
  * @example usage:
  *    yarn run build
+ *    yarn run docs
  *    yarn run install_deps
  *    yarn run package
  *    yarn run test
@@ -14,21 +15,14 @@
  * @version     1.5.13
  */
 
-/**
- * @namespace gulp
- */
-
-/* eslint-env node */
-/* eslint-disable max-len */
-
-"use strict";
+/* globals require, process */
 
 const gulp = require("gulp");
 const autoprefixer = require("autoprefixer");
 const babel = require("gulp-babel");
-const del = require("del");
+const color = require("gulp-color");
+const download = require("gulp-download");
 const ghRateLimit = require("gh-rate-limit");
-const jsdoc = require("gulp-jsdoc3");
 const eslint = require("gulp-eslint");
 const log = require("fancy-log");
 const phpcs = require("gulp-phpcs");
@@ -40,14 +34,18 @@ const runSequence = require("run-sequence");
 const sass = require("gulp-sass");
 const sassLint = require("gulp-sass-lint");
 const shell = require("gulp-shell");
+const unzip = require("gulp-unzip");
 const validate = require("gulp-nice-package");
 const wpdtrtPluginBump = require("gulp-wpdtrt-plugin-bump");
 const zip = require("gulp-zip");
 
 /**
- * @summary Get the pluginName from package.json
- * @return {string} pluginName
- * @memberOf gulp
+ * Function: get_pluginName
+ * 
+ * Get the pluginName from package.json.
+ *
+ * Returns:
+ *   pluginName (string)
  */
 function get_pluginName() {
     // pop() - remove the last element from the path array and return it
@@ -57,9 +55,12 @@ function get_pluginName() {
 }
 
 /**
- * @summary Determines whether we're in the boilerplate, or using it as a dependency
- * @return {Boolean} True if we're in the boilerplate
- * @memberOf gulp
+ * Function: is_boilerplate
+ * 
+ * Determines whether we're in the boilerplate, or using it as a dependency.
+ *
+ * Returns:
+ *  Boolean - True if we're in the boilerplate
  */
 function is_boilerplate() {
     const pluginName = get_pluginName();
@@ -68,19 +69,26 @@ function is_boilerplate() {
 }
 
 /**
- * @summary Determines whether the current Gulp process is running on Travis CI
- * @return {Boolean}
- * @see https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
- * @memberOf gulp
+ * Function: is_travis
+ * 
+ * Determines whether the current Gulp process is running on Travis CI.
+ *
+ * See: <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>.
+ *
+ * Returns:
+ *   Boolean
  */
 function is_travis() {
     return (typeof process.env.TRAVIS !== "undefined");
 }
 
 /**
- * @summary Get the value of the Github API access token used by Travis
- * @return {String}
- * @memberOf gulp
+ * Function: get_gh_token
+ * 
+ * Get the value of the Github API access token used by Travis.
+ *
+ * Returns:
+ *   String
  */
 function get_gh_token() {
     let token = "";
@@ -93,9 +101,12 @@ function get_gh_token() {
 }
 
 /**
- * @summary Get the path to the boilerplate
- * @return {string} path
- * @memberOf gulp
+ * Function: get_boilerplate_path
+ * 
+ * Get the path to the boilerplate.
+ *
+ * Returns:
+ *   path (string)
  */
 function get_boilerplate_path() {
     let path = "";
@@ -108,37 +119,14 @@ function get_boilerplate_path() {
 }
 
 /**
- * @summary Get list of JavaScript files to document
- * @return {array} jsFiles Array of files
- * @see http://usejsdoc.org/about-including-package.html
- * @memberOf gulp
- */
-function get_js_doc_files() {
-
-    let boilerplate_path = get_boilerplate_path();
-
-    if ( boilerplate_path !== "" ) {
-        boilerplate_path += "/";
-    }
-
-    const jsDocFiles = [
-        "./cypress/**/*.js",
-        "./js/*.js",
-        "!/js/*-es5.js",
-        "cypress.json",
-        "package.json",
-        `${boilerplate_path}gulpfile.js`,
-        `${boilerplate_path}js/backend.js`
-    ];
-
-    return jsDocFiles;
-}
-
-/**
- * @summary Get list of JavaScript files to transpile from ES6 to ES5
- * @return {array} jsFiles Array of files
- * @see http://usejsdoc.org/about-including-package.html
- * @memberOf gulp
+ * Function: get_js_files
+ * 
+ * Get list of JavaScript files to transpile from ES6 to ES5.
+ *
+ * See: <http://usejsdoc.org/about-including-package.html>.
+ * 
+ * Returns:
+ *   jsFiles - Array of files
  */
 function get_js_files() {
 
@@ -160,10 +148,14 @@ function get_js_files() {
 }
 
 /**
- * @summary Get list of JavaScript files to lint
- * @return {array} jsFiles Array of files
- * @see http://usejsdoc.org/about-including-package.html
- * @memberOf gulp
+ * Function: get_js_files_to_lint
+ * 
+ * Get list of JavaScript files to lint.
+ *
+ * See: <http://usejsdoc.org/about-including-package.html>.
+ * 
+ * Returns:
+ *   jsFiles - Array of files
  */
 function get_js_files_to_lint() {
 
@@ -175,6 +167,7 @@ function get_js_files_to_lint() {
 
     // note: es6 orignals only
     const jsFilesToLint = [
+        "./gulpfile.js",
         "./cypress/**/*.js",
         "./js/frontend.js",
         "./js/backend.js",
@@ -186,13 +179,49 @@ function get_js_files_to_lint() {
 }
 
 /**
- * @summary Displays a block comment for each task that runs
- * @param  {string} step          Step number
- * @param  {string} task_category Task category
- * @param  {string} task_action   Task action
- * @param  {string} task_detail   Task detail
- * @return {string}               Task header
- * @memberOf gulp
+ * Function: decorate_log
+ *
+ * Log a Gulp task result with emoji and colour.
+ * 
+ * Parameters:
+ *   (object) filePath, messageCount, warningCount, errorCount
+ */
+function decorate_log( {
+    textstring = "",
+    messageCount = 0,
+    warningCount = 0,
+    errorCount = 0
+} = {} ) {
+    const colors = { pass: "GREEN", message: "WHITE", warning: "YELLOW", error: "RED" };
+    const emojis = { pass: "✔", message: "✖", warning: "✖", error: "✖" };
+    let state;
+
+    if ( errorCount > 0 ) {
+        state = "error";
+    } else if ( warningCount > 0 ) {
+        state = "warning";
+    } else if ( messageCount > 0 ) {
+        state = "message";
+    } else {
+        state = "pass";
+    }
+
+    console.log( color( `${emojis[state]} ${textstring}`, `${colors[state]}` ) );
+}
+
+/**
+ * Function: gulp_helper_taskheader
+ * 
+ * Displays a block comment for each task that runs.
+ *
+ * Parameters:
+ *   step - Step number (string)
+ *   task_category - Task category (string)
+ *   task_action - Task action (string)
+ *   task_detail - Task detail (string)
+ * 
+ * Returns:
+ *   Task header (string)
  */
 function gulp_helper_taskheader(step, task_category, task_action, task_detail) {
 
@@ -221,26 +250,35 @@ const phpFiles = [
 const scssFiles = "./scss/*.scss";
 
 /**
- * @callback runSequenceCallback
- * @summary Tells runSequence that a task has finished.
- * @description
- *     By returning a stream,
- *     the task system is able to plan the execution of those streams.
- *     But sometimes, especially when you're in callback hell
- *     or calling some streamless plugin,
- *     you aren't able to return a stream.
- *     That's what the callback is for.
- *     To let the task system know that you're finished
- *     and to move on to the next call in the execution chain.
- * @see https://stackoverflow.com/a/29299107/6850747
- * @memberOf gulp
+ * Namespace: gulp
+ *
+ * Gulp tasks.
  */
 
 /**
- * @function install_dependencies
- * @summary Tasks which install dependencies
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * About: runSequenceCallback
+ *
+ * Tells runSequence that a task has finished..
+ * 
+ * By returning a stream,
+ * the task system is able to plan the execution of those streams.
+ * But sometimes, especially when you're in callback hell
+ * or calling some streamless plugin,
+ * you aren't able to return a stream.
+ * That's what the callback is for.
+ * To let the task system know that you're finished
+ * and to move on to the next call in the execution chain.
+ *
+ * See <Where is the gulp task callback function defined?: https://stackoverflow.com/a/29299107/6850747>
+ */
+
+/**
+ * Method: install_dependencies
+ * 
+ * Tasks which install dependencies.
+ *
+ * Parameters:
+ *   callback - The runSequenceCallback that handles the response
  */
 gulp.task("install_dependencies", (callback) => {
 
@@ -255,14 +293,18 @@ gulp.task("install_dependencies", (callback) => {
         "install_dependencies_yarn",
         "preinstall_dependencies_github",
         "install_dependencies_composer",
+        "dependencies_docs",
         callback
     );
 });
 
 /**
- * @function install_dependencies_yarn
- * @summary Install Yarn dependencies
- * @memberOf gulp
+ * Method: install_dependencies_yarn
+ * 
+ * Install Yarn dependencies.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("install_dependencies_yarn", () => {
 
@@ -281,10 +323,12 @@ gulp.task("install_dependencies_yarn", () => {
 });
 
 /**
- * @function preinstall_dependencies_github
- * @summary Expose the Github API rate limit to aid in debugging failed builds
- * @return {Object} Rate Limit object
- * @memberOf gulp
+ * Method: preinstall_dependencies_github
+ * 
+ * Expose the Github API rate limit to aid in debugging failed builds.
+ * 
+ * Returns:
+ *   Rate Limit (object)
  */
 gulp.task("preinstall_dependencies_github", () => {
 
@@ -315,9 +359,12 @@ gulp.task("preinstall_dependencies_github", () => {
 });
 
 /**
- * @function install_dependencies_composer
- * @summary Install Composer dependencies
- * @memberOf gulp
+ * Method: install_dependencies_composer
+ * 
+ * Install the Composer dependencies listed in composer.json.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("install_dependencies_composer", () => {
 
@@ -341,10 +388,43 @@ gulp.task("install_dependencies_composer", () => {
 });
 
 /**
- * @function lint
- * @summary Tasks which lint files
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * Function: dependencies_docs
+ * 
+ * Install documentation dependencies.
+ * 
+ * Natural Docs can't be installed via Yarn
+ * as the Github release needs to be compiled,
+ * and the download archive on the website
+ * is in .zip rather than .tar format.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
+ */
+gulp.task("dependencies_docs", () => {
+
+    gulp_helper_taskheader(
+        "1c",
+        "Dependencies",
+        "Install",
+        "Docs"
+    );
+
+    const url = "https://naturaldocs.org/download/natural_docs/"
+    + "2.0.2/Natural_Docs_2.0.2.zip";
+
+    // return stream or promise for run-sequence
+    return download(url)
+        .pipe( unzip() )
+        .pipe( gulp.dest("./" ) );
+});
+
+/**
+ * Method: lint
+ * 
+ * Tasks which lint files.
+ *
+ * Parameters:
+ *   callback - The runSequenceCallback that handles the response
  */
 gulp.task("lint", (callback) => {
 
@@ -366,9 +446,12 @@ gulp.task("lint", (callback) => {
 });
 
 /**
- * @function lint_sass
- * @summary Lint Sass files
- * @memberOf gulp
+ * Method: lint_sass
+ * 
+ * Lint Sass files.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_sass", () => {
 
@@ -386,9 +469,12 @@ gulp.task("lint_sass", () => {
 });
 
 /**
- * @function lint_js
- * @summary Lint JavaScript files
- * @memberOf gulp
+ * Method: lint_js
+ * 
+ * Lint JavaScript files.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_js", () => {
 
@@ -404,14 +490,28 @@ gulp.task("lint_js", () => {
     // return stream or promise for run-sequence
     return gulp.src(files)
         .pipe(eslint())
+        .pipe(eslint.result(result => {
+            const { filePath: textstring, messages, warningCount, errorCount } = result;
+            const { length: messageCount } = messages;
+            
+            decorate_log({
+                textstring,
+                messageCount,
+                warningCount,
+                errorCount
+            });
+        }))
         .pipe(eslint.format());
         // .pipe(eslint.failAfterError());
 });
 
 /**
- * @function lint_composer_json
- * @summary Lint composer.json
- * @memberOf gulp
+ * Method: lint_composer_json
+ * 
+ * Lint composer.json.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_composer_json", () => {
 
@@ -430,9 +530,12 @@ gulp.task("lint_composer_json", () => {
 });
 
 /**
- * @function lint_package_json
- * @summary Lint package.json
- * @memberOf gulp
+ * Method: lint_package_json
+ * 
+ * Lint package.json.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_package_json", () => {
 
@@ -451,13 +554,18 @@ gulp.task("lint_package_json", () => {
 });
 
 /**
- * @function lint_php
- * @summary Lint PHP files
- * @see https://packagist.org/packages/squizlabs/php_codesniffer
- * @see https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/89
- * @see https://github.com/JustBlackBird/gulp-phpcs/issues/39
- * @memberOf gulp
+ * Method: lint_php
+ * 
+ * Lint PHP files.
+ * 
+ * See:
+ * * <PHP_CodeSniffer: https://packagist.org/packages/squizlabs/php_codesniffer>
+ * * <WordPress Coding Standards for PHP_CodeSniffer: https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards>
+ * * <Add PHP linting (PSR-2): https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/89>
+ * * <Support for phpcs.xml: https://github.com/JustBlackBird/gulp-phpcs/issues/39>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("lint_php", () => {
 
@@ -494,10 +602,12 @@ gulp.task("lint_php", () => {
 });
 
 /**
- * @function compile
- * @summary Tasks which compile
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * Method: compile
+ * 
+ * Tasks which compile.
+ *
+ * Parameters:
+ *   callback - The runSequenceCallback that handles the response
  */
 gulp.task("compile", (callback) => {
 
@@ -516,9 +626,12 @@ gulp.task("compile", (callback) => {
 });
 
 /**
- * @function compile_css
- * @summary Compile CSS
- * @memberOf gulp
+ * Method: compile_css
+ * 
+ * Compile CSS.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("compile_css", () => {
 
@@ -568,9 +681,12 @@ gulp.task("compile_css", () => {
 });
 
 /**
- * @function transpile_js
- * @summary Transpile JS
- * @memberOf gulp
+ * Method: transpile_js
+ *
+ * Transpile ES6 to ES5, so that modern code runs in old browsers.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("transpile_js", () => {
 
@@ -593,10 +709,12 @@ gulp.task("transpile_js", () => {
 });
 
 /**
- * @function version
- * @summary Tasks which version the plugin
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * Method: version
+ * 
+ * Tasks which version the plugin.
+ *
+ * Parameters:
+ *   callback - The runSequenceCallback that handles the response
  */
 gulp.task("version", (callback) => {
 
@@ -616,14 +734,17 @@ gulp.task("version", (callback) => {
 });
 
 /**
- * @function version_update
- * @summary Update the boilerplate dependency to the latest version
- * @description
- *     If wpdtrt-plugin-boilerplate is loaded as a dependency
- *     get the latest release of wpdtrt-plugin-boilerplate.
- *     This has to run before `version_replace`
- *     so that the correct version information is available
- * @memberOf gulp
+ * Method: version_update
+ * 
+ * Update the boilerplate dependency to the latest version
+ * 
+ * If wpdtrt-plugin-boilerplate is loaded as a dependency
+ * get the latest release of wpdtrt-plugin-boilerplate.
+ * This has to run before version_replace
+ * so that the correct version information is available
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("version_update", () => {
 
@@ -641,14 +762,17 @@ gulp.task("version_update", () => {
     // return stream or promise for run-sequence
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            "composer update --no-interaction --no-suggest"
+            "composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest"
         ]));
 });
 
 /**
- * @function version_replace
- * @summary Replace version strings using the version set in package.json
- * @memberOf gulp
+ * Method: version_replace
+ * 
+ * Replace version strings, using the version set in package.json.
+ *
+ * Returns:
+ *   call to wpdtrtPluginBump (gulp-wpdtrt-plugin-bump)
  */
 gulp.task("version_replace", () => {
 
@@ -660,15 +784,18 @@ gulp.task("version_replace", () => {
     );
 
     return wpdtrtPluginBump({
-        root_input_path: "",
-        wpdtrt_plugin_boilerplate_input_path: get_boilerplate_path()
+        inputPathRoot: "",
+        inputPathBoilerplate: get_boilerplate_path()
     });
 });
 
 /**
- * @function version_update_autoload
- * @summary Regenerate the list of PHP classes to be autoloaded
- * @memberOf gulp
+ * Method: version_update_autoload
+ * 
+ * Regenerate the list of PHP classes to be autoloaded.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("version_update_autoload", () => {
 
@@ -691,115 +818,41 @@ gulp.task("version_update_autoload", () => {
 });
 
 /**
- * @function docs
- * @summary Tasks which generate documentation
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * Function: docs
+ * 
+ * Generate JS & PHP documentation.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
-gulp.task("docs", (callback) => {
+gulp.task("docs", () => {
 
     gulp_helper_taskheader(
-        "5",
-        "Documentation",
-        "",
-        ""
-    );
-
-    runSequence(
-        "docs_delete",
-        "docs_js",
-        "docs_php",
-        callback
-    );
-});
-
-/**
- * @function docs_delete
- * @summary Delete existing generated docs
- * @memberOf gulp
- */
-gulp.task("docs_delete", () => {
-
-    gulp_helper_taskheader(
-        "5a",
-        "Documentation",
-        "Delete",
-        ""
-    );
-
-    // return stream or promise for run-sequence
-    return del([
-        "docs/jsdoc",
-        "docs/phpdoc"
-    ]);
-});
-
-/**
- * @function docs_js
- * @summary Generate JavaScript documentation
- * @memberOf gulp
- */
-gulp.task("docs_js", () => {
-
-    gulp_helper_taskheader(
-        "5b",
+        "4",
         "Documentation",
         "Generate",
-        "JS"
+        "All (PHP & JavaScript)"
     );
 
-    const files = get_js_doc_files();
+    // Quotes escape space better than backslash on Travis
+    const naturaldocs_path = "Natural Docs/NaturalDocs.exe";
 
-    // require path is relative to this gulpfile
-    const jsdocConfig = require("./jsdoc.json");
-
-    // return stream or promise for run-sequence
-    return gulp.src(files)
-        // note: output cannot be piped on from jsdoc
-        .pipe(jsdoc(jsdocConfig));
-});
-
-/**
- * @function docs_php
- * @summary Generate PHP documentation
- * @memberOf gulp
- */
-gulp.task("docs_php", () => {
-
-    gulp_helper_taskheader(
-        "5c",
-        "Documentation",
-        "Generate",
-        "PHP"
-    );
-
-    const boilerplate = is_boilerplate();
-    let configFile = "";
-
-    if ( boilerplate ) {
-        // use config file in boilerplate root
-        configFile = "phpdoc-boilerplate.xml";
-    } else {
-        // use config file in plugin root
-        // see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/139#issuecomment-406854915
-        configFile = "phpdoc-plugin.xml";
-    }
-
-    // return stream or promise for run-sequence
     // note: src files are not used,
     // this structure is only used
     // to include the preceding log()
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
-            `vendor/bin/phpdoc --config ${configFile}`
+            `mono "${naturaldocs_path}" ./config/naturaldocs`
         ]));
 });
 
 /**
- * @function unit_test
- * @summary Tasks which set up or run unit tests
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * Method: unit_test
+ * 
+ * Tasks which set up or run unit tests.
+ *
+ * Parameters:
+ *   callback - The runSequenceCallback that handles the response
  */
 gulp.task("unit_test", (callback) => {
 
@@ -818,11 +871,14 @@ gulp.task("unit_test", (callback) => {
 });
 
 /**
- * @function wpunit_install
- * @summary Install WPUnit test suite
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/
- * Testing-&-Debugging#environmental-variables
- * @memberOf gulp
+ * Method: wpunit_install
+ * 
+ * Install WPUnit test suite.
+ * 
+ * See: <Testing & Debugging: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("wpunit_install", () => {
 
@@ -850,10 +906,14 @@ gulp.task("wpunit_install", () => {
 });
 
 /**
- * @function wpunit_run
- * @summary Run WPUnit tests
- * @memberOf gulp
- * @see https://stackoverflow.com/a/42467775/6850747
+ * Method: wpunit_run
+ * 
+ * Run WPUnit tests
+ * 
+ * See: <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("wpunit_run", () => {
 
@@ -873,10 +933,12 @@ gulp.task("wpunit_run", () => {
 });
 
 /**
- * @function release
- * @summary Tasks which package a release
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * Method: release
+ * 
+ * Tasks which package a release.
+ *
+ * Parameters:
+ *   callback - The runSequenceCallback that handles the response
  */
 gulp.task("release", (callback) => {
 
@@ -893,10 +955,8 @@ gulp.task("release", (callback) => {
         runSequence(
             "release_composer_dist",
             "release_yarn_dist",
-            "release_delete_pre",
             "release_copy",
             "release_zip",
-            "release_delete_post",
             callback
         );
     } else {
@@ -905,9 +965,9 @@ gulp.task("release", (callback) => {
 });
 
 /**
- * @function release_composer_dist
- * @summary Uninstall PHP development dependencies
- * @memberOf gulp
+ * Method: release_composer_dist
+ * 
+ * Uninstall PHP development dependencies.
  */
 gulp.task("release_composer_dist", () => {
 
@@ -919,9 +979,12 @@ gulp.task("release_composer_dist", () => {
     );
 
     /**
-    * Remove dev packages once we"ve used them
+    * Remove dev packages once we've used them
     *
-    * @see #47
+    * See: <Reduce vendor components required for deployment: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47>
+    *
+    * Returns:
+    *   Stream or promise for run-sequence.
     */
     return gulp.src(dummyFile, {read: false})
         .pipe(shell([
@@ -930,9 +993,12 @@ gulp.task("release_composer_dist", () => {
 });
 
 /**
- * @function release_yarn_dist
- * @summary Uninstall Yarn development dependencies
- * @memberOf gulp
+ * Method: release_yarn_dist
+ * 
+ * Uninstall Yarn development dependencies.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("release_yarn_dist", () => {
 
@@ -951,35 +1017,19 @@ gulp.task("release_yarn_dist", () => {
 });
 
 /**
- * @function release_delete_pre
- * @summary Delete existing release.zip
- * @memberOf gulp
- */
-gulp.task("release_delete_pre", () => {
-
-    gulp_helper_taskheader(
-        "7c",
-        "Release",
-        "Delete",
-        "Previous release"
-    );
-
-    // return stream or promise for run-sequence
-    return del([
-        "release.zip"
-    ]);
-});
-
-/**
- * @function release_copy
- * @summary Copy release files to a temporary folder
- * @see http://www.globtester.com/
- * @memberOf gulp
+ * Method: release_copy
+ * 
+ * Copy release files to a temporary folder
+ * 
+ * See: <globtester: http://www.globtester.com/>
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("release_copy", () => {
 
     gulp_helper_taskheader(
-        "7d",
+        "7c",
         "Release",
         "Copy files",
         "To temporary folder"
@@ -1076,14 +1126,17 @@ gulp.task("release_copy", () => {
 });
 
 /**
- * @function release_zip
- * @summary Generate release.zip for deployment by Travis/Github
- * @memberOf gulp
+ * Method: release_zip
+ * 
+ * Generate release.zip for deployment by Travis/Github.
+ *
+ * Returns:
+ *   Stream or promise for run-sequence.
  */
 gulp.task("release_zip", () => {
 
     gulp_helper_taskheader(
-        "7e",
+        "7d",
         "Release",
         "Generate",
         "ZIP file"
@@ -1099,29 +1152,9 @@ gulp.task("release_zip", () => {
 });
 
 /**
- * @function release_delete_post
- * @summary Delete the temporary folder
- * @memberOf gulp
- */
-gulp.task("release_delete_post", () => {
-
-    gulp_helper_taskheader(
-        "7f",
-        "Release",
-        "Delete",
-        "Temporary folder"
-    );
-
-    // return stream or promise for run-sequence
-    return del([
-        distDir
-    ]);
-});
-
-/**
- * @function watch
- * @summary Watch for changes to `.scss` files
- * @memberOf gulp
+ * Method: watch
+ * 
+ * Watch for changes to `.scss` files.
  */
 gulp.task("watch", () => {
 
@@ -1139,12 +1172,16 @@ gulp.task("watch", () => {
 });
 
 /**
- * @function default
- * @summary Default task
- * @example
+ * Method: default
+ * 
+ * Default task
+ *
+ * Parameters:
+ *   callback - The callback that handles the response
+ *
+ * --- javascript
  * gulp
- * @param {runSequenceCallback} callback - The callback that handles the response
- * @memberOf gulp
+ * ---
  */
 gulp.task("default", (callback) => {
 
