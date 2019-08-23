@@ -908,10 +908,10 @@ gulp.task( 'release', ( callback ) => {
     );
 
     runSequence(
-      'release_composer_dist',
-      'release_yarn_dist',
-      'release_copy',
-      'release_zip',
+      'releaseComposerDist',
+      'releaseYarnDist',
+      'releaseCopy',
+      'releaseZip',
       callback
     );
   } else {
@@ -920,11 +920,11 @@ gulp.task( 'release', ( callback ) => {
 } );
 
 /**
- * Method: release_composer_dist
+ * Method: releaseComposerDist
  *
  * Uninstall PHP development dependencies.
  */
-gulp.task( 'release_composer_dist', () => {
+gulp.task( 'releaseComposerDist', () => {
   taskHeader(
     '7a',
     'Release',
@@ -947,14 +947,14 @@ gulp.task( 'release_composer_dist', () => {
 } );
 
 /**
- * Method: release_yarn_dist
+ * Method: releaseYarnDist
  *
  * Uninstall Yarn development dependencies.
  *
  * Returns:
  *   Stream or promise for run-sequence.
  */
-gulp.task( 'release_yarn_dist', () => {
+gulp.task( 'releaseYarnDist', () => {
   taskHeader(
     '7b',
     'Release',
@@ -970,7 +970,7 @@ gulp.task( 'release_yarn_dist', () => {
 } );
 
 /**
- * Method: release_copy
+ * Method: releaseCopy
  *
  * Copy release files to a temporary folder
  *
@@ -979,7 +979,7 @@ gulp.task( 'release_yarn_dist', () => {
  * Returns:
  *   Stream or promise for run-sequence.
  */
-gulp.task( 'release_copy', () => {
+gulp.task( 'releaseCopy', () => {
   taskHeader(
     '7c',
     'Release',
@@ -1078,14 +1078,14 @@ gulp.task( 'release_copy', () => {
 } );
 
 /**
- * Method: release_zip
+ * Method: releaseZip
  *
  * Generate release.zip for deployment by Travis/Github.
  *
  * Returns:
  *   Stream or promise for run-sequence.
  */
-gulp.task( 'release_zip', () => {
+gulp.task( 'releaseZip', () => {
   taskHeader(
     '7d',
     'Release',
