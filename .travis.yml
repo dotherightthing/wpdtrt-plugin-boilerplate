@@ -87,9 +87,6 @@ install:
 # See https://github.com/wp-cli/sample-plugin/blob/master/.travis.yml
 before_script:
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - export WPUNIT_DB_USER="root"
-  - export WPUNIT_DB_PASS=""
-  - export WPUNIT_DB_HOST="localhost"
 
 # Run the build script
 script:
