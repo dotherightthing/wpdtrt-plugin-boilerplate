@@ -1,5 +1,7 @@
 <?php
 /**
+ * File: tests/generated-plugin/src/class-wpdtrt-test-taxonomy.php
+ *
  * Taxonomy sub class.
  *
  * @package WPDTRT_Test

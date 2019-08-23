@@ -1,5 +1,7 @@
 <?php
 /**
+ * File: tests/generated-plugin/src/class-wpdtrt-test-shortcode.php
+ *
  * Shortcode sub class.
  *
  * @package WPDTRT_Test

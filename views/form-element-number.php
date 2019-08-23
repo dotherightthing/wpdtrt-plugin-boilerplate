@@ -1,18 +1,20 @@
 <?php
 /**
+ * File: views/form-element-number.php
+ *
  * Template partial for Number fields.
  *
- * @package WPDTRT_Plugin_Boilerplate
- * @version 1.0.0
- * @since   1.0.0
- * @uses    WordPress_Admin_Style
- * @example
+ * Example
+ * --- PHP
  * 'fieldname' => array(
  *   type' => 'number',
  *   'label' => __('Field label', 'text-domain'),
  *   'size' => 10,
  *   tip' => __('Helper text', 'text-domain')
  * )
+ * ---
+ *
+ * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>

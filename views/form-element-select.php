@@ -1,12 +1,11 @@
 <?php
 /**
- * Template partial for Select fields.
+ * File: views/form-element-select.php
  *
- * @package WPDTRT_Plugin_Boilerplate
- * @version 1.0.0
- * @since   1.0.0
- * @uses    WordPress_Admin_Style
- * @example
+ * Template partial for Select box.
+ *
+ * Example
+ * --- PHP
  * 'fieldname' => array(
  *   'type' => 'select',
  *   label' => __('Field label', 'fieldname'),
@@ -20,6 +19,9 @@
  *   ),
  *   tip' => __('Helper text', 'text-domain')
  * )
+ * ---
+ *
+ * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>

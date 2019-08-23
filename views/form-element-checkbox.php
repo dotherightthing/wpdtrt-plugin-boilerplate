@@ -1,17 +1,19 @@
 <?php
 /**
+ * File: views/form-element-checkbox.php
+ *
  * Template partial for Checkbox fields.
  *
- * @package WPDTRT_Plugin_Boilerplate
- * @version 1.0.0
- * @since   1.0.0
- * @uses    WordPress_Admin_Style
- * @example
+ * Example
+ * --- PHP
  * 'fieldname' => array(
  *   'type' => 'checkbox',
  *   'label' => esc_html__('Field label', 'text-domain'),
  *   tip' => __('Helper text', 'text-domain')
  * )
+ * ---
+ *
+ * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>

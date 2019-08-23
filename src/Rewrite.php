@@ -1,10 +1,10 @@
 <?php
 /**
+ * File: src/Rewrite.php
+ *
  * Plugin rewrite class.
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
- * @since     1.4.16
+ * @package WPDTRT_Plugin_Boilerplate
  */
 
 namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;

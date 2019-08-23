@@ -1,5 +1,7 @@
 <?php
 /**
+ * File: tests/test-wpdtrt-plugin.php
+ *
  * Unit tests, using PHPUnit, wp-cli, WP_UnitTestCase.
  *  These tests are run from child plugins.
  *

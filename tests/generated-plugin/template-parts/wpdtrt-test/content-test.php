@@ -1,5 +1,7 @@
 <?php
 /**
+ * File: tests/generated-plugin/template-parts/wpdtrt-test/content-test.php
+ *
  * Template to display plugin output in shortcodes and widgets
  *
  * @package   DTRT Test

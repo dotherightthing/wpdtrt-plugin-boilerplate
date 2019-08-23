@@ -1,5 +1,7 @@
 <?php
 /**
+ * File: tests/generated-plugin/wpdtrt-test.php
+ *
  * DTRT Test
  *
  * @package     DTRT Test

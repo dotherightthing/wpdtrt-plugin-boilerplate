@@ -1,11 +1,12 @@
 <?php
 /**
+ * File: src/Widget.php
+ *
  * Plugin widget class.
  *
  * Boilerplate to generate a widget, which is configured in WP Admin, and can be displayed in sidebars.
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
+ * @package WPDTRT_Plugin_Boilerplate
  */
 
 namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;

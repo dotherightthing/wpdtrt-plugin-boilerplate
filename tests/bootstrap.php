@@ -1,5 +1,7 @@
 <?php
 /**
+ * File: tests/bootstrap.php
+ *
  * PHPUnit bootstrap file
  *
  * @package WPDTRT_Test

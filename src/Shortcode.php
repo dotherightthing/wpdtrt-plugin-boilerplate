@@ -1,9 +1,10 @@
 <?php
 /**
+ * File: src/Shortcode.php
+ *
  * Plugin shortcode class.
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
+ * @package WPDTRT_Plugin_Boilerplate
  */
 
 namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
