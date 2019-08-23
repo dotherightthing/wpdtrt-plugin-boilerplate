@@ -21,7 +21,6 @@ const gulp = require("gulp");
 const autoprefixer = require("autoprefixer");
 const babel = require("gulp-babel");
 const color = require("gulp-color");
-const del = require("del");
 const download = require("gulp-download");
 const ghRateLimit = require("gh-rate-limit");
 const eslint = require("gulp-eslint");
@@ -785,8 +784,8 @@ gulp.task("version_replace", () => {
     );
 
     return wpdtrtPluginBump({
-        root_input_path: "",
-        wpdtrt_plugin_boilerplate_input_path: get_boilerplate_path()
+        inputPathRoot: "",
+        inputPathBoilerplate: get_boilerplate_path()
     });
 });
 
