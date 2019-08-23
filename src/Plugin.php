@@ -1494,7 +1494,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$force_refresh = isset( $plugin_data_options['force_refresh'] ) ? $plugin_data_options['force_refresh'] : false;
 
 			wp_localize_script( $this->get_prefix() . '_backend',
-				'wpdtrt_plugin_boilerplate_config',
+				'wpdtrtPluginBoilerplateConfig',
 				array(
 					'prefix'           => $this->get_prefix(),
 					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
