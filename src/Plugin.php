@@ -779,7 +779,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   $is_raw_config_options - Whether the options are raw config options
 		 *
 		 * Returns:
-		 *   $options - Merged options (for unit testing)
+		 *   Merged options (for unit testing)
 		 *
 		 * Since:
 		 *   1.0.0 - Added
