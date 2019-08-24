@@ -9,5 +9,7 @@
         <exclude name="WordPress.XSS.EscapeOutput"/>
         <exclude name="WordPress.VIP.ValidatedSanitizedInput"/>
         <exclude name="Generic.Strings.UnnecessaryStringConcat"/>
+        <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
     </rule>
 </ruleset>
