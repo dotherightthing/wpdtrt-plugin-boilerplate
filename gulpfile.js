@@ -33,8 +33,6 @@ const wpdtrtPluginBump = require( 'gulp-wpdtrt-plugin-bump' );
 const xmltojson = require( 'gulp-xmltojson' ).xmltojson;
 const zip = require( 'gulp-zip' );
 
-let phpCsXmlRule = {};
-
 /**
  * Function: getPluginName
  *
@@ -272,6 +270,7 @@ const phpFiles = [
 ];
 const scssFiles = './scss/*.scss';
 const phpCsXml = getPhpCsXml();
+let phpCsXmlRule = {};
 
 /**
  * Namespace: gulp
@@ -580,7 +579,7 @@ gulp.task( 'lintComposer', () => {
     ] ) );
 } );
 
-gulp.task( 'lintPhpLoadPhpCsExclusions', () => {
+gulp.task( 'lintPhpCsExclusions', () => {
   taskHeader(
     '2e',
     'QA',
@@ -660,7 +659,7 @@ gulp.task( 'lintPhpLoadPhpCsExclusions', () => {
  * Returns:
  *   Stream or promise for run-sequence.
  */
-gulp.task( 'lintPhp', [ 'lintPhpLoadPhpCsExclusions' ], () => {
+gulp.task( 'lintPhp', [ 'lintPhpCsExclusions' ], () => {
   taskHeader(
     '2f',
     'QA',
@@ -680,7 +679,7 @@ gulp.task( 'lintPhp', [ 'lintPhpLoadPhpCsExclusions' ], () => {
     .pipe( phpcs( {
       bin: 'vendor/bin/phpcs',
       // standard must be included and cannot reference phpcs.xml, which is ignored
-      // so we load the exclusions using lintPhpLoadPhpCsExclusions
+      // so we load the exclusions using lintPhpCsExclusions
       standard: ref,
       // minimum severity required to display an error or warning.
       warningSeverity: 0,
