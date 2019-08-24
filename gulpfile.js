@@ -27,14 +27,18 @@ const runSequence = require( 'run-sequence' );
 const sass = require( 'gulp-sass' );
 const sassLint = require( 'gulp-sass-lint' );
 const shell = require( 'gulp-shell' );
+const tap = require( 'gulp-tap' );
 const unzip = require( 'gulp-unzip' );
 const wpdtrtPluginBump = require( 'gulp-wpdtrt-plugin-bump' );
+const xmltojson = require( 'gulp-xmltojson' ).xmltojson;
 const zip = require( 'gulp-zip' );
+
+let phpCsXmlRule = {};
 
 /**
  * Function: getPluginName
  *
- * Get the pluginName from package.json.
+ * Get the pluginName from the directory path.
  *
  * Returns:
  *   (string) pluginName
@@ -234,6 +238,24 @@ function taskHeader(
   log( ' ' );
 }
 
+/**
+ * Function: getPhpCsXml
+ *
+ * Gets the path to phpcs.xml.
+ *
+ * Returns:
+ *  (string) - The path
+ */
+function getPhpCsXml() {
+  let path = './phpcs.xml';
+
+  if ( !isBoilerplate() ) {
+    path = './vendor/dotherightthing/wpdtrt-plugin-boilerplate/phpcs.xml';
+  }
+
+  return path;
+}
+
 const pluginName = getPluginName();
 const pluginNameSafe = pluginName.replace( /-/g, '_' );
 const cssDir = 'css';
@@ -249,6 +271,7 @@ const phpFiles = [
   '!wp-content/**/*.php'
 ];
 const scssFiles = './scss/*.scss';
+const phpCsXml = getPhpCsXml();
 
 /**
  * Namespace: gulp
@@ -557,6 +580,72 @@ gulp.task( 'lintComposer', () => {
     ] ) );
 } );
 
+gulp.task( 'lintPhpLoadPhpCsExclusions', () => {
+  taskHeader(
+    '2e',
+    'QA',
+    'Lint',
+    'Get PHPCS linter config'
+  );
+
+  let errorMessage = false;
+
+  // load phpcs.xml
+  return gulp.src( phpCsXml )
+    // convert the XML to JSON
+    .pipe( xmltojson() )
+    // tap into the stream
+    .pipe( tap( ( file ) => {
+      // read the JSON
+      const phpCsJson = JSON.parse( file.contents.toString() );
+
+      // drill down to the PHPCS config
+      // note! adding comments to the xml file will affect the second index
+      // 1. description
+      // 2. comment
+      // 3. comment
+      // 4. comment
+      // 5. comment
+      // The errorMessage will be shown if the index is incorrect.
+      const ruleObj = phpCsJson.elements[ 0 ].elements[ 5 ];
+
+      // extract the keys
+      const {
+        attributes: ruleAttributes = {}, elements: ruleElements = []
+      } = ruleObj;
+
+      // ruleRef is the ruleset or standard to lint against
+      // format in phpcs.xml: `<rule ref="${ruleRef}">`
+      const { ref: ruleRef } = ruleAttributes;
+
+      // exclusions are the sniffs that we want to disable
+      const exclusions = [];
+
+      // loop over ruleElements,
+      // which is the sibling of ruleAttributes
+      ruleElements.forEach( ( ruleElement ) => {
+        // get the ruleElement name and attributes
+        const { name: ruleElementName, attributes: ruleElementAttributes } = ruleElement;
+
+        // if this is an exclusion
+        if ( ruleElementName === 'exclude' ) {
+          // get the name of the sniff that we're excluding
+          // format in phpcs.xml: `<${ruleElementName} name="${sniffName}"/>`
+          const { name: sniffName } = ruleElementAttributes;
+
+          // add the exclusion to the array for gulp-phpcs
+          exclusions.push( sniffName );
+        }
+      } );
+
+      if ( ( typeof ruleRef === 'undefined' ) || ( exclusions.length === 0 ) ) {
+        errorMessage = 'No PHPCS rule found, skipping linting..';
+      }
+      // populate global
+      phpCsXmlRule = { ref: ruleRef, exclusions, error: errorMessage };
+    } ) );
+} );
+
 /**
  * Method: lintPhp
  *
@@ -571,36 +660,35 @@ gulp.task( 'lintComposer', () => {
  * Returns:
  *   Stream or promise for run-sequence.
  */
-gulp.task( 'lintPhp', () => {
+gulp.task( 'lintPhp', [ 'lintPhpLoadPhpCsExclusions' ], () => {
   taskHeader(
-    '2e',
+    '2f',
     'QA',
     'Lint',
     'PHP'
   );
 
+  const { ref, exclusions, error } = phpCsXmlRule;
+
+  if ( error ) {
+    console.log( error );
+    return gulp.src( phpFiles );
+  }
+
   return gulp.src( phpFiles )
-  // Validate files using PHP Code Sniffer
+    // Validate files using PHP Code Sniffer
     .pipe( phpcs( {
       bin: 'vendor/bin/phpcs',
       // standard must be included and cannot reference phpcs.xml, which is ignored
-      // The WordPress ruleset cherry picks sniffs from Generic, PEAR, PSR-2, Squiz etc
-      standard: 'WordPress', // -Core + -Docs + -Extra + -VIP
-      warningSeverity: 0, // minimum severity required to display an error or warning.
+      // so we load the exclusions using lintPhpLoadPhpCsExclusions
+      standard: ref,
+      // minimum severity required to display an error or warning.
+      warningSeverity: 0,
       showSniffCode: true,
-      // phpcs.xml exclusions are duplicated here,
-      // but only 3 levels of specificity are tolerated by gulp-phpcs:
-      exclude: [
-        'WordPress.Files.FileName',
-        'WordPress.Functions.DontExtract',
-        'WordPress.CSRF.NonceVerification',
-        'WordPress.XSS.EscapeOutput',
-        'WordPress.VIP.RestrictedFunctions', // term_exists_term_exists - wpdtrt-tourdates
-        'WordPress.VIP.ValidatedSanitizedInput',
-        'Generic.Strings.UnnecessaryStringConcat'
-      ]
+      // note: only 3 levels of specificity are tolerated by gulp-phpcs:
+      exclude: exclusions
     } ) )
-  // Log all problems that were found
+    // Log all problems that were found
     .pipe( phpcs.reporter( 'log' ) );
 } );
 
