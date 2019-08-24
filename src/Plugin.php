@@ -3,8 +3,6 @@
  * File: src/Plugin.php
  *
  * Plugin class.
- *
- * @package WPDTRT_Plugin_Boilerplate
  */
 
 namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
@@ -39,9 +37,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * so this construct CANNOT contain anything that needs to run
 		 * BEFORE the WordPress 'init'
 		 *
-		 * @param     array $settings Plugin options.
-		 * @since     1.0.0
-		 * @version   1.1.0
+		 * Parameters:
+		 *   (array() $settings - Plugin options
 		 */
 		protected function __construct( $settings ) {
 
@@ -91,7 +88,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ====== WordPress Integration ======
+		 * Group: WordPress Integration
+		 * _____________________________________
 		 */
 
 		/**
@@ -103,17 +101,18 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *  Default priority is 10. A higher priority runs later.
 		 *  register_activation_hook() is run before any of the provided hooks
 		 *
-		 * @since 1.0.0
-		 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
-		 * @see https://wordpress.stackexchange.com/a/209772 Trying to get class to instantiate ONCE
+		 * See:
+		 *   <Action order:https://codex.wordpress.org/Plugin_API/Action_Reference>
+		 *   <Trying to get class to instantiate ONCE:https://wordpress.stackexchange.com/a/209772>
 		 */
 		protected function wp_setup() {
 
 			/**
 			 * $this->render_foobar() - infers that no args are to be passed, fails
 			 *
-			 * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
-			 * @see https://tommcfarlin.com/wordpress-plugin-constructors-hooks/
+			 * See:
+			 *   <https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback>
+			 *   <https://tommcfarlin.com/wordpress-plugin-constructors-hooks/>
 			 */
 			add_action( 'admin_menu', array( $this, 'render_options_menu' ) );
 			add_action( 'admin_notices', array( $this, 'render_settings_errors' ) );
@@ -138,10 +137,13 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: get_wp_composer_dependencies
 		 *
-		 * Get the WP plugin dependencies required for both TGMPA and WP Unit
+		 * Get the WP plugin dependencies required for both TGMPA and WP Unit.
 		 *
-		 * @param string $composer_json Full (not relative) path to plugin's composer.json.
-		 * @return array Plugin dependencies
+		 * Parameters:
+		 *   (string) $composer_json - Full (not relative) path to plugin's composer.json.
+		 *
+		 * Returns:
+		 *   (array) - Plugin dependencies
 		 */
 		public static function get_wp_composer_dependencies( $composer_json ) {
 
@@ -233,14 +235,16 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *
 		 * Register WP plugin dependencies with TGMPA.
 		 *
-		 * See <Adding WordPress plugin dependencies: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies>.
+		 * See:
+		 *   <Adding WordPress plugin dependencies: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies>.
 		 *
 		 * Parameters:
-		 *   $composer_json - Full (not relative) path to plugin's composer.json.
+		 *   $composer_json - Full (not relative) path to plugin's composer.json
 		 *
 		 * Returns:
 		 *   Updated plugin dependencies
 		 *
+		 * Example:
 		 * --- PHP
 		 * // wpdtrt-plugin-boilerplate/src/Plugin.php
 		 * global $wpdtrt_test_plugin; // Access non-static methods of plugin class.
@@ -284,17 +288,18 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Used in wpdtrt-foobar/tests/bootstrap.php
 		 * to get the WP plugin dependency files required by WP Unit.
 		 *
+		 * Parameters:
+		 *   $plugin_dependencies - Plugin dependencies
+		 *
+		 * Returns:
+		 *   (array) Plugin files to require
+		 *
+		 * Example:
 		 * --- PHP
 		 * // wpdtrt-foobar/tests/bootstrap.php
 		 * $composer_dependencies_to_require = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
 		 * }
 		 * ---
-		 *
-		 * Parameters:
-		 *   $plugin_dependencies - Plugin dependencies.
-		 *
-		 * Returns:
-		 *   (array) Plugin files to require
 		 */
 		public static function get_wp_composer_dependencies_wpunit( array $plugin_dependencies ) {
 
@@ -379,16 +384,17 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ====== Getters and Setters (Set, Get, Refresh, Unset) ======
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
 		 * Method: set_url
 		 *
-		 * Set the value of $url
+		 * Set the value of $url.
 		 *
 		 * Parameters:
-		 *   $new_url - New URL
+		 *   (string) $new_url
 		 */
 		protected function set_url( string $new_url ) {
 			$this->url = $new_url;
@@ -397,7 +403,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: get_url
 		 *
-		 * Get the value of $url
+		 * Get the value of $url.
 		 *
 		 * Returns:
 		 *   (string) The url which was set using set_url()
@@ -412,7 +418,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Set the value of $demo_shortcode_params.
 		 *
 		 * Parameters:
-		 *   $new_demo_shortcode_params - New Demo Shortcode Parameters.
+		 *   (array) $new_demo_shortcode_params
 		 */
 		protected function set_demo_shortcode_params( array $new_demo_shortcode_params ) {
 			$this->demo_shortcode_params = $new_demo_shortcode_params;
@@ -424,7 +430,6 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Get the value of $demo_shortcode_params.
 		 *
 		 * Returns:
-		 *
 		 *   (array) - The demo_shortcode_params which were set using
 		 *   set_demo_shortcode_params()
 		 */
@@ -435,10 +440,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: set_prefix
 		 *
-		 * Set the value of $prefix
+		 * Set the value of $prefix.
 		 *
 		 * Parameters:
-		 *   $new_prefix - New prefix
+		 *   (string) $new_prefix
 		 */
 		protected function set_prefix( string $new_prefix ) {
 			$this->prefix = $new_prefix;
@@ -447,10 +452,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: get_prefix
 		 *
-		 * Get the value of $prefix (wpdtrt_foo)
+		 * Get the value of $prefix (wpdtrt_foo).
 		 *
 		 * Returns:
-		 *
 		 *   (string) The prefix which was set using
 		 *   set_prefix()
 		 */
@@ -461,10 +465,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: set_slug
 		 *
-		 * Set the value of $slug
+		 * Set the value of $slug.
 		 *
 		 * Parameters:
-		 *   $new_slug - New slug
+		 *   (string) $new_slug
 		 */
 		protected function set_slug( string $new_slug ) {
 			$this->slug = $new_slug;
@@ -473,7 +477,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: get_slug
 		 *
-		 * Get the value of $slug
+		 * Get the value of $slug.
 		 *
 		 * Returns:
 		 *   (string) The slug which was set using
@@ -486,10 +490,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: set_menu_title
 		 *
-		 * Set the value of $menu_title
+		 * Set the value of $menu_title.
 		 *
 		 * Parameters:
-		 *   $new_menu_title - New menu title.
+		 *   (string) $new_menu_title
 		 */
 		protected function set_menu_title( string $new_menu_title ) {
 			$this->menu_title = $new_menu_title;
@@ -498,7 +502,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: get_menu_title
 		 *
-		 * Get the value of $menu_title
+		 * Get the value of $menu_title.
 		 *
 		 * Returns:
 		 *   (string) The menu_title which was set using
@@ -511,10 +515,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: set_settings_title
 		 *
-		 * Set the value of $settings_title
+		 * Set the value of $settings_title.
 		 *
 		 * Parameters:
-		 *   $new_settings_title - New settings title.
+		 *   (string) $new_settings_title
 		 */
 		protected function set_settings_title( string $new_settings_title ) {
 			$this->settings_title = $new_settings_title;
@@ -523,10 +527,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: get_settings_title
 		 *
-		 * Get the value of $settings_title
+		 * Get the value of $settings_title.
 		 *
 		 * Returns:
-		 *
 		 *   (string) The settings_title which was set using
 		 *   set_settings_title()
 		 */
@@ -537,10 +540,10 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: set_developer_prefix
 		 *
-		 * Set the value of $developer_prefix
+		 * Set the value of $developer_prefix.
 		 *
 		 * Parameters:
-		 *   $new_developer_prefix - New developer prefix.
+		 *   (string) $new_developer_prefix
 		 */
 		protected function set_developer_prefix( string $new_developer_prefix ) {
 			$this->developer_prefix = $new_developer_prefix;
@@ -549,10 +552,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 		/**
 		 * Method: get_developer_prefix
 		 *
-		 * Get the value of $developer_prefix
+		 * Get the value of $developer_prefix.
 		 *
 		 * Returns:
-		 *
 		 *   (string) The developer_prefix which was set using
 		 *   set_developer_prefix()
 		 */
@@ -561,33 +563,36 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Set the value of $messages
+		 * Method: set_messages
 		 *
-		 * @param       array $new_messages New messages.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $messages.
+		 *
+		 * Parameters:
+		 *   (array) $new_messages
 		 */
-		protected function set_messages( $new_messages ) {
+		protected function set_messages( array $new_messages ) {
 			$this->messages = $new_messages;
 		}
 
 		/**
-		 * Get the value of $messages
+		 * Method: get_messages
 		 *
-		 * @return       array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $messages.
+		 *
+		 * Returns:
+		 *   (array) messages
 		 */
 		public function get_messages() {
 			return $this->messages;
 		}
 
 		/**
-		 * Get the value of the $success_message
+		 * Method: get_success_message
 		 *
-		 * @return       string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of the $success_message.
+		 *
+		 * Returns:
+		 *   (string) $success_message
 		 */
 		public function get_success_message() {
 			$messages        = $this->get_messages();
@@ -596,34 +601,38 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Set the value of $path
+		 * Method: set_path
 		 *
-		 * @param       string $new_path New path.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $path.
+		 *
+		 * Parameters:
+		 *   (string) $new_path
 		 */
-		protected function set_path( $new_path ) {
+		protected function set_path( string $new_path ) {
 			$this->path = $new_path;
 		}
 
 		/**
-		 * Get the value of $path
+		 * Method: get_path
 		 *
-		 * @return       string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $path.
+		 *
+		 * Returns:
+		 *   (string) path
 		 */
 		public function get_path() {
 			return $this->path;
 		}
 
 		/**
-		 * Set plugin options
+		 * Method: set_options
 		 *
-		 * @param array $new_options New options.
-		 * @since 1.0.0
+		 * Set plugin options.
+		 *
+		 * Parameters:
+		 *   (array) $new_options
 		 */
-		protected function set_options( $new_options ) {
+		protected function set_options( array $new_options ) {
 			$old_options = $this->get_options();
 
 			/**
@@ -652,10 +661,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get plugin options, user values merged with the defaults
+		 * Method: get_options
 		 *
-		 * @return array
-		 * @since 1.0.0
+		 * Get plugin options, user values merged with the defaults.
+		 *
+		 * Returns:
+		 *   array $options
 		 */
 		public function get_options() {
 
@@ -678,9 +689,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Remove plugin options
+		 * Method: unset_options
 		 *
-		 * @since 1.0.0
+		 * Remove plugin options.
 		 */
 		public function unset_options() {
 			delete_option( $this->get_prefix() );
@@ -698,7 +709,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @since   1.3.0 Fixed option merging
 		 * @version 1.1.0
 		 */
-		public function set_plugin_options( $new_plugin_options, $is_raw_config_options = false ) {
+		public function set_plugin_options( array $new_plugin_options, boolean $is_raw_config_options = false ) {
 
 			if ( ! isset( $new_plugin_options ) ) {
 				return;
@@ -751,7 +762,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
-		public function set_plugin_dependency( $new_plugin_dependency ) {
+		public function set_plugin_dependency( array $new_plugin_dependency ) {
 
 			if ( ! isset( $new_plugin_dependency ) ) {
 				return;
@@ -815,7 +826,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
-		public function set_plugin_data( $new_plugin_data ) {
+		public function set_plugin_data( array $new_plugin_data ) {
 
 			if ( ! isset( $new_plugin_data ) ) {
 				return;
@@ -858,7 +869,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
-		public function set_plugin_data_options( $new_plugin_data_options ) {
+		public function set_plugin_data_options( array $new_plugin_data_options ) {
 			$options                        = $this->get_options();
 			$options['plugin_data_options'] = $new_plugin_data_options;
 			$this->set_options( $options );
@@ -890,7 +901,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
-		public function set_instance_options( $new_instance_options ) {
+		public function set_instance_options( array $new_instance_options ) {
 			$options                     = $this->get_options();
 			$options['instance_options'] = $new_instance_options;
 			$this->set_options( $options );
@@ -916,7 +927,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * @since       1.0.0
 		 * @version     1.0.0
 		 */
-		protected function set_version( $new_version ) {
+		protected function set_version( string $new_version ) {
 			$this->version = $new_version;
 		}
 
@@ -1056,7 +1067,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ===== Helpers =====
+		 * Group: Helpers
+		 * _____________________________________
 		 */
 
 		/**
@@ -1269,7 +1281,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**

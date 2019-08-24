@@ -75,7 +75,8 @@ if ( ! class_exists( 'Widget' ) ) {
 		}
 
 		/**
-		 * ===== Getters and Setters =====
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
@@ -142,7 +143,8 @@ if ( ! class_exists( 'Widget' ) ) {
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**

@@ -75,7 +75,8 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		}
 
 		/**
-		 * ====== WordPress Integration ======
+		 * Group: WordPress Integration
+		 * _____________________________________
 		 */
 
 		/**
@@ -91,7 +92,8 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		}
 
 		/**
-		 * ===== Setters and Getters =====
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
@@ -180,7 +182,8 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**

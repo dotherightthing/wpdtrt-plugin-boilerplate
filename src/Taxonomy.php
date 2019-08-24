@@ -105,7 +105,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * ===== Setters and Getters =====
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
@@ -219,7 +220,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * ===== Data management =====
+		 * Group: Data management
+		 * _____________________________________
 		 */
 
 		/**
@@ -363,7 +365,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**
@@ -464,7 +467,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * ===== Registerers =====
+		 * Group: Registerers
+		 * _____________________________________
 		 */
 
 		/**
