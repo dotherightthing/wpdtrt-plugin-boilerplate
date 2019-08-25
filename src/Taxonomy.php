@@ -231,11 +231,12 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *
 		 * TODO:
 		 * - Shortcode/Widget implementation questions (#15)
+		 * - Add the appropriate type for $plugin (not object)
 		 *
 		 * Since:
 		 *   1.0.0
 		 */
-		protected function set_plugin( object $plugin ) {
+		protected function set_plugin( $plugin ) {
 			$this->plugin = $plugin;
 		}
 
@@ -247,10 +248,13 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Returns:
 		 *   Plugin
 		 *
+		 * TODO:
+		 * - Add the appropriate return type for $plugin (not object)
+		 *
 		 * Since:
 		 *   1.0.0
 		 */
-		public function get_plugin() : object {
+		public function get_plugin() {
 			return $this->plugin;
 		}
 

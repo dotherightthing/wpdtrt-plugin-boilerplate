@@ -208,15 +208,17 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * - This is necessary because the object does not exist until the WordPress init action has fired.
 		 *
 		 * Parameters:
-		 *   $plugin - Plugin
+		 *   $plugin - Plugin instance
 		 *
 		 * TODO:
 		 * - Shortcode/Widget implementation questions (#15)
+		 * - Add the appropriate type for $plugin (not object)
+		 *
 		 *
 		 * Since:
 		 *   1.0.0
 		 */
-		protected function set_plugin( object $plugin ) {
+		protected function set_plugin( $plugin ) {
 			$this->plugin = $plugin;
 		}
 
