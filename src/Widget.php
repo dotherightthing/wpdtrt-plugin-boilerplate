@@ -304,7 +304,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 *   $args - Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
 		 *   $instance - The settings for the particular instance of the widget.
 		 */
-		public function widget( array $args, array $instance ) {
+		public function widget( $args, $instance ) {
 
 			/**
 			 * Get the unique ID
@@ -373,7 +373,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 * Returns:
 		 *   $instance - Instance
 		 */
-		public function update( array $new_instance, array $old_instance ) : array {
+		public function update( $new_instance, $old_instance ) : array {
 
 			// Save user input (widget options).
 			$instance         = $old_instance;
@@ -421,7 +421,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 * Parameters:
 		 *   $instance - Current settings
 		 */
-		public function form( array $instance ) {
+		public function form( $instance ) {
 
 			// get a reference to the parent plugin.
 			$plugin           = $this->get_plugin();
