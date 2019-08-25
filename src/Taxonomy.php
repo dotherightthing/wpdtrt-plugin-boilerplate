@@ -249,7 +249,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *   Plugin
 		 *
 		 * TODO:
-		 * - Add the appropriate return type for $plugin (not object)
+		 * - Add return type (not object)
 		 *
 		 * Since:
 		 *   1.0.0

@@ -230,10 +230,13 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Returns:
 		 *   Plugin
 		 *
+		 * TODO:
+		 * - Add return type (not object)
+		 *
 		 * Since:
 		 *   1.0.0
 		 */
-		public function get_plugin() : object {
+		public function get_plugin() {
 			return $this->plugin;
 		}
 
@@ -248,8 +251,8 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Render a shortcode.
 		 *
 		 * Parameters:
-		 *   $atts - User defined attributes in shortcode tag.
-		 *   $content - Content between shortcode opening and closing tags.
+		 *   $atts - User defined attributes in shortcode tag
+		 *   $content - Content between shortcode opening and closing tags
 		 *
 		 * Returns:
 		 *   $content - Content
@@ -257,7 +260,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Since:
 		 *   1.0.0
 		 */
-		public function render_shortcode( array $atts, string $content = '' ) : string {
+		public function render_shortcode( string $atts, string $content = '' ) : string {
 
 			/**
 			 * Combine user attributes with known attributes and fill in defaults when needed.

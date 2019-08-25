@@ -185,10 +185,13 @@ if ( ! class_exists( 'Widget' ) ) {
 		 * Returns:
 		 *   Plugin
 		 *
+		 * TODO:
+		 * - Add return type (not object)
+		 *
 		 * Since:
 		 *   1.0.0
 		 */
-		public function get_plugin() : object {
+		public function get_plugin() {
 			return $this->plugin;
 		}
 

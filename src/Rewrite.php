@@ -200,10 +200,13 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Returns:
 		 *   Plugin
 		 *
+		 * TODO:
+		 * - Add return type (not object)
+		 *
 		 * Since:
 		 *   1.4.15 - Added
 		 */
-		public function get_plugin() : object {
+		public function get_plugin() {
 			return $this->plugin;
 		}
 
