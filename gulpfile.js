@@ -584,7 +584,7 @@ gulp.task( 'lintPhpCsExclusions', () => {
     '2e',
     'QA',
     'Lint',
-    'Get PHPCS linter config'
+    'Load PHPCS ruleset'
   );
 
   let errorMessage = false;
@@ -592,56 +592,57 @@ gulp.task( 'lintPhpCsExclusions', () => {
   // load phpcs.xml
   return gulp.src( phpCsXml )
     // convert the XML to JSON
-    .pipe( xmltojson() )
+    .pipe( xmltojson( {
+      // https://github.com/nashwaan/xml-js#convert-xml--js-object--json
+      compact: true,
+      ignoreComment: true
+    } ) )
     // tap into the stream
     .pipe( tap( ( file ) => {
       // read the JSON
       const phpCsJson = JSON.parse( file.contents.toString() );
 
       // drill down to the PHPCS config
-      // note! adding comments to the xml file will affect the second index
-      // 1. description
-      // 2. comment
-      // 3. comment
-      // 4. comment
-      // 5. comment
-      // The errorMessage will be shown if the index is incorrect.
-      const ruleObj = phpCsJson.elements[ 0 ].elements[ 5 ];
+      const body = phpCsJson.ruleset;
 
       // extract the keys
-      const {
-        attributes: ruleAttributes = {}, elements: ruleElements = []
-      } = ruleObj;
+      const { rule } = body;
 
-      // ruleRef is the ruleset or standard to lint against
-      // format in phpcs.xml: `<rule ref="${ruleRef}">`
-      const { ref: ruleRef } = ruleAttributes;
+      // ref is the standard to lint against
+      const { _attributes } = rule;
+      const { ref } = _attributes;
+
+      // verify in phpcs.xml format
+      // console.log( `<rule ref="${ref}">` );
 
       // exclusions are the sniffs that we want to disable
-      const exclusions = [];
+      const { exclude: exclusions = [] } = rule;
 
-      // loop over ruleElements,
-      // which is the sibling of ruleAttributes
-      ruleElements.forEach( ( ruleElement ) => {
-        // get the ruleElement name and attributes
-        const { name: ruleElementName, attributes: ruleElementAttributes } = ruleElement;
-
-        // if this is an exclusion
-        if ( ruleElementName === 'exclude' ) {
-          // get the name of the sniff that we're excluding
-          // format in phpcs.xml: `<${ruleElementName} name="${sniffName}"/>`
-          const { name: sniffName } = ruleElementAttributes;
-
-          // add the exclusion to the array for gulp-phpcs
-          exclusions.push( sniffName );
-        }
-      } );
-
-      if ( ( typeof ruleRef === 'undefined' ) || ( exclusions.length === 0 ) ) {
+      // generate error message
+      if ( ( typeof ref === 'undefined' ) || ( exclusions.length === 0 ) ) {
         errorMessage = 'No PHPCS rule found, skipping linting..';
       }
+
+      // loop over exclusions
+      const exclusionsSafe = exclusions.map( exclude => {
+        // get attributes from exclude object
+        const { _attributes: excludeAttributes } = exclude;
+
+        // get the name of the sniff that we're excluding
+        const { name } = excludeAttributes;
+
+        // limit the specificity to 3 levels, to avoid a gulp-phpcs error
+        const nameParts = name.split( '.' );
+        const namePartsThreeLevels = nameParts.slice( 0, 3, nameParts.length ).join( '.' );
+
+        // verify in phpcs.xml format
+        // console.log( `<exclude name="${namePartsThreeLevels}"/>` );
+
+        return namePartsThreeLevels;
+      } );
+
       // populate global
-      phpCsXmlRule = { ref: ruleRef, exclusions, error: errorMessage };
+      phpCsXmlRule = { ref, exclusions: exclusionsSafe, error: errorMessage };
     } ) );
 } );
 
@@ -684,7 +685,7 @@ gulp.task( 'lintPhp', [ 'lintPhpCsExclusions' ], () => {
       // minimum severity required to display an error or warning.
       warningSeverity: 0,
       showSniffCode: true,
-      // note: only 3 levels of specificity are tolerated by gulp-phpcs:
+      // note: only 3 levels of specificity are tolerated by gulp-phpcs
       exclude: exclusions
     } ) )
     // Log all problems that were found

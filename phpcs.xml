@@ -2,9 +2,7 @@
 <ruleset name="DTRT WordPress">
     <description>WordPress standards with DTRT dev exclusions</description>
     <!-- The WordPress ruleset cherry picks sniffs from Generic, PEAR, PSR-2, Squiz etc -->
-    <!-- Note: only 3 levels of specificity are tolerated by gulp-phpcs: -->
-    <!-- Squiz.Commenting.FileComment is for ~.MissingPackageTag -->
-    <!-- Squiz.Commenting.FunctionComment is for ~.MissingParamTag -->
+    <!-- Note: only the first 3 levels of specificity are recognised by gulp-phpcs -->
     <rule ref="WordPress">
         <exclude name="WordPress.Files.FileName"/>
         <exclude name="WordPress.Functions.DontExtract"/>
@@ -12,7 +10,7 @@
         <exclude name="WordPress.XSS.EscapeOutput"/>
         <exclude name="WordPress.VIP.ValidatedSanitizedInput"/>
         <exclude name="Generic.Strings.UnnecessaryStringConcat"/>
-        <exclude name="Squiz.Commenting.FileComment"/>
-        <exclude name="Squiz.Commenting.FunctionComment"/>
+        <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
     </rule>
 </ruleset>
