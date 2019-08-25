@@ -12,7 +12,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 	/**
 	 * Class: Shortcode
 	 *
-	 * Plugin Shortcode base class
+	 * Plugin Shortcode base class.
 	 *
 	 * Note:
 	 * - Contains boilerplate functions, including

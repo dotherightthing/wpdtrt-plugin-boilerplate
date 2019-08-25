@@ -1935,7 +1935,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   $attributes Attributes.
 		 *
 		 * Returns:
-		 *   The HTML form element
+		 * - Form element HTML
 		 *
 		 * TODO:
 		 * - Add field validation feedback (#10)

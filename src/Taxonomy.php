@@ -514,17 +514,20 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * See:
 		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
 		 *
+		 * Returns:
+		 * - Form element HTML
+		 *
 		 * TODO:
 		 * - Add field validation feedback (#10)
 		 *
 		 * Since:
 		 *  1.0.0
 		 */
-		public function render_form_element( string $name, array $attributes = [], string $term_id ) {
+		public function render_form_element( string $name, array $attributes = [], string $term_id ) : string {
 
 			// these options don't have attributes.
 			if ( 'description' === $name ) {
-				return;
+				return '';
 			}
 
 			// define variables.
