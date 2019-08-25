@@ -560,7 +560,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.3.4 - Added
 		 */
-		protected function set_settings_title( string $new_settings_title ) : string {
+		protected function set_settings_title( string $new_settings_title = '' ) {
 			$this->settings_title = $new_settings_title;
 		}
 
@@ -785,7 +785,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 *   1.3.0 - Fixed option merging
 		 */
-		public function set_plugin_options( array $new_plugin_options, boolean $is_raw_config_options = null ) : array {
+		public function set_plugin_options( array $new_plugin_options, bool $is_raw_config_options ) : array {
 
 			// old options stored in database.
 			$old_plugin_options = $this->get_plugin_options();
@@ -794,7 +794,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				return $old_plugin_options;
 			}
 
-			if ( $is_raw_config_options ) {
+			if ( isset( $is_raw_config_options ) ) {
 				// the config array is the canonical set of options.
 				$config_options = $new_plugin_options;
 				$user_values    = $old_plugin_options;
@@ -1243,7 +1243,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.4.16 - Added
 		 */
-		public function helper_flush_rewrite_rules( boolean $force ) : boolean {
+		public function helper_flush_rewrite_rules( bool $force ) : bool {
 
 			$flushed        = false;
 			$plugin_options = $this->get_plugin_options();
@@ -1374,7 +1374,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 */
-		public function helper_options_saved() : boolean {
+		public function helper_options_saved() : bool {
 			$helper_options_saved = false;
 
 			if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) {
@@ -1518,7 +1518,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 */
-		public function render_cpt_permalink_placeholders( string $permalink, object $post, boolean $leavename ) : string {
+		public function render_cpt_permalink_placeholders( string $permalink, object $post, bool $leavename ) : string {
 
 			// Get post.
 			$post_id = $post->ID;
