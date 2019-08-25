@@ -1494,9 +1494,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   NOT in the rewrite rules / when the page is loaded.
 		 *
 		 * Parameters:
-		 *   $permalink - Permalink, see WordPress function options
-		 *   $post - Post, see WordPress function options
-		 *   $leavename - Leave name, see WordPress function options
+		 *   $permalink - The post URL
+		 *   $post - The post object
+		 *   $leavename - Whether to keep the post name
 		 *
 		 * Returns:
 		 *   Permalink
@@ -1520,7 +1520,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 */
-		public function render_cpt_permalink_placeholders( string $permalink, object $post, bool $leavename ) : string {
+		public function render_cpt_permalink_placeholders( $permalink, $post, $leavename ) : string {
 
 			// Get post.
 			$post_id = $post->ID;

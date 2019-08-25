@@ -973,7 +973,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * - Make this less generic as this class is instantiated for EACH taxonomy
 		 * - Replace manual 3 level check for children with a (while?) loop
 		 */
-		public function replace_taxonomy_in_cpt_permalinks( string $permalink, object $post, bool $leavename ) : string {
+		public function replace_taxonomy_in_cpt_permalinks( $permalink, $post, $leavename ) : string {
 
 			// Get post.
 			$post_id          = $post->ID;
