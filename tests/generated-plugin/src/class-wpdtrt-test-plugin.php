@@ -22,7 +22,7 @@
 class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Plugin {
 
 	/**
-	 * Method: __construct
+	 * Constructor: __construct
 	 *
 	 * Supplement plugin initialisation.
 	 *

@@ -35,7 +35,7 @@ if ( ! class_exists( 'Widget' ) ) {
 	class Widget extends \WP_Widget {
 
 		/**
-		 * Method: __construct
+		 * Constructor: __construct
 		 *
 		 * Hook the plugin in to WordPress.
 		 *
@@ -168,11 +168,12 @@ if ( ! class_exists( 'Widget' ) ) {
 		 *
 		 * TODO:
 		 * - Shortcode/Widget implementation questions (#15)
+		 * - Set correct type (not object)
 		 *
 		 * Since:
 		 *   1.0.0
 		 */
-		protected function set_plugin( object $plugin ) {
+		protected function set_plugin( $plugin ) {
 			$this->plugin = $plugin;
 		}
 

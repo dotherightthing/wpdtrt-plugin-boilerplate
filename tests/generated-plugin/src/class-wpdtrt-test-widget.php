@@ -18,7 +18,7 @@
 class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Widget {
 
 	/**
-	 * Method: __construct
+	 * Constructor: __construct
 	 *
 	 * Supplement widget initialisation.
 	 *

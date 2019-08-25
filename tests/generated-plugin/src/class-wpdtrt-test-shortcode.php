@@ -20,7 +20,7 @@
 class WPDTRT_Test_Shortcode extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Shortcode {
 
 	/**
-	 * Method: __construct
+	 * Constructor: __construct
 	 *
 	 * Supplement shortcode initialisation.
 	 *

@@ -23,7 +23,7 @@ if ( ! class_exists( 'Rewrite' ) ) {
 	class Rewrite {
 
 		/**
-		 * Method: __construct
+		 * Constructor: __construct
 		 *
 		 * Hook the plugin in to WordPress.
 		 *

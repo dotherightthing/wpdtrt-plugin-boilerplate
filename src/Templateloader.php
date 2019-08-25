@@ -29,7 +29,7 @@ if ( ! class_exists( 'Templateloader' ) ) {
 	class Templateloader extends \Gamajo_Template_Loader {
 
 		/**
-		 * Method: __construct
+		 * Constructor: __construct
 		 *
 		 * Pass options to Gamajo class.
 		 *

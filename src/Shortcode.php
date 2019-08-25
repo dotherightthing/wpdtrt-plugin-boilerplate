@@ -33,7 +33,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 	class Shortcode {
 
 		/**
-		 * Method: __construct
+		 * Constructor: __construct
 		 *
 		 * Hook the plugin in to WordPress.
 		 *

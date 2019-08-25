@@ -20,7 +20,7 @@
 class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Taxonomy {
 
 	/**
-	 * Method: __construct
+	 * Constructor: __construct
 	 *
 	 * Supplement taxonomy initialisation.
 	 *
