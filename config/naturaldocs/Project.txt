@@ -67,8 +67,6 @@ Ignore Source Folder: ../../docs
 
 Ignore Source Folder: ../../node_modules
 
-Ignore Source Folder: ../../tests
-
 Ignore Source Folder: ../../vendor
 
 

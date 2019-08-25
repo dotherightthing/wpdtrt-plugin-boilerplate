@@ -4,42 +4,56 @@
  *
  * Rewrite sub class.
  *
- * @package WPDTRT_Test
- * @since   0.7.16 DTRT WordPress Plugin Boilerplate Generator
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
 
 /**
+ * Class: WPDTRT_Test_Rewrite
+ *
  * Extend the base class to inherit boilerplate functionality.
  * Adds application-specific methods.
  *
- * @since   1.0.0
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
 class WPDTRT_Test_Rewrite extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Rewrite {
 
 	/**
+	 * Method: __construct
+	 *
 	 * Supplement plugin initialisation.
 	 *
-	 * @param     array $options Rewrite options.
-	 * @since     1.0.0
-	 * @version   1.1.0
+	 * Parameters:
+	 *   $options - Rewrite options
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
-	public function __construct( $options ) {
+	public function __construct( array $options ) {
 
 		// edit here.
 		parent::__construct( $options );
 	}
 
 	/**
-	 * ====== WordPress Integration ======
+	 * Group: WordPress Integration
+	 * _____________________________________
 	 */
 
 	/**
-	 * Supplement rewrite's WordPress setup.
-	 * Note: Default priority is 10. A higher priority runs later.
+	 * Method: wp_setup
 	 *
-	 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
+	 * Supplement rewrite's WordPress setup.
+	 *
+	 * Note:
+	 * - Default priority is 10. A higher priority runs later.
+	 *
+	 * See:
+	 * - <Action order: https://codex.wordpress.org/Plugin_API/Action_Reference>
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
 	protected function wp_setup() {
 
@@ -48,18 +62,22 @@ class WPDTRT_Test_Rewrite extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_
 	}
 
 	/**
-	 * ====== Getters and Setters ======
+	 * Group: Getters and Setters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Renderers =====
+	 * Group: Renderers
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Filters =====
+	 * Group: Filters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Helpers =====
+	 * Group: Helpers
+	 * _____________________________________
 	 */
 }

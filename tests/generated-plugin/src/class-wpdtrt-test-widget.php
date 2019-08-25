@@ -4,30 +4,52 @@
  *
  * Widget sub class.
  *
- * @package WPDTRT_Test
- * @since   0.7.16 DTRT WordPress Plugin Boilerplate Generator
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
 
 /**
  * Extend the base class to inherit boilerplate functionality.
  * Adds application-specific methods.
  *
- * @since   1.0.0
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
 class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Widget {
 
 	/**
+	 * Method: __construct
+	 *
 	 * Supplement widget initialisation.
 	 *
-	 * @param     array $options Widget options.
-	 * @since     1.0.0
-	 * @version   1.1.0
+	 * Parameters:
+	 *   $options - Widget options
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
-	public function __construct( $options ) {
+	public function __construct( array $options ) {
 
 		// edit here.
 		parent::__construct( $options );
 	}
-}
+
+	/**
+	 * Group: Getters and Setters
+	 * _____________________________________
+	 */
+
+	/**
+	 * Group: Renderers
+	 * _____________________________________
+	 */
+
+	/**
+	 * Group: Filters
+	 * _____________________________________
+	 */
+
+	/**
+	 * Group: Helpers
+	 * _____________________________________
+	 */
