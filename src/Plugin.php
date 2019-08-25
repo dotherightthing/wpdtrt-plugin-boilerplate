@@ -785,7 +785,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 *   1.3.0 - Fixed option merging
 		 */
-		public function set_plugin_options( array $new_plugin_options, bool $is_raw_config_options ) : array {
+		public function set_plugin_options( array $new_plugin_options, bool $is_raw_config_options = false ) : array {
 
 			// old options stored in database.
 			$old_plugin_options = $this->get_plugin_options();
