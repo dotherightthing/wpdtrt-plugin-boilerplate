@@ -3,11 +3,9 @@
  * File: views/options.php
  *
  * Template partial for Admin Options page.
- *  WP Admin > Settings > PluginName.
  *
- * ---
- *
- * @package WPDTRT_Plugin_Boilerplate
+ * Note:
+ * - WP Admin > Settings > PluginName.
  */
 
 $plugin_options              = $this->get_plugin_options();

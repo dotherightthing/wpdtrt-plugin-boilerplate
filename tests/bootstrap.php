@@ -2,9 +2,7 @@
 /**
  * File: tests/bootstrap.php
  *
- * PHPUnit bootstrap file
- *
- * @package WPDTRT_Test
+ * PHPUnit bootstrap file.
  */
 
 $_tests_dir = getenv( 'WP_TESTS_DIR' );

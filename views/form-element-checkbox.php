@@ -4,16 +4,14 @@
  *
  * Template partial for Checkbox fields.
  *
- * Example
- * --- PHP
+ * Example:
+ * --- php
  * 'fieldname' => array(
  *   'type' => 'checkbox',
  *   'label' => esc_html__('Field label', 'text-domain'),
  *   tip' => __('Helper text', 'text-domain')
  * )
  * ---
- *
- * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>

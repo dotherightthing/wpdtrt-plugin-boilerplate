@@ -4,9 +4,8 @@
  *
  * Template partial for Text fields.
  *
- * Example
- *
- * --- PHP
+ * Example:
+ * --- php
  *  'fieldname' => array(
  *   'type' => 'text',
  *   label' => __('Field label', 'text-domain'),
@@ -14,8 +13,6 @@
  *   tip' => __('Helper text', 'text-domain')
  * )
  * ---
- *
- * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>

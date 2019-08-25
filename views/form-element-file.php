@@ -4,16 +4,14 @@
  *
  * Template partial for File fields.
  *
- * Example
- * --- PHP
+ * Example:
+ * --- php
  * 'fieldname' => array(
  *   'type' => 'file',
  *   'label' => __('Field label', 'text-domain'),
  *   'tip' => __('Helper text', 'text-domain')
  * )
  * ---
- *
- * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>

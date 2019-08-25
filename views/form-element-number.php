@@ -4,8 +4,8 @@
  *
  * Template partial for Number fields.
  *
- * Example
- * --- PHP
+ * Example:
+ * --- php
  * 'fieldname' => array(
  *   type' => 'number',
  *   'label' => __('Field label', 'text-domain'),
@@ -13,8 +13,6 @@
  *   tip' => __('Helper text', 'text-domain')
  * )
  * ---
- *
- * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>

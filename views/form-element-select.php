@@ -4,8 +4,8 @@
  *
  * Template partial for Select box.
  *
- * Example
- * --- PHP
+ * Example:
+ * --- php
  * 'fieldname' => array(
  *   'type' => 'select',
  *   label' => __('Field label', 'fieldname'),
@@ -20,8 +20,6 @@
  *   tip' => __('Helper text', 'text-domain')
  * )
  * ---
- *
- * @package WPDTRT_Plugin_Boilerplate
  */
 
 echo $label_start; ?>
