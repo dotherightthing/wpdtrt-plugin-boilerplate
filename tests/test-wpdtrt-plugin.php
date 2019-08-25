@@ -41,7 +41,7 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Method: setUp
 	 *
-	 * setUp; automatically called by PHPUnit before each test method is run.
+	 * Automatically called by PHPUnit before each test method is run.
 	 */
 	public function setUp() {
 		// Make the factory objects available.
