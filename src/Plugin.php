@@ -1094,9 +1094,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * add_filter( 'wpdtrt_forms_set_api_endpoint', [$this, 'set_api_endpoint'] );
 		 * ---
 		 *
+		 * Uses:
+		 * - ../../../../wp-includes/http.php
+		 *
 		 * See:
 		 * - get_api_endpoint()
-		 * - ../../../../wp-includes/http.php
 		 * - <https://developer.wordpress.org/reference/functions/wp_remote_get/>
 		 * - <http://php.net/manual/en/function.json-decode.php>
 		 *

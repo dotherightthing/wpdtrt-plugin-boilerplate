@@ -14,22 +14,36 @@ if ( ! class_exists( 'Rewrite' ) ) {
 	 *
 	 * Plugin Rewrite base class.
 	 *
-	 * Boilerplate functions.
+	 * Note:
+	 * - Contains boilerplate functions.
+	 *
+	 * Since:
+	 *   1.4.15 - Added
 	 */
 	class Rewrite {
 
 		/**
-		 * Hook the plugin in to WordPress
-		 * This constructor automatically initialises the object's properties
-		 * when it is instantiated,
+		 * Method: __construct
 		 *
-		 * This is a public method as every plugin uses a new instance:
+		 * Hook the plugin in to WordPress.
+		 *
+		 * Note:
+		 * - This constructor automatically initialises the object's properties
+		 *   when it is instantiated.
+		 * - This is a public method as every plugin uses a new instance
+		 *
+		 * Example:
+		 * --- php
 		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Rewrite {}
+		 * ---
 		 *
 		 * Parameters:
-		 *   (array) $options - Rewrite options.
+		 *   $options - Rewrite options.
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function __construct( $options ) {
+		public function __construct( array $options ) {
 
 			// define variables.
 			$name   = null;
@@ -53,6 +67,9 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Method: wp_setup
 		 *
 		 * Initialise rewrite options ONCE.
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		protected function wp_setup() {
 			$rewrite_name = $this->get_name();
@@ -69,9 +86,12 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Get the value of $name.
 		 *
 		 * Returns:
-		 *   (string) name
+		 *   Name
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function get_name() {
+		public function get_name() : string {
 			return $this->name;
 		}
 
@@ -81,7 +101,10 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Set the value of $name.
 		 *
 		 * Parameters:
-		 *   (string) $new_name
+		 *   $new_name - New name
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		protected function set_name( string $new_name ) {
 			$this->name = $new_name;
@@ -93,9 +116,12 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Get instance options.
 		 *
 		 * Returns:
-		 *   (array) instance_options
+		 *   Instance options
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function get_instance_options() {
+		public function get_instance_options() : array {
 			return $this->instance_options;
 		}
 
@@ -105,7 +131,10 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Set instance options.
 		 *
 		 * Parameters:
-		 *   (array) $instance_options
+		 *   $instance_options - New instance options
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		protected function set_instance_options( array $instance_options ) {
 			$this->instance_options = $instance_options;
@@ -117,9 +146,12 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Get the value of $labels.
 		 *
 		 * Returns:
-		 *   (array) labels
+		 *   Labels
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function get_labels() {
+		public function get_labels() : array {
 			return $this->labels;
 		}
 
@@ -129,7 +161,10 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Set the value of $labels.
 		 *
 		 * Parameters:
-		 *   (array) $labels
+		 *   $labels - Labels
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		protected function set_labels( array $labels ) {
 			$this->labels = $labels;
@@ -140,15 +175,18 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 *
 		 * Set parent plugin, which contains shortcode/widget options.
 		 *
-		 * This is a global which is passed to the function which instantiates this object.
-		 *
-		 * This is necessary because the object does not exist until the WordPress init action has fired.
+		 * Note:
+		 * - This is a global which is passed to the function which instantiates this object.
+		 * - This is necessary because the object does not exist until the WordPress init action has fired.
 		 *
 		 * Parameters:
 		 *   (object) $plugin
 		 *
 		 * TODO:
 		 *   Shortcode/Widget implementation questions (#15)
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		protected function set_plugin( object $plugin ) {
 			$this->plugin = $plugin;
@@ -160,9 +198,12 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Get parent plugin, which contains shortcode/widget options.
 		 *
 		 * Returns:
-		 *   object - Plugin
+		 *   Plugin
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function get_plugin() {
+		public function get_plugin() : object {
 			return $this->plugin;
 		}
 
@@ -172,9 +213,9 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Get the value of $options.
 		 *
 		 * Returns:
-		 *   (array) options
+		 *   Options
 		 */
-		public function get_options() {
+		public function get_options() : array {
 			return $this->options;
 		}
 
@@ -184,7 +225,10 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 * Set the value of $options.
 		 *
 		 * Parameters:
-		 *   (array) $new_options
+		 *   $new_options
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		protected function set_options( array $new_options ) {
 			$this->options = $new_options;
