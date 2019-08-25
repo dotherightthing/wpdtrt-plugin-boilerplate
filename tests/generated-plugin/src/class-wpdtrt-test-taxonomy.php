@@ -1,43 +1,59 @@
 <?php
 /**
+ * File: tests/generated-plugin/src/class-wpdtrt-test-taxonomy.php
+ *
  * Taxonomy sub class.
  *
- * @package WPDTRT_Test
- * @since   0.7.16 DTRT WordPress Plugin Boilerplate Generator
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
 
 /**
+ * Class: WPDTRT_Test_Taxonomy
+ *
  * Extend the base class to inherit boilerplate functionality.
  * Adds application-specific methods.
  *
- * @since   1.0.0
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
-class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Taxonomy {
+class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Taxonomy {
 
 	/**
+	 * Constructor: __construct
+	 *
 	 * Supplement taxonomy initialisation.
 	 *
-	 * @param     array $options Taxonomy options.
-	 * @since     1.0.0
-	 * @version   1.1.0
+	 * Parameters:
+	 *   $options - Taxonomy options
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
-	public function __construct( $options ) {
+	public function __construct( array $options ) {
 
 		// edit here.
 		parent::__construct( $options );
 	}
 
 	/**
-	 * ====== WordPress Integration ======
+	 * Group: WordPress Integration
+	 * _____________________________________
 	 */
 
 	/**
-	 * Supplement taxonomy's WordPress setup.
-	 * Note: Default priority is 10. A higher priority runs later.
+	 * Method: wp_setup
 	 *
-	 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
+	 * Supplement taxonomy's WordPress setup.
+	 *
+	 * Note:
+	 * - Default priority is 10. A higher priority runs later.
+	 *
+	 * See:
+	 * - <Action order: https://codex.wordpress.org/Plugin_API/Action_Reference>
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
 	protected function wp_setup() {
 
@@ -46,18 +62,22 @@ class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1
 	}
 
 	/**
-	 * ====== Getters and Setters ======
+	 * Group: Getters and Setters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Renderers =====
+	 * Group: Renderers
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Filters =====
+	 * Group: Filters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Helpers =====
+	 * Group: Helpers
+	 * _____________________________________
 	 */
 }

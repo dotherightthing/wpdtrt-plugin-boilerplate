@@ -1,39 +1,49 @@
 <?php
 /**
- * Plugin rewrite class.
+ * File: src/Rewrite.php
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
- * @since     1.4.16
+ * Plugin rewrite class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0;
 
 if ( ! class_exists( 'Rewrite' ) ) {
 
 	/**
-	 * Plugin Rewrite base class.
-	 *  Boilerplate functions.
+	 * Class: Rewrite
 	 *
-	 * @return      Rewrite
-	 * @since       1.4.15
-	 * @version     1.0.0
+	 * Plugin Rewrite base class.
+	 *
+	 * Note:
+	 * - Contains boilerplate functions.
+	 *
+	 * Since:
+	 *   1.4.15 - Added
 	 */
 	class Rewrite {
 
 		/**
-		 * Hook the plugin in to WordPress
-		 * This constructor automatically initialises the object's properties
-		 * when it is instantiated,
+		 * Constructor: __construct
 		 *
-		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Rewrite {}
+		 * Hook the plugin in to WordPress.
 		 *
-		 * @param     array $options Rewrite options.
-		 * @since     1.0.0
-		 * @version   1.1.0
+		 * Note:
+		 * - This constructor automatically initialises the object's properties
+		 *   when it is instantiated.
+		 * - This is a public method as every plugin uses a new instance
+		 *
+		 * Example:
+		 * --- php
+		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Rewrite {}
+		 * ---
+		 *
+		 * Parameters:
+		 *   $options - Rewrite options.
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function __construct( $options ) {
+		public function __construct( array $options ) {
 
 			// define variables.
 			$name   = null;
@@ -54,137 +64,192 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		}
 
 		/**
+		 * Method: wp_setup
+		 *
 		 * Initialise rewrite options ONCE.
 		 *
-		 * @since 1.0.0
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		protected function wp_setup() {
 			$rewrite_name = $this->get_name();
 		}
 
 		/**
-		 * ===== Setters and Getters =====
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
-		 * Get the value of $name
+		 * Method: get_name
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $name.
+		 *
+		 * Returns:
+		 *   Name
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function get_name() {
+		public function get_name() : string {
 			return $this->name;
 		}
 
 		/**
-		 * Set the value of $name
+		 * Method: set_name
 		 *
-		 * @param       string $new_name New name.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $name.
+		 *
+		 * Parameters:
+		 *   $new_name - New name
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		protected function set_name( $new_name ) {
+		protected function set_name( string $new_name ) {
 			$this->name = $new_name;
 		}
 
 		/**
-		 * Get default options
+		 * Method: get_instance_options
 		 *
-		 * @return array
-		 * @since 1.0.0
+		 * Get instance options.
+		 *
+		 * Returns:
+		 *   Instance options
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function get_instance_options() {
+		public function get_instance_options() : array {
 			return $this->instance_options;
 		}
 
 		/**
-		 * Set instance options
+		 * Method: set_instance_options
 		 *
-		 * @param array $instance_options Instance options.
-		 * @since 1.0.0
+		 * Set instance options.
+		 *
+		 * Parameters:
+		 *   $instance_options - New instance options
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		protected function set_instance_options( $instance_options ) {
+		protected function set_instance_options( array $instance_options ) {
 			$this->instance_options = $instance_options;
 		}
 
 		/**
-		 * Get the value of $labels
+		 * Method: get_labels
 		 *
-		 * @return      array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $labels.
+		 *
+		 * Returns:
+		 *   Labels
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		public function get_labels() {
+		public function get_labels() : array {
 			return $this->labels;
 		}
 
 		/**
-		 * Set the value of $labels
+		 * Method: set_labels
 		 *
-		 * @param       array $labels Labels.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $labels.
+		 *
+		 * Parameters:
+		 *   $labels - Labels
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		protected function set_labels( $labels ) {
+		protected function set_labels( array $labels ) {
 			$this->labels = $labels;
 		}
 
 		/**
-		 * Set parent plugin, which contains shortcode/widget options
-		 * This is a global which is passed to the function which instantiates this object.
-		 * This is necessary because the object does not exist until the WordPress init action has fired.
+		 * Method: set_plugin
 		 *
-		 * @param object $plugin Plugin.
-		 * @since 1.0.0
-		 * @todo Shortcode/Widget implementation questions (#15)
+		 * Set parent plugin, which contains shortcode/widget options.
+		 *
+		 * Note:
+		 * - This is a global which is passed to the function which instantiates this object.
+		 * - This is necessary because the object does not exist until the WordPress init action has fired.
+		 *
+		 * Parameters:
+		 *   (object) $plugin
+		 *
+		 * TODO:
+		 *   Shortcode/Widget implementation questions (#15)
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		protected function set_plugin( $plugin ) {
+		protected function set_plugin( object $plugin ) {
 			$this->plugin = $plugin;
 		}
 
 		/**
-		 * Get parent plugin, which contains shortcode/widget options
+		 * Method: get_plugin
 		 *
-		 * @return object
-		 * @since 1.0.0
+		 * Get parent plugin, which contains shortcode/widget options.
+		 *
+		 * Returns:
+		 *   Plugin
+		 *
+		 * TODO:
+		 * - Add return type (not object)
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
 		public function get_plugin() {
 			return $this->plugin;
 		}
 
 		/**
-		 * Get the value of $options
+		 * Method: get_options
 		 *
-		 * @return      array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $options.
+		 *
+		 * Returns:
+		 *   Options
 		 */
-		public function get_options() {
+		public function get_options() : array {
 			return $this->options;
 		}
 
 		/**
-		 * Set the value of $options
+		 * Method: set_options
 		 *
-		 * @param       array $new_options New options.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $options.
+		 *
+		 * Parameters:
+		 *   $new_options
+		 *
+		 * Since:
+		 *   1.4.15 - Added
 		 */
-		protected function set_options( $new_options ) {
+		protected function set_options( array $new_options ) {
 			$this->options = $new_options;
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**
-		 * ===== Filters =====
+		 * Group: Filters
+		 * _____________________________________
 		 */
 
 		/**
-		 * ===== Helpers =====
+		 * Group: Helpers
+		 * _____________________________________
 		 */
 	}
 }

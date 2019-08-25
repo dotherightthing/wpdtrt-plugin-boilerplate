@@ -1,43 +1,60 @@
 <?php
 /**
+ * File: tests/generated-plugin/src/class-wpdtrt-test-shortcode.php
+ *
  * Shortcode sub class.
  *
- * @package WPDTRT_Test
- * @since   0.7.16 DTRT WordPress Plugin Boilerplate Generator
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
 
 /**
+ * Class: WPDTRT_Test_Shortcode
+ *
  * Extend the base class to inherit boilerplate functionality.
  * Adds application-specific methods.
  *
- * @since   1.0.0
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator0
  */
-class WPDTRT_Test_Shortcode extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Shortcode {
+class WPDTRT_Test_Shortcode extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Shortcode {
 
 	/**
+	 * Constructor: __construct
+	 *
 	 * Supplement shortcode initialisation.
 	 *
-	 * @param     array $options Shortcode options.
-	 * @since     1.0.0
-	 * @version   1.1.0
+	 * Parameters:
+	 *   $options - Shortcode options
+	 *
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
-	public function __construct( $options ) {
+	public function __construct( array $options ) {
 
 		// edit here.
 		parent::__construct( $options );
 	}
 
 	/**
-	 * ====== WordPress Integration ======
+	 * Group: WordPress Integration
+	 * _____________________________________
 	 */
 
 	/**
-	 * Supplement shortcode's WordPress setup.
-	 * Note: Default priority is 10. A higher priority runs later.
+	 * Method: wp_setup
 	 *
-	 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
+	 * Supplement shortcode's WordPress setup.
+	 *
+	 * Note:
+	 * - Default priority is 10. A higher priority runs later.
+	 *
+	 * See:
+	 * - <Action order: https://codex.wordpress.org/Plugin_API/Action_Reference>
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
 	protected function wp_setup() {
 
@@ -46,18 +63,22 @@ class WPDTRT_Test_Shortcode extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_
 	}
 
 	/**
-	 * ====== Getters and Setters ======
+	 * Group: Getters and Setters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Renderers =====
+	 * Group: Renderers
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Filters =====
+	 * Group: Filters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Helpers =====
+	 * Group: Helpers
+	 * _____________________________________
 	 */
 }

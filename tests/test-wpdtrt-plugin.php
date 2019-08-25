@@ -1,25 +1,34 @@
 <?php
 /**
- * Unit tests, using PHPUnit, wp-cli, WP_UnitTestCase.
- *  These tests are run from child plugins.
+ * File: tests/test-wpdtrt-plugin.php
  *
- * @package DTRT Test
+ * Unit tests, using PHPUnit, wp-cli, WP_UnitTestCase.
+ *
+ * Note:
+ * - These tests are run from child plugins.
  */
 
 /**
- * WP_UnitTestCase unit tests for wpdtrt_plugin_boilerplate
+ * Class: PluginTest
+ *
+ * WP_UnitTestCase unit tests for wpdtrt_plugin_boilerplate.
  */
 class PluginTest extends WP_UnitTestCase {
 
 	/**
+	 * Method: assertEqualHtml
+	 *
 	 * Compare two HTML fragments.
 	 *
-	 * @param string $expected Expected value.
-	 * @param string $actual Actual value.
-	 * @param string $error_message Message to show when strings don't match.
-	 * @uses https://stackoverflow.com/a/26727310/6850747
+	 * Parameters:
+	 *   $expected - Expected value
+	 *   $actual - Actual value
+	 *   $error_message - Message to show when strings don't match
+	 *
+	 * Uses:
+	 * - <https://stackoverflow.com/a/26727310/6850747>
 	 */
-	protected function assertEqualHtml( $expected, $actual, $error_message ) {
+	protected function assertEqualHtml( string $expected, string $actual, string $error_message ) {
 		$from = [ '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s' ];
 		$to   = [ '>', '<', '\\1', '><' ];
 		$this->assertEquals(
@@ -30,7 +39,8 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * SetUp.
+	 * Method: setUp
+	 *
 	 * Automatically called by PHPUnit before each test method is run.
 	 */
 	public function setUp() {
@@ -41,8 +51,9 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * TearDown.
-	 * Automatically called by PHPUnit after each test method is run.
+	 * Method: tearDown
+	 *
+	 * Teardown; automatically called by PHPUnit after each test method is run.
 	 */
 	public function tearDown() {
 
@@ -57,15 +68,22 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Create post
+	 * Method: create_post
 	 *
-	 * @param array $options Options [$post_title, $post_date, $post_content].
-	 * @return number $post_id
-	 * @see https://developer.wordpress.org/reference/functions/wp_insert_post/
-	 * @see https://wordpress.stackexchange.com/questions/37163/proper-formatting-of-post-date-for-wp-insert-post
-	 * @see https://codex.wordpress.org/Function_Reference/wp_update_post
+	 * Create post.
+	 *
+	 * Parameters:
+	 *   $options - Options [$post_title, $post_date, $post_content].
+	 *
+	 * Returns:
+	 *   Post ID
+	 *
+	 * See:
+	 * - <https://developer.wordpress.org/reference/functions/wp_insert_post/>
+	 * - <https://wordpress.stackexchange.com/questions/37163/proper-formatting-of-post-date-for-wp-insert-post
+	 * - <https://codex.wordpress.org/Function_Reference/wp_update_post>
 	 */
-	public function create_post( $options ) {
+	public function create_post( array $options ) : int {
 
 		$post_title   = null;
 		$post_date    = null;
@@ -85,7 +103,7 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * ===== Mock Data =====
+	 * Method: mock_data
 	 */
 	public function mock_data() {
 
@@ -221,19 +239,25 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * ===== Tests =====
+	 * Group: Tests
+	 * _____________________________________
 	 */
 
 	/**
-	 * Test that the raw config is saved as-is, sans values.
-	 *  For each option, the 'value' attribute is deliberately omitted,
-	 *  this is to aid the checking of this value by helper_get_default_value().
-	 *  If the value was set to '' by default,
-	 *  it could erase a user value when the new and old options were merged -
-	 *  or, if blank values were ignored
-	 *  it would prevent the user from erasing values they no longer required
+	 * Method: test__set_plugin_options
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
+	 * Test that the raw config is saved as-is, sans values.
+	 *
+	 * Note:
+	 * - For each option, the 'value' attribute is deliberately omitted,
+	 *   this is to aid the checking of this value by helper_get_default_value().
+	 * - If the value was set to '' by default,
+	 *   it could erase a user value when the new and old options were merged.
+	 * - Or, if blank values were ignored
+	 *   it would prevent the user from erasing values they no longer required.
+	 *
+	 * See:
+	 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84>
 	 */
 	public function test__set_plugin_options() {
 
@@ -294,9 +318,12 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test that the user values are correctly merged into the config
+	 * Method: test__set_plugin_option_values
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
+	 * Test that the user values are correctly merged into the config.
+	 *
+	 * See:
+	 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84>
 	 */
 	public function test__set_plugin_option_values() {
 
@@ -365,10 +392,15 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test update_option()
-	 * This is the WordPress function which adds the merged data to the options table
+	 * MethodL test__update_option__get_option
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
+	 * Test update_option().
+	 *
+	 * Note:
+	 * - This is the WordPress function which adds the merged data to the options table
+	 *
+	 * See:
+	 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84>
 	 */
 	public function test__update_option__get_option() {
 
@@ -427,12 +459,15 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Method: test__render_form_element
+	 *
 	 * Test that the correct field 'type'
 	 * is passed to the Plugin's render_form_element()
 	 * as it us used to determine the include() name
-	 * via options.php
+	 * via options.php.
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
+	 * See:
+	 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84>
 	 */
 	public function test__render_form_element() {
 
@@ -451,10 +486,13 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test whether multiple calls to set and get plugin options
-	 * result in duplicate keys
+	 * Method: test__set_plugin_options__get_plugin_options__multi
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
+	 * Test whether multiple calls to set and get plugin options
+	 * result in duplicate keys.
+	 *
+	 * See:
+	 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84>
 	 */
 	public function test__set_plugin_options__get_plugin_options__multi() {
 
@@ -491,17 +529,22 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Method: test__helper_get_default_value
+	 *
 	 * Test that form element values are correctly set
 	 * when a form element is rendered
-	 * for a plugin option which doesn't have a value attribute yet
+	 * for a plugin option which doesn't have a value attribute yet.
 	 *
-	 * @see views/form-element-checkbox.php
-	 * @see views/form-element-file.php
-	 * @see views/form-element-number.php
-	 * @see views/form-element-password.php
-	 * @see views/form-element-select.php
-	 * @see views/form-element-text.php
-	 * @todo test HTML output to ensure that default values translate to semantic HTML
+	 * See:
+	 * - views/form-element-checkbox.php
+	 * - views/form-element-file.php
+	 * - views/form-element-number.php
+	 * - views/form-element-password.php
+	 * - views/form-element-select.php
+	 * - views/form-element-text.php
+	 *
+	 * TODO:
+	 * - Test HTML output to ensure that default values translate to semantic HTML
 	 */
 	public function test__helper_get_default_value() {
 
@@ -545,19 +588,25 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test that the options page fields display the correct attributes
+	 * Method: todo__test__render_options_page_field
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84
+	 * Test that the options page fields display the correct attributes.
+	 *
+	 * See:
+	 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/84>
 	 */
 	public function todo__test__render_options_page_field() {
 		// .
 	}
 
 	/**
+	 * Method: test__get_api_data
+	 *
 	 * Test that get_api_data() returns data,
 	 *  and that this is stored and retrievable.
 	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Data:-Loading-from-an-API#data-is-stored-in-an-associative-array
+	 * See:
+	 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Data:-Loading-from-an-API#data-is-stored-in-an-associative-array>
 	 */
 	public function test__get_api_data() {
 		global $wpdtrt_test_plugin;
@@ -584,8 +633,10 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Method: test_set_plugin_dependency
+	 *
 	 * Test that setting a single dependency,
-	 *  will supercede an outdated duplicate
+	 *  will supercede an outdated duplicate.
 	 */
 	public function test_set_plugin_dependency() {
 
@@ -614,7 +665,9 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test shortcode
+	 * Method: test_shortcode
+	 *
+	 * Test shortcode.
 	 */
 	public function test_shortcode() {
 
@@ -634,6 +687,8 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Method: __test_settings_page
+	 *
 	 * Test that the Settings (options) page loads without errors.
 	 */
 	public function __test_settings_page() {
@@ -646,6 +701,8 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Method: test_get_wp_composer_dependencies
+	 *
 	 * Test that plugin dependencies are correctly loaded from composer-tgmpa.json
 	 */
 	public function test_get_wp_composer_dependencies() {
@@ -694,7 +751,9 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test that TGMPA dependencies are correctly registered
+	 * Method: test__set_wp_composer_dependencies_tgmpa
+	 *
+	 * Test that TGMPA dependencies are correctly registered.
 	 */
 	public function test__set_wp_composer_dependencies_tgmpa() {
 		global $wpdtrt_test_plugin;
@@ -731,7 +790,9 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test that no TGMPA dependencies does not cause an error
+	 * Method: test__not_set_wp_composer_dependencies_tgmpa
+	 *
+	 * Test that no TGMPA dependencies does not cause an error.
 	 */
 	public function test__not_set_wp_composer_dependencies_tgmpa() {
 		global $wpdtrt_test_plugin;
@@ -747,7 +808,9 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test static method get_wp_composer_dependencies_wpunit
+	 * Method: test__get_wp_composer_dependencies_wpunit
+	 *
+	 * Test static method get_wp_composer_dependencies_wpunit.
 	 */
 	public function test__get_wp_composer_dependencies_wpunit() {
 		$composer_json                    = dirname( __FILE__ ) . '/data/composer-tgmpa.json';
@@ -765,7 +828,9 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test that no TGMPA dependencies does not cause an error
+	 * Method: test__not_get_wp_composer_dependencies_wpunit
+	 *
+	 * Test that no TGMPA dependencies does not cause an error.
 	 */
 	public function test__not_get_wp_composer_dependencies_wpunit() {
 		$composer_json                    = dirname( __FILE__ ) . '/data/composer-not-tgmpa.json';

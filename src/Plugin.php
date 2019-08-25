@@ -1,45 +1,59 @@
 <?php
 /**
- * Plugin class.
+ * File: src/Plugin.php
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @since     1.0.0
- * @version   1.0.1
+ * Plugin class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
 	/**
-	 * Plugin base class
+	 * Class: Plugin
 	 *
-	 * Boilerplate functions, including
+	 * Plugin base class.
+	 *
+	 * Note:
+	 * - Contains boilerplate functions, including
 	 * options page, field templating, error messaging, CSS, JS.
+	 * - Use Shortcode for dependent shortcodes.
+	 * - Use Widget for dependent widgets.
 	 *
-	 * Use Shortcode for dependent shortcodes.
-	 * Use Widget for dependent widgets.
+	 * Since:
+	 *   1.0.0 - Added
 	 */
 	class Plugin {
 
 		// https://secure.php.net/manual/en/language.oop5.constants.php.
-		const WPDTRT_PLUGIN_VERSION = '1.5.13';
+		const WPDTRT_PLUGIN_VERSION = '1.6.0';
 
 		/**
+		 * Constructor: __construct
+		 *
 		 * Initialise the object's properties when it is instantiated.
-		 * This is a protected method as every plugin uses a sub class:
-		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Plugin {...}
 		 *
-		 * A plugin-specific instance of this class is created on init:
+		 * Note:
+		 * - This is a protected method as every plugin uses a sub class:
+		 * --- php
+		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Plugin {...}
+		 * ---
+		 *
+		 * - A plugin-specific instance of this class is created on init:
+		 * --- php
 		 * add_action( 'init', '<%= nameSafe %>_init', 0 );
-		 * so this construct CANNOT contain anything that needs to run
-		 * BEFORE the WordPress 'init'
+		 * ---
 		 *
-		 * @param     array $settings Plugin options.
-		 * @since     1.0.0
-		 * @version   1.1.0
+		 * - So this construct CANNOT contain anything that needs to run
+		 * BEFORE the WordPress 'init'.
+		 *
+		 * Parameters:
+		 *   $settings - Plugin options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function __construct( $settings ) {
+		protected function __construct( array $settings ) {
 
 			// option variables.
 			$url                   = null;
@@ -87,27 +101,31 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ====== WordPress Integration ======
+		 * Group: WordPress Integration
+		 * _____________________________________
 		 */
 
 		/**
+		 * Method: wp_setup
+		 *
 		 * Initialise plugin options ONCE.
 		 *
-		 * Notes:
-		 *  Default priority is 10. A higher priority runs later.
-		 *  register_activation_hook() is run before any of the provided hooks
+		 * Note:
+		 * - Default priority is 10. A higher priority runs later.
+		 * - register_activation_hook() is run before any of the provided hooks.
 		 *
-		 * @since 1.0.0
-		 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
-		 * @see https://wordpress.stackexchange.com/a/209772 Trying to get class to instantiate ONCE
+		 * See:
+		 * - <Action order:https://codex.wordpress.org/Plugin_API/Action_Reference>
+		 * - <Trying to get class to instantiate ONCE:https://wordpress.stackexchange.com/a/209772>
 		 */
 		protected function wp_setup() {
 
 			/**
 			 * $this->render_foobar() - infers that no args are to be passed, fails
 			 *
-			 * @see https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback
-			 * @see https://tommcfarlin.com/wordpress-plugin-constructors-hooks/
+			 * See:
+			 * - <https://stackoverflow.com/questions/28954168/php-how-to-use-a-class-function-as-a-callback>
+			 * - <https://tommcfarlin.com/wordpress-plugin-constructors-hooks/>
 			 */
 			add_action( 'admin_menu', array( $this, 'render_options_menu' ) );
 			add_action( 'admin_notices', array( $this, 'render_settings_errors' ) );
@@ -130,12 +148,17 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get the WP plugin dependencies required for both TGMPA and WP Unit
+		 * Method: get_wp_composer_dependencies
 		 *
-		 * @param string $composer_json Full (not relative) path to plugin's composer.json.
-		 * @return array Plugin dependencies
+		 * Get the WP plugin dependencies required for both TGMPA and WP Unit.
+		 *
+		 * Parameters:
+		 *   $composer_json - Full (not relative) path to plugin's composer.json
+		 *
+		 * Returns:
+		 *   Plugin dependencies
 		 */
-		public static function get_wp_composer_dependencies( $composer_json ) {
+		public static function get_wp_composer_dependencies( $composer_json ) : array {
 
 			if ( ! file_exists( $composer_json ) ) {
 				return array();
@@ -221,20 +244,30 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Register WP plugin dependencies with TGMPA
+		 * Method: set_wp_composer_dependencies_tgmpa
 		 *
-		 * @param string $composer_json Full (not relative) path to plugin's composer.json.
-		 * @return array Updated plugin dependencies
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
-		 * @example
-		 *   // wpdtrt-plugin-boilerplate/src/Plugin.php
-		 *   global $wpdtrt_test_plugin; // Access non-static methods of plugin class.
-		 *   $composer_json = dirname( __FILE__ ) . '/data/composer.json';
-		 *   $updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
+		 * Register WP plugin dependencies with TGMPA.
+		 *
+		 * Parameters:
+		 *   $composer_json - Full (not relative) path to plugin's composer.json
+		 *
+		 * Returns:
+		 *   Updated plugin dependencies
+		 *
+		 * Example:
+		 * --- PHP
+		 * // wpdtrt-plugin-boilerplate/src/Plugin.php
+		 * global $wpdtrt_test_plugin; // Access non-static methods of plugin class.
+		 * $composer_json = dirname( __FILE__ ) . '/data/composer.json';
+		 * $updated_plugin_dependencies = $wpdtrt_test_plugin->set_wp_composer_dependencies_tgmpa( $composer_json );
+		 * ---
+		 *
+		 * See:
+		 * - <Adding WordPress plugin dependencies: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies>.
 		 */
-		public function set_wp_composer_dependencies_tgmpa( $composer_json ) {
+		public function set_wp_composer_dependencies_tgmpa( string $composer_json ) : array {
 			$wp_composer_dependencies = $this->get_wp_composer_dependencies( $composer_json );
-			$tgmpa_props              = array(
+			$tgmpa_props = array(
 				'name',
 				'slug',
 				'required',
@@ -263,20 +296,25 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get the WP plugin dependency files required by WP Unit
+		 * Method: get_wp_composer_dependencies_wpunit
 		 *
-		 * @param array $plugin_dependencies Plugin dependencies.
-		 * @return array Plugin files to require
-		 * @example
-		 *   // wpdtrt-foobar/tests/bootstrap.php
-		 *   function _manually_load_plugin() {
-		 *     require dirname( dirname( __FILE__ ) ) . '/wpdtrt-foobar.php'; // Access static methods of plugin class.
-		 *     $composer_json = dirname( dirname( __FILE__ ) ) . '/composer.json';
-		 *     $composer_dependencies = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies( $composer_json );
-		 *     $composer_dependencies_to_require = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
-		 *   }
+		 * Used in wpdtrt-foobar/tests/bootstrap.php,
+		 * to get the WP plugin dependency files required by WP Unit.
+		 *
+		 * Parameters:
+		 *   $plugin_dependencies
+		 *
+		 * Returns:
+		 *   Plugin files to require
+		 *
+		 * Example:
+		 * --- PHP
+		 * // wpdtrt-foobar/tests/bootstrap.php
+		 * $composer_dependencies_to_require = WPDTRT_Foobar_Plugin::get_wp_composer_dependencies_wpunit( $composer_dependencies );
+		 * }
+		 * ---
 		 */
-		public static function get_wp_composer_dependencies_wpunit( $plugin_dependencies ) {
+		public static function get_wp_composer_dependencies_wpunit( array $plugin_dependencies ) : array {
 
 			$plugin_files_to_require = array();
 
@@ -307,19 +345,19 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * TGM Plugin Activation Configuration.
-		 * Registers the required plugins for this theme.
-		 * This function is hooked into `tgmpa_register`,
-		 * which is fired on the WP `init` action on priority 10.
+		 * Method: wp_register_plugin_dependencies
 		 *
-		 * @version     2.6.1 for WPDTRT_Plugin_Boilerplate
-		 * @author      Thomas Griffin, Gary Jones, Juliette Reinders Folmer
-		 * @copyright   Copyright (c) 2011, Thomas Griffin
-		 * @license     http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
-		 * @link        https://github.com/TGMPA/TGM-Plugin-Activation
-		 * @since       1.0.0
-		 * @see         http://tgmpluginactivation.com/configuration/
-		 * @see         http://tgmpluginactivation.com/download/ for more options
+		 * TGM Plugin Activation Configuration.
+		 *
+		 * Note:
+		 * - Registers the required plugins for this theme.
+		 * - This function is hooked into `tgmpa_register`,
+		 *   which is fired on the WP `init` action on priority 10.
+		 *
+		 * See:
+		 * - <https://github.com/TGMPA/TGM-Plugin-Activation>
+		 * - <http://tgmpluginactivation.com/configuration/>
+		 * - <http://tgmpluginactivation.com/download/> for more options
 		 */
 		public function wp_register_plugin_dependencies() {
 
@@ -357,227 +395,309 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ====== Getters and Setters (Set, Get, Refresh, Unset) ======
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
-		 * Set the value of $url
+		 * Method: set_url
 		 *
-		 * @param       string $new_url New URL.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $url.
+		 *
+		 * Parameters:
+		 *   $new_url - New URL
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_url( $new_url ) {
+		protected function set_url( string $new_url ) {
 			$this->url = $new_url;
 		}
 
 		/**
-		 * Get the value of $url
+		 * Method: get_url
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $url.
+		 *
+		 * Returns:
+		 *   The url which was set using set_url()
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_url() {
+		public function get_url() : string {
 			return $this->url;
 		}
 
 		/**
-		 * Set the value of $demo_shortcode_params
+		 * Method: set_demo_shortcode_params
 		 *
-		 * @param       array $new_demo_shortcode_params New Demo Shortcode Parameters.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $demo_shortcode_params.
+		 *
+		 * Parameters:
+		 *   $new_demo_shortcode_params - New demo shortcode params
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_demo_shortcode_params( $new_demo_shortcode_params ) {
+		protected function set_demo_shortcode_params( array $new_demo_shortcode_params ) {
 			$this->demo_shortcode_params = $new_demo_shortcode_params;
 		}
 
 		/**
-		 * Get the value of $demo_shortcode_params
+		 * Method: get_demo_shortcode_params
 		 *
-		 * @return      array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $demo_shortcode_params.
+		 *
+		 * Returns:
+		 *   The demo_shortcode_params which were set using set_demo_shortcode_params()
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_demo_shortcode_params() {
+		public function get_demo_shortcode_params() : array {
 			return $this->demo_shortcode_params;
 		}
 
 		/**
-		 * Set the value of $prefix
+		 * Method: set_prefix
 		 *
-		 * @param       string $new_prefix New Prefix.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $prefix.
+		 *
+		 * Parameters:
+		 *   $new_prefix - New prefix
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_prefix( $new_prefix ) {
+		protected function set_prefix( string $new_prefix ) {
 			$this->prefix = $new_prefix;
 		}
 
 		/**
-		 * Get the value of $prefix (wpdtrt_foo)
+		 * Method: get_prefix
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $prefix (wpdtrt_foo).
+		 *
+		 * Returns:
+		 *   The prefix which was set using set_prefix()
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_prefix() {
+		public function get_prefix() : string {
 			return $this->prefix;
 		}
 
 		/**
-		 * Set the value of $slug
+		 * Method: set_slug
 		 *
-		 * @param       string $new_slug New slug.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $slug.
+		 *
+		 * Parameters:
+		 *   $new_slug - New slug
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_slug( $new_slug ) {
+		protected function set_slug( string $new_slug ) {
 			$this->slug = $new_slug;
 		}
 
 		/**
-		 * Get the value of $slug
+		 * Method: get_slug
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $slug.
+		 *
+		 * Returns:
+		 *   The slug which was set using set_slug()
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_slug() {
+		public function get_slug() : string {
 			return $this->slug;
 		}
 
 		/**
-		 * Set the value of $menu_title
+		 * Method: set_menu_title
 		 *
-		 * @param       string $new_menu_title New menu title.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $menu_title.
+		 *
+		 * Parameters:
+		 *   $new_menu_title - New menu title
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_menu_title( $new_menu_title ) {
+		protected function set_menu_title( string $new_menu_title ) {
 			$this->menu_title = $new_menu_title;
 		}
 
 		/**
-		 * Get the value of $menu_title
+		 * Method: get_menu_title
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $menu_title.
+		 *
+		 * Returns:
+		 *   The menu_title which was set using set_menu_title()
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_menu_title() {
+		public function get_menu_title() : string {
 			return $this->menu_title;
 		}
 
 		/**
-		 * Set the value of $settings_title
+		 * Method: set_settings_title
 		 *
-		 * @param string $new_settings_title New settings title.
-		 * @since       1.3.4
-		 * @version     1.0.0
+		 * Set the value of $settings_title.
+		 *
+		 * Parameters:
+		 *   $new_settings_title - New settings title
+		 *
+		 * Since:
+		 *   1.3.4 - Added
 		 */
-		protected function set_settings_title( $new_settings_title ) {
+		protected function set_settings_title( string $new_settings_title = '' ) {
 			$this->settings_title = $new_settings_title;
 		}
 
 		/**
-		 * Get the value of $settings_title
+		 * Method: get_settings_title
 		 *
-		 * @return      string
-		 * @since       1.3.4
-		 * @version     1.0.0
+		 * Get the value of $settings_title.
+		 *
+		 * Returns:
+		 *   The settings_title which was set using set_settings_title()
+		 *
+		 * Since:
+		 *   1.3.4 - Added
 		 */
-		public function get_settings_title() {
+		public function get_settings_title() : string {
 			return $this->settings_title;
 		}
 
 		/**
-		 * Set the value of $developer_prefix
+		 * Method: set_developer_prefix
 		 *
-		 * @param       string $new_developer_prefix New developer prefix.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $developer_prefix.
+		 *
+		 * Parameters:
+		 *   $new_developer_prefix - New developer prefix
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_developer_prefix( $new_developer_prefix ) {
+		protected function set_developer_prefix( string $new_developer_prefix ) {
 			$this->developer_prefix = $new_developer_prefix;
 		}
 
 		/**
-		 * Get the value of $developer_prefix
+		 * Method: get_developer_prefix
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $developer_prefix.
+		 *
+		 * Returns:
+		 *   The developer_prefix which was set using set_developer_prefix()
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_developer_prefix() {
+		public function get_developer_prefix() : string {
 			return $this->developer_prefix;
 		}
 
 		/**
-		 * Set the value of $messages
+		 * Method: set_messages
 		 *
-		 * @param       array $new_messages New messages.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $messages.
+		 *
+		 * Parameters:
+		 *   $new_messages - New messages
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_messages( $new_messages ) {
+		protected function set_messages( array $new_messages ) {
 			$this->messages = $new_messages;
 		}
 
 		/**
-		 * Get the value of $messages
+		 * Method: get_messages
 		 *
-		 * @return       array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $messages.
+		 *
+		 * Returns:
+		 *   Messages
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_messages() {
+		public function get_messages() : array {
 			return $this->messages;
 		}
 
 		/**
-		 * Get the value of the $success_message
+		 * Method: get_success_message
 		 *
-		 * @return       string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of the $success_message.
+		 *
+		 * Returns:
+		 *   Success message
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_success_message() {
+		public function get_success_message() : string {
 			$messages        = $this->get_messages();
 			$success_message = $messages['success'];
 			return $success_message;
 		}
 
 		/**
-		 * Set the value of $path
+		 * Method: set_path
 		 *
-		 * @param       string $new_path New path.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $path.
+		 *
+		 * Parameters:
+		 *   $new_path - New path
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_path( $new_path ) {
+		protected function set_path( string $new_path ) {
 			$this->path = $new_path;
 		}
 
 		/**
-		 * Get the value of $path
+		 * Method: get_path
 		 *
-		 * @return       string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $path.
+		 *
+		 * Returns:
+		 *   Path
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_path() {
+		public function get_path() : string {
 			return $this->path;
 		}
 
 		/**
-		 * Set plugin options
+		 * Method: set_options
 		 *
-		 * @param array $new_options New options.
-		 * @since 1.0.0
+		 * Set plugin options.
+		 *
+		 * Parameters:
+		 *   $new_options - New options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_options( $new_options ) {
+		protected function set_options( array $new_options ) {
 			$old_options = $this->get_options();
 
 			/**
@@ -606,12 +726,17 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get plugin options, user values merged with the defaults
+		 * Method: get_options
 		 *
-		 * @return array
-		 * @since 1.0.0
+		 * Get plugin options, user values merged with the defaults.
+		 *
+		 * Returns:
+		 *   Options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_options() {
+		public function get_options() : array {
 
 			/**
 			 * Load any plugin user settings, falling back to an empty $options_array if they don't exist yet
@@ -632,36 +757,44 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Remove plugin options
+		 * Method: unset_options
 		 *
-		 * @since 1.0.0
+		 * Remove plugin options.
 		 */
 		public function unset_options() {
 			delete_option( $this->get_prefix() );
 		}
 
 		/**
-		 * Set the value of $plugin_options.
-		 *  Add any new options or attributes in the configuration.
-		 *  Adds the value attribute once this has been supplied by the user.
+		 * Method: set_plugin_options
 		 *
-		 * @param   array   $new_plugin_options New plugin options.
-		 * @param   boolean $is_raw_config_options Are the options raw config options.
-		 * @return  array   $options Merged options (for unit testing)
-		 * @since   1.0.0
-		 * @since   1.3.0 Fixed option merging
-		 * @version 1.1.0
+		 * Set the value of $plugin_options.
+		 *
+		 * Note:
+		 * - Add any new options or attributes in the configuration.
+		 * - Adds the value attribute once this has been supplied by the user.
+		 *
+		 * Parameters:
+		 *   $new_plugin_options - New plugin options
+		 *   $is_raw_config_options - Whether the options are raw config options
+		 *
+		 * Returns:
+		 *   Merged options (for unit testing)
+		 *
+		 * Since:
+		 *   1.0.0 - Added
+		 *   1.3.0 - Fixed option merging
 		 */
-		public function set_plugin_options( $new_plugin_options, $is_raw_config_options = false ) {
-
-			if ( ! isset( $new_plugin_options ) ) {
-				return;
-			}
+		public function set_plugin_options( array $new_plugin_options, bool $is_raw_config_options = false ) : array {
 
 			// old options stored in database.
 			$old_plugin_options = $this->get_plugin_options();
 
-			if ( $is_raw_config_options ) {
+			if ( ! isset( $new_plugin_options ) ) {
+				return $old_plugin_options;
+			}
+
+			if ( isset( $is_raw_config_options ) ) {
 				// the config array is the canonical set of options.
 				$config_options = $new_plugin_options;
 				$user_values    = $old_plugin_options;
@@ -685,27 +818,37 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get the value of $plugin_options
+		 * Method: get_plugin_options
 		 *
-		 * @return       array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $plugin_options.
+		 *
+		 * Returns:
+		 *   Plugin options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_plugin_options() {
+		public function get_plugin_options() : array {
 			$options        = $this->get_options();
 			$plugin_options = $options['plugin_options'];
 			return $plugin_options;
 		}
 
 		/**
-		 * Store a plugin dependency for loading via TGMPA
-		 *  This is only called by set_wp_composer_dependencies().
+		 * Method: set_plugin_dependency
 		 *
-		 * @param       array $new_plugin_dependency New plugin dependency.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Store a plugin dependency for loading via TGMPA.
+		 *
+		 * Note:
+		 * - This is only called by set_wp_composer_dependencies().
+		 *
+		 * Parameters:
+		 *   $new_plugin_dependency - New plugin dependency
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function set_plugin_dependency( $new_plugin_dependency ) {
+		public function set_plugin_dependency( array $new_plugin_dependency ) {
 
 			if ( ! isset( $new_plugin_dependency ) ) {
 				return;
@@ -749,13 +892,17 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get a list of plugin dependencies to load via TGMPA
+		 * Method: get_plugin_dependencies
 		 *
-		 * @return       array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get a list of plugin dependencies to load via TGMPA.
+		 *
+		 * Returns:
+		 *   Plugin dependencies
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_plugin_dependencies() {
+		public function get_plugin_dependencies() : array {
 			$options             = $this->get_options();
 			$plugin_dependencies = $options['plugin_dependencies'];
 			// remove empty array elements before returning.
@@ -763,13 +910,17 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Set the value of $plugin_data
+		 * Method: set_plugin_data
 		 *
-		 * @param       array $new_plugin_data New plugin data.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $plugin_data.
+		 *
+		 * Parameters:
+		 *   $new_plugin_data - New plugin data
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function set_plugin_data( $new_plugin_data ) {
+		public function set_plugin_data( array $new_plugin_data ) {
 
 			if ( ! isset( $new_plugin_data ) ) {
 				return;
@@ -781,51 +932,68 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get the value of $plugin_data
+		 * Method: get_plugin_data
 		 *
-		 * @return       array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $plugin_data.
+		 *
+		 * Returns:
+		 *   Plugin data
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_plugin_data() {
+		public function get_plugin_data() : array {
 			$options     = $this->get_options();
 			$plugin_data = $options['plugin_data'];
 			return $plugin_data;
 		}
 
 		/**
-		 * Get the number of items in $plugin_data
+		 * Methods: get_plugin_data_length
 		 *
-		 * @return      number
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the number of items in $plugin_data.
+		 *
+		 * Returns:
+		 *   Number of items
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_plugin_data_length() {
+		public function get_plugin_data_length() : number {
 			$plugin_data = $this->get_plugin_data();
-			return count( $plugin_data );
+			$number_of_items = count( $plugin_data );
+			return $number_of_items;
 		}
 
 		/**
-		 * Set the value of $plugin_data_options
+		 * Method: set_plugin_data_options
 		 *
-		 * @param       array $new_plugin_data_options New plugin data options.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $plugin_data_options.
+		 *
+		 * Parameters:
+		 *   $new_plugin_data_options - New plugin data options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function set_plugin_data_options( $new_plugin_data_options ) {
+		public function set_plugin_data_options( array $new_plugin_data_options ) {
 			$options                        = $this->get_options();
 			$options['plugin_data_options'] = $new_plugin_data_options;
 			$this->set_options( $options );
 		}
 
 		/**
-		 * Get the value of $plugin_data_options
+		 * Method: get_plugin_data_options
 		 *
-		 * @return       array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $plugin_data_options.
+		 *
+		 * Returns:
+		 *   Plugin data options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_plugin_data_options() {
+		public function get_plugin_data_options() : array {
 			$options             = $this->get_options();
 			$plugin_data_options = $options['plugin_data_options'];
 
@@ -837,78 +1005,108 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Set the value of $instance_options
-		 *  replacing the existing options.
+		 * Method: set_instance_options
 		 *
-		 * @param       array $new_instance_options New instance options.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $instance_options, replacing the existing options.
+		 *
+		 * Parameters:
+		 *   $new_instance_options - New instance options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function set_instance_options( $new_instance_options ) {
+		public function set_instance_options( array $new_instance_options ) {
 			$options                     = $this->get_options();
 			$options['instance_options'] = $new_instance_options;
 			$this->set_options( $options );
 		}
 
 		/**
-		 * Get the value of $instance_options
+		 * Method: get_instance_options
 		 *
-		 * @return      array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $instance_options.
+		 *
+		 * Returns:
+		 *   Instance options
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_instance_options() {
+		public function get_instance_options() : array {
 			$options          = $this->get_options();
 			$instance_options = $options['instance_options'];
 			return $instance_options;
 		}
 
 		/**
-		 * Set the value of $version
+		 * Method: set_version
 		 *
-		 * @param       string $new_version New version.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $version.
+		 *
+		 * Parameters:
+		 *   $new_version - New version
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function set_version( $new_version ) {
+		protected function set_version( string $new_version ) {
 			$this->version = $new_version;
 		}
 
 		/**
-		 * Get the value of $version
+		 * Method: get_version
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $version.
+		 *
+		 * Returns:
+		 *   Version
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function get_version() {
+		public function get_version() : string {
 			return $this->version;
 		}
 
 		/**
-		 * Request the data from the API
-		 *  The endpoint URL is sometimes constructed from plugin specific settings fields.
-		 *  We need to manually assemble the endpoint string from dynamic data.
-		 *  As this data and assembly is contextual, it is done in the child plugin.
+		 * Method: get_api_data
 		 *
-		 *  A WordPress filter is used to get the correct value of $endpoint at runtime.
-		 *  This allows us to keep the get_api_data() code in the parent class,
-		 *  rather than expecting authors to overwrite get_api_data() with in the child class.
+		 * Request the data from the API.
 		 *
-		 * @param       string $endpoint Used for unit testing.
-		 * @return      array $data The body of the JSON response, as an associative array
-		 * @since       0.1.0
-		 * @since       1.0.0
-		 * @since       1.3.4 Use get_api_endpoint() to pass in the endpoint
-		 * @example
-		 *  public function wpdtrt_forms_set_api_endpoint { return $endpoint; }
-		 *  add_filter( 'wpdtrt_forms_set_api_endpoint', [$this, 'set_api_endpoint'] );
-		 * @see         get_api_endpoint()
-		 * @uses        ../../../../wp-includes/http.php
-		 * @see         https://developer.wordpress.org/reference/functions/wp_remote_get/
-		 * @see         http://php.net/manual/en/function.json-decode.php
+		 * Note:
+		 * - The endpoint URL is sometimes constructed from plugin specific settings fields.
+		 * - We need to manually assemble the endpoint string from dynamic data.
+		 * - As this data and assembly is contextual, it is done in the child plugin.
+		 *
+		 * - A WordPress filter is used to get the correct value of $endpoint at runtime.
+		 * - This allows us to keep the get_api_data() code in the parent class,
+		 * - rather than expecting authors to overwrite get_api_data() with in the child class.
+		 *
+		 * Parameters:
+		 *   $endpoint - Endpoint, used for unit testing
+		 *
+		 * Returns:
+		 *   The body of the JSON response, as an associative array
+		 *
+		 * Example:
+		 * --- php
+		 * public function wpdtrt_forms_set_api_endpoint { return $endpoint; }
+		 * add_filter( 'wpdtrt_forms_set_api_endpoint', [$this, 'set_api_endpoint'] );
+		 * ---
+		 *
+		 * Uses:
+		 * - ../../../../wp-includes/http.php
+		 *
+		 * See:
+		 * - get_api_endpoint()
+		 * - <https://developer.wordpress.org/reference/functions/wp_remote_get/>
+		 * - <http://php.net/manual/en/function.json-decode.php>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
+		 *   1.3.4 - Use get_api_endpoint() to pass in the endpoint
 		 */
-		public function get_api_data( $endpoint = '' ) {
+		public function get_api_data( string $endpoint = '' ) : array {
 
 			// Call child plugin method:
 			// A filter is used rather than an action as actions do not return a value.
@@ -932,7 +1130,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 				/**
 				 * Return the body, not the header
-				 * Note: There is an optional boolean argument, which returns an associative array if TRUE
+				 * Note: There is an optional boolean argument,
+				 * which returns an associative array if TRUE.
 				 */
 				$api_data = json_decode( $response['body'], true );
 
@@ -948,22 +1147,29 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Refresh the data from the API
-		 *    The 'action' key's value, 'refresh_api_data',
+		 * Method: refresh_api_data
+		 *
+		 * Refresh the data from the API.
+		 *
+		 * Note:
+		 * - The 'action' key's value, 'refresh_api_data',
 		 *    matches the latter half of the action 'wp_ajax_refresh_api_data' in our AJAX handler.
-		 *    This is because it is used to call the server side PHP function through admin-ajax.php.
-		 *    If an action is not specified, admin-ajax.php will exit, and return 0 in the process.
+		 * - This is because it is used to call the server side PHP function through admin-ajax.php.
+		 * - If an action is not specified, admin-ajax.php will exit, and return 0 in the process.
 		 *
-		 * See also $this->__construct()
-		 * See also $this->render_js_backend()
-		 * See also js/backend.js
+		 * Parameters:
+		 *   $format - The data format ('ui'|'data')
 		 *
-		 * @param       string $format The data format ('ui'|'data').
-		 * @since       1.0.0
-		 * @version     1.0.1
-		 * @see         https://codex.wordpress.org/AJAX_in_Plugins
+		 * See:
+		 * - $this->__construct()
+		 * - $this->render_js_backend()
+		 * - js/backend.js
+		 * - <https://codex.wordpress.org/AJAX_in_Plugins>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function refresh_api_data( $format ) {
+		public function refresh_api_data( string $format ) {
 			$format              = sanitize_text_field( $_POST['format'] );
 			$plugin_data_options = $this->get_plugin_data_options();
 			$existing_data       = $this->get_plugin_data();
@@ -1010,25 +1216,36 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ===== Helpers =====
+		 * Group: Helpers
+		 * _____________________________________
 		 */
 
 		/**
-		 * Flush all plugin rewrite rules
-		 *  This is hooked into the init action,
-		 *  but as flushing is an expensive operation,
-		 *  and the init action fires once on every page load.
-		 *  this is only run if $plugin_options['flush_rewrite_rules'].
-		 *  This could also be called on activation and deactivation,
-		 *  but see #128.
+		 * Method: helper_flush_rewrite_rules
 		 *
-		 * @param boolean $force Run the function in spite of the toggle setting.
-		 * @return boolean $flushed Whether the rules were flushed or not
-		 * @since 1.4.16
-		 * @see https://carlalexander.ca/wordpress-adventurous-rewrite-api/ - "How do call flush_rewrite_rules?"
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128
+		 * Flush all plugin rewrite rules.
+		 *
+		 * Note:
+		 * - This is hooked into the init action,
+		 *   but as flushing is an expensive operation,
+		 *   and the init action fires once on every page load.
+		 * - This is only run if $plugin_options['flush_rewrite_rules'].
+		 * - This could also be called on activation and deactivation, but see #128.
+		 *
+		 * Parameters:
+		 *   $force - Whether to force run the function, in spite of the toggle setting
+		 *
+		 * Returns:
+		 *   Whether the rules were flushed or not
+		 *
+		 * See:
+		 * - <How do call flush_rewrite_rules?: https://carlalexander.ca/wordpress-adventurous-rewrite-api/>
+		 * - <#128: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128>
+		 *
+		 * Since:
+		 *   1.4.16 - Added
 		 */
-		public function helper_flush_rewrite_rules( $force ) {
+		public function helper_flush_rewrite_rules( bool $force ) : bool {
 
 			$flushed        = false;
 			$plugin_options = $this->get_plugin_options();
@@ -1046,16 +1263,24 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Get a usable value for every form element type
+		 * Method: helper_normalise_field_value
 		 *
-		 * @param       string $field_value Field value.
-		 * @param       string $field_type Field type.
-		 * @return      string $normalised_field_value;
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @todo        Add field validation feedback (#10)
+		 * Get a usable value for every form element type.
+		 *
+		 * Parameters:
+		 *   $field_value - Field value
+		 *   $field_type - Field type
+		 *
+		 * Returns:
+		 *   Normalised field value
+		 *
+		 * TODO:
+		 * - Add field validation feedback (#10)
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function helper_normalise_field_value( $field_value, $field_type ) {
+		public function helper_normalise_field_value( string $field_value, string $field_type ) : string {
 			$normalised_field_value = null;
 
 			if ( isset( $field_value ) ) {
@@ -1084,25 +1309,41 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Callback function for array_filter which only removes NULL keys
+		 * Method: helper_array_filter_not_null
 		 *
-		 * @param array $arr The array to filter.
-		 * @return array The filtered array
-		 * @see http://php.net/manual/en/function.array-filter.php#115777
+		 * Callback function for array_filter which only removes NULL keys.
+		 *
+		 * Parameters:
+		 *   $arr - The array to filter
+		 *
+		 * Returns:
+		 *   The filtered array
+		 *
+		 * See:
+		 * - <http://php.net/manual/en/function.array-filter.php#115777>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function helper_array_filter_not_null( $arr ) {
+		protected function helper_array_filter_not_null( array $arr ) : array {
 			return ! is_null( $arr );
 		}
 
 		/**
-		 * Get the default value from an input type
+		 * Method: helper_get_default_value
 		 *
-		 * @param       string $input_type Input type.
-		 * @return      mixed $default_value
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the default value from an input type.
+		 *
+		 * Parameters:
+		 *   $input_type - Input type
+		 *
+		 * Returns:
+		 *   Default value
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function helper_get_default_value( $input_type ) {
+		public function helper_get_default_value( string $input_type ) : ?string {
 
 			if ( 'select' === $input_type ) {
 				$default_value = null;
@@ -1122,14 +1363,20 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Determine whether the options page form has been submitted or not
+		 * Method: helper_options_saved
 		 *
-		 * @return      boolean
-		 * @since       1.0.0
-		 * @version     1.0.1
-		 * @todo        Incorporate validation checks to ensure that all expected inputs are present (#10)
+		 * Determine whether the options page form has been submitted or not.
+		 *
+		 * Returns:
+		 *   Whether the options were saved
+		 *
+		 * TODO:
+		 * - Incorporate validation checks to ensure that all expected inputs are present (#10)
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function helper_options_saved() {
+		public function helper_options_saved() : bool {
 			$helper_options_saved = false;
 
 			if ( isset( $_POST['wpdtrt_plugin_boilerplate_form_submitted'] ) ) {
@@ -1146,13 +1393,17 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Build demo shortcode
+		 * Method: helper_build_demo_shortcode
 		 *
-		 * @return string Shortcode
-		 * @since 1.0.0
-		 * @version 1.0.1
+		 * Build demo shortcode.
+		 *
+		 * Returns:
+		 *   Options page demo shortcode
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function helper_build_demo_shortcode() {
+		protected function helper_build_demo_shortcode() : string {
 			$params = $this->get_demo_shortcode_params();
 
 			if ( ! isset( $params ) || empty( $params ) ) {
@@ -1179,16 +1430,21 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Merge option arrays
-		 *  Adds any new items.
+		 * Method: helper_add_values_to_options
 		 *
-		 * @param       array $config_options Config options.
-		 * @param       array $user_values User values.
-		 * @return      array $merged_options
-		 * @since       1.4.0
-		 * @version     1.0.0
+		 * Merge option arrays, adding any new items.
+		 *
+		 * Parameters:
+		 *   $config_options - Config options
+		 *   $user_values - User values
+		 *
+		 * Returns:
+		 *   Merged options
+		 *
+		 * Since:
+		 *   1.4.0
 		 */
-		public function helper_add_values_to_options( $config_options, $user_values ) {
+		public function helper_add_values_to_options( array $config_options, array $user_values ) : array {
 
 			if ( ! is_array( $config_options ) ) {
 				$config_options = array();
@@ -1223,32 +1479,48 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**
-		 * Support Custom Field %placeholders% in Custom Post Type permalinks
-		 *  This replacement is only applied when the permalink is generated
-		 *  eg on an archive listing or wpadmin edit page
-		 *  NOT in the rewrite rules / when the page is loaded
+		 * Method: render_cpt_permalink_placeholders
 		 *
-		 * @param  string  $permalink See WordPress function options.
-		 * @param  object  $post See WordPress function options.
-		 * @param  boolean $leavename See WordPress function options.
-		 * @return $permalink
-		 * @example
-		 *  // wpdtrt-dbth/library/register_post_type_tourdiaries.php
-		 *  'rewrite' => array(
-		 *    'slug' => 'tourdiaries/%wpdtrt_tourdates_taxonomy_tour%/%wpdtrt_tourdates_cf_daynumber%',
-		 *    'with_front' => false
-		 *  )
-		 * @see http://shibashake.com/wordpress-theme/add-custom-taxonomy-tags-to-your-wordpress-permalinks
-		 * @see http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict
-		 * @see https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug
-		 * @see https://kellenmace.com/edit-slug-button-missing-in-wordpress/
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44 - Permalink Edit button missing
+		 * Support Custom Field %placeholders% in Custom Post Type permalinks.
+		 *
+		 * Note:
+		 * - This replacement is only applied when the permalink is generated
+		 *   e.g. on an archive listing or wpadmin edit page,
+		 *   NOT in the rewrite rules / when the page is loaded.
+		 *
+		 * Parameters:
+		 *   $permalink - The post URL
+		 *   $post - The post object
+		 *   $leavename - Whether to keep the post name
+		 *
+		 * Returns:
+		 *   Permalink
+		 *
+		 * Example:
+		 * --- php
+		 * // wpdtrt-dbth/library/register_post_type_tourdiaries.php
+		 * 'rewrite' => array(
+		 *   'slug' => 'tourdiaries/%wpdtrt_tourdates_taxonomy_tour%/%wpdtrt_tourdates_cf_daynumber%',
+		 *   'with_front' => false
+		 * )
+		 * ---
+		 *
+		 * See:
+		 * - <Add Custom Taxonomy Tags to Your WordPress Permalinks: http://shibashake.com/wordpress-theme/add-custom-taxonomy-tags-to-your-wordpress-permalinks>
+		 * - <Custom Post Type Permalinks - Part 2: http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict>
+		 * - <Wordpress Custom Type permalink containing Taxonomy slug: https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug>
+		 * <Edit Slug Button Missing in WordPress: https://kellenmace.com/edit-slug-button-missing-in-wordpress/>
+		 * <#44: Permalink Edit button missing: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function render_cpt_permalink_placeholders( $permalink, $post, $leavename ) {
+		public function render_cpt_permalink_placeholders( $permalink, $post, $leavename ) : string {
 
 			// Get post.
 			$post_id = $post->ID;
@@ -1273,31 +1545,51 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Render demo shortcode
+		 * Method: render_demo_shortcode
 		 *
-		 * @param string $shortcode Shortcode.
-		 * @return string Shortcode HTML
-		 * @since 1.0.0
+		 * Render demo shortcode.
+		 *
+		 * Parameters:
+		 *   $shortcode - Shortcode
+		 *
+		 * Returns:
+		 *   Shortcode HTML
+		 *
+		 * TODO:
+		 *   Error when dumping some data objects (#37)
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function render_demo_shortcode( $shortcode ) {
+		protected function render_demo_shortcode( string $shortcode ) : string {
 			return do_shortcode( $shortcode );
 		}
 
 		/**
-		 * Render demo shortcode data
+		 * Method: render_demo_shortcode_data
 		 *
-		 * For the purposes of debugging, we also display the raw data.
-		 * var_dump is prefereable to print_r,
-		 * because it reveals the data types used,
-		 * so we can check whether the data is in the expected format.
+		 * Render demo shortcode data.
 		 *
-		 * @return string Indented data
-		 * @since 1.0.0
-		 * @link http://kb.dotherightthing.co.nz/php/print_r-vs-var_dump/
-		 * @see https://stackoverflow.com/a/139553/6850747
-		 * @todo Error when dumping some data objects (#37)
+		 * Note:
+		 * - For the purposes of debugging, we also display the raw data.
+		 * - var_dump is prefereable to print_r,
+		 *   because it reveals the data types used,
+		 *   so we can check whether the data is in the expected format.
+		 *
+		 * Returns:
+		 *   Indented data
+		 *
+		 * See:
+		 * - <print_r vs var_dump: https://gist.github.com/dotherightthing/fa154026945c9c8bb8996db1b5ae15e3>
+		 * - <How can I capture the result of var_dump to a string?: https://stackoverflow.com/a/139553/6850747>
+		 *
+		 * TODO:
+		 * - Error when dumping some data objects (#37)
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		protected function render_demo_shortcode_data() {
+		protected function render_demo_shortcode_data() : string {
 			$plugin_data           = $this->get_plugin_data();
 			$data_str              = '';
 			$demo_shortcode_params = $this->get_demo_shortcode_params();
@@ -1330,16 +1622,24 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Render a human readable last updated date.
-		 *  Works best with General Settings > Date Format > Custom
+		 * Method: render_last_updated_humanised
 		 *
-		 * @return      string $humanised_date
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see https://codex.wordpress.org/Option_Reference
-		 * @see https://codex.wordpress.org/Function_Reference/get_gmt_from_date
+		 * Render a human readable last updated date.
+		 *
+		 * Note:
+		 * - Works best with General Settings > Date Format > Custom
+		 *
+		 * Returns:
+		 *   Humanised date
+		 *
+		 * See:
+		 * - <https://codex.wordpress.org/Option_Reference>
+		 * - <https://codex.wordpress.org/Function_Reference/get_gmt_from_date>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function render_last_updated_humanised() {
+		public function render_last_updated_humanised() : string {
 			$last_updated_str    = '';
 			$plugin_data_options = $this->get_plugin_data_options();
 			$last_updated        = isset( $plugin_data_options['last_updated'] ) ? $plugin_data_options['last_updated'] : false;
@@ -1362,14 +1662,20 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Attach JS for front-end widgets and shortcodes
-		 *    Generate a configuration object which the JavaScript can access.
-		 *    When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
+		 * Method: render_js_frontend
 		 *
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see         https://codex.wordpress.org/AJAX_in_Plugins
-		 * @see         https://codex.wordpress.org/Function_Reference/wp_localize_script
+		 * Attach JS for front-end widgets and shortcodes.
+		 *
+		 * Note:
+		 * - Generate a configuration object which the JavaScript can access.
+		 * - When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
+		 *
+		 * See:
+		 * - <https://codex.wordpress.org/AJAX_in_Plugins>
+		 * - <https://codex.wordpress.org/Function_Reference/wp_localize_script>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
 		public function render_js_frontend() {
 			$attach_to_footer = true;
@@ -1412,19 +1718,27 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Attach JS for back-end admin pages
-		 *    For consistency with render_js_frontend,
-		 *    Generate a configuration object which the JavaScript can access.
-		 *    When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
+		 * Method: render_js_backend
 		 *
-		 * @param       string $hook_suffix The current admin page.
-		 * @since       1.0.0
-		 * @version     1.0.1
-		 * @see         https://codex.wordpress.org/AJAX_in_Plugins
-		 * @see         https://codex.wordpress.org/Function_Reference/wp_localize_script
-		 * @see         https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/
+		 * Attach JS for back-end admin pages.
+		 *
+		 * Note:
+		 * - For consistency with render_js_frontend,
+		 *   generate a configuration object which the JavaScript can access.
+		 * - When an Ajax command is submitted, pass it to our function via the Admin Ajax page.
+		 *
+		 * Parameters:
+		 *   $hook_suffix - The current admin page
+		 *
+		 * See:
+		 * - <https://codex.wordpress.org/AJAX_in_Plugins>
+		 * - <https://codex.wordpress.org/Function_Reference/wp_localize_script>
+		 * - <https://developer.wordpress.org/reference/hooks/admin_enqueue_scripts/>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function render_js_backend( $hook_suffix ) {
+		public function render_js_backend( string $hook_suffix ) {
 			if ( ( 'settings_page_' . $this->get_slug() ) !== $hook_suffix ) {
 				return;
 			}
@@ -1448,7 +1762,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$force_refresh = isset( $plugin_data_options['force_refresh'] ) ? $plugin_data_options['force_refresh'] : false;
 
 			wp_localize_script( $this->get_prefix() . '_backend',
-				'wpdtrt_plugin_boilerplate_config',
+				'wpdtrtPluginBoilerplateConfig',
 				array(
 					'prefix'           => $this->get_prefix(),
 					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
@@ -1460,12 +1774,15 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Display a link to the options page in the admin menu
+		 * Method: render_options_menu
 		 *
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @uses        ../../../../wp-admin/includes/plugin.php
-		 * @see         https://developer.wordpress.org/reference/functions/add_options_page/
+		 * Display a link to the options page in the admin menu.
+		 *
+		 * Uses:
+		 *   ../../../../wp-admin/includes/plugin.php
+		 *
+		 * See:
+		 * - <https://developer.wordpress.org/reference/functions/add_options_page/>
 		 */
 		public function render_options_menu() {
 			add_options_page(
@@ -1478,15 +1795,24 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Display a link to the plugin settings page in the plugins list
+		 * Method: render_settings_link
 		 *
-		 * @param array $links Links.
-		 * @return array $links
-		 * @since 1.3.4
-		 * @see https://isabelcastillo.com/settings-link-plugin-plugins
-		 * @see https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)
+		 * Display a link to the plugin settings page in the plugins list.
+		 *
+		 * Parameters:
+		 *   $links - Links
+		 *
+		 * Returns:
+		 *   Links
+		 *
+		 * See:
+		 * - <https://isabelcastillo.com/settings-link-plugin-plugins>
+		 * - <https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)>
+		 *
+		 * Since:
+		 *   1.3.4 - Added
 		 */
-		public function render_settings_link( $links ) {
+		public function render_settings_link( array $links ) : array {
 			$settings_url  = get_admin_url() . 'options-general.php?page=' . $this->get_slug();
 			$settings_link = '<a href="' . $settings_url . '">' . $this->settings_title . '</a>';
 
@@ -1497,13 +1823,20 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Display a link to the wpdtrt-plugin-boilerplate library
+		 * Method: render_library_link
 		 *
-		 * @param array $links Links.
-		 * @return array $links
-		 * @since 1.3.6
+		 * Display a link to the wpdtrt-plugin-boilerplate library.
+		 *
+		 * Parameters:
+		 *   $links - Links
+		 *
+		 * Returns:
+		 *   Links
+		 *
+		 * Since:
+		 *   1.3.6 - Added
 		 */
-		public function render_library_link( $links ) {
+		public function render_library_link( array $links ) : array {
 
 			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases/tag/' . self::WPDTRT_PLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPDTRT_PLUGIN_VERSION . '</a>';
 
@@ -1513,17 +1846,20 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
+		 * Method: render_options_page
+		 *
 		 * Render the appropriate UI on Settings > DTRT PluginName
 		 *
-		 *    1. Take the user's options (from the form input)
-		 *    2. Store the user's options
-		 *    3. Render the options page
+		 * Note:
+		 * - Take the user's options (from the form input)
+		 * - Store the user's options
+		 * - Render the options page
 		 *
-		 *    Note: Shortcode/widget options are specific to each instance of the shortcode/widget
-		 *    and are thus stored with those individual instances.
+		 * - Shortcode/widget options are specific to each instance of the shortcode/widget
+		 * and are thus stored with those individual instances.
 		 *
-		 * @since   1.0.0
-		 * @version 1.0.0
+		 * Since:
+		 *   1.0.0 - Added
 		 */
 		public function render_options_page() {
 			$messages                         = $this->get_messages();
@@ -1590,16 +1926,24 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Form field templating for the options page
+		 * Method: render_form_element
 		 *
-		 * @param       string $name Name.
-		 * @param       array  $attributes Attributes.
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @todo        Add field validation feedback (#10)
+		 * Form field templating for the options page.
+		 *
+		 * Parameters:
+		 *   $name Name.
+		 *   $attributes Attributes.
+		 *
+		 * Returns:
+		 * - Form element HTML
+		 *
+		 * TODO:
+		 * - Add field validation feedback (#10)
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
-		public function render_form_element( $name, $attributes = array() ) {
+		public function render_form_element( string $name, array $attributes = array() ) : string {
 			// define variables.
 			$type    = null;
 			$label   = null;
@@ -1612,7 +1956,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			extract( $attributes, EXTR_IF_EXISTS );
 
 			if ( ! isset( $type, $label ) ) {
-				return;
+				return '';
 			}
 
 			if ( ! isset( $value ) ) {
@@ -1655,25 +1999,37 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Admin Notices: Errors
-		 * Displayed below the H1
+		 * Method: render_settings_errors
 		 *
-		 * @since     1.0.0
-		 * @version   1.0.0
-		 * @see       https://digwp.com/2016/05/wordpress-admin-notices/
+		 * Admin Notices: Errors.
+		 *
+		 * Note:
+		 * - Displayed below the H1.
+		 *
+		 * See:
+		 * - <https://digwp.com/2016/05/wordpress-admin-notices/>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
 		public function render_settings_errors() {
 			settings_errors();
 		}
 
 		/**
-		 * Admin Notices: Custom
-		 * Displayed below the H1
-		 * Possible classes: notice-error, notice-warning, notice-success, or notice-info
+		 * Method: render_admin_notices
 		 *
-		 * @since     1.0.0
-		 * @version   1.0.0
-		 * @see       https://digwp.com/2016/05/wordpress-admin-notices/
+		 * Admin Notices: Custom.
+		 *
+		 * Note:
+		 * - Displayed below the H1.
+		 * - Possible classes: notice-error, notice-warning, notice-success, or notice-info
+		 *
+		 * See:
+		 * - <https://digwp.com/2016/05/wordpress-admin-notices/>
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
 		public function render_admin_notices() {
 			$screen = get_current_screen();
@@ -1695,10 +2051,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Attach CSS for options page
+		 * Method: render_css_backend
 		 *
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Attach CSS for options page.
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
 		public function render_css_backend() {
 			$media = 'all';
@@ -1714,10 +2072,12 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 
 		/**
-		 * Attach CSS for front-end widgets and shortcodes
+		 * Method: render_css_frontend
 		 *
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Attach CSS for front-end widgets and shortcodes.
+		 *
+		 * Since:
+		 *   1.0.0 - Added
 		 */
 		public function render_css_frontend() {
 			$media = 'all';
@@ -1733,5 +2093,3 @@ if ( ! class_exists( 'Plugin' ) ) {
 		}
 	}
 }
-
-?>

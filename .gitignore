@@ -1,9 +1,14 @@
 .DS_Store
+/*.log
 composer.phar
 css
-docs
+docs/*
+!docs/README.md
 js/*-es5.js
 logs
 node_modules
 release.zip
 vendor
+config/naturaldocs/Working Data
+Natural Docs
+*sublime-*

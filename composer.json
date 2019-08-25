@@ -23,7 +23,6 @@
         "php": "^7.0"
     },
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "2.9.0",
         "phpunit/phpunit": "^5.7",
         "psy/psysh" : "~0.6",
         "wp-cli/wp-cli" : "~0.22",
@@ -32,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_5_13\\": "src"
+            "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_6_0\\": "src"
         }
     },
     "repositories": [

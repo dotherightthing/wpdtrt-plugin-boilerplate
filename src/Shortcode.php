@@ -1,47 +1,59 @@
 <?php
 /**
- * Plugin shortcode class.
+ * File: src/Shortcode.php
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
+ * Plugin shortcode class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0;
 
 if ( ! class_exists( 'Shortcode' ) ) {
 
 	/**
-	 * Plugin Shortcode base class
+	 * Class: Shortcode
 	 *
-	 * Boilerplate functions, including
-	 * options support, template loading, access to Plugin methods.
+	 * Plugin Shortcode base class.
 	 *
-	 * @param       array $atts Optional shortcode attributes specified by the user.
-	 * @param       string $content Content within the enclosing shortcode tags.
-	 * @return      Shortcode
-	 * @since       1.0.0
-	 * @version     1.0.0
-	 * @uses        ../../../../wp-includes/shortcodes.php
-	 * @see         https://codex.wordpress.org/Function_Reference/add_shortcode
-	 * @see         https://codex.wordpress.org/Shortcode_API#Enclosing_vs_self-closing_shortcodes
-	 * @see         http://php.net/manual/en/function.ob-start.php
-	 * @see         http://php.net/manual/en/function.ob-get-clean.php
+	 * Note:
+	 * - Contains boilerplate functions, including
+	 *   options support, template loading, access to Plugin methods.
+	 *
+	 * Uses:
+	 * - ../../../../wp-includes/shortcodes.php
+	 *
+	 * See:
+	 * - <https://codex.wordpress.org/Function_Reference/add_shortcode>
+	 * - <https://codex.wordpress.org/Shortcode_API#Enclosing_vs_self-closing_shortcodes>
+	 * - <http://php.net/manual/en/function.ob-start.php>
+	 * - <http://php.net/manual/en/function.ob-get-clean.php>
+	 *
+	 * Since:
+	 *   1.0.0
 	 */
 	class Shortcode {
 
 		/**
-		 * Hook the plugin in to WordPress
-		 * This constructor automatically initialises the object's properties
-		 * when it is instantiated.
+		 * Constructor: __construct
 		 *
-		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Shortcode {}
+		 * Hook the plugin in to WordPress.
 		 *
-		 * @param     array $options Shortcode options.
-		 * @since     1.0.0
-		 * @version   1.1.0
+		 * Note:
+		 * - This constructor automatically initialises the object's properties
+		 *   when it is instantiated.
+		 * - This is a public method as every plugin uses a new instance.
+		 *
+		 * Example:
+		 * --- php
+		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Shortcode {}
+		 * ---
+		 *
+		 * Parameters:
+		 *   $options - Shortcode options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function __construct( $options ) {
+		public function __construct( array $options ) {
 
 			// define variables.
 			$name                      = null;
@@ -74,123 +86,181 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		}
 
 		/**
-		 * ====== WordPress Integration ======
+		 * Group: WordPress Integration
+		 * _____________________________________
 		 */
 
 		/**
+		 * Method: wp_setup
+		 *
 		 * Initialise shortcode options ONCE.
 		 *
-		 * @since 1.4.16
+		 * Since:
+		 *   1.4.16
 		 */
 		protected function wp_setup() {
-
 			$name = $this->get_name();
-
 			add_shortcode( $name, array( $this, 'render_shortcode' ) );
 		}
 
 		/**
-		 * ===== Setters and Getters =====
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
-		 * Set the template name
+		 * Method: set_template_name
 		 *
-		 * @param string $template_name Template name.
-		 * @since 1.0.0
+		 * Set the template name.
+		 *
+		 * Parameters:
+		 *   $template_name - Template name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_template_name( $template_name ) {
+		protected function set_template_name( string $template_name ) {
 			$this->template_name = $template_name;
 		}
 
 		/**
-		 * Get the template name
+		 * Method: get_template_name
 		 *
-		 * @return string
-		 * @since 1.0.0
+		 * Get the template name.
+		 *
+		 * Returns:
+		 *   Template name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function get_template_name() {
+		protected function get_template_name() : string {
 			return $this->template_name;
 		}
 
 		/**
-		 * Get the value of $name
+		 * Method: get_name
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $name.
+		 *
+		 * Returns:
+		 *   Name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function get_name() {
+		public function get_name() : string {
 			return $this->name;
 		}
 
 		/**
-		 * Set the value of $name
+		 * Method: set_name
 		 *
-		 * @param       string $new_name New name.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $name.
+		 *
+		 * Parameters:
+		 *   $new_name - New name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_name( $new_name ) {
+		protected function set_name( string $new_name ) {
 			$this->name = $new_name;
 		}
 
 		/**
-		 * Get default options
+		 * Method: get_instance_options
 		 *
-		 * @return array
-		 * @since 1.0.0
+		 * Get default options.
+		 *
+		 * Returns:
+		 *   Instance options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function get_instance_options() {
+		public function get_instance_options() : array {
 			return $this->instance_options;
 		}
 
 		/**
-		 * Set instance options
+		 * Method: set_instance_options
 		 *
-		 * @param array $instance_options Instance options.
-		 * @since 1.0.0
+		 * Set instance options.
+		 *
+		 * Parameters:
+		 *   $instance_options - Instance options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_instance_options( $instance_options ) {
+		protected function set_instance_options( array $instance_options ) {
 			$this->instance_options = $instance_options;
 		}
 
 		/**
-		 * Set parent plugin, which contains shortcode/widget options
-		 * This is a global which is passed to the function which instantiates this object.
-		 * This is necessary because the object does not exist until the WordPress init action has fired.
+		 * Method: set_plugin
 		 *
-		 * @param object $plugin Plugin.
-		 * @since 1.0.0
-		 * @todo Shortcode/Widget implementation questions (#15)
+		 * Set parent plugin, which contains shortcode/widget options.
+		 *
+		 * Note:
+		 * - This is a global which is passed to the function which instantiates this object.
+		 * - This is necessary because the object does not exist until the WordPress init action has fired.
+		 *
+		 * Parameters:
+		 *   $plugin - Plugin instance
+		 *
+		 * TODO:
+		 * - Shortcode/Widget implementation questions (#15)
+		 * - Add the appropriate type for $plugin (not object)
+		 *
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
 		protected function set_plugin( $plugin ) {
 			$this->plugin = $plugin;
 		}
 
 		/**
+		 * Method: get_plugin
+		 *
 		 * Get parent plugin, which contains shortcode/widget options.
 		 *
-		 * @return object
-		 * @since 1.0.0
+		 * Returns:
+		 *   Plugin
+		 *
+		 * TODO:
+		 * - Add return type (not object)
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
 		public function get_plugin() {
 			return $this->plugin;
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**
-		 * Render a shortcode
+		 * Method: render_shortcode
 		 *
-		 * @param array  $atts User defined attributes in shortcode tag.
-		 * @param string $content Content between shortcode opening and closing tags.
-		 * @return string
-		 * @since 1.0.0
+		 * Render a shortcode.
+		 *
+		 * Parameters:
+		 *   $atts - User defined attributes in shortcode tag
+		 *   $content - Content between shortcode opening and closing tags
+		 *
+		 * Returns:
+		 *   $content - Content
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function render_shortcode( $atts, $content = '' ) {
+		public function render_shortcode( string $atts, string $content = '' ) : string {
 
 			/**
 			 * Combine user attributes with known attributes and fill in defaults when needed.

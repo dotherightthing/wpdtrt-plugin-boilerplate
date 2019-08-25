@@ -1,17 +1,17 @@
 <?php
 /**
+ * File: views/form-element-file.php
+ *
  * Template partial for File fields.
  *
- * @package WPDTRT_Plugin_Boilerplate
- * @version 1.0.0
- * @since   1.0.1
- * @uses    WordPress_Admin_Style
- * @example
+ * Example:
+ * --- php
  * 'fieldname' => array(
  *   'type' => 'file',
  *   'label' => __('Field label', 'text-domain'),
  *   'tip' => __('Helper text', 'text-domain')
  * )
+ * ---
  */
 
 echo $label_start; ?>

@@ -1,17 +1,16 @@
 <?php
 /**
- * DTRT Test
+ * File: tests/generated-plugin/wpdtrt-test.php
  *
- * @package     DTRT Test
- * @author      Dan Smith
- * @copyright   2018 Do The Right Thing
- * @license     GPL-2.0+
+ * This plugin is used in unit testing,
+ * to verify that a generated plugin can
+ * run alongside wpdtrt-plugin-boilerplate.
  *
  * @wordpress-plugin
  * Plugin Name:  DTRT Test
  * Plugin URI:   https://github.com/dotherightthing/wpdtrt-plugin-boilerplate
  * Description:  Test plugin using the wpdtrt-plugin-boilerplate base classes.
- * Version:      1.5.13
+ * Version:      1.6.0
  * Author:       Dan Smith
  * Author URI:   https://profiles.wordpress.org/dotherightthingnz
  * License:      GPLv2 or later
@@ -21,89 +20,122 @@
  */
 
 /**
- * Constants
+ * Group: Constants
+ *
  * WordPress makes use of the following constants when determining the path to the content and plugin directories.
- * These should not be used directly by plugins or themes, but are listed here for completeness.
- * WP_CONTENT_DIR  // no trailing slash, full paths only
- * WP_CONTENT_URL  // full url
- * WP_PLUGIN_DIR  // full path, no trailing slash
- * WP_PLUGIN_URL  // full url, no trailing slash
  *
- * WordPress provides several functions for easily determining where a given file or directory lives.
- * Always use these functions in your plugins instead of hard-coding references to the wp-content directory
+ * Note:
+ * - These should not be used directly by plugins or themes, but are listed here for completeness.
+ *   - WP_CONTENT_DIR  // no trailing slash, full paths only
+ *   - WP_CONTENT_URL  // full url
+ *   - WP_PLUGIN_DIR  // full path, no trailing slash
+ *   - WP_PLUGIN_URL  // full url, no trailing slash
+ *
+ * - WordPress provides several functions for easily determining where a given file or directory lives.
+ * - Always use these functions in your plugins instead of hard-coding references to the wp-content directory
  * or using the WordPress internal constants.
- * plugins_url()
- * plugin_dir_url()
- * plugin_dir_path()
- * plugin_basename()
+ *   - plugins_url()
+ *   - plugin_dir_url()
+ *   - plugin_dir_path()
+ *   - plugin_basename()
  *
- * @see https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Constants
- * @see https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Plugins
+ * See:
+ * - <https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Constants>
+ * - <https://codex.wordpress.org/Determining_Plugin_and_Content_Directories#Plugins>
+ * _____________________________________
  */
 
 if ( ! defined( 'WPDTRT_TEST_VERSION' ) ) {
 	/**
+	 * Constant: WPDTRT_TEST_VERSION
+	 *
 	 * Plugin version.
 	 *
-	 * WP provides get_plugin_data(), but it only works within WP Admin,
-	 * so we define a constant instead.
+	 * Note:
+	 * - WP provides get_plugin_data(), but it only works within WP Admin,
+	 *   so we define a constant instead.
 	 *
-	 * @see $plugin_data = get_plugin_data( __FILE__ ); $plugin_version = $plugin_data['Version'];
-	 * @see https://wordpress.stackexchange.com/questions/18268/i-want-to-get-a-plugin-version-number-dynamically
+	 * See:
+	 * --- php
+	 * $plugin_data = get_plugin_data( __FILE__ );
+	 * $plugin_version = $plugin_data['Version'];
+	 * ---
+	 *
+	 * - <https://wordpress.stackexchange.com/questions/18268/i-want-to-get-a-plugin-version-number-dynamically>
 	 */
-	define( 'WPDTRT_TEST_VERSION', '1.5.13' );
+	define( 'WPDTRT_TEST_VERSION', '1.6.0' );
 }
 
 if ( ! defined( 'WPDTRT_TEST_PATH' ) ) {
 	/**
+	 * Constant: WPDTRT_TEST_PATH
+	 *
 	 * Plugin directory filesystem path.
 	 *
-	 * @param string $file
-	 * @return The filesystem directory path (with trailing slash)
+	 * Note:
+	 * - Value is the filesystem directory path (with trailing slash)
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/plugin_dir_path/
-	 * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
+	 * See:
+	 * - <https://developer.wordpress.org/reference/functions/plugin_dir_path/>
+	 * - <https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything>
 	 */
 	define( 'WPDTRT_TEST_PATH', plugin_dir_path( __FILE__ ) );
 }
 
 if ( ! defined( 'WPDTRT_TEST_URL' ) ) {
 	/**
+	 * Constant: WPDTRT_TEST_URL
+	 *
 	 * Plugin directory URL path.
 	 *
-	 * @param string $file
-	 * @return The URL (with trailing slash)
+	 * Note:
+	 * - The URL (with trailing slash)
 	 *
-	 * @see https://codex.wordpress.org/Function_Reference/plugin_dir_url
-	 * @see https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything
+	 * See:
+	 * - <https://codex.wordpress.org/Function_Reference/plugin_dir_url>
+	 * - <https://developer.wordpress.org/plugins/the-basics/best-practices/#prefix-everything>
 	 */
 	define( 'WPDTRT_TEST_URL', plugin_dir_url( __FILE__ ) );
 }
 
 /**
- * ===== Dependencies =====
- */
-
-/**
- * Determine the correct path, from wpdtrt-plugin-boilerplate to the PSR-4 autoloader
+ * Constant: WPDTRT_PLUGIN_CHILD
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51
+ * Determines the correct path, from wpdtrt-plugin-boilerplate
+ * to the PSR-4 autoloader.
+ *
+ * See:
+ * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51>
  */
 if ( ! defined( 'WPDTRT_PLUGIN_CHILD' ) ) {
 	define( 'WPDTRT_PLUGIN_CHILD', true );
 }
 
 /**
- * Determine the correct path, from wpdtrt-foobar to the PSR-4 autoloader
+ * Group: Variables
+ * _____________________________________
+ */
+
+/**
+ * Variable: $project_root_path
  *
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/104
- * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies
+ * Uses WPDTRT_TEST_TEST_DEPENDENCY to determine the correct path, from wpdtrt-foobar
+ * to the PSR-4 autoloader.
+ *
+ * See:
+ * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/104>
+ * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies>
  */
 if ( defined( 'WPDTRT_TEST_TEST_DEPENDENCY' ) ) {
 	$project_root_path = realpath( __DIR__ . '/../../..' ) . '/';
 } else {
 	$project_root_path = '';
 }
+
+/**
+ * Group: Require dependencies
+ * _____________________________________
+ */
 
 require_once $project_root_path . 'vendor/autoload.php';
 
@@ -120,15 +152,18 @@ global $debug;
 $debug = new DoTheRightThing\WPDebug\Debug();
 
 /**
- * ===== WordPress Integration =====
+ * Group: WordPress Integration
  *
- * Notes:
- *  Default priority is 10. A higher priority runs later.
- *  register_activation_hook() is run before any of the provided hooks
+ * Note:
+ * - Default priority is 10. A higher priority runs later.
+ * - register_activation_hook() is run before any of the provided hooks.
  *
- * @see https://developer.wordpress.org/plugins/hooks/actions/#priority
- * @see https://codex.wordpress.org/Function_Reference/register_activation_hook.
+ * See:
+ * - <https://developer.wordpress.org/plugins/hooks/actions/#priority>
+ * - <https://codex.wordpress.org/Function_Reference/register_activation_hook>
+ * _____________________________________
  */
+
 register_activation_hook( dirname( __FILE__ ), 'wpdtrt_test_helper_activate' );
 
 add_action( 'init', 'wpdtrt_test_plugin_init', 0 );
@@ -139,54 +174,73 @@ add_action( 'widgets_init', 'wpdtrt_test_widget_init', 10 );
 register_deactivation_hook( dirname( __FILE__ ), 'wpdtrt_test_helper_deactivate' );
 
 /**
- * ===== Plugin config =====
+ * Group: Plugin config
+ * _____________________________________
  */
 
 /**
+ * Function: wpdtrt_test_helper_activate
+ *
  * Register functions to be run when the plugin is activated.
  *
- * @see https://codex.wordpress.org/Function_Reference/register_activation_hook
- * @todo https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128
- * @see See also Plugin::helper_flush_rewrite_rules()
+ * See:
+ * - <https://codex.wordpress.org/Function_Reference/register_activation_hook>
+ * - Plugin::helper_flush_rewrite_rules()
+ *
+ * TODO:
+ * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128>
  */
 function wpdtrt_test_helper_activate() {
 	flush_rewrite_rules();
 }
 
 /**
- * Register functions to be run when the plugin is deactivated.
- * (WordPress 2.0+)
+ * Function: wpdtrt_test_helper_deactivate
  *
- * @see https://codex.wordpress.org/Function_Reference/register_deactivation_hook
- * @todo https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128
- * @see See also Plugin::helper_flush_rewrite_rules()
+ * Register functions to be run when the plugin is deactivated.
+ *
+ * Note:
+ * - WordPress 2.0+
+ *
+ * See:
+ * - <https://codex.wordpress.org/Function_Reference/register_deactivation_hook>
+ * - Plugin::helper_flush_rewrite_rules()
+ *
+ * TODO:
+ * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/128>
  */
 function wpdtrt_test_helper_deactivate() {
 	flush_rewrite_rules();
 }
 
 /**
- * Plugin initialisaton
+ * Function: wpdtrt_test_plugin_init
  *
- * We call init before widget_init so that the plugin object properties are available to it.
- * If widget_init is not working when called via init with priority 1, try changing the priority of init to 0.
- * init: Typically used by plugins to initialize. The current user is already authenticated by this time.
- * widgets_init: Used to register sidebars. Fired at 'init' priority 1 (and so before 'init' actions with priority ≥ 1!)
+ * Plugin initialisaton.
  *
- * @see https://wp-mix.com/wordpress-widget_init-not-working/
- * @see https://codex.wordpress.org/Plugin_API/Action_Reference
- * @todo Add a constructor function to WPDTRT_Blocks_Plugin, to explain the options array
+ * Note:
+ * - We call init before widget_init so that the plugin object properties are available to it.
+ * - If widget_init is not working when called via init with priority 1, try changing the priority of init to 0.
+ * - init: Typically used by plugins to initialize. The current user is already authenticated by this time.
+ * - widgets_init: Used to register sidebars. Fired at 'init' priority 1 (and so before 'init' actions with priority ≥ 1!)
+ *
+ * See:
+ * - <https://wp-mix.com/wordpress-widget_init-not-working/>
+ * - <https://codex.wordpress.org/Plugin_API/Action_Reference>
+ * - <$plugin_options: Adding global options: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-global-options>
+ * - <Options: Adding shortcode or widget options: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-shortcode-or-widget-options>
+ * - <Options: Adding WordPress plugin dependencies: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies>
+ * - <Settings page: Adding a demo shortcode: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Settings-page:-Adding-a-demo-shortcode>
+ *
+ * TODO:
+ * - Add a constructor function to WPDTRT_Blocks_Plugin, to explain the options array.
  */
 function wpdtrt_test_plugin_init() {
 	// pass object reference between classes via global
 	// because the object does not exist until the WordPress init action has fired.
 	global $wpdtrt_test_plugin;
 
-	/**
-	 * Global options
-	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-global-options Options: Adding global options
-	 */
+	// Global options.
 	$plugin_options = array(
 		'api_key' => array(
 			'type'  => 'password',
@@ -195,11 +249,7 @@ function wpdtrt_test_plugin_init() {
 		),
 	);
 
-	/**
-	 * Shortcode or Widget options
-	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-shortcode-or-widget-options Options: Adding shortcode or widget options
-	 */
+	// Shortcode or Widget options.
 	$instance_options = array(
 		'hide' => array(
 			'type'  => 'checkbox',
@@ -207,16 +257,8 @@ function wpdtrt_test_plugin_init() {
 		),
 	);
 
-	/**
-	 * Plugin dependencies
-	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Options:-Adding-WordPress-plugin-dependencies Options: Adding WordPress plugin dependencies
-	 */
 	$plugin_dependencies = array();
 
-	/**
-	 *  UI Messages
-	 */
 	$ui_messages = array(
 		'demo_data_description'       => __( 'This demo was generated from the following data', 'wpdtrt-test' ),
 		'demo_data_displayed_length'  => __( 'results displayed', 'wpdtrt-test' ),
@@ -235,11 +277,6 @@ function wpdtrt_test_plugin_init() {
 		'success'                     => __( 'settings successfully updated', 'wpdtrt-test' ),
 	);
 
-	/**
-	 * Demo shortcode
-	 *
-	 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Settings-page:-Adding-a-demo-shortcode Settings page: Adding a demo shortcode
-	 */
 	$demo_shortcode_params = array(
 		'name'   => 'wpdtrt_test_shortcode',
 		'hide'   => 1,
@@ -247,7 +284,9 @@ function wpdtrt_test_plugin_init() {
 	);
 
 	/**
-	 * Plugin configuration
+	 * Variable: wpdtrt_test_plugin
+	 *
+	 * Instance of WPDTRT_Test_Plugin.
 	 */
 	$wpdtrt_test_plugin = new WPDTRT_Test_Plugin(
 		array(
@@ -269,11 +308,14 @@ function wpdtrt_test_plugin_init() {
 }
 
 /**
- * ===== Rewrite config =====
+ * Group: Rewrite config
+ * _____________________________________
  */
 
 /**
- * Register Rewrite
+ * Function: wpdtrt_test_rewrite_init
+ *
+ * Register Rewrite.
  */
 function wpdtrt_test_rewrite_init() {
 
@@ -285,11 +327,14 @@ function wpdtrt_test_rewrite_init() {
 }
 
 /**
- * ===== Shortcode config =====
+ * Group: Shortcode config
+ * _____________________________________
  */
 
 /**
- * Register Shortcode
+ * Function: wpdtrt_test_shortcode_init
+ *
+ * Register Shortcode.
  */
 function wpdtrt_test_shortcode_init() {
 
@@ -308,13 +353,20 @@ function wpdtrt_test_shortcode_init() {
 }
 
 /**
- * ===== Taxonomy config =====
+ * Group: Taxonomy config
+ * _____________________________________
  */
 
 /**
- * Register Taxonomy
+ * Function: wpdtrt_test_taxonomy_init
  *
- * @return object Taxonomy/
+ * Register Taxonomy.
+ *
+ * Returns:
+ *   An instance of the WPDTRT_Test_Taxonomy.
+ *
+ * TODO:
+ * - what is the type of this return?
  */
 function wpdtrt_test_taxonomy_init() {
 
@@ -366,21 +418,30 @@ function wpdtrt_test_taxonomy_init() {
 }
 
 /**
- * ===== Widget config =====
+ * Group: Widget config
+ * _____________________________________
  */
 
 /**
- * Register a WordPress widget, passing in an instance of our custom widget class
- * The plugin does not require registration, but widgets and shortcodes do.
- * Note: widget_init fires before init, unless init has a priority of 0
+ * Function: wpdtrt_test_widget_init
  *
- * @uses        ../../../../wp-includes/widgets.php
- * @see         https://codex.wordpress.org/Function_Reference/register_widget#Example
- * @see         https://wp-mix.com/wordpress-widget_init-not-working/
- * @see         https://codex.wordpress.org/Plugin_API/Action_Reference
- * @uses        https://github.com/dotherightthing/wpdtrt/tree/master/library/sidebars.php
- * @todo        Add form field parameters to the options array
- * @todo        Investigate the 'classname' option
+ * Register a WordPress widget, passing in an instance of our custom widget class.
+ *
+ * - The plugin does not require registration, but widgets and shortcodes do.
+ * - Note: widget_init fires before init, unless init has a priority of 0
+ *
+ * Uses:
+ * - ../../../../wp-includes/widgets.php
+ * - <https://github.com/dotherightthing/wpdtrt/tree/master/library/sidebars.php>
+ *
+ * See:
+ * - <https://codex.wordpress.org/Function_Reference/register_widget#Example
+ * - <https://wp-mix.com/wordpress-widget_init-not-working/
+ * - <https://codex.wordpress.org/Plugin_API/Action_Reference
+ *
+ * TODO:
+ * - Add form field parameters to the options array.
+ * - Investigate the 'classname' option.
  */
 function wpdtrt_test_widget_init() {
 

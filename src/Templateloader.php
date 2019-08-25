@@ -1,43 +1,55 @@
 <?php
 /**
- * Plugin template loader class.
+ * File: src/Templateloader.php
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
- * @since     0.6.0
+ * Plugin template loader class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0;
 
 if ( ! class_exists( 'Templateloader' ) ) {
 
 	/**
-	 * Template loader sub class
+	 * Class: Templateloader
 	 *
-	 * Extends the base class to inherit functionality.
-	 * Displays templates in the Templates dropdown in the page edit screen.
-	 * Allows the author to override these from the templates folder in their own theme.
+	 * Template loader sub class.
 	 *
-	 * @since   0.6.0
-	 * @version 1.0.0
-	 * @uses    https://github.com/wpexplorer/page-templater
-	 * @see     http://www.wpexplorer.com/wordpress-page-templates-plugin/
+	 * Note:
+	 * - Extends the base class to inherit functionality.
+	 * - Displays templates in the Templates dropdown in the page edit screen.
+	 * - Allows the author to override these from the templates folder in their own theme.
+	 *
+	 * Uses:
+	 * - <https://github.com/wpexplorer/page-templater>
+	 * - <http://www.wpexplorer.com/wordpress-page-templates-plugin/>
+	 *
+	 * Since:
+	 *   0.6.0
 	 */
 	class Templateloader extends \Gamajo_Template_Loader {
 
 		/**
-		 * Pass options to Gamajo class
-		 * This constructor automatically initialises the object's properties
-		 * when it is instantiated.
+		 * Constructor: __construct
 		 *
-		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Templateloader {}
+		 * Pass options to Gamajo class.
 		 *
-		 * @param     array $options Plugin options.
-		 * @since     1.0.0
-		 * @version   1.1.0
+		 * Note:
+		 * - This constructor automatically initialises the object's properties
+		 *   when it is instantiated.
+		 * - This is a public method as every plugin uses a new instance
+		 *
+		 * Example:
+		 * --- php
+		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Templateloader {}
+		 * ---
+		 *
+		 * Parameters:
+		 *   $options - Plugin options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function __construct( $options ) {
+		public function __construct( array $options ) {
 
 			// define variables.
 			$filter_prefix             = null;

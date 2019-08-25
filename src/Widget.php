@@ -1,45 +1,61 @@
 <?php
 /**
+ * File: src/Widget.php
+ *
  * Plugin widget class.
  *
- * Boilerplate to generate a widget, which is configured in WP Admin, and can be displayed in sidebars.
- *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
+ * Note:
+ * - Boilerplate to generate a widget, which is configured in WP Admin, and can be displayed in sidebars.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0;
 
 if ( ! class_exists( 'Widget' ) ) {
 
 	/**
+	 * Class: Widget
+	 *
 	 * Plugin Widget sub class.
 	 *
-	 * Extends and inherits from WP_Widget.
-	 * WP_Widget must be extended for each widget, and WP_Widget::widget() must be overridden.
-	 * Class names should use capitalized words separated by underscores. Any acronyms should be all upper case.
+	 * Note:
+	 * - Extends and inherits from WP_Widget.
+	 * - WP_Widget must be extended for each widget, and WP_Widget::widget() must be overridden.
+	 * - Class names should use capitalized words separated by underscores. Any acronyms should be all upper case.
 	 *
-	 * @since       0.1.0
-	 * @version     1.0.0
-	 * @uses        ../../../../wp-includes/class-wp-widget.php:
-	 * @see         https://developer.wordpress.org/reference/classes/wp_widget/
-	 * @see         https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions
+	 * Uses:
+	 * - ../../../../wp-includes/class-wp-widget.php:
+	 *
+	 * See:
+	 * - <https://developer.wordpress.org/reference/classes/wp_widget/>
+	 * - <https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions>
+	 *
+	 * Since:
+	 *   0.1.0
 	 */
 	class Widget extends \WP_Widget {
 
 		/**
-		 * Hook the plugin in to WordPress
-		 * This constructor automatically initialises the object's properties
-		 * when it is instantiated.
+		 * Constructor: __construct
 		 *
-		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Widget {}
+		 * Hook the plugin in to WordPress.
 		 *
-		 * @param     array $options Widget options.
-		 * @since     1.0.0
-		 * @version   1.1.0
+		 * Note:
+		 * - This constructor automatically initialises the object's properties
+		 *   when it is instantiated.
+		 * - This is a public method as every plugin uses a new instance
+		 *
+		 * Example:
+		 * --- php
+		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Widget {}
+		 * ---
+		 *
+		 * Parameters:
+		 *   $options - Widget options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function __construct( $options ) {
+		public function __construct( array $options ) {
 
 			// define variables.
 			$name                      = null;
@@ -74,92 +90,140 @@ if ( ! class_exists( 'Widget' ) ) {
 		}
 
 		/**
-		 * ===== Getters and Setters =====
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
-		 * Set the template name
+		 * Method: set_template_name
 		 *
-		 * @param string $template_name Template name.
-		 * @since 1.0.0
+		 * Set the template name.
+		 *
+		 * Parameters:
+		 *   $template_name - Template name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_template_name( $template_name ) {
+		protected function set_template_name( string $template_name ) {
 			$this->template_name = $template_name;
 		}
 
 		/**
-		 * Get the template name
+		 * Method: get_template_name
 		 *
-		 * @return string
-		 * @since 1.0.0
+		 * Get the template name.
+		 *
+		 * Returns:
+		 *   Template name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function get_template_name() {
+		protected function get_template_name() : string {
 			return $this->template_name;
 		}
 
 		/**
-		 * Set instance options
+		 * Method: set_instance_options
 		 *
-		 * @param array $instance_options Instance options.
-		 * @since 1.0.0
+		 * Set instance options.
+		 *
+		 * Parameters:
+		 *   $instance_options - Instance options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_instance_options( $instance_options ) {
+		protected function set_instance_options( array $instance_options ) {
 			$this->instance_options = $instance_options;
 		}
 
 		/**
-		 * Get default options
+		 * Method: get_instance_options
 		 *
-		 * @return array
-		 * @since 1.0.0
+		 * Get default options.
+		 *
+		 * Returns:
+		 *   Instance options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function get_instance_options() {
+		protected function get_instance_options() : array {
 			return $this->instance_options;
 		}
 
 		/**
-		 * Set parent plugin, which contains shortcode/widget options
-		 * This is a global which is passed to the function which instantiates this object.
-		 * This is necessary because the object does not exist until the WordPress init action has fired.
+		 * Method: set_plugin
 		 *
-		 * @param object $plugin Plugin.
-		 * @since 1.0.0
-		 * @todo Shortcode/Widget implementation questions (#15)
+		 * Set parent plugin, which contains shortcode/widget options.
+		 *
+		 * Note:
+		 * - This is a global which is passed to the function which instantiates this object.
+		 * - This is necessary because the object does not exist until the WordPress init action has fired.
+		 *
+		 * Parameters:
+		 *   $plugin - Plugin.
+		 *
+		 * TODO:
+		 * - Shortcode/Widget implementation questions (#15)
+		 * - Set correct type (not object)
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
 		protected function set_plugin( $plugin ) {
 			$this->plugin = $plugin;
 		}
 
 		/**
-		 * Get parent plugin, which contains shortcode/widget options
+		 * Method: get_plugin
 		 *
-		 * @return object
-		 * @since 1.0.0
+		 * Get parent plugin, which contains shortcode/widget options.
+		 *
+		 * Returns:
+		 *   Plugin
+		 *
+		 * TODO:
+		 * - Add return type (not object)
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
 		public function get_plugin() {
 			return $this->plugin;
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**
-		 * Form field templating for the widget admin page
+		 * Method: render_form_element
 		 *
-		 * @param       array  $instance The WordPress Widget instance.
-		 * @param       string $name Name.
-		 * @param       array  $attributes Attributes.
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @todo        Add field validation feedback (#10)
+		 * Form field templating for the widget admin page.
+		 *
+		 * Parameters:
+		 * $instance - The WordPress Widget instance
+		 * $name - Name
+		 * $attributes - Attributes
+		 *
+		 * Returns:
+		 * - Form element HTML
+		 *
+		 * TODO:
+		 * - Add field validation feedback (#10)
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function render_form_element( $instance, $name, $attributes = array() ) {
+		public function render_form_element( array $instance, string $name, array $attributes = [] ) : string {
 
 			// these options don't have attributes.
 			if ( 'description' === $name ) {
-				return;
+				return '';
 			}
 
 			// define variables.
@@ -235,11 +299,13 @@ if ( ! class_exists( 'Widget' ) ) {
 		}
 
 		/**
-		 * Echoes the widget content to the front-end
+		 * Method: widget
 		 *
-		 * @param array $args     Display arguments including 'before_title', 'after_title',
-		 *                        'before_widget', and 'after_widget'.
-		 * @param array $instance The settings for the particular instance of the widget.
+		 * Echoes the widget content to the front-end.
+		 *
+		 * Parameters:
+		 *   $args - Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
+		 *   $instance - The settings for the particular instance of the widget.
 		 */
 		public function widget( $args, $instance ) {
 
@@ -299,14 +365,18 @@ if ( ! class_exists( 'Widget' ) ) {
 		}
 
 		/**
-		 * Updates a particular instance of a widget, by replacing the old instance with data from the new instance
+		 * Method: update
 		 *
-		 * @param array $new_instance New settings for this instance as input by the user via
-		 *  WP_Widget::form().
-		 * @param array $old_instance Old settings for this instance.
-		 * @return array Settings to save or bool false to cancel saving.
+		 * Updates a particular instance of a widget, by replacing the old instance with data from the new instance.
+		 *
+		 * Parameters:
+		 *   $new_instance New settings for this instance as input by the user via WP_Widget::form().
+		 *   $old_instance Old settings for this instance.
+		 *
+		 * Returns:
+		 *   $instance - Instance
 		 */
-		public function update( $new_instance, $old_instance ) {
+		public function update( $new_instance, $old_instance ) : array {
 
 			// Save user input (widget options).
 			$instance         = $old_instance;
@@ -344,10 +414,15 @@ if ( ! class_exists( 'Widget' ) ) {
 		}
 
 		/**
-		 * Outputs the settings update form in wp-admin.
-		 *  Default return is 'noform'.
+		 * Method: form
 		 *
-		 * @param array $instance Current settings.
+		 * Outputs the settings update form in wp-admin.
+		 *
+		 * Note:
+		 * - Default return is 'noform'.
+		 *
+		 * Parameters:
+		 *   $instance - Current settings
 		 */
 		public function form( $instance ) {
 

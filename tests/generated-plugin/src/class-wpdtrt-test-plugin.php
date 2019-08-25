@@ -1,43 +1,61 @@
 <?php
 /**
+ * File: tests/generated-plugin/src/class-wpdtrt-test-plugin.php
+ *
  * Plugin sub class.
  *
- * @package WPDTRT_Test
- * @since   0.7.16 DTRT WordPress Plugin Boilerplate Generator
- * @version 1.0.0
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
 
 /**
- * Extend the base class to inherit boilerplate functionality.
- * Adds application-specific methods.
+ * Class: WPDTRT_Test_Plugin
  *
- * @since   1.0.0
- * @version 1.0.0
+ * Extend the base class to inherit boilerplate functionality.
+ *
+ * Note:
+ * - Adds application-specific methods.
+ *
+ * Since:
+ *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
-class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Plugin {
+class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Plugin {
 
 	/**
+	 * Constructor: __construct
+	 *
 	 * Supplement plugin initialisation.
 	 *
-	 * @param     array $options Plugin options.
-	 * @since     1.0.0
-	 * @version   1.1.0
+	 * Parameters:
+	 *   $options - Plugin options
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
-	public function __construct( $options ) {
+	public function __construct( array $options ) {
 
 		// edit here.
 		parent::__construct( $options );
 	}
 
 	/**
-	 * ====== WordPress Integration ======
+	 * Group: WordPress Integration
+	 * _____________________________________
 	 */
 
 	/**
-	 * Supplement plugin's WordPress setup.
-	 * Note: Default priority is 10. A higher priority runs later.
+	 * Method: wp_setup
 	 *
-	 * @see https://codex.wordpress.org/Plugin_API/Action_Reference Action order
+	 * Supplement plugin's WordPress setup.
+	 *
+	 * Note:
+	 * - Default priority is 10. A higher priority runs later.
+	 *
+	 * See:
+	 * - <Action order: https://codex.wordpress.org/Plugin_API/Action_Reference>
+	 *
+	 * Since:
+	 *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
 	 */
 	protected function wp_setup() {
 
@@ -46,18 +64,22 @@ class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5
 	}
 
 	/**
-	 * ====== Getters and Setters ======
+	 * Group: Getters and Setters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Renderers =====
+	 * Group: Renderers
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Filters =====
+	 * Group: Filters
+	 * _____________________________________
 	 */
 
 	/**
-	 * ===== Helpers =====
+	 * Group: Helpers
+	 * _____________________________________
 	 */
 }

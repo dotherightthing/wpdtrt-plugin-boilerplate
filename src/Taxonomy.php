@@ -1,42 +1,54 @@
 <?php
 /**
- * Plugin taxonomy class.
+ * File: src/Taxonomy.php
  *
- * @package   WPDTRT_Plugin_Boilerplate
- * @version   1.0.0
+ * Plugin taxonomy class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0;
 
 if ( ! class_exists( 'Taxonomy' ) ) {
 
 	/**
-	 * Plugin Taxonomy base class.
-	 *  Boilerplate functions, including
-	 *  options support, registration, template loading, custom fields
+	 * Class: Taxonomy
 	 *
-	 * @param       array $atts Optional taxonomy attributes specified by the user.
-	 * @return      Taxonomy
-	 * @since       1.0.0
-	 * @version     1.0.0
-	 * @see         http://php.net/manual/en/function.ob-start.php
-	 * @see         http://php.net/manual/en/function.ob-get-clean.php
+	 * Plugin Taxonomy base class.
+	 *
+	 * Note:
+	 * - Contains boilerplate functions, including
+	 *   options support, registration, template loading, custom fields
+	 *
+	 * See:
+	 * - <http://php.net/manual/en/function.ob-start.php>
+	 * - <http://php.net/manual/en/function.ob-get-clean.php>
+	 *
+	 * Since:
+	 *   1.0.0
 	 */
 	class Taxonomy {
 
 		/**
-		 * Hook the plugin in to WordPress
-		 * This constructor automatically initialises the object's properties
-		 * when it is instantiated.
+		 * Constructor: __construct
 		 *
-		 * This is a public method as every plugin uses a new instance:
-		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5_13\Taxonomy {}
+		 * Hook the plugin in to WordPress.
 		 *
-		 * @param     array $options Shortcode options.
-		 * @since     1.0.0
-		 * @version   1.1.0
+		 * Note:
+		 * - This constructor automatically initialises the object's properties
+		 *   when it is instantiated.
+		 * - This is a public method as every plugin uses a new instance.
+		 *
+		 * Example:
+		 * --- php
+		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Taxonomy {}
+		 * ---
+		 *
+		 * Parameters:
+		 *   $options - Shortcode options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function __construct( $options ) {
+		public function __construct( array $options ) {
 
 			// define variables.
 			$name                      = null;
@@ -77,14 +89,18 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
+		 * Method: wp_setup
+		 *
 		 * Initialise taxonomy options ONCE.
 		 *
-		 * @since 1.0.0
-		 * @see https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
-		 * @see https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/
+		 * See:
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 * - <https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/>
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
 		protected function wp_setup() {
-
 			$taxonomy_name = $this->get_name();
 
 			/**
@@ -104,134 +120,196 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * ===== Setters and Getters =====
+		 * Group: Setters and Getters
+		 * _____________________________________
 		 */
 
 		/**
-		 * Get the value of $name
+		 * Method: get_name
 		 *
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $name.
+		 *
+		 * Returns:
+		 *   Name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function get_name() {
+		public function get_name() : string {
 			return $this->name;
 		}
 
 		/**
-		 * Set the value of $name
+		 * Method: set_name
 		 *
-		 * @param       string $new_name New name.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Set the value of $name.
+		 *
+		 * Parameters:
+		 *   $new_name - New name
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_name( $new_name ) {
+		protected function set_name( string $new_name ) {
 			$this->name = $new_name;
 		}
 
 		/**
-		 * Get default options
+		 * Method: get_instance_options
 		 *
-		 * @return array
-		 * @since 1.0.0
+		 * Get default options.
+		 *
+		 * Returns:
+		 *   Instance options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function get_instance_options() {
+		public function get_instance_options() : array {
 			return $this->instance_options;
 		}
 
 		/**
-		 * Set instance options
+		 * Method: set_instance_options
 		 *
-		 * @param array $instance_options Instance options.
-		 * @since 1.0.0
+		 * Set instance options.
+		 *
+		 * Parameters:
+		 *   $instance_options - Instance options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_instance_options( $instance_options ) {
+		protected function set_instance_options( array $instance_options ) {
 			$this->instance_options = $instance_options;
 		}
 
 		/**
-		 * Get the value of $labels
+		 * Method: get_labels
 		 *
-		 * @return      array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $labels.
+		 *
+		 * Returns:
+		 *   Labels
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function get_labels() {
+		public function get_labels() : array {
 			return $this->labels;
 		}
 
 		/**
-		 * Set the value of $labels
+		 * Method: set_labels
 		 *
-		 * @param       array $labels Labels.
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @todo        Limit to allowed labels
+		 * Set the value of $labels.
+		 *
+		 * Parameters:
+		 *   $labels - Labels
+		 *
+		 * TODO:
+		 * - Limit to allowed labels
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_labels( $labels ) {
+		protected function set_labels( array $labels ) {
 			$this->labels = $labels;
 		}
 
 		/**
-		 * Set parent plugin, which contains shortcode/widget options
-		 * This is a global which is passed to the function which instantiates this object.
-		 * This is necessary because the object does not exist until the WordPress init action has fired.
+		 * Method: set_plugin
 		 *
-		 * @param object $plugin Plugin.
-		 * @since 1.0.0
-		 * @todo Shortcode/Widget implementation questions (#15)
+		 * Set parent plugin, which contains shortcode/widget options.
+		 *
+		 * Note:
+		 * - This is a global which is passed to the function which instantiates this object.
+		 * - This is necessary because the object does not exist until the WordPress init action has fired.
+		 *
+		 * Parameters:
+		 *   $plugin - Plugin
+		 *
+		 * TODO:
+		 * - Shortcode/Widget implementation questions (#15)
+		 * - Add the appropriate type for $plugin (not object)
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
 		protected function set_plugin( $plugin ) {
 			$this->plugin = $plugin;
 		}
 
 		/**
-		 * Get parent plugin, which contains shortcode/widget options
+		 * Method: get_plugin
 		 *
-		 * @return object
-		 * @since 1.0.0
+		 * Get parent plugin, which contains shortcode/widget options.
+		 *
+		 * Returns:
+		 *   Plugin
+		 *
+		 * TODO:
+		 * - Add return type (not object)
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
 		public function get_plugin() {
 			return $this->plugin;
 		}
 
 		/**
-		 * Get the value of $options
+		 * Method: get_options
 		 *
-		 * @return      array
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Get the value of $options.
+		 *
+		 * Returns:
+		 *   Options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function get_options() {
+		public function get_options() : array {
 			return $this->options;
 		}
 
 		/**
+		 * Method: set_options
+		 *
 		 * Set the value of $options.
 		 *
-		 * @param       array $new_options New options.
-		 * @since       1.0.0
-		 * @version     1.0.0
+		 * Parameters:
+		 *   $new_options - New options
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		protected function set_options( $new_options ) {
+		protected function set_options( array $new_options ) {
 			$this->options = $new_options;
 		}
 
 		/**
-		 * ===== Data management =====
+		 * Group: Data management
+		 * _____________________________________
 		 */
 
 		/**
-		 * Save custom meta from the term create screen
+		 * Method: create_options
 		 *
-		 * @param       int $term_id Term ID.
-		 * @param       int $tt_id Term taxonomy ID.
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see         https://developer.wordpress.org/reference/hooks/created_taxonomy/
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+		 * Save custom meta from the term create screen.
+		 *
+		 * Parameters:
+		 *   $term_id - Term ID
+		 *   $tt_id - Term taxonomy ID
+		 *
+		 * See:
+		 * - <https://developer.wordpress.org/reference/hooks/created_taxonomy/>
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function create_options( $term_id, $tt_id ) {
+		public function create_options( int $term_id, int $tt_id ) {
 
 			$taxonomy_options = $this->get_options();
 
@@ -245,16 +323,24 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * Display custom meta on the term edit screen
+		 * Method: edit_options
 		 *
-		 * @param       object $tag Current taxonomy term object.
-		 * @param       string $taxonomy Current taxonomy slug.
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see         https://developer.wordpress.org/reference/hooks/taxonomy_edit_form_fields/
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+		 * Display custom meta on the term edit screen.
+		 *
+		 *
+		 * Parameters:
+		 *   $tag - Current taxonomy term object.
+		 *   $taxonomy - Current taxonomy slug.
+		 *
+		 * See:
+		 * - <https://developer.wordpress.org/reference/hooks/taxonomy_edit_form_fields/>
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 *
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function edit_options( $tag, $taxonomy ) {
+		public function edit_options( object $tag, string $taxonomy ) {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
@@ -263,16 +349,22 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
+		 * Method: update_options
+		 *
 		 * Save custom meta from the term edit screen.
 		 *
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @param       int $term_id Term ID.
-		 * @param       int $tt_id Term taxonomy ID.
-		 * @see         https://developer.wordpress.org/reference/hooks/edited_taxonomy/
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+		 * Parameters:
+		 *   $term_id - Term ID
+		 *   $tt_id - Term taxonomy ID
+		 *
+		 * See:
+		 * - <https://developer.wordpress.org/reference/hooks/edited_taxonomy/>
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function update_options( $term_id, $tt_id ) {
+		public function update_options( int $term_id, int $tt_id ) {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
@@ -285,16 +377,24 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * Display options in the term list table
+		 * Method: options_columns
 		 *
-		 * @param       array $columns Table columns.
-		 * @return      array $columns
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see         https://developer.wordpress.org/reference/?
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+		 * Display options in the term list table.
+		 *
+		 * Parameters:
+		 *   $columns - Table columns
+		 *
+		 * Returns:
+		 *   Columns
+		 *
+		 * See:
+		 * - <https://developer.wordpress.org/reference/>
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function options_columns( $columns ) {
+		public function options_columns( array $columns ) : array {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
@@ -307,17 +407,23 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
+		 * Method: options_columns_content
+		 *
 		 * Display options in the term list table.
 		 *
-		 * @param       string $content Content.
-		 * @param       string $column_name Content name.
-		 * @param       number $term_id Term ID.
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see         https://developer.wordpress.org/reference/?
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+		 * Parameters:
+		 *   $content - Content
+		 *   $column_name - Content name
+		 *   $term_id - Term ID
+		 *
+		 * See:
+		 * - <https://developer.wordpress.org/reference/>
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function options_columns_content( $content, $column_name, $term_id ) {
+		public function options_columns_content( string $content, string $column_name, int $term_id ) {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
@@ -339,17 +445,27 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * Make options sortable in the term list table
+		 * Method: options_columns_sortable
 		 *
-		 * @param       array $sortable Sortable array.
-		 * @return      array $sortable
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see         https://developer.wordpress.org/reference/?
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
-		 * @todo        https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/42
+		 * Make options sortable in the term list table.
+		 *
+		 * Parameters:
+		 *   $sortable - Sortable array.
+		 *
+		 * Returns:
+		 *   Sortable array
+		 *
+		 * See:
+		 * - <https://developer.wordpress.org/reference/>
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 *
+		 * TODO:
+		 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/42>
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function options_columns_sortable( $sortable ) {
+		public function options_columns_sortable( array $sortable ) : array {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
@@ -362,19 +478,26 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * ===== Renderers =====
+		 * Group: Renderers
+		 * _____________________________________
 		 */
 
 		/**
-		 * Display custom meta on the term create screen
+		 * Method: render_options
 		 *
-		 * @param       string $taxonomy The taxonomy slug.
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
-		 * @see         https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/
+		 * Display custom meta on the term create screen.
+		 *
+		 * Parameters:
+		 *   $taxonomy - The taxonomy slug
+		 *
+		 * See:
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 * - <https://developer.wordpress.org/reference/hooks/taxonomy_add_form_fields/>
+		 *
+		 * Since:
+		 *   1.0.0
 		 */
-		public function render_options( $taxonomy ) {
+		public function render_options( string $taxonomy ) {
 			$taxonomy_options = $this->get_options();
 
 			foreach ( $taxonomy_options as $name => $attributes ) {
@@ -383,22 +506,32 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * Form field templating for the taxonomy admin page
+		 * Method: render_form_element
 		 *
-		 * @param       string $name Name.
-		 * @param       array  $attributes Attributes.
-		 * @param       string $term_id Taxonomy term ID (available in edit_options).
-		 * @return      string
-		 * @since       1.0.0
-		 * @version     1.0.0
-		 * @todo        Add field validation feedback (#10)
-		 * @see         https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/
+		 * Form field templating for the taxonomy admin page.
+		 *
+		 * Parameters:
+		 *   $name - Name
+		 *   $attributes - Attributes
+		 *   $term_id - Taxonomy term ID (available in edit_options)
+		 *
+		 * See:
+		 * - <https://www.smashingmagazine.com/2015/12/how-to-use-term-meta-data-in-wordpress/>
+		 *
+		 * Returns:
+		 * - Form element HTML
+		 *
+		 * TODO:
+		 * - Add field validation feedback (#10)
+		 *
+		 * Since:
+		 *  1.0.0
 		 */
-		public function render_form_element( $name, $attributes = array(), $term_id = null ) {
+		public function render_form_element( string $name, array $attributes = [], string $term_id ) : string {
 
 			// these options don't have attributes.
 			if ( 'description' === $name ) {
-				return;
+				return '';
 			}
 
 			// define variables.
@@ -463,23 +596,32 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * ===== Registerers =====
+		 * Group: Registerers
+		 * _____________________________________
 		 */
 
 		/**
-		 * Register taxonomy
+		 * Method: register_taxonomy
 		 *
-		 * @uses ../../../../wp-includes/taxonomy.php
-		 * @see https://codex.wordpress.org/Function_Reference/register_taxonomy
-		 * @see https://www.smashingmagazine.com/2012/01/create-custom-taxonomies-wordpress/
-		 * @see https://code.tutsplus.com/articles/the-rewrite-api-post-types-taxonomies--wp-25488
+		 * Register taxonomy.
 		 *
-		 * Register Custom Taxonomy BEFORE the Custom Post Type
-		 * for the rewrite rule to work
-		 * for WordPress to build the URL correctly
-		 * @see https://cnpagency.com/blog/the-right-way-to-do-wordpress-custom-taxonomy-rewrites/
-		 * @see https://mondaybynoon.com/revisiting-custom-post-types-taxonomies-permalinks-slugs/
-		 * @todo Test how redundant it is to specify the advanced options here (#126)
+		 * Uses:
+		 * - ../../../../wp-includes/taxonomy.php
+		 *
+		 * Note:
+		 * - Register Custom Taxonomy BEFORE the Custom Post Type,
+		 *   for the rewrite rule to work and
+		 *   for WordPress to build the URL correctly
+		 *
+		 * TODO:
+		 * - Test how redundant it is to specify the advanced options here (#126)
+		 *
+		 * See:
+		 * - <https://codex.wordpress.org/Function_Reference/register_taxonomy>
+		 * - <https://www.smashingmagazine.com/2012/01/create-custom-taxonomies-wordpress/>
+		 * - <https://code.tutsplus.com/articles/the-rewrite-api-post-types-taxonomies--wp-25488>
+		 * - <https://cnpagency.com/blog/the-right-way-to-do-wordpress-custom-taxonomy-rewrites/>
+		 * - <https://mondaybynoon.com/revisiting-custom-post-types-taxonomies-permalinks-slugs/>
 		 */
 		public function register_taxonomy() {
 
@@ -747,15 +889,22 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * Recursively get taxonomy and its children
+		 * Method: get_taxonomy_hierarchy
 		 *
-		 * @param int    $post_id - Post ID.
-		 * @param string $taxonomy - Taxonomy name.
-		 * @param int    $parent - Parent Term ID (0 == no parent / topmost term in hierarchy).
-		 * @return array Multidimensional array preserving relationship between parents and children
-		 * @see Adapted from https://www.daggerhart.com/wordpress-get-taxonomy-hierarchy-including-children/
+		 * Recursively get taxonomy and its children.
+		 *
+		 * Parameters:
+		 *   $post_id - Post ID
+		 *   $taxonomy - Taxonomy name
+		 *   $parent - Parent Term ID (0 == no parent / topmost term in hierarchy)
+		 *
+		 * Returns:
+		 *   Multidimensional array preserving relationship between parents and children
+		 *
+		 * See:
+		 * - Adapted from <https://www.daggerhart.com/wordpress-get-taxonomy-hierarchy-including-children/>
 		 */
-		public function get_taxonomy_hierarchy( $post_id, $taxonomy, $parent = 0 ) {
+		public function get_taxonomy_hierarchy( int $post_id, string $taxonomy, int $parent = 0 ) : array {
 			$taxonomy = is_array( $taxonomy ) ? array_shift( $taxonomy ) : $taxonomy;
 
 			// Get all direct decendants of the $parent.
@@ -787,30 +936,44 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		}
 
 		/**
-		 * Replace Taxonomy %placeholders% in Custom Post Type permalinks
-		 *  as taxonomy terms do not automatically appear in Custom Post Type permalinks.
-		 *  The placeholder will be replaced by the hierarchical term selection (parent_term/child_term/grandchild_term)
+		 * Method: replace_taxonomy_in_cpt_permalinks
 		 *
-		 * @param string $permalink The post URL.
-		 * @param object $post      The post object.
-		 * @param bool   $leavename Whether to keep the post name.
-		 * @return $permalink
-		 * @example
-		 *  // wpdtrt-dbth/library/register_post_type_tourdiaries.php
-		 *  'rewrite' => array(
-		 *    'slug' => 'tourdiaries/%tours%/%wpdtrt_tourdates_cf_daynumber%'
-		 *    'with_front' => false
-		 *  )
-		 * @see https://codex.wordpress.org/Plugin_API/Filter_Reference/post_type_link
-		 * @see http://shibashake.com/wordpress-theme/add-custom-taxonomy-tags-to-your-wordpress-permalinks
-		 * @see http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict
-		 * @see https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug
-		 * @see https://kellenmace.com/edit-slug-button-missing-in-wordpress/
-		 * @see https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44 - Permalink Edit button missing
-		 * @todo make this less generic as this class is instantiated for EACH taxonomy
-		 * @todo Replace manual 3 level check for children with a (while?) loop
+		 * Replace Taxonomy %placeholders% in Custom Post Type permalinks.
+		 *
+		 * Note:
+		 * - This is required because taxonomy terms do not automatically appear in Custom Post Type permalinks.
+		 * - The placeholder will be replaced by the hierarchical term selection (parent_term/child_term/grandchild_term).
+		 *
+		 * Parameters:
+		 *   $permalink - The post URL
+		 *   $post - The post object
+		 *   $leavename - Whether to keep the post name
+		 *
+		 * Returns:
+		 *   Permalink
+		 *
+		 * Example:
+		 * --- php
+		 * // wpdtrt-dbth/library/register_post_type_tourdiaries.php
+		 * 'rewrite' => array(
+		 *   'slug' => 'tourdiaries/%tours%/%wpdtrt_tourdates_cf_daynumber%'
+		 *   'with_front' => false
+		 * )
+		 * ---
+		 *
+		 * See:
+		 * - <https://codex.wordpress.org/Plugin_API/Filter_Reference/post_type_link>
+		 * - <http://shibashake.com/wordpress-theme/add-custom-taxonomy-tags-to-your-wordpress-permalinks>
+		 * - <http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict>
+		 * - <https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug>
+		 * - <https://kellenmace.com/edit-slug-button-missing-in-wordpress/>
+		 * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44> - Permalink Edit button missing
+		 *
+		 * TODO:
+		 * - Make this less generic as this class is instantiated for EACH taxonomy
+		 * - Replace manual 3 level check for children with a (while?) loop
 		 */
-		public function replace_taxonomy_in_cpt_permalinks( $permalink, $post, $leavename ) {
+		public function replace_taxonomy_in_cpt_permalinks( $permalink, $post, $leavename ) : string {
 
 			// Get post.
 			$post_id          = $post->ID;
