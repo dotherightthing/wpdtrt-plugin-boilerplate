@@ -53,3 +53,4 @@ class WPDTRT_Test_Widget extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_5
 	 * Group: Helpers
 	 * _____________________________________
 	 */
+}

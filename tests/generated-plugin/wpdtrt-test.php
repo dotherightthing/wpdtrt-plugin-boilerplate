@@ -2,7 +2,9 @@
 /**
  * File: tests/generated-plugin/wpdtrt-test.php
  *
- * Topic: DTRT Test
+ * This plugin is used in unit testing,
+ * to verify that a generated plugin can
+ * run alongside wpdtrt-plugin-boilerplate.
  *
  * @wordpress-plugin
  * Plugin Name:  DTRT Test

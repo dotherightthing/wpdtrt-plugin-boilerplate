@@ -81,3 +81,4 @@ class WPDTRT_Test_Shortcode extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_
 	 * Group: Helpers
 	 * _____________________________________
 	 */
+}
