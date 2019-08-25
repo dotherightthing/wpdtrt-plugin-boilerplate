@@ -1343,7 +1343,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 */
-		public function helper_get_default_value( string $input_type ) : mixed {
+		public function helper_get_default_value( string $input_type ) : ?string {
 
 			if ( 'select' === $input_type ) {
 				$default_value = null;
