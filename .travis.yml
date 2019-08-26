@@ -3,6 +3,9 @@
 # To skip a build, add [ci skip] to the commit message.
 # This file has been linted using: http://lint.travis-ci.org/
 
+# conditions under which to run this build
+if: NOT (branch = master) OR (branch = master AND tag IS present)
+
 # Use PHP, to use Composer, WordPress and PHPUnit
 language: php
 
