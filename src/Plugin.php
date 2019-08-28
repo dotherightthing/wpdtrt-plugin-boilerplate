@@ -1513,7 +1513,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * See:
 		 * - <Add Custom Taxonomy Tags to Your WordPress Permalinks: http://shibashake.com/wordpress-theme/add-custom-taxonomy-tags-to-your-wordpress-permalinks>
 		 * - <Custom Post Type Permalinks - Part 2: http://shibashake.com/wordpress-theme/custom-post-type-permalinks-part-2#conflict>
-		 * - <Wordpress Custom Type permalink containing Taxonomy slug: https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug>
+		 * - <WordPress Custom Type permalink containing Taxonomy slug: https://stackoverflow.com/questions/7723457/wordpress-custom-type-permalink-containing-taxonomy-slug>
 		 * <Edit Slug Button Missing in WordPress: https://kellenmace.com/edit-slug-button-missing-in-wordpress/>
 		 * <#44: Permalink Edit button missing: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/44>
 		 *
