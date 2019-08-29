@@ -12,13 +12,13 @@
   ],
   "overrides": [
     {
-      "files": ["gulpfile.js"],
+      "files": ["gulpfile.babel.js"],
       "rules": {
         "max-len": "off"
       }
     },
     {
-      "files": ["gulpfile.js", "index.js", "test/index.js"],
+      "files": ["gulpfile.babel.js", "index.js", "test/index.js", "gulp-modules/*.js"],
       "rules": {
         "no-console": "off"
       }
