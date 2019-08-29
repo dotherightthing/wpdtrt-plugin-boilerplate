@@ -56,7 +56,7 @@ function autoloadUpdatedDependencies() {
  * Returns:
  *   call to wpdtrtPluginBump (gulp-wpdtrt-plugin-bump)
  */
-function replaceVersions() {
+function replaceVersions( done ) {
   taskHeader(
     '4b',
     'Version',
@@ -64,10 +64,12 @@ function replaceVersions() {
     'Replace version strings'
   );
 
-  return wpdtrtPluginBump( {
-    inputPathRoot: '',
-    inputPathBoilerplate: `/${boilerplatePath()}`
+  wpdtrtPluginBump( {
+    inputPathRoot: './',
+    inputPathBoilerplate: `./${boilerplatePath()}`
   } );
+
+  done();
 }
 
 /**
