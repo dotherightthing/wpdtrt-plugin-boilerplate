@@ -41,7 +41,8 @@ export const buildDev = series(
   compile,
   version,
   documentation,
-  test
+  test,
+  watch
 );
 
 export { compile as compile };
@@ -62,4 +63,4 @@ export { watch as watch };
  * ---
  */
 
-export default ( TRAVIS ? buildTravis : series( buildDev, watch ) );
+export default ( TRAVIS ? buildTravis : buildDev );
