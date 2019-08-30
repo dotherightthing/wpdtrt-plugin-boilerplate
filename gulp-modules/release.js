@@ -7,7 +7,7 @@
  * - <Globtester: http://www.globtester.com/>
  */
 
-import { dest, series } from 'gulp';
+import { dest, series, src } from 'gulp';
 import del from 'del';
 import print from 'gulp-print';
 import zip from 'gulp-zip';
@@ -132,7 +132,7 @@ function cleanUp() {
  * Function: composer
  *
  * Uninstall PHP development dependencies.
- * 
+ *
  * See:
  * - <Reduce vendor components required for deployment: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47>
  */
