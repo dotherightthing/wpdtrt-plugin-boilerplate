@@ -40,6 +40,4 @@ async function wpUnit() {
   console.error( stderr );
 }
 
-export default series(
-  wpUnit
-);
+export default series( wpUnit );
