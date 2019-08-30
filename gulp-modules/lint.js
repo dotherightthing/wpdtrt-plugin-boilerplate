@@ -30,6 +30,7 @@ const sources = {
   js: [
     './composer.json',
     './gulpfile.babel.js',
+    './gulp-modules/*.js',
     './package.json',
     './README.md',
     './cypress/**/*.js',

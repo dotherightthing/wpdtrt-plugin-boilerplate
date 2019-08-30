@@ -77,8 +77,7 @@ function github( done ) {
     log( ' ' );
 
     done();
-  } )
-  .catch( err => {
+  } ).catch( err => {
     console.error( err );
     console.log( `GH_TOKEN.length = ${GH_TOKEN.length}` );
 
