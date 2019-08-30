@@ -14,15 +14,22 @@ import 'regenerator-runtime/runtime';
 import { series } from 'gulp';
 
 // internal modules
+import { TRAVIS } from './gulp-modules/env';
 import compile from './gulp-modules/compile';
 import dependencies from './gulp-modules/dependencies';
 import documentation from './gulp-modules/documentation';
-import { TRAVIS } from './gulp-modules/env';
 import lint from './gulp-modules/lint';
 import release from './gulp-modules/release';
 import test from './gulp-modules/test';
 import version from './gulp-modules/version';
 import watch from './gulp-modules/watch';
+
+console.log( `TRAVIS = ${TRAVIS}` );
+if ( TRAVIS ) {
+  console.log( 'Do buildTravis' );
+} else {
+  console.log( 'Do buildDev' );
+}
 
 // export combo tasks
 export const buildTravis = series(
