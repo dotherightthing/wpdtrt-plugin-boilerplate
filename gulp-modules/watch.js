@@ -35,7 +35,7 @@ const sources = {
  */
 function devWatch() {
   taskHeader(
-    '*',
+    '8',
     'Watch',
     'Compile',
     'JS & SCSS'

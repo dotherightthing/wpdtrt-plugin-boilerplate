@@ -93,12 +93,16 @@ async function updateDependencies() {
 }
 
 const versionDev = series(
+  // 4a
   updateDependencies,
+  // 4b
   replaceVersions,
+  // 4c
   autoloadUpdatedDependencies
 );
 
 const versionTravis = series(
+  // 4b
   replaceVersions
 );
 

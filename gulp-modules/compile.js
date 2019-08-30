@@ -101,7 +101,7 @@ function css() {
  */
 function js() {
   taskHeader(
-    '3a',
+    '3b',
     'Assets',
     'Transpile',
     'ES6+ JS -> ES5 JS'
@@ -118,6 +118,8 @@ function js() {
 }
 
 export default series(
+  // 3a
   css,
+  // 3b
   js
 );

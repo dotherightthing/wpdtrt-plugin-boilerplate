@@ -165,16 +165,24 @@ async function yarn() {
 }
 
 const dependenciesDev = series(
+  // 1a
   yarn,
+  // 1c
   composer,
+  // 1d
   naturalDocs,
+  // 1e
   wpUnit
 );
 
 const dependenciesTravis = series(
+  // 1a
   yarn,
+  // 1b
   github,
+  // 1d
   naturalDocs,
+  // 1e
   wpUnit
 );
 

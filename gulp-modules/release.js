@@ -215,9 +215,14 @@ function zipFiles() {
 }
 
 export default series(
+  // 7a
   composer,
+  // 7b
   yarn,
+  // 7c
   copy,
+  // 7d
   zipFiles,
+  // 7e
   cleanUp
 );

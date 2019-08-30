@@ -62,7 +62,7 @@ const sources = {
  */
 async function composer() {
   taskHeader(
-    '2d',
+    '2c',
     'QA',
     'Lint',
     'composer.json'
@@ -105,7 +105,7 @@ function css() {
  */
 function js() {
   taskHeader(
-    '2c',
+    '2b',
     'QA',
     'Lint',
     'JavaScript'
@@ -147,7 +147,7 @@ function js() {
  */
 function php() {
   taskHeader(
-    '2f',
+    '2e',
     'QA',
     'Lint',
     'PHP'
@@ -190,7 +190,7 @@ function php() {
  */
 function phpCsExclusions() {
   taskHeader(
-    '2e',
+    '2d',
     'QA',
     'Lint',
     'Load PHPCS ruleset'
@@ -255,9 +255,14 @@ function phpCsExclusions() {
 }
 
 export default series(
+  // 2a
   css,
+  // 2b
   js,
+  // 2c
   composer,
+  // 2d
   phpCsExclusions,
+  // 2e
   php
 );

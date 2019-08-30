@@ -26,22 +26,36 @@ import watch from './gulp-modules/watch';
 
 // export combo tasks
 export const buildTravis = series(
+  // 1
   dependencies,
+  // 2
   lint,
+  // 3
   compile,
+  // 4
   version,
+  // 5
   documentation,
+  // 6
   test,
+  // 7
   release
 );
 
 export const buildDev = series(
+  // 1
   dependencies,
+  // 2
   lint,
+  // 3
   compile,
+  // 4
   version,
+  // 5
   documentation,
+  // 6
   test,
+  // 8
   watch
 );
 
