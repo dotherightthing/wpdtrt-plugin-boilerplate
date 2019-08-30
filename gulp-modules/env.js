@@ -24,6 +24,9 @@ const GH_TOKEN = process.env.GH_TOKEN;
  * See:
  * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
  */
-const TRAVIS = typeof process.env.TRAVIS !== 'undefined';
+const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
+
+console.log( `process.env.TRAVIS = ${process.env.TRAVIS}` );
+console.log( `typeof process.env.TRAVIS !== 'undefined' = ${typeof process.env.TRAVIS !== 'undefined'}` );
 
 export default { GH_TOKEN, TRAVIS };
