@@ -4,17 +4,14 @@
  * Gulp tasks to version files prior to a release.
  */
 
-import { series, src } from 'gulp';
-import shell from 'gulp-shell';
+import { series } from 'gulp';
 import wpdtrtPluginBump from 'gulp-wpdtrt-plugin-bump';
 
 // internal modules
 import boilerplatePath from './boilerplate-path';
+import exec from './exec';
 import taskHeader from './task-header';
 import { TRAVIS } from './env';
-
-// constants
-const dummyFile = './README.md';
 
 /**
  * Group: Tasks
@@ -29,7 +26,7 @@ const dummyFile = './README.md';
  * Returns:
  *   A stream to signal task completion
  */
-function autoloadUpdatedDependencies() {
+async function autoloadUpdatedDependencies() {
   taskHeader(
     '4c',
     'Version',
@@ -38,10 +35,7 @@ function autoloadUpdatedDependencies() {
   );
 
   // regenerate autoload files
-  return src( dummyFile, { read: false } )
-    .pipe( shell( [
-      'composer dump-autoload --no-interaction'
-    ] ) );
+  await exec( 'composer dump-autoload --no-interaction' );
 }
 
 /**
@@ -82,7 +76,7 @@ function replaceVersions( done ) {
  * Returns:
  *   A stream to signal task completion
  */
-function updateDependencies() {
+async function updateDependencies() {
   taskHeader(
     '4a',
     'Version',
@@ -94,10 +88,7 @@ function updateDependencies() {
     return true;
   }
 
-  return src( dummyFile, { read: false } )
-    .pipe( shell( [
-      'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest'
-    ] ) );
+  await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
 }
 
 const versionDev = series(

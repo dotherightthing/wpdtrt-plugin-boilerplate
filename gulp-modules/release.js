@@ -7,17 +7,16 @@
  * - <Globtester: http://www.globtester.com/>
  */
 
-import { dest, series, src } from 'gulp';
+import { dest, series } from 'gulp';
 import del from 'del';
 import print from 'gulp-print';
-import shell from 'gulp-shell';
 import zip from 'gulp-zip';
 
 // internal modules
+import exec from './exec';
 import taskHeader from './task-header';
 
 // constants
-const dummyFile = './README.md';
 const pluginName = process.cwd().split( '/' ).pop();
 const sources = {
   // note: paths are relative to gulpfile, not this file
@@ -137,7 +136,7 @@ function cleanUp() {
  * Returns:
  *   A stream to signal task completion
  */
-function composer() {
+async function composer() {
   taskHeader(
     '7a',
     'Release',
@@ -154,10 +153,7 @@ function composer() {
   * Returns:
   *   A stream to signal task completion
   */
-  return src( dummyFile, { read: false } )
-    .pipe( shell( [
-      'composer install --prefer-dist --no-interaction --no-dev --no-suggest'
-    ] ) );
+  await exec( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
 }
 
 /**
@@ -191,7 +187,7 @@ function copy() {
  * Returns:
  *   A stream to signal task completion
  */
-function yarn() {
+async function yarn() {
   taskHeader(
     '7b',
     'Release',
@@ -199,11 +195,7 @@ function yarn() {
     'Yarn'
   );
 
-  // return stream or promise for run-sequence
-  return src( dummyFile, { read: false } )
-    .pipe( shell( [
-      'yarn install --non-interactive --production'
-    ] ) );
+  await exec( 'yarn install --non-interactive --production' );
 }
 
 /**

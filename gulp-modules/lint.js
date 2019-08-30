@@ -5,7 +5,6 @@
  */
 
 import { series, src } from 'gulp';
-import shell from 'gulp-shell';
 import { xmltojson } from 'gulp-xmltojson';
 
 // Ignore missing declaration files
@@ -21,6 +20,7 @@ import tap from 'gulp-tap';
 // internal modules
 import boilerplatePath from './boilerplate-path';
 import decorateLog from './decorate-log';
+import exec from './exec';
 import taskHeader from './task-header';
 
 // constants
@@ -64,7 +64,7 @@ const sources = {
  * Returns:
  *   A stream to signal task completion
  */
-function composer() {
+async function composer() {
   taskHeader(
     '2d',
     'QA',
@@ -72,10 +72,7 @@ function composer() {
     'composer.json'
   );
 
-  return src( sources.composer, { allowEmpty: true } )
-    .pipe( shell( [
-      'composer validate'
-    ] ) );
+  await exec( 'composer validate' );
 }
 
 /**

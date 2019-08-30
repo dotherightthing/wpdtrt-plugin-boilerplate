@@ -4,9 +4,8 @@
  * Gulp tasks to download dependencies.
  */
 
-import { dest, series, src } from 'gulp';
+import { dest, series } from 'gulp';
 import log from 'fancy-log';
-import shell from 'gulp-shell';
 
 // Ignore missing declaration files
 // @ts-ignore
@@ -18,11 +17,11 @@ import unzip from 'gulp-unzip';
 
 // internal modules
 import boilerplatePath from './boilerplate-path';
+import exec from './exec';
 import taskHeader from './task-header';
 import { GH_TOKEN, TRAVIS } from './env';
 
 // constants
-const dummyFile = './README.md';
 const pluginName = process.cwd().split( '/' ).pop();
 const pluginNameSafe = pluginName.replace( /-/g, '_' );
 
@@ -65,7 +64,7 @@ function getGhToken() {
  * Returns:
  *   A stream to signal task completion
  */
-function composer() {
+async function composer() {
   taskHeader(
     '1c',
     'Dependencies',
@@ -73,10 +72,7 @@ function composer() {
     'Composer (PHP)'
   );
 
-  return src( dummyFile, { read: false } )
-    .pipe( shell( [
-      'composer install --prefer-dist --no-interaction --no-suggest'
-    ] ) );
+  await exec( 'composer install --prefer-dist --no-interaction --no-suggest' );
 }
 
 /**
@@ -149,7 +145,7 @@ function naturalDocs() {
  * Returns:
  *   A stream to signal task completion
  */
-function wpUnit() {
+async function wpUnit() {
   taskHeader(
     '1e',
     'Dependencies',
@@ -165,10 +161,7 @@ function wpUnit() {
     installerPath = `${boilerplatePath()}bin/`;
   }
 
-  return src( dummyFile, { read: false } )
-    .pipe( shell( [
-      `bash ${installerPath}install-wp-tests.sh ${dbName} ${wpVersion}`
-    ] ) );
+  await exec( `bash ${installerPath}install-wp-tests.sh ${dbName} ${wpVersion}` );
 }
 
 /**
@@ -179,7 +172,7 @@ function wpUnit() {
  * Returns:
  *   A stream to signal task completion
  */
-function yarn() {
+async function yarn() {
   taskHeader(
     '1a',
     'Dependencies',
@@ -187,10 +180,7 @@ function yarn() {
     'Yarn'
   );
 
-  return src( dummyFile, { read: false } )
-    .pipe( shell( [
-      'yarn install --non-interactive'
-    ] ) );
+  await exec( 'yarn install --non-interactive' );
 }
 
 const dependenciesDev = series(
