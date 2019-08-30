@@ -19,7 +19,7 @@ import documentation from './gulp-modules/documentation';
 import { TRAVIS } from './gulp-modules/env';
 import lint from './gulp-modules/lint';
 import release from './gulp-modules/release';
-import tests from './gulp-modules/test';
+import test from './gulp-modules/test';
 import version from './gulp-modules/version';
 import watch from './gulp-modules/watch';
 
@@ -30,7 +30,7 @@ export const buildTravis = series(
   compile,
   version,
   documentation,
-  tests,
+  test,
   release
 );
 
@@ -40,7 +40,7 @@ export const buildDev = series(
   compile,
   version,
   documentation,
-  tests
+  test
 );
 
 export { compile as compile };
@@ -48,7 +48,7 @@ export { dependencies as dependencies };
 export { documentation as documentation };
 export { lint as lint };
 export { release as release };
-export { tests as tests };
+export { test as test };
 export { version as version };
 export { watch as watch };
 

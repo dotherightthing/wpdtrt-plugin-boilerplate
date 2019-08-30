@@ -70,7 +70,7 @@
     "docs": "gulp documentation",
     "lint": "gulp lint",
     "release": "gulp release",
-    "tests": "gulp tests",
+    "test": "gulp test",
     "version": "gulp version",
     "watch": "gulp compile && gulp watch"
   },
