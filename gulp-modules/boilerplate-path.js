@@ -10,6 +10,21 @@
  */
 
 /**
+ * Function: getPluginName
+ *
+ * Get the pluginName from the directory path.
+ *
+ * Returns:
+ *   (string) pluginName
+ */
+function getPluginName() {
+  // pop() - remove the last element from the path array and return it
+  const pluginName = process.cwd().split( '/' ).pop();
+
+  return pluginName;
+}
+
+/**
  * Function: boilerplateIs
  *
  * Determines whether we're in the boilerplate, or using it as a dependency.
@@ -45,21 +60,6 @@ function boilerplatePath() {
   }
 
   return path;
-}
-
-/**
- * Function: getPluginName
- *
- * Get the pluginName from the directory path.
- *
- * Returns:
- *   (string) pluginName
- */
-function getPluginName() {
-  // pop() - remove the last element from the path array and return it
-  const pluginName = process.cwd().split( '/' ).pop();
-
-  return pluginName;
 }
 
 export default boilerplatePath;
