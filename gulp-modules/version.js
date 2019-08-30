@@ -86,12 +86,10 @@ async function updateDependencies() {
   );
 
   if ( boilerplatePath().length ) {
-    return true;
+    const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
+    console.log( stdout );
+    console.error( stderr );
   }
-
-  const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
-  console.log( stdout );
-  console.error( stderr );
 }
 
 const versionDev = series(
