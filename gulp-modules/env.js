@@ -14,7 +14,7 @@
  *
  * Github API token (string).
  */
-const GH_TOKEN = process.env.GH_TOKEN;
+const GH_TOKEN = process.env.GH_TOKEN || '';
 
 /**
  * Constant: TRAVIS

@@ -31,27 +31,6 @@ const pluginNameSafe = pluginName.replace( /-/g, '_' );
  */
 
 /**
- * Function: getGhToken
- *
- * Get the value of the Github API access token used by Travis.
- *
- * See:
- * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
- *
- * Returns:
- *   (string) - token
- */
-function getGhToken() {
-  let token = '';
-
-  if ( TRAVIS ) {
-    token = ( GH_TOKEN || '' );
-  }
-
-  return ( token );
-}
-
-/**
  * Group: Tasks
  * _____________________________________
  */
@@ -90,15 +69,21 @@ function github( done ) {
     'Check current Github API rate limit for automated installs'
   );
 
-  ghRateLimit( {
-    token: getGhToken()
+  return ghRateLimit( {
+    token: GH_TOKEN
   } ).then( ( status ) => {
     log( 'Github API rate limit:' );
     log( `API calls remaining: ${status.core.remaining}/${status.core.limit}` );
     log( ' ' );
-  } );
 
-  done();
+    done();
+  } )
+  .catch( err => {
+    console.error( err );
+    console.log( `GH_TOKEN.length = ${GH_TOKEN.length}` );
+
+    done();
+  } );
 }
 
 /**
