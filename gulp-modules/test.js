@@ -25,7 +25,7 @@ import taskHeader from './task-header';
  * - <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 async function wpUnit() {
   taskHeader(
@@ -35,7 +35,9 @@ async function wpUnit() {
     'WPUnit'
   );
 
-  await exec( `./vendor/bin/phpunit --configuration ${boilerplatePath()}phpunit.xml.dist` );
+  const { stdout, stderr } = await exec( `./vendor/bin/phpunit --configuration ${boilerplatePath()}phpunit.xml.dist` );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 export default series(

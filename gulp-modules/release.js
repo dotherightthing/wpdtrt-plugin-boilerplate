@@ -116,7 +116,7 @@ const targets = {
  * Clean up temporary files.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function cleanUp() {
   taskHeader(
@@ -132,9 +132,9 @@ function cleanUp() {
  * Function: composer
  *
  * Uninstall PHP development dependencies.
- *
- * Returns:
- *   A stream to signal task completion
+ * 
+ * See:
+ * - <Reduce vendor components required for deployment: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47>
  */
 async function composer() {
   taskHeader(
@@ -144,16 +144,9 @@ async function composer() {
     'Composer (PHP)'
   );
 
-  /**
-    * Remove dev packages once we've used them
-    *
-    * See:
-    * - <Reduce vendor components required for deployment: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/47>
-  *
-  * Returns:
-  *   A stream to signal task completion
-  */
-  await exec( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
+  const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-dev --no-suggest' );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 /**
@@ -162,7 +155,7 @@ async function composer() {
  * Copy release files to a temporary folder.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function copy() {
   taskHeader(
@@ -185,7 +178,7 @@ function copy() {
  * Uninstall Yarn development dependencies.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 async function yarn() {
   taskHeader(
@@ -195,7 +188,9 @@ async function yarn() {
     'Yarn'
   );
 
-  await exec( 'yarn install --non-interactive --production' );
+  const { stdout, stderr } = await exec( 'yarn install --non-interactive --production' );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 /**
@@ -204,7 +199,7 @@ async function yarn() {
  * Generate release.zip for deployment by Travis/Github.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function zipFiles() {
   taskHeader(

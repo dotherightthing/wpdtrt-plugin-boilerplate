@@ -60,9 +60,6 @@ function getGhToken() {
  * Function: composer
  *
  * Install the Composer dependencies listed in composer.json.
- *
- * Returns:
- *   A stream to signal task completion
  */
 async function composer() {
   taskHeader(
@@ -72,7 +69,9 @@ async function composer() {
     'Composer (PHP)'
   );
 
-  await exec( 'composer install --prefer-dist --no-interaction --no-suggest' );
+  const { stdout, stderr } = await exec( 'composer install --prefer-dist --no-interaction --no-suggest' );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 /**
@@ -114,7 +113,7 @@ function github( done ) {
  *   is in .zip rather than .tar format.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function naturalDocs() {
   taskHeader(
@@ -141,9 +140,6 @@ function naturalDocs() {
  *
  * See:
  * - <Testing & Debugging: https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Testing-&-Debugging#environmental-variables>
- *
- * Returns:
- *   A stream to signal task completion
  */
 async function wpUnit() {
   taskHeader(
@@ -161,16 +157,15 @@ async function wpUnit() {
     installerPath = `${boilerplatePath()}bin/`;
   }
 
-  await exec( `bash ${installerPath}install-wp-tests.sh ${dbName} ${wpVersion}` );
+  const { stdout, stderr } = await exec( `bash ${installerPath}install-wp-tests.sh ${dbName} ${wpVersion}` );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 /**
  * Function: yarn
  *
  * Install Yarn dependencies.
- *
- * Returns:
- *   A stream to signal task completion
  */
 async function yarn() {
   taskHeader(
@@ -180,7 +175,9 @@ async function yarn() {
     'Yarn'
   );
 
-  await exec( 'yarn install --non-interactive' );
+  const { stdout, stderr } = await exec( 'yarn install --non-interactive' );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 const dependenciesDev = series(

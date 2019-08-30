@@ -18,9 +18,6 @@ import taskHeader from './task-header';
  * Function: naturalDocs
  *
  * Generate JS & PHP documentation.
- *
- * Returns:
- *   A stream to signal task completion
  */
 async function naturalDocs() {
   taskHeader(
@@ -33,7 +30,9 @@ async function naturalDocs() {
   // Quotes escape space better than backslash on Travis
   const naturalDocsPath = 'Natural Docs/NaturalDocs.exe';
 
-  await exec( `mono "${naturalDocsPath}" ./config/naturaldocs` );
+  const { stdout, stderr } = await exec( `mono "${naturalDocsPath}" ./config/naturaldocs` );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 export default naturalDocs;

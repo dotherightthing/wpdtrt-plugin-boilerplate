@@ -60,9 +60,6 @@ const sources = {
  * Function: composer
  *
  * Lint composer.json.
- *
- * Returns:
- *   A stream to signal task completion
  */
 async function composer() {
   taskHeader(
@@ -72,7 +69,9 @@ async function composer() {
     'composer.json'
   );
 
-  await exec( 'composer validate' );
+  const { stdout, stderr } = await exec( 'composer validate' );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 /**
@@ -81,7 +80,7 @@ async function composer() {
  * Lint CSS files.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function css() {
   taskHeader(
@@ -103,7 +102,7 @@ function css() {
  * Lint JavaScript files.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function js() {
   taskHeader(
@@ -145,7 +144,7 @@ function js() {
  * - <Support for phpcs.xml: https://github.com/JustBlackBird/gulp-phpcs/issues/39>
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function php() {
   taskHeader(
@@ -188,7 +187,7 @@ function php() {
  * - <https://github.com/nashwaan/xml-js#convert-xml--js-object--json>
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function phpCsExclusions() {
   taskHeader(

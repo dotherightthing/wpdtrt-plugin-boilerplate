@@ -24,7 +24,7 @@ import { TRAVIS } from './env';
  * Regenerate the list of PHP classes to be autoloaded.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 async function autoloadUpdatedDependencies() {
   taskHeader(
@@ -34,8 +34,9 @@ async function autoloadUpdatedDependencies() {
     'List of classes to be autoloaded'
   );
 
-  // regenerate autoload files
-  await exec( 'composer dump-autoload --no-interaction' );
+  const { stdout, stderr } = await exec( 'composer dump-autoload --no-interaction' );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 /**
@@ -74,7 +75,7 @@ function replaceVersions( done ) {
  *   so that the correct version information is available
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 async function updateDependencies() {
   taskHeader(
@@ -88,7 +89,9 @@ async function updateDependencies() {
     return true;
   }
 
-  await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
+  const { stdout, stderr } = await exec( 'composer update dotherightthing/wpdtrt-plugin-boilerplate --no-interaction --no-suggest' );
+  console.log( stdout );
+  console.error( stderr );
 }
 
 const versionDev = series(

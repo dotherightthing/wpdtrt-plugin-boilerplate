@@ -44,7 +44,7 @@ const targets = {
  * Compile CSS.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function css() {
   taskHeader(
@@ -97,7 +97,7 @@ function css() {
  * Transpile ES6+ to ES5, so that modern code runs in old browsers.
  *
  * Returns:
- *   A stream to signal task completion
+ *   A stream - to signal task completion
  */
 function js() {
   taskHeader(
