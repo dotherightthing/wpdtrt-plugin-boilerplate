@@ -26,7 +26,4 @@ const GH_TOKEN = process.env.GH_TOKEN;
  */
 const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
 
-console.log( `process.env.TRAVIS = ${process.env.TRAVIS}` );
-console.log( `typeof process.env.TRAVIS !== 'undefined' = ${typeof process.env.TRAVIS !== 'undefined'}` );
-
-export default { GH_TOKEN, TRAVIS };
+export { GH_TOKEN, TRAVIS, test1 };

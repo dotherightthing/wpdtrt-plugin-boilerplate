@@ -24,13 +24,6 @@ import test from './gulp-modules/test';
 import version from './gulp-modules/version';
 import watch from './gulp-modules/watch';
 
-console.log( `TRAVIS = ${TRAVIS}` );
-if ( TRAVIS ) {
-  console.log( 'Do buildTravis' );
-} else {
-  console.log( 'Do buildDev' );
-}
-
 // export combo tasks
 export const buildTravis = series(
   dependencies,
