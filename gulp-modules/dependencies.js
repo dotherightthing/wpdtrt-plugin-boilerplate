@@ -44,7 +44,7 @@ const pluginNameSafe = pluginName.replace( /-/g, '_' );
 function getGhToken() {
   let token = '';
 
-  if ( typeof TRAVIS !== 'undefined' ) {
+  if ( TRAVIS ) {
     token = ( GH_TOKEN || '' );
   }
 
