@@ -9,7 +9,8 @@
  *   yarn run scriptname
  *   ---
  */
-
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import { series } from 'gulp';
 
 // internal modules
