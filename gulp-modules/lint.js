@@ -27,7 +27,6 @@ import taskHeader from './task-header';
 let phpCsXmlRule = '';
 const sources = {
   // note: paths are relative to gulpfile, not this file
-  composer: './composer.json',
   js: [
     './composer.json',
     './gulpfile.babel.js',
@@ -47,8 +46,7 @@ const sources = {
     '!./wp-content/**/*.php'
   ],
   phpCsXml: `./${boilerplatePath()}phpcs.xml`,
-  scss: './scss/*.scss',
-  ts: './cypress/**/*.ts'
+  scss: './scss/*.scss'
 };
 
 /**
