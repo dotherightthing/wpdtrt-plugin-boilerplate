@@ -1,5 +1,5 @@
 /**
- * File: gulpfile.js
+ * File: gulpfile.babel.js
  *
  * Gulp build tasks.
  *
@@ -16,6 +16,7 @@ import { series } from 'gulp';
 import compile from './gulp-modules/compile';
 import dependencies from './gulp-modules/dependencies';
 import documentation from './gulp-modules/documentation';
+import { TRAVIS } from './gulp-modules/env';
 import lint from './gulp-modules/lint';
 import release from './gulp-modules/release';
 import tests from './gulp-modules/test';
@@ -23,22 +24,25 @@ import version from './gulp-modules/version';
 import watch from './gulp-modules/watch';
 
 // export combo tasks
-export const build = series(
-  // 1
+export const buildTravis = series(
   dependencies,
-  // 2
   lint,
-  // 3
   compile,
-  // 4
   version,
-  // 5
   documentation,
-  // 6
   tests,
-  // 7 - TODO only if TRAVIS
   release
 );
+
+export const buildDev = series(
+  dependencies,
+  lint,
+  compile,
+  version,
+  documentation,
+  tests
+);
+
 export { compile as compile };
 export { dependencies as dependencies };
 export { documentation as documentation };
@@ -56,4 +60,5 @@ export { watch as watch };
  * gulp
  * ---
  */
-export default series( build, watch );
+
+export default ( TRAVIS ? buildTravis : series( buildDev, watch ) );

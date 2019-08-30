@@ -66,22 +66,17 @@ function getGhToken() {
  *   A stream to signal task completion
  */
 function composer() {
-  // Travis already runs composer install
-  if ( typeof TRAVIS === 'undefined' ) {
-    taskHeader(
-      '1c',
-      'Dependencies',
-      'Install',
-      'Composer (PHP)'
-    );
+  taskHeader(
+    '1c',
+    'Dependencies',
+    'Install',
+    'Composer (PHP)'
+  );
 
-    return src( dummyFile, { read: false } )
-      .pipe( shell( [
-        'composer install --prefer-dist --no-interaction --no-suggest'
-      ] ) );
-  }
-
-  return src( dummyFile, { read: false } );
+  return src( dummyFile, { read: false } )
+    .pipe( shell( [
+      'composer install --prefer-dist --no-interaction --no-suggest'
+    ] ) );
 }
 
 /**
@@ -100,21 +95,13 @@ function github( done ) {
     'Check current Github API rate limit for automated installs'
   );
 
-  let token = '';
-
-  if ( typeof TRAVIS !== 'undefined' ) {
-    token = getGhToken();
-  }
-
-  if ( token !== '' ) {
-    ghRateLimit( {
-      token: token
-    } ).then( ( status ) => {
-      log( 'Github API rate limit:' );
-      log( `API calls remaining: ${status.core.remaining}/${status.core.limit}` );
-      log( ' ' );
-    } );
-  }
+  ghRateLimit( {
+    token: getGhToken()
+  } ).then( ( status ) => {
+    log( 'Github API rate limit:' );
+    log( `API calls remaining: ${status.core.remaining}/${status.core.limit}` );
+    log( ' ' );
+  } );
 
   done();
 }
@@ -206,10 +193,18 @@ function yarn() {
     ] ) );
 }
 
-export default series(
+const dependenciesDev = series(
   yarn,
-  github,
   composer,
   naturalDocs,
   wpUnit
 );
+
+const dependenciesTravis = series(
+  yarn,
+  github,
+  naturalDocs,
+  wpUnit
+);
+
+export default ( TRAVIS ? dependenciesTravis : dependenciesDev );

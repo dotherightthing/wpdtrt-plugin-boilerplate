@@ -30,10 +30,6 @@ const dummyFile = './README.md';
  *   A stream to signal task completion
  */
 function autoloadUpdatedDependencies() {
-  if ( TRAVIS ) {
-    return true;
-  }
-
   taskHeader(
     '4c',
     'Version',
@@ -94,7 +90,7 @@ function updateDependencies() {
     'Update Composer dependencies'
   );
 
-  if ( boilerplatePath().length || TRAVIS ) {
+  if ( boilerplatePath().length ) {
     return true;
   }
 
@@ -104,8 +100,14 @@ function updateDependencies() {
     ] ) );
 }
 
-export default series(
+const versionDev = series(
   updateDependencies,
   replaceVersions,
   autoloadUpdatedDependencies
 );
+
+const versionTravis = series(
+  replaceVersions
+);
+
+export default ( TRAVIS ? versionTravis : versionDev );

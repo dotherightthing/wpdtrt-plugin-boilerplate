@@ -4,7 +4,7 @@
  * Gulp tasks to generate documentation.
  */
 
-import { series, src } from 'gulp';
+import { src } from 'gulp';
 import shell from 'gulp-shell';
 
 // internal modules
@@ -46,6 +46,4 @@ function naturalDocs() {
     ] ) );
 }
 
-export default series(
-  naturalDocs
-);
+export default naturalDocs;

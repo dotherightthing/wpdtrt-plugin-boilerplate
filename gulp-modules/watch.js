@@ -10,7 +10,6 @@ import { series, watch } from 'gulp';
 import boilerplatePath from './boilerplate-path';
 import compile from './compile';
 import taskHeader from './task-header';
-import { TRAVIS } from './env';
 
 // constants
 const sources = {
@@ -35,17 +34,15 @@ const sources = {
  * Watch for changes to files.
  */
 function devWatch() {
-  if ( !TRAVIS ) {
-    taskHeader(
-      '*',
-      'Watch',
-      'Compile',
-      'JS & SCSS'
-    );
+  taskHeader(
+    '*',
+    'Watch',
+    'Compile',
+    'JS & SCSS'
+  );
 
-    watch( sources.scss, series( compile ) );
-    watch( sources.js, series( compile ) );
-  }
+  watch( sources.scss, series( compile ) );
+  watch( sources.js, series( compile ) );
 }
 
 export default series( devWatch );
