@@ -4,7 +4,7 @@
  * Promisify the node exec function, to be notified when command line calls have completed.
  *
  * See:
- * - <Gist - node-exec: https://gist.github.com/dotherightthing/3a1a33e87fcf3575b8a5b28c77784db2>
+ * - <Gist: node-exec: https://gist.github.com/dotherightthing/3a1a33e87fcf3575b8a5b28c77784db2>
  *
  * Example:
  * --- js

@@ -13,6 +13,9 @@ import taskHeader from './task-header';
 
 /**
  * Group: Tasks
+ *
+ * Steps:
+ * 1. - wpUnit (1/1)
  * _____________________________________
  */
 
@@ -29,7 +32,7 @@ import taskHeader from './task-header';
  */
 async function wpUnit() {
   taskHeader(
-    '6a',
+    '1/1',
     'QA',
     'Tests',
     'WPUnit'

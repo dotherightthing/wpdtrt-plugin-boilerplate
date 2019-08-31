@@ -11,6 +11,9 @@ import taskHeader from './task-header';
 
 /**
  * Group: Tasks
+ *
+ * Order:
+ * 1. - naturalDocs (1/1)
  * _____________________________________
  */
 
@@ -21,7 +24,7 @@ import taskHeader from './task-header';
  */
 async function naturalDocs() {
   taskHeader(
-    '5a',
+    '1/1',
     'Documentation',
     'Documentation',
     'Natural Docs (JS & PHP)'

@@ -25,6 +25,9 @@ const sources = {
 
 /**
  * Group: Tasks
+ *
+ * Steps:
+ * 1. - devWatch (1/1)
  * _____________________________________
  */
 
@@ -35,7 +38,7 @@ const sources = {
  */
 function devWatch() {
   taskHeader(
-    '8',
+    '1/1',
     'Watch',
     'Compile',
     'JS & SCSS'

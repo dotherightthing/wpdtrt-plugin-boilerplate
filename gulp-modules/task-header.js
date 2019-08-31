@@ -23,14 +23,14 @@ import log from 'fancy-log';
  *   (string) taskDetail - Task detail
  */
 function taskHeader(
-  step = '0',
+  step = '1/1',
   taskCategory = '',
   taskAction = '',
   taskDetail = ''
 ) {
   log( ' ' );
   log( '========================================' );
-  log( `${step} - ${taskCategory}:` );
+  log( `${taskCategory} step ${step}:` );
   log( `=> ${taskAction}: ${taskDetail}` );
   log( '----------------------------------------' );
   log( ' ' );

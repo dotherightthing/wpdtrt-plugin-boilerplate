@@ -35,6 +35,10 @@ const targets = {
 
 /**
  * Group: Tasks
+ *
+ * Order:
+ * 1. - css (1/2)
+ * 2. - js (2/2)
  * _____________________________________
  */
 
@@ -48,7 +52,7 @@ const targets = {
  */
 function css() {
   taskHeader(
-    '3a',
+    '1/2',
     'Assets',
     'Compile',
     'SCSS -> CSS'
@@ -101,7 +105,7 @@ function css() {
  */
 function js() {
   taskHeader(
-    '3b',
+    '2/2',
     'Assets',
     'Transpile',
     'ES6+ JS -> ES5 JS'
@@ -118,8 +122,8 @@ function js() {
 }
 
 export default series(
-  // 3a
+  // 1/2
   css,
-  // 3b
+  // 2/2
   js
 );

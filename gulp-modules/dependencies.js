@@ -32,6 +32,13 @@ const pluginNameSafe = pluginName.replace( /-/g, '_' );
 
 /**
  * Group: Tasks
+ *
+ * Order:
+ * 1. - yarn (1/5)
+ * 2. - github (2/5)
+ * 3. - composer (3/5)
+ * 4. - naturalDocs (4/5)
+ * 5. - wpUnit (5/5)
  * _____________________________________
  */
 
@@ -42,7 +49,7 @@ const pluginNameSafe = pluginName.replace( /-/g, '_' );
  */
 async function composer() {
   taskHeader(
-    '1c',
+    '3/5',
     'Dependencies',
     'Install',
     'Composer (PHP)'
@@ -63,7 +70,7 @@ async function composer() {
  */
 function github( done ) {
   taskHeader(
-    '1b',
+    '2/5',
     'Dependencies',
     'Install',
     'Check current Github API rate limit for automated installs'
@@ -101,7 +108,7 @@ function github( done ) {
  */
 function naturalDocs() {
   taskHeader(
-    '1d',
+    '4/5',
     'Dependencies',
     'Install',
     'Docs'
@@ -127,7 +134,7 @@ function naturalDocs() {
  */
 async function wpUnit() {
   taskHeader(
-    '1e',
+    '5/5',
     'Dependencies',
     'Install',
     'WP Unit'
@@ -153,7 +160,7 @@ async function wpUnit() {
  */
 async function yarn() {
   taskHeader(
-    '1a',
+    '1/5',
     'Dependencies',
     'Install',
     'Yarn'
@@ -165,24 +172,24 @@ async function yarn() {
 }
 
 const dependenciesDev = series(
-  // 1a
+  // 1/5
   yarn,
-  // 1c
+  // 3/5
   composer,
-  // 1d
+  // 4/5
   naturalDocs,
-  // 1e
+  // 5/5
   wpUnit
 );
 
 const dependenciesTravis = series(
-  // 1a
+  // 1/5
   yarn,
-  // 1b
+  // 2/5
   github,
-  // 1d
+  // 4/5
   naturalDocs,
-  // 1e
+  // 5/5
   wpUnit
 );
 

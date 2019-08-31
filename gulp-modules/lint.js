@@ -52,6 +52,13 @@ const sources = {
 
 /**
  * Group: Tasks
+ *
+ * Order:
+ * 1. - css (1/5)
+ * 2. - js (2/5)
+ * 3. - composer (3/5)
+ * 4. - phpCsExclusions (4/5)
+ * 5. - php (5/5)
  * _____________________________________
  */
 
@@ -62,7 +69,7 @@ const sources = {
  */
 async function composer() {
   taskHeader(
-    '2c',
+    '3/5',
     'QA',
     'Lint',
     'composer.json'
@@ -83,7 +90,7 @@ async function composer() {
  */
 function css() {
   taskHeader(
-    '2a',
+    '1/5',
     'QA',
     'Lint',
     'CSS'
@@ -105,7 +112,7 @@ function css() {
  */
 function js() {
   taskHeader(
-    '2b',
+    '2/5',
     'QA',
     'Lint',
     'JavaScript'
@@ -147,7 +154,7 @@ function js() {
  */
 function php() {
   taskHeader(
-    '2e',
+    '5/5',
     'QA',
     'Lint',
     'PHP'
@@ -190,7 +197,7 @@ function php() {
  */
 function phpCsExclusions() {
   taskHeader(
-    '2d',
+    '4/5',
     'QA',
     'Lint',
     'Load PHPCS ruleset'
@@ -255,14 +262,14 @@ function phpCsExclusions() {
 }
 
 export default series(
-  // 2a
+  // 1/5
   css,
-  // 2b
+  // 2/5
   js,
-  // 2c
+  // 3/5
   composer,
-  // 2d
+  // 4/5
   phpCsExclusions,
-  // 2e
+  // 5/5
   php
 );

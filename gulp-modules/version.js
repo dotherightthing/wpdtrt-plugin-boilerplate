@@ -15,6 +15,11 @@ import { TRAVIS } from './env';
 
 /**
  * Group: Tasks
+ *
+ * Steps:
+ * 1. - updateDependencies (1/3)
+ * 2. - replaceVersions (2/3)
+ * 3. - autoloadUpdatedDependencies (3/3)
  * _____________________________________
  */
 
@@ -28,7 +33,7 @@ import { TRAVIS } from './env';
  */
 async function autoloadUpdatedDependencies() {
   taskHeader(
-    '4c',
+    '3/3',
     'Version',
     'Generate',
     'List of classes to be autoloaded'
@@ -49,7 +54,7 @@ async function autoloadUpdatedDependencies() {
  */
 function replaceVersions( done ) {
   taskHeader(
-    '4b',
+    '2/3',
     'Version',
     'Bump',
     'Replace version strings'
@@ -79,7 +84,7 @@ function replaceVersions( done ) {
  */
 async function updateDependencies() {
   taskHeader(
-    '4a',
+    '1/3',
     'Version',
     'Bump',
     'Update Composer dependencies'
@@ -93,16 +98,16 @@ async function updateDependencies() {
 }
 
 const versionDev = series(
-  // 4a
+  // 1/3
   updateDependencies,
-  // 4b
+  // 2/3
   replaceVersions,
-  // 4c
+  // 3/3
   autoloadUpdatedDependencies
 );
 
 const versionTravis = series(
-  // 4b
+  // 2/3
   replaceVersions
 );
 

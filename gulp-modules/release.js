@@ -108,6 +108,13 @@ const targets = {
 /**
  * Group: Tasks
  * _____________________________________
+ *
+ * Steps:
+ * 1. - composer (1/5)
+ * 2. - yarn (2/5)
+ * 3. - copy (3/5)
+ * 4. - zipFiles (4/5)
+ * 5. - cleanUp (5/5)
  */
 
 /**
@@ -120,7 +127,7 @@ const targets = {
  */
 function cleanUp() {
   taskHeader(
-    '7e',
+    '5/5',
     'Release',
     'Clean up'
   );
@@ -138,7 +145,7 @@ function cleanUp() {
  */
 async function composer() {
   taskHeader(
-    '7a',
+    '1/5',
     'Release',
     'Uninstall dev dependencies',
     'Composer (PHP)'
@@ -159,7 +166,7 @@ async function composer() {
  */
 function copy() {
   taskHeader(
-    '7c',
+    '3/5',
     'Release',
     'Copy files',
     'To temporary folder'
@@ -182,7 +189,7 @@ function copy() {
  */
 async function yarn() {
   taskHeader(
-    '7b',
+    '2/5',
     'Release',
     'Uninstall dev dependencies',
     'Yarn'
@@ -203,7 +210,7 @@ async function yarn() {
  */
 function zipFiles() {
   taskHeader(
-    '7d',
+    '4/5',
     'Release',
     'Generate',
     'Zip file'
@@ -215,14 +222,14 @@ function zipFiles() {
 }
 
 export default series(
-  // 7a
+  // 1/5
   composer,
-  // 7b
+  // 2/5
   yarn,
-  // 7c
+  // 3/5
   copy,
-  // 7d
+  // 4/5
   zipFiles,
-  // 7e
+  // 5/5
   cleanUp
 );
