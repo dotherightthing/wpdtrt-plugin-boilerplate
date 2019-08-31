@@ -16,10 +16,10 @@ import { TRAVIS } from './env';
 /**
  * Group: Tasks
  *
- * Steps:
- * 1. - updateDependencies (1/3)
+ * Order:
+ * 1. - updateDependencies (1/3) - Dev only
  * 2. - replaceVersions (2/3)
- * 3. - autoloadUpdatedDependencies (3/3)
+ * 3. - autoloadUpdatedDependencies (3/3) - Dev only
  * _____________________________________
  */
 

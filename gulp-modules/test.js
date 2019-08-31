@@ -14,7 +14,7 @@ import taskHeader from './task-header';
 /**
  * Group: Tasks
  *
- * Steps:
+ * Order:
  * 1. - wpUnit (1/1)
  * _____________________________________
  */

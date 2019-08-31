@@ -109,7 +109,7 @@ const targets = {
  * Group: Tasks
  * _____________________________________
  *
- * Steps:
+ * Order:
  * 1. - composer (1/5)
  * 2. - yarn (2/5)
  * 3. - copy (3/5)

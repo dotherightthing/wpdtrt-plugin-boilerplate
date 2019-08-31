@@ -35,8 +35,8 @@ const pluginNameSafe = pluginName.replace( /-/g, '_' );
  *
  * Order:
  * 1. - yarn (1/5)
- * 2. - github (2/5)
- * 3. - composer (3/5)
+ * 2. - github (2/5) - Travis only
+ * 3. - composer (3/5) - Dev only
  * 4. - naturalDocs (4/5)
  * 5. - wpUnit (5/5)
  * _____________________________________

@@ -26,7 +26,7 @@ const sources = {
 /**
  * Group: Tasks
  *
- * Steps:
+ * Order:
  * 1. - devWatch (1/1)
  * _____________________________________
  */
