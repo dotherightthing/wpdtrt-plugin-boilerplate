@@ -82,6 +82,7 @@ install:
   - npm install -g yarn
   - yarn install --non-interactive # child plugin
   - yarn global add gulp-cli
+  - yarn config set version-git-tag false
 
 # Exporting a variable causes it to be inherited
 # by subsequently started processes in the shell session
