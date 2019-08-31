@@ -5,7 +5,7 @@
  * Plugin shortcode class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_1;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_2;
 
 if ( ! class_exists( 'Shortcode' ) ) {
 
@@ -44,7 +44,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 *
 		 * Example:
 		 * --- php
-		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_1\Shortcode {}
+		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_2\Shortcode {}
 		 * ---
 		 *
 		 * Parameters:
