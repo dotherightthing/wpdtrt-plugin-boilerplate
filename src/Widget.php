@@ -8,7 +8,7 @@
  * - Boilerplate to generate a widget, which is configured in WP Admin, and can be displayed in sidebars.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_1;
 
 if ( ! class_exists( 'Widget' ) ) {
 
@@ -46,7 +46,7 @@ if ( ! class_exists( 'Widget' ) ) {
 		 *
 		 * Example:
 		 * --- php
-		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_0\Widget {}
+		 * $wpdtrt_test_widget = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_1\Widget {}
 		 * ---
 		 *
 		 * Parameters:
