@@ -9,7 +9,7 @@ Format: 2.0.2
 # ------------------------------------------------------------------------
 
 Title: Documentation
-Subtitle: DTRT Test (1.6.2)
+Subtitle: DTRT Test (1.6.3)
 
 Copyright: Copyright (C) 2019 Dan Smith
 
