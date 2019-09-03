@@ -1,19 +1,22 @@
 /**
  * File: gulpfile.babel.js
  *
- * Gulp build tasks.
+ * Functions exported from this file
+ * can be run as Gulp tasks.
  *
  * Note:
  * - See package.json for scripts, which can be run with:
  *   --- Text
  *   yarn run scriptname
  *   ---
+ *
+ * See:
+ * - <https://gulpjs.com/docs/en/getting-started/creating-tasks>
  */
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
+
 import { series } from 'gulp';
 
-// internal modules
+// import internal task modules
 import { TRAVIS } from './gulp-modules/env';
 import compile from './gulp-modules/compile';
 import dependencies from './gulp-modules/dependencies';
@@ -59,14 +62,25 @@ export const buildDev = series(
   watch
 );
 
-export { compile as compile };
-export { dependencies as dependencies };
-export { documentation as documentation };
-export { lint as lint };
-export { release as release };
-export { test as test };
-export { version as version };
-export { watch as watch };
+ /**
+  * Fix #1 for: "Task never defined: lint"
+  * 
+  * Expose the public tasks to pre-gulpfile.babel.js
+  * 
+  * See:
+  * - Fix #2 in ./pre-gulpfile.babel.js
+  * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
+  */
+export {
+  compile,
+  dependencies,
+  documentation,
+  lint,
+  release,
+  test,
+  version,
+  watch
+};
 
 /*
  * Export the default task
@@ -76,5 +90,4 @@ export { watch as watch };
  * gulp
  * ---
  */
-
 export default ( TRAVIS ? buildTravis : buildDev );
