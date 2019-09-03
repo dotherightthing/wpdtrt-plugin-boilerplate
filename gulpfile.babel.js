@@ -69,15 +69,15 @@ export const buildDev = series(
   watch
 );
 
- /**
-  * Fix #1 for: "Task never defined: lint"
-  * 
-  * Expose the public tasks to pre-gulpfile.babel.js
-  * 
-  * See:
-  * - Fix #2 in ./pre-gulpfile.babel.js
-  * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
-  */
+/**
+ * Fix #1 for: "Task never defined: lint"
+ *
+ * Expose the public tasks to pre-gulpfile.babel.js
+ *
+ * See:
+ * - Fix #2 in ./pre-gulpfile.babel.js
+ * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
+ */
 export {
   compile,
   dependencies,
