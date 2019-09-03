@@ -1,5 +1,5 @@
 /**
- * File: pre-gulpfile.babel.js
+ * File: gulpfile-loader.js
  *
  * Use ES5 to load transpiler preset.
  * ES6 can then be used in the required module.
@@ -11,10 +11,10 @@
 require( '@babel/register' ) ( {
   presets: [
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
         targets: {
-          node: "current"
+          node: 'current'
         }
       }
     ]
@@ -31,12 +31,15 @@ require( '@babel/register' ) ( {
  * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
  */
 const {
-  dependencies,
+  buildDev,
+  buildTravis,
   compile,
+  dependencies,
   documentation,
   lint,
   release,
   test,
+  TRAVIS,
   version,
   watch
 } = require( './gulpfile.babel.js' );
@@ -51,3 +54,13 @@ module.exports = {
   version,
   watch
 };
+
+/**
+ * Export the default task
+ *
+ * Example:
+ * --- bash
+ * gulp
+ * ---
+ */
+module.exports.default = ( TRAVIS ? buildTravis : buildDev );

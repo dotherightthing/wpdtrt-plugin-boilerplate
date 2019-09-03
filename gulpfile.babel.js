@@ -22,7 +22,6 @@ import 'regenerator-runtime/runtime';
 
 import { series } from 'gulp';
 
-
 // import internal task modules
 import { TRAVIS } from './gulp-modules/env';
 import compile from './gulp-modules/compile';
@@ -35,7 +34,7 @@ import version from './gulp-modules/version';
 import watch from './gulp-modules/watch';
 
 // export combo tasks
-export const buildTravis = series(
+const buildTravis = series(
   // 1
   dependencies,
   // 2
@@ -52,7 +51,7 @@ export const buildTravis = series(
   release
 );
 
-export const buildDev = series(
+const buildDev = series(
   // 1
   dependencies,
   // 2
@@ -72,29 +71,22 @@ export const buildDev = series(
 /**
  * Fix #1 for: "Task never defined: lint"
  *
- * Expose the public tasks to pre-gulpfile.babel.js
+ * Expose the public tasks to gulpfile-loader.js
  *
  * See:
- * - Fix #2 in ./pre-gulpfile.babel.js
+ * - Fix #2 in ./gulpfile-loader.js
  * - <Gulp - Creating tasks: https://gulpjs.com/docs/en/getting-started/creating-tasks>
  */
 export {
+  buildDev,
+  buildTravis,
   compile,
   dependencies,
   documentation,
   lint,
   release,
   test,
+  TRAVIS,
   version,
   watch
 };
-
-/*
- * Export the default task
- *
- * Example:
- * --- bash
- * gulp
- * ---
- */
-export default ( TRAVIS ? buildTravis : buildDev );
