@@ -14,7 +14,14 @@
  * - <https://gulpjs.com/docs/en/getting-started/creating-tasks>
  */
 
+// TODO
+// this needs better documentation
+// but it works for now
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
 import { series } from 'gulp';
+
 
 // import internal task modules
 import { TRAVIS } from './gulp-modules/env';
