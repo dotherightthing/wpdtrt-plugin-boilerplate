@@ -1,7 +1,6 @@
 {
   "extends": [
-    "airbnb-base/legacy",
-    "plugin:compat/recommended"
+    "airbnb-base/legacy"
   ],
   "parser": "babel-eslint",
   "plugins": [
