@@ -144,7 +144,7 @@ async function wpUnit() {
   const wpVersion = 'latest';
   let installerPath = 'bin/';
 
-  if ( !boilerplatePath().length ) {
+  if ( boilerplatePath().length ) {
     installerPath = `${boilerplatePath()}bin/`;
   }
 
