@@ -1,6 +1,6 @@
 {
   "name": "wpdtrt-plugin-boilerplate",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "Boilerplate for WordPress plugin development.",
   "main": "index.php",
   "person": {
@@ -66,14 +66,14 @@
     "sass-lint": "^1.12.1"
   },
   "scripts": {
-    "build": "gulp",
-    "dependencies": "gulp dependencies",
-    "docs": "gulp documentation",
-    "lint": "gulp lint",
-    "release": "gulp release",
-    "test": "gulp test",
-    "version": "gulp version",
-    "watch": "gulp compile && gulp watch"
+    "build": "gulp --gulpfile ./gulpfile-loader.js",
+    "dependencies": "gulp dependencies --gulpfile ./gulpfile-loader.js",
+    "docs": "gulp documentation --gulpfile ./gulpfile-loader.js",
+    "lint": "gulp lint --gulpfile ./gulpfile-loader.js",
+    "release": "gulp release --gulpfile ./gulpfile-loader.js",
+    "test": "gulp test --gulpfile ./gulpfile-loader.js",
+    "version": "gulp version --gulpfile ./gulpfile-loader.js",
+    "watch": "gulp compile --gulpfile ./gulpfile-loader.js && gulp watch --gulpfile ./gulpfile-loader.js"
   },
   "repository": {
     "type": "git",
