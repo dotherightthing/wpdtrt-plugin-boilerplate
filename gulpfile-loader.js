@@ -8,7 +8,7 @@
  * - <https://stackoverflow.com/a/53904273/6850747>
  */
 
-require( '@babel/register' ) ( {
+require( '@babel/register' )( {
   presets: [
     [
       '@babel/preset-env',
