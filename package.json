@@ -31,11 +31,13 @@
     "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.3",
     "core-js": "^3.2.1",
+    "cypress": "^3.4.1",
     "del": "^5.1.0",
     "eslint": "^6.2.2",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-chai-friendly": "^0.4.1",
     "eslint-plugin-cypress": "^2.0.1",
+    "eslint-plugin-ejs": "^0.0.2",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-markdown": "^1.0.0",
@@ -60,9 +62,11 @@
     "gulp-xmltojson": "^1.0.2",
     "gulp-zip": "^5.0.0",
     "include-media": "^1.4.9",
+    "normalize-html-whitespace": "^1.0.0",
     "postcss-pxtorem": "^4.0.1",
     "regenerator-runtime": "^0.13.3",
-    "sass-lint": "^1.12.1"
+    "sass-lint": "^1.12.1",
+    "tenon-node": "^0.4.1"
   },
   "scripts": {
     "build": "gulp --gulpfile ./gulpfile-loader.js",

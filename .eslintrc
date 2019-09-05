@@ -4,8 +4,9 @@
   ],
   "parser": "babel-eslint",
   "plugins": [
-    "cypress",
     "chai-friendly",
+    "cypress",
+    "ejs",
     "json",
     "markdown"
   ],
