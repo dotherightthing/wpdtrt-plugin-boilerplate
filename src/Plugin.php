@@ -959,7 +959,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 */
-		public function get_plugin_data_length() : number {
+		public function get_plugin_data_length() : int {
 			$plugin_data = $this->get_plugin_data();
 			$number_of_items = count( $plugin_data );
 			return $number_of_items;
