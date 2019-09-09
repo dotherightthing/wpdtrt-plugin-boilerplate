@@ -5,7 +5,7 @@
  * Plugin shortcode class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_7;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_8;
 
 if ( ! class_exists( 'Shortcode' ) ) {
 
@@ -44,7 +44,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 *
 		 * Example:
 		 * --- php
-		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_7\Shortcode {}
+		 * $wpdtrt_test_shortcode = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_8\Shortcode {}
 		 * ---
 		 *
 		 * Parameters:
@@ -218,7 +218,8 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Since:
 		 *   1.0.0
 		 */
-		protected function set_plugin( $plugin ) {
+		protected function set_plugin( object $plugin ) {
+			global $debug;
 			$this->plugin = $plugin;
 		}
 
@@ -236,7 +237,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Since:
 		 *   1.0.0
 		 */
-		public function get_plugin() {
+		public function get_plugin() : object {
 			return $this->plugin;
 		}
 
@@ -260,7 +261,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Since:
 		 *   1.0.0
 		 */
-		public function render_shortcode( string $atts, string $content = '' ) : string {
+		public function render_shortcode( $atts = array(), string $content = '' ) : string {
 
 			/**
 			 * Combine user attributes with known attributes and fill in defaults when needed.
