@@ -260,7 +260,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Since:
 		 *   1.0.0
 		 */
-		public function render_shortcode( string $atts, string $content = '' ) : string {
+		public function render_shortcode( $atts = array(), string $content = '' ) : string {
 
 			/**
 			 * Combine user attributes with known attributes and fill in defaults when needed.
