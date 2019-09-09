@@ -218,7 +218,8 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Since:
 		 *   1.0.0
 		 */
-		protected function set_plugin( $plugin ) {
+		protected function set_plugin( object $plugin ) {
+			global $debug;
 			$this->plugin = $plugin;
 		}
 
@@ -236,7 +237,7 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 * Since:
 		 *   1.0.0
 		 */
-		public function get_plugin() {
+		public function get_plugin() : object {
 			return $this->plugin;
 		}
 
