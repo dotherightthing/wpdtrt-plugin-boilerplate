@@ -63,6 +63,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		wp_delete_post( $this->post_id_1, true );
 		wp_delete_post( $this->post_id_2, true );
+		wp_delete_post( $this->post_id_3, true );
 
 		// remove any previously saved options.
 		$wpdtrt_test_plugin->unset_options();
@@ -112,13 +113,17 @@ class PluginTest extends WP_UnitTestCase {
 		// See ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php.
 		$this->post_id_1 = $this->create_post( array(
 			'post_title'   => 'DTRT Test shortcode test',
-			'post_content' => '[wpdtrt_test_shortcode]Text to hide[/wpdtrt_test_shortcode]',
+			'post_content' => '[wpdtrt_test_shortcode]Text to style[/wpdtrt_test_shortcode]',
 		));
 
-		// Post (for testing manually entered, naked shortcode).
 		$this->post_id_2 = $this->create_post( array(
 			'post_title'   => 'DTRT Test shortcode test',
 			'post_content' => '[wpdtrt_test_shortcode]Text to style[/wpdtrt_test_shortcode]',
+		));
+
+		$this->post_id_3 = $this->create_post( array(
+			'post_title'   => 'DTRT Test shortcode test',
+			'post_content' => '[wpdtrt_test_shortcode color="green"]Text to style[/wpdtrt_test_shortcode]',
 		));
 
 		$this->plugin_option_types = array(
@@ -675,7 +680,7 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Method: test_shortcode
 	 *
-	 * Test that shortcode wraps content and _show class is applied.
+	 * Test that shortcode wraps content, _show class is applied.
 	 *
 	 * Uses:
 	 * - $this->mock_data() - post_id_1 - page containing shortcode in page content
@@ -695,7 +700,7 @@ class PluginTest extends WP_UnitTestCase {
 		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_1 ) );
 
 		$this->assertEqualHtml(
-			'<span class="wpdtrt-test wpdtrt-test_show">Text to hide</span>',
+			'<span class="wpdtrt-test wpdtrt-test_show" style="color:red;">Text to style</span>',
 			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
 			'wpdtrt_text_shortcode does not wrap text'
 		);
@@ -726,7 +731,36 @@ class PluginTest extends WP_UnitTestCase {
 		$this->assertEqualHtml(
 			'<span class="wpdtrt-test wpdtrt-test_show" style="color:red;">Text to style</span>',
 			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
-			'wpdtrt_text_shortcode does not wrap text'
+			'wpdtrt_text_shortcode default option value not output'
+		);
+	}
+
+	/**
+	 * Method: test_shortcode_options
+	 *
+	 * Test that author color value is respected.
+	 *
+	 * Uses:
+	 * - $this->mock_data() - post_id_3 - page containing shortcode in page content
+	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_plugin_init() - instance_options
+	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_shortcode_init() - selected_instance_options
+	 * - ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php - output template
+	 *
+	 * See:
+	 * - <Filter your content before displaying it: https://stackoverflow.com/a/22270259/6850747>.
+	 */
+	public function test_shortcode_options() {
+
+		$this->go_to(
+			get_post_permalink( $this->post_id_3 )
+		);
+
+		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_3 ) );
+
+		$this->assertEqualHtml(
+			'<span class="wpdtrt-test wpdtrt-test_show" style="color:green;">Text to style</span>',
+			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
+			'wpdtrt_text_shortcode user option value not output'
 		);
 	}
 
