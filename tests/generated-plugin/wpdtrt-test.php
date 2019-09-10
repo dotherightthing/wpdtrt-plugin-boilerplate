@@ -254,6 +254,14 @@ function wpdtrt_test_plugin_init() {
 		'hide' => array(
 			'type'  => 'checkbox',
 			'label' => esc_html__( 'Hide?', 'wpdtrt-test' ),
+			'default' => 0,
+		),
+		'color' => array(
+			'type'    => 'text',
+			'size'    => 10,
+			'label'   => __( 'Text color', 'wpdtrt-test' ),
+			'tip'     => __( 'e.g. red', 'wpdtrt-test' ),
+			'default' => __( 'red', 'wpdtrt-test' ),
 		),
 	);
 
@@ -347,6 +355,7 @@ function wpdtrt_test_shortcode_init() {
 			'template'                  => 'test',
 			'selected_instance_options' => array(
 				'hide',
+				'color',
 			),
 		)
 	);
@@ -456,6 +465,7 @@ function wpdtrt_test_widget_init() {
 			'template'                  => 'test',
 			'selected_instance_options' => array(
 				'hide',
+				'color',
 			),
 		)
 	);

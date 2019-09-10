@@ -62,6 +62,7 @@ class PluginTest extends WP_UnitTestCase {
 		parent::tearDown();
 
 		wp_delete_post( $this->post_id_1, true );
+		wp_delete_post( $this->post_id_2, true );
 
 		// remove any previously saved options.
 		$wpdtrt_test_plugin->unset_options();
@@ -111,6 +112,12 @@ class PluginTest extends WP_UnitTestCase {
 		$this->post_id_1 = $this->create_post( array(
 			'post_title'   => 'DTRT Test shortcode test',
 			'post_content' => '[wpdtrt_test_shortcode]Text to hide[/wpdtrt_test_shortcode]',
+		));
+
+		// Post (for testing manually entered, naked shortcode).
+		$this->post_id_2 = $this->create_post( array(
+			'post_title'   => 'DTRT Test shortcode test',
+			'post_content' => '[wpdtrt_test_shortcode]Text to style[/wpdtrt_test_shortcode]',
 		));
 
 		$this->plugin_option_types = array(
@@ -681,6 +688,35 @@ class PluginTest extends WP_UnitTestCase {
 		// default value is '' = unchecked = show.
 		$this->assertEqualHtml(
 			'<span class="wpdtrt-test wpdtrt-test_show">Text to hide</span>',
+			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
+			'wpdtrt_text_shortcode does not wrap text'
+		);
+	}
+
+	/**
+	 * Method: test_shortcode_defaults
+	 *
+	 * Test that 'default' color value is output, in lieu of the author specifying this.
+	 *
+	 * Uses:
+	 * - $this->mock_data() - post_id_2 - page containing shortcode in page content
+	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_plugin_init() - instance_options
+	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_shortcode_init() - selected_instance_options
+	 * - ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php - output template
+	 *
+	 * See:
+	 * - <Filter your content before displaying it: https://stackoverflow.com/a/22270259/6850747>.
+	 */
+	public function test_shortcode_defaults() {
+
+		$this->go_to(
+			get_post_permalink( $this->post_id_2 )
+		);
+
+		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_2 ) );
+
+		$this->assertEqualHtml(
+			'<span class="wpdtrt-test wpdtrt-test_show" style="color:red;">Text to style</span>',
 			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
 			'wpdtrt_text_shortcode does not wrap text'
 		);
