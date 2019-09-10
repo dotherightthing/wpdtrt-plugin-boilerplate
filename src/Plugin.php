@@ -1746,7 +1746,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$attach_to_footer = true;
 
 			wp_enqueue_script( $this->get_prefix() . '_backend',
-				$this->get_url() . 'vendor/dotherightthing/wpdtrt-plugin-boilerplate/js/backend-es5.js',
+				$this->get_url() . 'js/backend-es5.js',
 				array(
 					// load these registered dependencies first.
 					'jquery',
