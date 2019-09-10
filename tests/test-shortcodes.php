@@ -5,11 +5,9 @@
  * Unit tests, using PHPUnit, wp-cli, WP_UnitTestCase.
  *
  * Note:
- * - These tests are run from child plugins.
+ * - These tests are also run from child plugins.
  */
 
-// Note: this causes the warning
-// No tests found in class "PluginTestHelpers".
 require_once 'helpers/helpers.php';
 
 /**
