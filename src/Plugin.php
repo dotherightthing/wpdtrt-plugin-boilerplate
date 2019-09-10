@@ -140,6 +140,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			add_action( 'init', array( $this, 'helper_flush_rewrite_rules' ), 99 );
 
 			// call the server side PHP function through admin-ajax.php.
+			// see js/backend.js.
 			add_action( 'wp_ajax_' . $this->get_prefix() . '_refresh_api_data', array( $this, 'refresh_api_data' ) );
 
 			$plugin_root_relative_to_plugin_folder = $this->get_slug() . '/' . $this->get_slug() . '.php';
@@ -1114,7 +1115,21 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$child_plugin_filter = $this->get_prefix() . '_set_api_endpoint';
 			$endpoint            = apply_filters( $child_plugin_filter, $endpoint );
 
-			$api_data = false;
+			/**
+			 * About: Demo shortcode Ajax
+			 *
+			 * This method is called by refresh_api_data()
+			 * for ALL demo shortcodes,
+			 * regardless of whether they are populated from API calls
+			 * or just from the regular
+			 * template-parts/pluginname/content-foo.php.
+			 *
+			 * If no $endpoint is passed into this method
+			 * then we know that the plugin/shortcode
+			 * doesn't actually need any API data.
+			 * So we just return an info message.
+			 */
+			$fallback_for_plugin_that_does_not_need_api_data = '<p>No data was required to render this example</p>';
 
 			if ( '' !== $endpoint ) {
 
@@ -1134,14 +1149,25 @@ if ( ! class_exists( 'Plugin' ) ) {
 				 * which returns an associative array if TRUE.
 				 */
 				$api_data = json_decode( $response['body'], true );
-
-				// Save the data and retrieval time.
-				$plugin_data_options                 = $this->get_plugin_data_options();
-				$plugin_data_options['last_updated'] = time();
-
-				$this->set_plugin_data( $api_data );
-				$this->set_plugin_data_options( $plugin_data_options );
+			} else {
+				/**
+				 * Return a message.
+				 * This is redundant UI,
+				 * but it works as learning tool.
+				 */
+				$api_data = $fallback_for_plugin_that_does_not_need_api_data;
 			}
+
+			// the data has to be stored,
+			// because the return below does not send
+			// the data back to the calling function,
+			// rather it gets it from the plugin data store.
+			$this->set_plugin_data( $api_data );
+
+			// Save the data and retrieval time.
+			$plugin_data_options                 = $this->get_plugin_data_options();
+			$plugin_data_options['last_updated'] = time();
+			$this->set_plugin_data_options( $plugin_data_options );
 
 			return $api_data;
 		}
@@ -1191,18 +1217,26 @@ if ( ! class_exists( 'Plugin' ) ) {
 				$do_refresh = true;
 			}
 
-			// TODO: should this data be passed somewhere?
 			if ( $do_refresh ) {
 				$data = $this->get_api_data();
 			} else {
 				$data = $existing_data;
 			}
 
+			// backend.js makes 2 calls to this function:
+			// 1. to render the data as a shortcode
+			// 2. to display the data used to construct the shortcode.
+
 			// update the UI.
 			if ( 'ui' === $format ) {
+				// build the shortcode.
 				$shortcode = $this->helper_build_demo_shortcode();
+				// render the shortcode HTML.
 				echo $this->render_demo_shortcode( $shortcode );
 			} elseif ( 'data' === $format ) {
+				// render the JSON response
+				// from get_api_data()
+				// (if there was data).
 				echo $this->render_demo_shortcode_data();
 			}
 
@@ -1417,7 +1451,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				if ( 'name' === $key ) {
 					$options_page_demo_shortcode .= $value;
 				} elseif ( substr( $key, 0, 5 ) !== 'mock_' ) {
-					$options_page_demo_shortcode .= "{$key}=\"{$value}\"";
+					$options_page_demo_shortcode .= " {$key}=\"{$value}\"";
 				}
 			}
 

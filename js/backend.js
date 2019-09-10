@@ -34,6 +34,7 @@ const wpdtrtPluginBoilerplateAdminUi = {
   ajax_init: ( $ ) => {
     // wpdtrtPluginBoilerplateConfig is generic
     // but we can only view one settings page at a time
+    // see Plugin.php - render_js_backend()
     const config = wpdtrtPluginBoilerplateConfig;
     const loadingMessage = config.messages.loading;
     const prefix = config.prefix;
