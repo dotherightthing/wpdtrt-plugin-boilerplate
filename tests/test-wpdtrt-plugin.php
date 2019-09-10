@@ -16,27 +16,9 @@
 class PluginTest extends WP_UnitTestCase {
 
 	/**
-	 * Method: assertEqualHtml
-	 *
-	 * Compare two HTML fragments.
-	 *
-	 * Parameters:
-	 *   $expected - Expected value
-	 *   $actual - Actual value
-	 *   $error_message - Message to show when strings don't match
-	 *
-	 * Uses:
-	 * - <https://stackoverflow.com/a/26727310/6850747>
+	 * Group: Lifecycle methods
+	 * _____________________________________
 	 */
-	protected function assertEqualHtml( string $expected, string $actual, string $error_message ) {
-		$from = [ '/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s' ];
-		$to   = [ '>', '<', '\\1', '><' ];
-		$this->assertEquals(
-			preg_replace( $from, $to, $expected ),
-			preg_replace( $from, $to, $actual ),
-			$error_message
-		);
-	}
 
 	/**
 	 * Method: setUp
@@ -61,70 +43,19 @@ class PluginTest extends WP_UnitTestCase {
 
 		parent::tearDown();
 
-		wp_delete_post( $this->post_id_1, true );
-		wp_delete_post( $this->post_id_2, true );
-		wp_delete_post( $this->post_id_3, true );
-
 		// remove any previously saved options.
 		$wpdtrt_test_plugin->unset_options();
 	}
 
 	/**
-	 * Method: create_post
-	 *
-	 * Create post.
-	 *
-	 * Parameters:
-	 *   $options - Options [$post_title, $post_date, $post_content].
-	 *
-	 * Returns:
-	 *   Post ID
-	 *
-	 * See:
-	 * - <https://developer.wordpress.org/reference/functions/wp_insert_post/>
-	 * - <https://wordpress.stackexchange.com/questions/37163/proper-formatting-of-post-date-for-wp-insert-post
-	 * - <https://codex.wordpress.org/Function_Reference/wp_update_post>
+	 * Group: Mock data
+	 * _____________________________________
 	 */
-	public function create_post( array $options ) : int {
-
-		$post_title   = null;
-		$post_date    = null;
-		$post_content = null;
-
-		extract( $options, EXTR_IF_EXISTS );
-
-		$post_id = $this->factory->post->create([
-			'post_title'   => $post_title,
-			'post_date'    => $post_date,
-			'post_content' => $post_content,
-			'post_type'    => 'post',
-			'post_status'  => 'publish',
-		]);
-
-		return $post_id;
-	}
 
 	/**
 	 * Method: mock_data
 	 */
 	public function mock_data() {
-
-		// Post (for testing manually entered, naked shortcode).
-		// See ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php.
-		$this->post_id_1 = $this->create_post( array(
-			'post_title'   => 'DTRT Test shortcode test',
-			'post_content' => '[wpdtrt_test_shortcode]Text to style[/wpdtrt_test_shortcode]',
-		));
-
-		$this->post_id_2 = $this->create_post( array(
-			'post_title'   => 'DTRT Test shortcode test',
-			'post_content' => '[wpdtrt_test_shortcode]Text to style[/wpdtrt_test_shortcode]',
-		));
-
-		$this->post_id_3 = $this->create_post( array(
-			'post_title'   => 'DTRT Test shortcode test',
-			'post_content' => '[wpdtrt_test_shortcode color="green"]Text to style[/wpdtrt_test_shortcode]',
-		));
 
 		$this->plugin_option_types = array(
 			'checkbox_input' => array(
@@ -674,93 +605,6 @@ class PluginTest extends WP_UnitTestCase {
 			'0.0.2',
 			$new_plugin_dependencies[0]['version'],
 			'Expected old plugin dependency to be replaced with new version'
-		);
-	}
-
-	/**
-	 * Method: test_shortcode
-	 *
-	 * Test that shortcode wraps content, _show class is applied.
-	 *
-	 * Uses:
-	 * - $this->mock_data() - post_id_1 - page containing shortcode in page content
-	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_plugin_init() - instance_options
-	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_shortcode_init() - selected_instance_options
-	 * - ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php - output template
-	 *
-	 * See:
-	 * - <Filter your content before displaying it: https://stackoverflow.com/a/22270259/6850747>.
-	 */
-	public function test_shortcode() {
-
-		$this->go_to(
-			get_post_permalink( $this->post_id_1 )
-		);
-
-		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_1 ) );
-
-		$this->assertEqualHtml(
-			'<span class="wpdtrt-test wpdtrt-test_show" style="color:red;">Text to style</span>',
-			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
-			'wpdtrt_text_shortcode does not wrap text'
-		);
-	}
-
-	/**
-	 * Method: test_shortcode_defaults
-	 *
-	 * Test that 'default' color value is output, in lieu of the author specifying this.
-	 *
-	 * Uses:
-	 * - $this->mock_data() - post_id_2 - page containing shortcode in page content
-	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_plugin_init() - instance_options
-	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_shortcode_init() - selected_instance_options
-	 * - ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php - output template
-	 *
-	 * See:
-	 * - <Filter your content before displaying it: https://stackoverflow.com/a/22270259/6850747>.
-	 */
-	public function test_shortcode_defaults() {
-
-		$this->go_to(
-			get_post_permalink( $this->post_id_2 )
-		);
-
-		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_2 ) );
-
-		$this->assertEqualHtml(
-			'<span class="wpdtrt-test wpdtrt-test_show" style="color:red;">Text to style</span>',
-			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
-			'wpdtrt_text_shortcode default option value not output'
-		);
-	}
-
-	/**
-	 * Method: test_shortcode_options
-	 *
-	 * Test that author color value is respected.
-	 *
-	 * Uses:
-	 * - $this->mock_data() - post_id_3 - page containing shortcode in page content
-	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_plugin_init() - instance_options
-	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_shortcode_init() - selected_instance_options
-	 * - ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php - output template
-	 *
-	 * See:
-	 * - <Filter your content before displaying it: https://stackoverflow.com/a/22270259/6850747>.
-	 */
-	public function test_shortcode_options() {
-
-		$this->go_to(
-			get_post_permalink( $this->post_id_3 )
-		);
-
-		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_3 ) );
-
-		$this->assertEqualHtml(
-			'<span class="wpdtrt-test wpdtrt-test_show" style="color:green;">Text to style</span>',
-			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
-			'wpdtrt_text_shortcode user option value not output'
 		);
 	}
 
