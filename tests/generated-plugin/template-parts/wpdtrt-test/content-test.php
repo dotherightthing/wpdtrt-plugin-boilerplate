@@ -20,7 +20,8 @@ $after_title   = null; // register_sidebar.
 $after_widget  = null; // register_sidebar.
 
 // shortcode options.
-$hide = null;
+$hide  = null;
+$color = null;
 
 // access to plugin.
 $plugin = null;
@@ -62,7 +63,7 @@ echo $before_widget;
 echo $before_title . $title . $after_title;
 ?>
 
-<span class="wpdtrt-test <?php echo $state_classname; ?>">
+<span class="wpdtrt-test <?php echo $state_classname; ?>" style="color:<?php echo $color; ?>;">
 	<?php
 		echo $content;
 	?>

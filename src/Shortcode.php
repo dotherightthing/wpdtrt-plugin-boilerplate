@@ -267,11 +267,18 @@ if ( ! class_exists( 'Shortcode' ) ) {
 			 * Combine user attributes with known attributes and fill in defaults when needed.
 			 *
 			 * @see https://developer.wordpress.org/reference/functions/shortcode_atts/
+			 * @todo Do for widget
 			 */
+			$instance_options = $this->get_instance_options();
+			$string_options   = array();
+
+			foreach ( $instance_options as $key => $value ) {
+				$string_options[ $key ] = $this->helper_instance_option_to_string( $value );
+			}
 
 			// merge shortcode options with user's shortcode $atts.
 			$template_options = shortcode_atts(
-				$this->get_instance_options(),
+				$string_options,
 				$atts,
 				$this->get_name()
 			);
@@ -318,6 +325,56 @@ if ( ! class_exists( 'Shortcode' ) ) {
 			$content = ob_get_clean();
 
 			return $content;
+		}
+
+		/**
+		 * Group: Helpers
+		 * _____________________________________
+		 */
+
+		/**
+		 * Function: helper_instance_option_to_string
+		 *
+		 * If the parameter is not supplied with the shortcode,
+		 * then use the 'default' key from the $instance_options array.
+		 *
+		 * Parameters:
+		 *   $option - the shortcode/widget option
+		 *
+		 * Returns:
+		 *   $option - the option as a string
+		 *
+		 * Example:
+		 * --- php
+		 * function wpdtrt_foo_plugin_init() {
+		 *   ...
+		 *   $instance_options = array(
+		 *     'enlargement_link_text' => array(
+		 *     'type'    => 'text',
+		 *     'size'    => 30,
+		 *     'label'   => __( 'Enlargement link text', 'wpdtrt-map' ),
+		 *     'tip'     => __( 'e.g. View larger map', 'wpdtrt-map' ),
+		 *     'default' => __( 'View in Google Maps', 'wpdtrt-map' ),
+		 *   ),
+		 * );
+		 *
+		 * $instance_options = $this->get_instance_options();
+		 * $string_options   = array();
+		 *
+		 * foreach ( $instance_options as $key => $value ) {
+		 *   $string_options[ $key ] = $this->helper_instance_option_to_string( $value );
+		 * }
+		 * ---
+		 *
+		 * Test:
+		 * - ./tests/test-wpdtrt-plugin.php - test_shortcode_defaults()
+		 */
+		protected function helper_instance_option_to_string( $option ) : string {
+			if ( is_array( $option ) ) {
+				$option = $option['default'];
+			}
+
+			return $option;
 		}
 	}
 }
