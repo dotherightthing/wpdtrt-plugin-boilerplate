@@ -251,9 +251,9 @@ function wpdtrt_test_plugin_init() {
 
 	// Shortcode or Widget options.
 	$instance_options = array(
-		'hide' => array(
-			'type'  => 'checkbox',
-			'label' => esc_html__( 'Hide?', 'wpdtrt-test' ),
+		'hide'  => array(
+			'type'    => 'checkbox',
+			'label'   => esc_html__( 'Hide?', 'wpdtrt-test' ),
 			'default' => 0,
 		),
 		'color' => array(
@@ -285,6 +285,7 @@ function wpdtrt_test_plugin_init() {
 		'success'                     => __( 'settings successfully updated', 'wpdtrt-test' ),
 	);
 
+	// TODO: redundant - use defaults.
 	$demo_shortcode_params = array(
 		'name'   => 'wpdtrt_test_shortcode',
 		'hide'   => 1,

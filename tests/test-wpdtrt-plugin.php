@@ -109,6 +109,7 @@ class PluginTest extends WP_UnitTestCase {
 	public function mock_data() {
 
 		// Post (for testing manually entered, naked shortcode).
+		// See ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php.
 		$this->post_id_1 = $this->create_post( array(
 			'post_title'   => 'DTRT Test shortcode test',
 			'post_content' => '[wpdtrt_test_shortcode]Text to hide[/wpdtrt_test_shortcode]',
@@ -399,7 +400,7 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * MethodL test__update_option__get_option
+	 * Method: test__update_option__get_option
 	 *
 	 * Test update_option().
 	 *
@@ -674,7 +675,16 @@ class PluginTest extends WP_UnitTestCase {
 	/**
 	 * Method: test_shortcode
 	 *
-	 * Test shortcode.
+	 * Test that shortcode wraps content and _show class is applied.
+	 *
+	 * Uses:
+	 * - $this->mock_data() - post_id_1 - page containing shortcode in page content
+	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_plugin_init() - instance_options
+	 * - ./tests/generated-plugin/wpdtrt-test.php: wpdtrt_test_shortcode_init() - selected_instance_options
+	 * - ./tests/generated-plugin/template-parts/wpdtrt-test/content-test.php - output template
+	 *
+	 * See:
+	 * - <Filter your content before displaying it: https://stackoverflow.com/a/22270259/6850747>.
 	 */
 	public function test_shortcode() {
 
@@ -682,10 +692,8 @@ class PluginTest extends WP_UnitTestCase {
 			get_post_permalink( $this->post_id_1 )
 		);
 
-		// https://stackoverflow.com/a/22270259/6850747.
 		$content = apply_filters( 'the_content', get_post_field( 'post_content', $this->post_id_1 ) );
 
-		// default value is '' = unchecked = show.
 		$this->assertEqualHtml(
 			'<span class="wpdtrt-test wpdtrt-test_show">Text to hide</span>',
 			trim( do_shortcode( trim( do_shortcode( $content ) ) ) ),
