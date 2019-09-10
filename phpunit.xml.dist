@@ -6,11 +6,16 @@
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
-	verbose="true"
+	stderr="true"
 	>
+	<filter>
+	<whitelist>
+		<directory suffix=".php">./src/</directory>
+	</whitelist>
+	</filter>
 	<testsuites>
-		<testsuite name="test">
-			<directory prefix="test-" suffix=".php">./tests/</directory>
+		<testsuite name="plugin">
+			<directory suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>
 </phpunit>
