@@ -30,9 +30,26 @@ import taskHeader from './task-header';
  * Returns:
  *   A stream - to signal task completion
  */
+async function cypressIo() {
+  taskHeader(
+    '1/2',
+    'QA',
+    'Tests',
+    'Cypress'
+  );
+
+  // only child plugins have tests
+  // child plugins run off the boilerplatePath
+  if ( boilerplatePath().length ) {
+    const { stdout, stderr } = await exec( './node_modules/bin/cypress run --record --config ./cypress.json' );
+    console.log( stdout );
+    console.error( stderr );
+  }
+}
+
 async function wpUnit() {
   taskHeader(
-    '1/1',
+    '2/2',
     'QA',
     'Tests',
     'WPUnit'
@@ -43,4 +60,9 @@ async function wpUnit() {
   console.error( stderr );
 }
 
-export default series( wpUnit );
+export default series(
+  // 1/2
+  cypressIo,
+  // 2/2
+  wpUnit
+);
