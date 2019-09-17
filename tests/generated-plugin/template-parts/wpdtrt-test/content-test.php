@@ -26,7 +26,7 @@ $color = null;
 $plugin = null;
 
 // Options: display $args + widget $instance settings + access to plugin.
-$options = get_query_var( 'options' );
+$options = get_query_var( 'options', $default = array() );
 
 // Overwrite variables from array values
 // @link http://kb.network.dan/php/wordpress/extract/.
