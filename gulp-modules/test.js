@@ -41,7 +41,7 @@ async function cypressIo() {
   // only child plugins have tests
   // child plugins run off the boilerplatePath
   if ( boilerplatePath().length ) {
-    const { stdout, stderr } = await exec( './node_modules/bin/cypress run --record --config ./cypress.json' );
+    const { stdout, stderr } = await exec( './node_modules/.bin/cypress run --record --config ./cypress.json' );
     console.log( stdout );
     console.error( stderr );
   }
