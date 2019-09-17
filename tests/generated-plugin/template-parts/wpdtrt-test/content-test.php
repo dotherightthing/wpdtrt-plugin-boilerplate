@@ -4,9 +4,8 @@
  *
  * Template to display plugin output in shortcodes and widgets
  *
- * @package   DTRT Test
- * @version   0.0.1
- * @since     0.7.0 DTRT WordPress Plugin Boilerplate Generator
+ * Since:
+ *   0.8.13 - DTRT WordPress Plugin Boilerplate Generator
  */
 
 // Predeclare variables
@@ -27,7 +26,7 @@ $color = null;
 $plugin = null;
 
 // Options: display $args + widget $instance settings + access to plugin.
-$options = get_query_var( 'options' );
+$options = get_query_var( 'options', $default = array() );
 
 // Overwrite variables from array values
 // @link http://kb.network.dan/php/wordpress/extract/.
