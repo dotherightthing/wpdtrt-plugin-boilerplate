@@ -1226,7 +1226,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			// backend.js makes 2 calls to this function:
 			// 1. to render the data as a shortcode
 			// 2. to display the data used to construct the shortcode.
-
+			//
 			// update the UI.
 			if ( 'ui' === $format ) {
 				// build the shortcode.
