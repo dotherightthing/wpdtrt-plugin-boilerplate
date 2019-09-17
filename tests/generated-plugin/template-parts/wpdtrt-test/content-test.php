@@ -4,9 +4,8 @@
  *
  * Template to display plugin output in shortcodes and widgets
  *
- * @package   DTRT Test
- * @version   0.0.1
- * @since     0.7.0 DTRT WordPress Plugin Boilerplate Generator
+ * Since:
+ *   0.8.13 - DTRT WordPress Plugin Boilerplate Generator
  */
 
 // Predeclare variables
