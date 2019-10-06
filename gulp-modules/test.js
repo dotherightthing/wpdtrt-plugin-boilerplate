@@ -41,7 +41,7 @@ async function cypressIo() {
   // child plugins run off the boilerplatePath
   if ( boilerplatePath().length ) {
     const cypressRecord = ( ( TRAVIS && CYPRESS_RECORD_KEY ) ? ' --record' : '' );
-    const { stdout, stderr } = await exec( `./node_modules/.bin/cypress run${cypressRecord}` );
+    const { stdout, stderr } = await exec( `${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` );
     console.log( stdout );
     console.error( stderr );
   }
