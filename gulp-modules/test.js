@@ -10,7 +10,7 @@ import { series } from 'gulp';
 import boilerplatePath from './boilerplate-path';
 import exec from './exec';
 import taskHeader from './task-header';
-import { CYPRESS_RECORD_KEY } from './env';
+import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
 
 /**
  * Group: Tasks
@@ -39,11 +39,10 @@ async function cypressIo() {
     'Cypress'
   );
 
-  const cypressRecord = ( CYPRESS_RECORD_KEY ? ` --record --key ${CYPRESS_RECORD_KEY}` : '' );
-
   // only child plugins have tests
   // child plugins run off the boilerplatePath
   if ( boilerplatePath().length ) {
+    const cypressRecord = ( ( TRAVIS && CYPRESS_RECORD_KEY ) ? ' --record' : '' );
     const { stdout, stderr } = await exec( `./node_modules/.bin/cypress run${cypressRecord}` );
     console.log( stdout );
     console.error( stderr );
