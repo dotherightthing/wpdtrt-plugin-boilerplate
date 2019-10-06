@@ -16,17 +16,15 @@ import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
  * Group: Tasks
  *
  * Order:
- * 1. - wpUnit (1/1)
+ * 1. - cypressIo (1/2)
+ * 2. - wpUnit (2/2)
  * _____________________________________
  */
 
 /**
- * Function: wpUnit
+ * Function: cypressIo
  *
- * Run WPUnit tests
- *
- * See:
- * - <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>
+ * Run Cypress tests
  *
  * Returns:
  *   A stream - to signal task completion
@@ -49,6 +47,17 @@ async function cypressIo() {
   }
 }
 
+/**
+ * Function: wpUnit
+ *
+ * Run WPUnit tests
+ *
+ * See:
+ * - <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>
+ *
+ * Returns:
+ *   A stream - to signal task completion
+ */
 async function wpUnit() {
   taskHeader(
     '2/2',

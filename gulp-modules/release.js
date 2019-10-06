@@ -1,7 +1,7 @@
 /**
  * File: gulp-modules/release.js
  *
- * Gulp tasks to zipFiles a release.
+ * Gulp tasks to zip a release.
  *
  * See:
  * - <Globtester: http://www.globtester.com/>
