@@ -10,23 +10,21 @@ import { series } from 'gulp';
 import boilerplatePath from './boilerplate-path';
 import exec from './exec';
 import taskHeader from './task-header';
-import { CYPRESS_RECORD_KEY } from './env';
+import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
 
 /**
  * Group: Tasks
  *
  * Order:
- * 1. - wpUnit (1/1)
+ * 1. - cypressIo (1/2)
+ * 2. - wpUnit (2/2)
  * _____________________________________
  */
 
 /**
- * Function: wpUnit
+ * Function: cypressIo
  *
- * Run WPUnit tests
- *
- * See:
- * - <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>
+ * Run Cypress tests
  *
  * Returns:
  *   A stream - to signal task completion
@@ -39,17 +37,27 @@ async function cypressIo() {
     'Cypress'
   );
 
-  const cypressRecord = ( CYPRESS_RECORD_KEY ? ` --record --key ${CYPRESS_RECORD_KEY}` : '' );
-
   // only child plugins have tests
   // child plugins run off the boilerplatePath
   if ( boilerplatePath().length ) {
-    const { stdout, stderr } = await exec( `./node_modules/.bin/cypress run${cypressRecord}` );
+    const cypressRecord = ( ( TRAVIS && CYPRESS_RECORD_KEY ) ? ' --record' : '' );
+    const { stdout, stderr } = await exec( `${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` );
     console.log( stdout );
     console.error( stderr );
   }
 }
 
+/**
+ * Function: wpUnit
+ *
+ * Run WPUnit tests
+ *
+ * See:
+ * - <Trouble running PHPUnit in Travis Build: https://stackoverflow.com/a/42467775/6850747>
+ *
+ * Returns:
+ *   A stream - to signal task completion
+ */
 async function wpUnit() {
   taskHeader(
     '2/2',
