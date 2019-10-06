@@ -27,6 +27,7 @@ const sources = {
   ],
   scss: './scss/*.scss'
 };
+
 const targets = {
   // note: paths are relative to gulpfile, not this file
   css: './css',
