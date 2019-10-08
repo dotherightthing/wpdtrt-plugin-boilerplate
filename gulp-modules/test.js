@@ -66,7 +66,7 @@ async function wpUnit() {
     'WPUnit'
   );
 
-  const { stdout, stderr } = await exec( `./vendor/bin/phpunit --configuration ${boilerplatePath()}phpunit.xml.dist` );
+  const { stdout, stderr } = await exec( './vendor/bin/phpunit --configuration phpunit.xml.dist' );
   console.log( stdout );
   console.error( stderr );
 }
