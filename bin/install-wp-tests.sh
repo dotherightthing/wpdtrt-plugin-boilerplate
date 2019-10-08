@@ -142,6 +142,11 @@ install_test_suite() {
 		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
+
+		# http://www.grymoire.com/Unix/Sed.html#uh-1
+		# => define( 'WP_TESTS_DOMAIN', 'localhost' );
+		# => define( 'WP_TESTS_EMAIL', 'admin@localhost' );
+		sed $ioption "s/example.org/localhost/" "$WP_TESTS_DIR"/wp-tests-config.php
 	fi
 
 }
