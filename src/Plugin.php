@@ -1107,7 +1107,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 *   1.3.4 - Use get_api_endpoint() to pass in the endpoint
 		 */
-		public function get_api_data( string $endpoint = '' ) : array {
+		public function get_api_data( string $endpoint = '' ) {
 
 			// Call child plugin method:
 			// A filter is used rather than an action as actions do not return a value.
