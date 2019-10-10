@@ -120,12 +120,12 @@ function naturalDocs( cb ) {
       const url = 'https://naturaldocs.org/download/natural_docs/'
       + '2.0.2/Natural_Docs_2.0.2.zip';
 
-      download( url )
+      return download( url )
         .pipe( unzip() )
         .pipe( dest( './' ) );
-    } else {
-      cb();
     }
+
+    return cb();
   };
 
   return getNaturalDocs();
