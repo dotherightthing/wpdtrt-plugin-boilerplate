@@ -96,9 +96,7 @@ const sources = {
     // Not demo files
     '!./icons/icomoon/demo-files/**/*',
     // Not docs
-    '!./docs/**/*',
-    // Not node module src files
-    '!./node_modules/**/src/**/*'
+    '!./docs/**/*'
   ]
 };
 const targets = {

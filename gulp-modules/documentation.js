@@ -8,6 +8,7 @@ import exec from './exec';
 
 // internal modules
 import taskHeader from './task-header';
+import { TAGGED_RELEASE } from './env';
 
 /**
  * Group: Tasks
@@ -30,12 +31,14 @@ async function naturalDocs() {
     'Natural Docs (JS & PHP)'
   );
 
-  // Quotes escape space better than backslash on Travis
-  const naturalDocsPath = 'Natural Docs/NaturalDocs.exe';
+  if ( TAGGED_RELEASE ) {
+    // Quotes escape space better than backslash on Travis
+    const naturalDocsPath = 'Natural Docs/NaturalDocs.exe';
 
-  const { stdout, stderr } = await exec( `mono "${naturalDocsPath}" ./config/naturaldocs` );
-  console.log( stdout );
-  console.error( stderr );
+    const { stdout, stderr } = await exec( `mono "${naturalDocsPath}" ./config/naturaldocs` );
+    console.log( stdout );
+    console.error( stderr );
+  }
 }
 
 export default naturalDocs;

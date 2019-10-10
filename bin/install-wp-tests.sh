@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# this file is run by yarn run dependencies
 
 if [ $# -lt 1 ]; then
 	echo "usage: $0 <db-name> [wp-version] [skip-database-creation]"
@@ -141,6 +142,12 @@ install_test_suite() {
 		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
+
+		# http://www.grymoire.com/Unix/Sed.html#uh-1
+		# https://github.com/dotherightthing/wpdtrt-gallery/issues/72
+		# => define( 'WP_TESTS_DOMAIN', '127.0.0.1' );
+		# => define( 'WP_TESTS_EMAIL', 'admin@127.0.0.1' );
+		# sed $ioption "s/example.org/127.0.0.1/" "$WP_TESTS_DIR"/wp-tests-config.php
 	fi
 
 }

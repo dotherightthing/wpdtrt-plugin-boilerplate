@@ -25,13 +25,13 @@
     "require-dev": {
         "phpunit/phpunit": "^7.5.14",
         "psy/psysh" : "~0.6",
-        "wp-cli/wp-cli" : "~0.22",
         "wp-coding-standards/wpcs": "^0.14.1",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4"
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+        "wp-cli/wp-cli": "^2.3"
     },
     "autoload": {
         "psr-4": {
-            "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_6_12\\": "src"
+            "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_6_13\\": "src"
         }
     },
     "repositories": [

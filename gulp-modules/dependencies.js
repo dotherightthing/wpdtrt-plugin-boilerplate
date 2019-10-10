@@ -6,6 +6,7 @@
 
 import { dest, series } from 'gulp';
 import log from 'fancy-log';
+import fs from 'fs';
 
 // Ignore missing declaration files
 // @ts-ignore
@@ -19,7 +20,7 @@ import unzip from 'gulp-unzip';
 import boilerplatePath from './boilerplate-path';
 import exec from './exec';
 import taskHeader from './task-header';
-import { GH_TOKEN, TRAVIS } from './env';
+import { GH_TOKEN, TRAVIS, TAGGED_RELEASE } from './env';
 
 // constants
 const pluginName = process.cwd().split( '/' ).pop();
@@ -106,7 +107,7 @@ function github( done ) {
  * Returns:
  *   A stream - to signal task completion
  */
-function naturalDocs() {
+function naturalDocs( cb ) {
   taskHeader(
     '4/5',
     'Dependencies',
@@ -114,14 +115,20 @@ function naturalDocs() {
     'Docs'
   );
 
-  const url = 'https://naturaldocs.org/download/natural_docs/'
-    + '2.0.2/Natural_Docs_2.0.2.zip';
+  const getNaturalDocs = () => {
+    if ( !fs.existsSync( `${process.cwd()}/Natural Docs/NaturalDocs.exe` ) ) {
+      const url = 'https://naturaldocs.org/download/natural_docs/'
+      + '2.0.2/Natural_Docs_2.0.2.zip';
 
-  return (
-    download( url )
-      .pipe( unzip() )
-      .pipe( dest( './' ) )
-  );
+      download( url )
+        .pipe( unzip() )
+        .pipe( dest( './' ) );
+    } else {
+      cb();
+    }
+  };
+
+  return getNaturalDocs();
 }
 
 /**
@@ -187,10 +194,33 @@ const dependenciesTravis = series(
   yarn,
   // 2/5
   github,
+  // 5/5
+  wpUnit
+);
+
+const dependenciesTravisTagged = series(
+  // 1/5
+  yarn,
+  // 2/5
+  github,
   // 4/5
   naturalDocs,
   // 5/5
   wpUnit
 );
 
-export default ( TRAVIS ? dependenciesTravis : dependenciesDev );
+const getDependencies = () => {
+  let deps;
+
+  if ( TRAVIS && TAGGED_RELEASE ) {
+    deps = dependenciesTravisTagged;
+  } else if ( TRAVIS ) {
+    deps = dependenciesTravis;
+  } else {
+    deps = dependenciesDev;
+  }
+
+  return deps;
+};
+
+export default getDependencies();

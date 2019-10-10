@@ -39,4 +39,22 @@ const GH_TOKEN = process.env.GH_TOKEN || '';
  */
 const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
 
-export { CYPRESS_RECORD_KEY, GH_TOKEN, TRAVIS };
+/**
+ * Constant: TAGGED_RELEASE
+ *
+ * Checks whether we are deploying a release from the master branch.
+ *
+ * Note:
+ * - if the current build is for a git tag, this variable is set to the tag’s name.
+ *
+ * See:
+ * - <Default Environment Variables: https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables>
+ */
+const TAGGED_RELEASE = process.env.TRAVIS_TAG || false;
+
+export {
+  CYPRESS_RECORD_KEY,
+  GH_TOKEN,
+  TRAVIS,
+  TAGGED_RELEASE
+};

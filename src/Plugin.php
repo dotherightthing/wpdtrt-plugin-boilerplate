@@ -5,7 +5,7 @@
  * Plugin class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_12;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_13;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
@@ -26,7 +26,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 	class Plugin {
 
 		// https://secure.php.net/manual/en/language.oop5.constants.php.
-		const WPDTRT_PLUGIN_VERSION = '1.6.12';
+		const WPDTRT_PLUGIN_VERSION = '1.6.13';
 
 		/**
 		 * Constructor: __construct
@@ -36,7 +36,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Note:
 		 * - This is a protected method as every plugin uses a sub class:
 		 * --- php
-		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_12\Plugin {...}
+		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_13\Plugin {...}
 		 * ---
 		 *
 		 * - A plugin-specific instance of this class is created on init:
@@ -1107,7 +1107,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 *   1.3.4 - Use get_api_endpoint() to pass in the endpoint
 		 */
-		public function get_api_data( string $endpoint = '' ) : array {
+		public function get_api_data( string $endpoint = '' ) {
 
 			// Call child plugin method:
 			// A filter is used rather than an action as actions do not return a value.

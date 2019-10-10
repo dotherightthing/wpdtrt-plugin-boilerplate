@@ -19,6 +19,7 @@
         <exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
         <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
         <exclude name="Squiz.Commenting.FunctionComment.MissingParamTag"/>
+        <exclude name="Squiz.Commenting.VariableComment.MissingVar"/>
         <exclude name="Squiz.PHP.CommentedOutCode.Found"/>
         <exclude name="WordPress.CSRF.NonceVerification"/>
         <exclude name="WordPress.Files.FileName"/>
