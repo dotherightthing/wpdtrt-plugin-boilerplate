@@ -144,9 +144,10 @@ install_test_suite() {
 		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
 
 		# http://www.grymoire.com/Unix/Sed.html#uh-1
-		# => define( 'WP_TESTS_DOMAIN', 'localhost' );
-		# => define( 'WP_TESTS_EMAIL', 'admin@localhost' );
-		sed $ioption "s/example.org/localhost/" "$WP_TESTS_DIR"/wp-tests-config.php
+		# https://github.com/dotherightthing/wpdtrt-gallery/issues/72
+		# => define( 'WP_TESTS_DOMAIN', '127.0.0.1' );
+		# => define( 'WP_TESTS_EMAIL', 'admin@127.0.0.1' );
+		# sed $ioption "s/example.org/127.0.0.1/" "$WP_TESTS_DIR"/wp-tests-config.php
 	fi
 
 }
