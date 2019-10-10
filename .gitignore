@@ -13,3 +13,4 @@ config/naturaldocs/Working Data
 Natural Docs
 *sublime-*
 *.code-workspace
+.vscode
