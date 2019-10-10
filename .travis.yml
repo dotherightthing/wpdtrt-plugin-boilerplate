@@ -62,11 +62,11 @@ before_install:
   - phpenv config-rm xdebug.ini
   # Install Mono (Natural Docs dependency)
   # https://www.mono-project.com/download/stable/#download-lin-ubuntu
-  - if [ $TRAVIS_TAG ]; then sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-  - if [ $TRAVIS_TAG ]; then sudo apt install apt-transport-https ca-certificates
-  - if [ $TRAVIS_TAG ]; then echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
-  - if [ $TRAVIS_TAG ]; then sudo apt update
-  - if [ $TRAVIS_TAG ]; then sudo apt install mono-complete
+  - if [ $TRAVIS_TAG ]; then sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF; fi
+  - if [ $TRAVIS_TAG ]; then sudo apt install apt-transport-https ca-certificates; fi
+  - if [ $TRAVIS_TAG ]; then echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list; fi
+  - if [ $TRAVIS_TAG ]; then sudo apt update; fi
+  - if [ $TRAVIS_TAG ]; then sudo apt install mono-complete; fi
   # Unsure if this is required here, it is needed by generated plugins.
   # See dotherightthing/generator-wpdtrt-plugin-boilerplate#88
   - composer config -g github-oauth.github.com $GH_TOKEN
