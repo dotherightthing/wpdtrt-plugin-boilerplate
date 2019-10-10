@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_6_12\\": "src"
+            "DoTheRightThing\\WPDTRT_Plugin_Boilerplate\\r_1_6_13\\": "src"
         }
     },
     "repositories": [
