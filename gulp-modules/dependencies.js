@@ -6,6 +6,7 @@
 
 import { dest, series } from 'gulp';
 import log from 'fancy-log';
+import fs from 'fs';
 
 // Ignore missing declaration files
 // @ts-ignore
@@ -106,7 +107,7 @@ function github( done ) {
  * Returns:
  *   A stream - to signal task completion
  */
-function naturalDocs() {
+function naturalDocs( cb ) {
   taskHeader(
     '4/5',
     'Dependencies',
@@ -114,14 +115,20 @@ function naturalDocs() {
     'Docs'
   );
 
-  const url = 'https://naturaldocs.org/download/natural_docs/'
-    + '2.0.2/Natural_Docs_2.0.2.zip';
+  const getNaturalDocs = () => {
+    if ( !fs.existsSync( `${process.cwd()}/Natural Docs/NaturalDocs.exe` ) ) {
+      const url = 'https://naturaldocs.org/download/natural_docs/'
+      + '2.0.2/Natural_Docs_2.0.2.zip';
 
-  return (
-    download( url )
-      .pipe( unzip() )
-      .pipe( dest( './' ) )
-  );
+      download( url )
+        .pipe( unzip() )
+        .pipe( dest( './' ) );
+    } else {
+      cb();
+    }
+  };
+
+  return getNaturalDocs();
 }
 
 /**
@@ -216,4 +223,4 @@ const getDependencies = () => {
   return deps;
 };
 
-export default getDependencies;
+export default getDependencies();
