@@ -19,7 +19,7 @@ import unzip from 'gulp-unzip';
 import boilerplatePath from './boilerplate-path';
 import exec from './exec';
 import taskHeader from './task-header';
-import { GH_TOKEN, TRAVIS } from './env';
+import { GH_TOKEN, TRAVIS, TAGGED_RELEASE } from './env';
 
 // constants
 const pluginName = process.cwd().split( '/' ).pop();
@@ -187,10 +187,33 @@ const dependenciesTravis = series(
   yarn,
   // 2/5
   github,
+  // 5/5
+  wpUnit
+);
+
+const dependenciesTravisTagged = series(
+  // 1/5
+  yarn,
+  // 2/5
+  github,
   // 4/5
   naturalDocs,
   // 5/5
   wpUnit
 );
 
-export default ( TRAVIS ? dependenciesTravis : dependenciesDev );
+const getDependencies = () => {
+  let deps;
+
+  if ( TRAVIS && TAGGED_RELEASE ) {
+    deps = dependenciesTravisTagged;
+  } else if ( TRAVIS ) {
+    deps = dependenciesTravis;
+  } else {
+    deps = dependenciesDev;
+  }
+
+  return deps;
+};
+
+export default getDependencies;
