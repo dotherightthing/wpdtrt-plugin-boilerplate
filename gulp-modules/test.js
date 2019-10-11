@@ -47,7 +47,7 @@ async function cypressIo() {
       console.log( stdout );
       console.log( stderr );
     } catch ( error ) {
-      console.log( error );
+      console.log( error.stdout );
     }
   }
 }
