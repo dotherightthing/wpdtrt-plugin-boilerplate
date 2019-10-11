@@ -8,7 +8,7 @@ import { series } from 'gulp';
 
 // internal modules
 import boilerplatePath from './boilerplate-path';
-import exec from './child_process';
+import exec from './exec';
 import taskHeader from './task-header';
 import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
 
