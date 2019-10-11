@@ -43,8 +43,9 @@ async function cypressIo() {
   if ( boilerplatePath().length ) {
     const cypressRecord = ( ( TRAVIS && CYPRESS_RECORD_KEY ) ? ' --record' : '' );
     try {
-      const { stdout } = await execa.commandSync( `./${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` );
+      const { stdout, stderr } = await execa.commandSync( `./${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` );
       console.log( stdout );
+      console.log( stderr );
     } catch ( error ) {
       console.log( error );
     }
