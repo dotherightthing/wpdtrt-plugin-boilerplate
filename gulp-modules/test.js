@@ -9,7 +9,7 @@ import { series } from 'gulp';
 // internal modules
 import boilerplatePath from './boilerplate-path';
 import exec from './exec';
-import execa from './execa';
+const execa = require( 'execa' );
 import taskHeader from './task-header';
 import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
 
