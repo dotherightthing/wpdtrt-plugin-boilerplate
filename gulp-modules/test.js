@@ -9,6 +9,7 @@ import { series } from 'gulp';
 // internal modules
 import boilerplatePath from './boilerplate-path';
 import exec from './exec';
+const execa = require( 'execa' );
 import taskHeader from './task-header';
 import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
 
@@ -41,9 +42,13 @@ async function cypressIo() {
   // child plugins run off the boilerplatePath
   if ( boilerplatePath().length ) {
     const cypressRecord = ( ( TRAVIS && CYPRESS_RECORD_KEY ) ? ' --record' : '' );
-    const { stdout, stderr } = await exec( `./${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` );
-    console.log( stdout );
-    console.error( stderr );
+    try {
+      const { stdout, stderr } = await execa.commandSync( `./${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` );
+      console.log( stdout );
+      console.log( stderr );
+    } catch ( error ) {
+      console.log( error.stdout );
+    }
   }
 }
 
@@ -66,7 +71,11 @@ async function wpUnit() {
     'WPUnit'
   );
 
-  const { stdout, stderr } = await exec( './vendor/bin/phpunit --configuration phpunit.xml.dist' );
+  const { error, stdout, stderr } = await exec( './vendor/bin/phpunit --configuration phpunit.xml.dist' );
+  if ( error ) {
+    console.error( error );
+    return;
+  }
   console.log( stdout );
   console.error( stderr );
 }
