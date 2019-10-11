@@ -13,16 +13,6 @@
  */
 
 /**
- * Constant: CYPRESS_RECORD_KEY
- *
- * Key for recording headless CI tests.
- *
- * Note:
- * - This is in addition to the projectId in cypress.json.
- */
-const CYPRESS_RECORD_KEY = process.env.CYPRESS_RECORD_KEY || '';
-
-/**
  * Constant: GH_TOKEN
  *
  * Github API token (string).
@@ -53,7 +43,6 @@ const TRAVIS = ( typeof process.env.TRAVIS !== 'undefined' );
 const TAGGED_RELEASE = process.env.TRAVIS_TAG || false;
 
 export {
-  CYPRESS_RECORD_KEY,
   GH_TOKEN,
   TRAVIS,
   TAGGED_RELEASE

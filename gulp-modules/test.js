@@ -11,7 +11,6 @@ import boilerplatePath from './boilerplate-path';
 import exec from './exec';
 const execa = require( 'execa' );
 import taskHeader from './task-header';
-import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
 
 /**
  * Group: Tasks
