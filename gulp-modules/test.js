@@ -9,6 +9,7 @@ import { series } from 'gulp';
 // internal modules
 import boilerplatePath from './boilerplate-path';
 import exec from './exec';
+import execa from './execa';
 import taskHeader from './task-header';
 import { CYPRESS_RECORD_KEY, TRAVIS } from './env';
 
@@ -41,13 +42,11 @@ async function cypressIo() {
   // child plugins run off the boilerplatePath
   if ( boilerplatePath().length ) {
     const cypressRecord = ( ( TRAVIS && CYPRESS_RECORD_KEY ) ? ' --record' : '' );
-    const { error, stdout, stderr } = await exec( `./${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` );
-    if ( error ) {
-      console.error( error );
-      return;
+    try {
+      await execa( `./${boilerplatePath()}node_modules/.bin/cypress run${cypressRecord}` ).stdout.pipe( process.stdout );
+    } catch ( error ) {
+      console.log( error );
     }
-    console.log( stdout );
-    console.error( stderr );
   }
 }
 
