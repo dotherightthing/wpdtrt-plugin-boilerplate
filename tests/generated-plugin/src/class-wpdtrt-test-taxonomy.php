@@ -17,7 +17,7 @@
  * Since:
  *   0.7.16 - DTRT WordPress Plugin Boilerplate Generator
  */
-class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_17\Taxonomy {
+class WPDTRT_Test_Taxonomy extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_18\Taxonomy {
 
 	/**
 	 * Constructor: __construct

@@ -5,7 +5,7 @@
  * Plugin class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_17;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_18;
 
 if ( ! class_exists( 'Plugin' ) ) {
 
@@ -26,7 +26,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 	class Plugin {
 
 		// https://secure.php.net/manual/en/language.oop5.constants.php.
-		const WPDTRT_PLUGIN_VERSION = '1.6.17';
+		const WPDTRT_PLUGIN_VERSION = '1.6.18';
 
 		/**
 		 * Constructor: __construct
@@ -36,7 +36,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Note:
 		 * - This is a protected method as every plugin uses a sub class:
 		 * --- php
-		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_17\Plugin {...}
+		 * class WPDTRT_Test_Plugin extends DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_18\Plugin {...}
 		 * ---
 		 *
 		 * - A plugin-specific instance of this class is created on init:
