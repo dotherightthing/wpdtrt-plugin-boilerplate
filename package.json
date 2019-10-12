@@ -1,6 +1,6 @@
 {
   "name": "wpdtrt-plugin-boilerplate",
-  "version": "1.6.19",
+  "version": "1.7.0",
   "description": "Boilerplate for WordPress plugin development.",
   "main": "index.php",
   "person": {
@@ -25,17 +25,18 @@
     "WordPress"
   ],
   "devDependencies": {
-    "wpdtrt-gulp": "https://github.com/dotherightthing/wpdtrt-gulp.git#development"
+    "gulp": "^4.0.2",
+    "wpdtrt-gulp": "https://github.com/dotherightthing/wpdtrt-gulp.git"
   },
   "scripts": {
-    "build": "gulp --gulpfile ./gulpfile-loader.js",
-    "dependencies": "gulp dependencies --gulpfile ./gulpfile-loader.js",
-    "docs": "gulp documentation --gulpfile ./gulpfile-loader.js",
-    "lint": "gulp lint --gulpfile ./gulpfile-loader.js",
-    "release": "gulp release --gulpfile ./gulpfile-loader.js",
-    "test": "gulp test --gulpfile ./gulpfile-loader.js",
-    "version": "gulp version --gulpfile ./gulpfile-loader.js",
-    "watch": "gulp compile --gulpfile ./gulpfile-loader.js && gulp watch --gulpfile ./gulpfile-loader.js"
+    "build": "./node_modules/.bin/gulp --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./",
+    "dependencies": "./node_modules/.bin/gulp dependencies --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./",
+    "docs": "./node_modules/.bin/gulp documentation --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./",
+    "lint": "./node_modules/.bin/gulp lint --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./",
+    "release": "./node_modules/.bin/gulp release --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./",
+    "test": "./node_modules/.bin/gulp test --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./",
+    "version": "./node_modules/.bin/gulp version --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./",
+    "watch": "./node_modules/.bin/gulp compile --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js && gulp watch --gulpfile ./node_modules/wpdtrt-gulp/gulpfile-loader.js --cwd ./"
   },
   "repository": {
     "type": "git",

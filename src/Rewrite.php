@@ -5,7 +5,7 @@
  * Plugin rewrite class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_19;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_0;
 
 if ( ! class_exists( 'Rewrite' ) ) {
 
@@ -34,7 +34,7 @@ if ( ! class_exists( 'Rewrite' ) ) {
 		 *
 		 * Example:
 		 * --- php
-		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_6_19\Rewrite {}
+		 * $wpdtrt_test_rewrite = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_0\Rewrite {}
 		 * ---
 		 *
 		 * Parameters:
