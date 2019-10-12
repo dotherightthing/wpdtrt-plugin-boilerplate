@@ -7041,9 +7041,9 @@ wordwrap@~1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha1-J1hIEIkUVqQXHI0CJkQa3pDLyus=
 
-"wpdtrt-gulp@https://github.com/dotherightthing/wpdtrt-gulp.git#development":
+"wpdtrt-gulp@https://github.com/dotherightthing/wpdtrt-gulp.git":
   version "0.1.0"
-  resolved "https://github.com/dotherightthing/wpdtrt-gulp.git#adac9f56e31fa711f7841c4c301720d0d889a576"
+  resolved "https://github.com/dotherightthing/wpdtrt-gulp.git#6a97c85eed1f6687b90af2197397e45539b83860"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/preset-env" "^7.4.1"
