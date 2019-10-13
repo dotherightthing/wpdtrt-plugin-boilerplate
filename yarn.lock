@@ -7048,7 +7048,7 @@ wordwrap@~1.0.0:
 
 "wpdtrt-gulp@https://github.com/dotherightthing/wpdtrt-gulp.git":
   version "0.1.0"
-  resolved "https://github.com/dotherightthing/wpdtrt-gulp.git#92000b5a48cebe6a9f1352ffda7fe368251d853a"
+  resolved "https://github.com/dotherightthing/wpdtrt-gulp.git#f2bc8794547c76a9f7db342848fce3d6d492caff"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/preset-env" "^7.4.1"
