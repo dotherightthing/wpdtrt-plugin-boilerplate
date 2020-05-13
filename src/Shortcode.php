@@ -368,7 +368,11 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 */
 		protected function helper_instance_option_to_string( $option ) : string {
 			if ( is_array( $option ) ) {
-				$option = $option['default'];
+				if ( array_key_exists( 'default', $option ) ) {
+					$option = $option['default'];
+				} else {
+					$option = '';
+				}
 			}
 
 			return $option;
