@@ -268,7 +268,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 		public function set_wp_composer_dependencies_tgmpa( string $composer_json ) : array {
 			$wp_composer_dependencies = $this->get_wp_composer_dependencies( $composer_json );
-			$tgmpa_props = array(
+			$tgmpa_props              = array(
 				'name',
 				'slug',
 				'required',
@@ -961,7 +961,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 */
 		public function get_plugin_data_length() : int {
-			$plugin_data = $this->get_plugin_data();
+			$plugin_data     = $this->get_plugin_data();
 			$number_of_items = count( $plugin_data );
 			return $number_of_items;
 		}
