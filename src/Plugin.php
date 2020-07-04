@@ -2114,13 +2114,19 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 */
 		public function render_css_frontend() {
-			$media = 'all';
+			$media                     = 'all';
+			$stylesheets_to_load_first = array();
+
+			wp_enqueue_style( $this->get_prefix() . '_variables',
+				$this->get_url() . '/css/' . $this->get_slug() . '-variables.css',
+				$stylesheets_to_load_first,
+				$this->get_version(),
+				$media
+			);
 
 			wp_enqueue_style( $this->get_prefix(),
 				$this->get_url() . 'css/frontend.css',
-				array(
-					// load these registered dependencies first.
-				),
+				$stylesheets_to_load_first,
 				$this->get_version(),
 				$media
 			);
