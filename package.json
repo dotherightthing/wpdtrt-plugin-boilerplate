@@ -47,10 +47,6 @@
     "type": "git",
     "url": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate"
   },
-  "browserslist": [
-    "last 2 versions",
-    "ie >= 11"
-  ],
   "license": "ISC",
   "homepage": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate",
   "srcDir": "/Volumes/DanBackup/Websites/wpdtrt-plugin-boilerplate",
