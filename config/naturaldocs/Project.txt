@@ -9,9 +9,9 @@ Format: 2.0.2
 # ------------------------------------------------------------------------
 
 Title: Documentation
-Subtitle: DTRT WordPress Plugin Boilerplate (1.7.1)
+Subtitle: wpdtrt-plugin-boilerplate (1.7.1)
 
-Copyright: Copyright © 2019 Dan Smith
+Copyright: Copyright © 2020 Dan Smith
 
 Timestamp: Last updated day month, year
 #    m     - Single digit month, when possible.  January is "1".
@@ -60,8 +60,6 @@ Source Folder: ../..
 
 # Source Filtering
 # ------------------------------------------------------------------------
-
-Ignore Source Folder: ../../bin
 
 Ignore Source Folder: ../../docs
 
@@ -127,5 +125,3 @@ HTML Output Folder: ../../docs
 #
 # Auto Group: [yes|no]
 #    Whether groups should automatically apply to you code.  Defaults to yes.
-
-

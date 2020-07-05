@@ -1,9 +1,9 @@
 //
 // SCSS variables
-// This file is imported by child plugins
 //
 // @package     WPDTRT_Plugin_Boilerplate
 // @since       1.0.0
 //
 
-@import 'variables/scss';
+// path relative to css folder
+$icomoon-font-path: '../icons/icomoon/fonts';

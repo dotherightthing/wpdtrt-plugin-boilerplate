@@ -1,0 +1,6 @@
+{
+    "phpcbf.executablePath": "${workspaceRoot}/vendor/bin/phpcbf",
+    "phpcbf.onsave": false,
+    "phpcs.showSources": true,
+    "phpcbf.standard": "phpcs.xml"
+}

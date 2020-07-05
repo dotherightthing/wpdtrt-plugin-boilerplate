@@ -1,6 +1,6 @@
 # DTRT WordPress Plugin Boilerplate
 
-[![GitHub release](https://img.shields.io/github/release/dotherightthing/wpdtrt-plugin-boilerplate.svg?branch=master)](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases) [![Build Status](https://travis-ci.org/dotherightthing/wpdtrt-plugin-boilerplate.svg?branch=master)](https://travis-ci.org/dotherightthing/wpdtrt-plugin-boilerplate) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin-boilerplate.svg)](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues) [![GitHub wiki](https://img.shields.io/badge/documentation-wiki-lightgrey.svg)](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki)
+[![GitHub release](https://img.shields.io/github/v/tag/dotherightthing/wpdtrt-plugin-boilerplate)](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases) [![Build Status](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/workflows/Build%20and%20release%20if%20tagged/badge.svg)](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/actions?query=workflow%3A%22Build+and+release+if+tagged%22) [![GitHub issues](https://img.shields.io/github/issues/dotherightthing/wpdtrt-plugin-boilerplate.svg)](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues)[![GitHub wiki](https://img.shields.io/badge/documentation-wiki-lightgrey.svg)](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki)
 
 Boilerplate for WordPress plugin development.
 

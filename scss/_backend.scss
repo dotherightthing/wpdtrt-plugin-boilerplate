@@ -29,7 +29,7 @@
 
         .wpdtrt-plugin-boilerplate-version {
             // copied from dashboard-widgets-suite plugin
-            color: #c7c7c7;
+            color: var(--wpdtrt-plugin-boilerplate-text-color-version);
             font-size: 90%;
         }
 
@@ -85,7 +85,7 @@
     table {
         &.compat-attachment-fields {
             padding-top: 5px;
-            border-top: 1px solid #ddd;
+            border-top: 1px solid var(--wpdtrt-plugin-boilerplate-divider-custom-field);
             margin-top: 15px;
         }
     }

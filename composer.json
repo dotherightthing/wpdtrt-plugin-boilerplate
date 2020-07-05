@@ -23,10 +23,10 @@
         "php": "^7.2.20"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5.14",
-        "psy/psysh" : "~0.6",
         "wp-coding-standards/wpcs": "^0.14.1",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
+        "phpunit/phpunit": "^7.5.14",
+        "psy/psysh": "~0.6",
         "wp-cli/wp-cli": "^2.3"
     },
     "autoload": {
