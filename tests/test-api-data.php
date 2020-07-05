@@ -8,6 +8,9 @@
  * - These tests are also run from child plugins.
  */
 
+/**
+ * Import helpers
+ */
 require_once 'helpers/helpers.php';
 
 /**
