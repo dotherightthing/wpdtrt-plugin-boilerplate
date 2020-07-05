@@ -165,7 +165,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				return array();
 			}
 
-			$composer_config = file_get_contents( $composer_json );
+			$composer_config = file_get_contents( $composer_json ); // phpcs:ignore
 
 			$obj = json_decode( $composer_config );
 
