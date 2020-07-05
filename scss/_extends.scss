@@ -1,9 +1,12 @@
 //
 // SCSS silent @extends (Helpers)
+// This file is imported by child plugins
 //
 // @package     WPDTRT_Plugin_Boilerplate
 // @since       1.0.0
 //
+
+/* stylelint-disable declaration-no-important */
 
 // ex twentysixteen/style.css
 %wpdtrt-plugin-boilerplate--screen-reader-text,
@@ -68,7 +71,7 @@
 // add a divider after the last attachment field added by a plugin
 %wpdtrt-plugin-boilerplate--last-attachment-field-divider {
     padding-bottom: 5px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--wpdtrt-plugin-boilerplate-divider-custom-field);
     margin-bottom: 15px;
 }
 
