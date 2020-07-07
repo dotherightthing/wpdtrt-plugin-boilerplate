@@ -11,3 +11,7 @@ Please install and use via the [DTRT WordPress Plugin Boilerplate Generator](htt
 ## Usage
 
 Please start by reading the wiki section titled [Workflows](https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/wiki/Workflows).
+
+## Note
+
+This library uses wpdtrt-npm-scripts, but a release zip archive is not generated as the library is only consumed as a Composer dependency.

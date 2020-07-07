@@ -46,15 +46,15 @@ jobs:
         WPUNIT_DB_PASS: root
         WPUNIT_DB_HOST: 127.0.0.1
 
-    - name: Copy built files to release folder
-      run: npm run release --if-present
+    # - name: Copy built files to release folder
+    #   run: npm run release --if-present
 
     # https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts
-    - name: Archive release folder
-      uses: actions/upload-artifact@v1
-      with:
-        name: release
-        path: release
+    # - name: Archive release folder
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: release
+    #     path: release
 
     - name: Archive changelog
       uses: actions/upload-artifact@v1
@@ -85,12 +85,12 @@ jobs:
     # otherwise the contents will be added
     # to the (empty) root
     # (as of download-artifact@v2)
-    - name: Download release folder from Build
-      if: steps.check-tag.outputs.match == 'true'
-      uses: actions/download-artifact@v2
-      with:
-        name: release
-        path: release
+    # - name: Download release folder from Build
+    #   if: steps.check-tag.outputs.match == 'true'
+    #   uses: actions/download-artifact@v2
+    #   with:
+    #     name: release
+    #     path: release
 
     - name: Download changelog from Build
       if: steps.check-tag.outputs.match == 'true'
@@ -102,17 +102,17 @@ jobs:
     - name: Check that artifacts were downloaded as expected
       run: ls -R
 
-    - name: Zip release folder
-      if: steps.check-tag.outputs.match == 'true'
-      uses: montudor/action-zip@v0.1.0
-      with:
-        args: zip -qq -r ./release.zip ./release
+    # - name: Zip release folder
+    #   if: steps.check-tag.outputs.match == 'true'
+    #   uses: montudor/action-zip@v0.1.0
+    #   with:
+    #     args: zip -qq -r ./release.zip ./release
 
     - name: Upload release to the repository's Releases page
       if: steps.check-tag.outputs.match == 'true'
-      uses: yakuhzi/action-release@v1
+      uses: yakuhzi/action-release@v1.2.2
       with:
-        file: release.zip
+        # file: release.zip
         changelog: changelog/CHANGELOG.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
