@@ -1,1 +1,1 @@
-* [cdc9855] Downgrade action-release to v1.2.0 (#181)
+* [341bea8] Downgrade to action-release v1, which should point to the latest release
