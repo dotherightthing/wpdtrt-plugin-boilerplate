@@ -110,7 +110,7 @@ jobs:
 
     - name: Upload release to the repository's Releases page
       if: steps.check-tag.outputs.match == 'true'
-      uses: yakuhzi/action-release@v1.2.0
+      uses: yakuhzi/action-release@v1
       with:
         # file: release.zip
         changelog: changelog/CHANGELOG.md
