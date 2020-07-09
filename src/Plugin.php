@@ -2118,7 +2118,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$stylesheets_to_load_first = array();
 
 			wp_enqueue_style( $this->get_prefix() . '_variables',
-				$this->get_url() . '/css/' . $this->get_slug() . '-variables.css',
+				$this->get_url() . 'css/' . $this->get_slug() . '-variables.css',
 				$stylesheets_to_load_first,
 				$this->get_version(),
 				$media
