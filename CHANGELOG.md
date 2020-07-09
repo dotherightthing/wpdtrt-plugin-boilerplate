@@ -1,1 +1,1 @@
-* [341bea8] Downgrade to action-release v1, which should point to the latest release
+* [f196128] Remove extra slash from path to CSS variables stylesheet
