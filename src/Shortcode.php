@@ -100,6 +100,11 @@ if ( ! class_exists( 'Shortcode' ) ) {
 		 */
 		protected function wp_setup() {
 			$name = $this->get_name();
+
+			if ( shortcode_exists( $name ) ) {
+				remove_shortcode( $name ); // supports replacement of core shortcodes.
+			}
+
 			add_shortcode( $name, array( $this, 'render_shortcode' ) );
 		}
 
