@@ -785,6 +785,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 *   1.3.0 - Fixed option merging
+		 *   1.7.6 - Fixed check for raw config options
 		 */
 		public function set_plugin_options( array $new_plugin_options, bool $is_raw_config_options = false ) : array {
 
@@ -795,7 +796,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 				return $old_plugin_options;
 			}
 
-			if ( isset( $is_raw_config_options ) ) {
+			if ( $is_raw_config_options ) {
 				// the config array is the canonical set of options.
 				$config_options = $new_plugin_options;
 				$user_values    = $old_plugin_options;
