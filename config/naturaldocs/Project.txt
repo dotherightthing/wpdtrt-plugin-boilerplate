@@ -9,7 +9,7 @@ Format: 2.0.2
 # ------------------------------------------------------------------------
 
 Title: Documentation
-Subtitle: wpdtrt-plugin-boilerplate (1.7.1)
+Subtitle: wpdtrt-plugin-boilerplate (1.7.6)
 
 Copyright: Copyright © 2020 Dan Smith
 
