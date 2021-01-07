@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [13.x]
+        node: [ '13.x' ]
 
     steps:
     # check out the repository, so the workflow can access it
@@ -26,12 +26,41 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '7.2.15'
-        node-version: ${{ matrix.node-version }}
+        node-version: ${{ matrix.node }}
+
+    # Downgrade from Composer 2 in ubuntu-latest, to Composer 1, as v2 causes issues
+    # https://github.com/actions/virtual-environments/issues/1816
+    # Fix: https://github.com/actions/virtual-environments/issues/1924
+    - name: Make sure we are using composer v1
+      run: |
+        sudo composer self-update --1
+        sudo chown $USER $HOME/.composer
+
+    # Fix Cypress cannot write to the cache directory due to file permissions
+    # https://github.com/cypress-io/cypress/issues/1281
+    - name: Grant Cypress permission to download to cache directory
+      run: |
+        sudo chown $USER $HOME/.cache
     
-    - name: Run build
+    # https://github.com/cypress-io/github-action#install-cypress-only
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      id: cache
+      with:
+        path: |
+          ~/.cache
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+    - name: Composer config
       run: |
         composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Install dependencies
+      run: |
         npm ci
+
+    - name: Run build
+      run: |
         npm run lint --if-present
         npm run compile --if-present
 
