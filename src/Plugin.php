@@ -1315,7 +1315,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 */
-		public function helper_normalise_field_value( string $field_value, string $field_type ) : string {
+		public function helper_normalise_field_value( ?string $field_value, string $field_type ) : ?string {
 			$normalised_field_value = null;
 
 			if ( isset( $field_value ) ) {
