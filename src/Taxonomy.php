@@ -5,7 +5,7 @@
  * Plugin taxonomy class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_8;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_9;
 
 if ( ! class_exists( 'Taxonomy' ) ) {
 
@@ -39,7 +39,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 *
 		 * Example:
 		 * --- php
-		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_8\Taxonomy {}
+		 * $wpdtrt_test_taxonomy = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_9\Taxonomy {}
 		 * ---
 		 *
 		 * Parameters:

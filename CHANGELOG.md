@@ -1,1 +1,1 @@
-* [4514d73] Use nullable type hints to support string|null input and output (fixes dotherightthing/wpdtrt-tourdates#33)
+* [b80d89f] Use nullable type hint and add missing value (fixes dotherightthing/wpdtrt-tourdates#33)
