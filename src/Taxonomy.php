@@ -527,7 +527,7 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 		 * Since:
 		 *  1.0.0
 		 */
-		public function render_form_element( string $name, array $attributes = [], string $term_id ) : string {
+		public function render_form_element( string $name, array $attributes = [], ?string $term_id = null ) : string {
 
 			// these options don't have attributes.
 			if ( 'description' === $name ) {
