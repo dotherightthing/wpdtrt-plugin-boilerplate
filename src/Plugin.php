@@ -2007,7 +2007,16 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$field_start = '<td>';
 			$field_end   = '</td></tr>';
 			$tip_element = 'div';
-			$classname   = 'regular-text';
+
+			if ( $size <= 2 ) {
+				$classname = 'tiny-text';
+			} elseif ( $size <= 4 ) {
+				$classname = 'small-text';
+			} elseif ( $size <= 37 ) {
+				$classname = 'regular-text';
+			} else {
+				$classname = 'large-text';
+			}
 
 			// same.
 			$id = $name_str;
