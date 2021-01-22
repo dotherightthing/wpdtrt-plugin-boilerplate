@@ -1999,6 +1999,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 			if ( ! isset( $value ) ) {
 				$value = $this->helper_get_default_value( $type, $default );
+			} elseif ( ( 'number' === $type ) && ( '' === $value ) ) {
+				$value = $this->helper_get_default_value( $type, $default );
 			}
 
 			// name as a string.
