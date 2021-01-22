@@ -1378,9 +1378,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * Since:
 		 *   1.0.0 - Added
 		 */
-		public function helper_get_default_value( string $input_type ) : ?string {
+		public function helper_get_default_value( string $input_type, $default = null ) : ?string {
 
-			if ( 'select' === $input_type ) {
+			if ( ! is_null( $default ) ) {
+				$default_value = $default;
+			} elseif ( 'select' === $input_type ) {
 				$default_value = null;
 			} elseif ( 'checkbox' === $input_type ) {
 				$default_value = '';
@@ -1986,6 +1988,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$tip     = null;
 			$options = null;
 			$value   = null;
+			$default = null;
 
 			// populate variables.
 			extract( $attributes, EXTR_IF_EXISTS );
@@ -1995,7 +1998,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			}
 
 			if ( ! isset( $value ) ) {
-				$value = $this->helper_get_default_value( $type );
+				$value = $this->helper_get_default_value( $type, $default );
 			}
 
 			// name as a string.
