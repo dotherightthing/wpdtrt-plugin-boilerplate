@@ -20,7 +20,7 @@ echo $label_start; ?>
 <?php echo $label_end; ?>
 
 <?php echo $field_start; ?>
-	<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $value ); ?>" size="<?php echo esc_attr( $size ); ?>" class="<?php echo esc_attr( $classname ); ?>" aria-describedby="<?php echo esc_attr( $id ); ?>-tip">
+	<input type="text" name="<?php echo esc_attr( $name ); ?>" id="<?php echo esc_attr( $id ); ?>" value="<?php echo esc_attr( $value ); ?>" size="<?php echo esc_attr( $size ); ?>" maxlength="<?php echo esc_attr( $size ); ?>" class="<?php echo esc_attr( $classname ); ?>" aria-describedby="<?php echo esc_attr( $id ); ?>-tip">
 	<<?php echo $tip_element; ?> class="description" id="<?php echo esc_attr( $id ); ?>-tip">
 		<?php echo $tip; ?>
 	</<?php echo $tip_element; ?>>
