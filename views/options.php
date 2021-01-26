@@ -36,12 +36,12 @@ if ( $demo_display ) {
 }
 ?>
 
-<div class="wrap wpdtrt-plugin-boilerplate--options">
+<div class="wrap wpdtrt-plugin-boilerplate__options">
 
 	<div id="icon-options-general" class="icon32"></div>
 		<h1>
 			<?php echo esc_html( $plugin_title ); ?>
-			<span class="wpdtrt-plugin-boilerplate-version">
+			<span class="wpdtrt-scss-plugin-version">
 				<?php echo esc_html( $plugin_version ); ?>
 			</span>
 		</h1>
@@ -126,7 +126,7 @@ if ( $demo_display ) {
 			<?php echo esc_html( $demo_data_displayed_length ); ?>:
 		</p>
 
-		<div class="wpdtrt-plugin-boilerplate-ajax-response" data-format="ui"></div>
+		<div class="wpdtrt-scss-plugin-ajax-response" data-format="ui"></div>
 
 			<h2>
 				<span>
@@ -138,9 +138,9 @@ if ( $demo_display ) {
 				<?php echo esc_html( $demo_data_description ); ?>.
 			</p>
 
-			<div class="wpdtrt-plugin-boilerplate-ajax-response" data-format="data"></div>
+			<div class="wpdtrt-scss-plugin-ajax-response" data-format="data"></div>
 
-			<p class="wpdtrt-plugin-boilerplate-date">
+			<p class="wpdtrt-scss-plugin-date">
 				<em>
 					<?php echo esc_html( $demo_date_last_updated . ': ' . $demo_date_last_updated_date ); ?>
 				</em>
