@@ -126,7 +126,7 @@ if ( $demo_display ) {
 			<?php echo esc_html( $demo_data_displayed_length ); ?>:
 		</p>
 
-		<div class="wpdtrt-scss-plugin-ajax-response" data-format="ui"></div>
+		<div class="wpdtrt-plugin-boilerplate-ajax-response wpdtrt-scss-plugin-ajax-response" data-format="ui"></div>
 
 			<h2>
 				<span>
@@ -138,7 +138,7 @@ if ( $demo_display ) {
 				<?php echo esc_html( $demo_data_description ); ?>.
 			</p>
 
-			<div class="wpdtrt-scss-plugin-ajax-response" data-format="data"></div>
+			<div class="wpdtrt-plugin-boilerplate-ajax-response wpdtrt-scss-plugin-ajax-response" data-format="data"></div>
 
 			<p class="wpdtrt-scss-plugin-date">
 				<em>
