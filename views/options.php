@@ -118,13 +118,17 @@ if ( $demo_display ) {
 			</code>
 		</p>
 
-		<p>
-			<?php echo esc_html( $demo_data_length ); ?>.
-		</p>
+			<?php
+			if ( $plugin_data_length > 0 ) {
+				echo '<p>' . esc_html( $demo_data_length ) . '</p>';
+			}
+			?>
 
-		<p>
-			<?php echo esc_html( $demo_data_displayed_length ); ?>:
-		</p>
+			<?php
+			if ( ( $plugin_data_length > 0 ) && ( $demo_data_maxlength > 0 ) ) {
+				echo '<p>' . esc_html( $demo_data_displayed_length ) . '</p>';
+			}
+			?>
 
 		<div class="wpdtrt-plugin-boilerplate-ajax-response wpdtrt-scss-plugin-ajax-response" data-format="ui"></div>
 
@@ -134,11 +138,7 @@ if ( $demo_display ) {
 				</span>
 			</h2>
 
-			<p>
-				<?php echo esc_html( $demo_data_description ); ?>.
-			</p>
-
-			<div class="wpdtrt-plugin-boilerplate-ajax-response wpdtrt-scss-plugin-ajax-response" data-format="data"></div>
+			<div class="wpdtrt-plugin-boilerplate-ajax-response wpdtrt-scss-plugin-ajax-response" data-format="data" data-description="<?php echo $demo_data_description; ?>"></div>
 
 			<p class="wpdtrt-scss-plugin-date">
 				<em>

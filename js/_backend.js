@@ -34,8 +34,9 @@ const wpdtrtPluginBoilerplateAdminUi = {
 
         // config.refresh_api_data comes from wp_localize_script in Plugin.php
         if (config.refresh_api_data === 'true') {
-            $.each([ 'ui', 'data' ], (index, value) => {
+            $.each(['ui', 'data'], (index, value) => {
                 let $ajaxContainer = $(`.wpdtrt-plugin-boilerplate-ajax-response[data-format="${value}"]`);
+                let description = $ajaxContainer.data('description');
 
                 let settings = {
                     type: 'POST',
@@ -56,8 +57,17 @@ const wpdtrtPluginBoilerplateAdminUi = {
                 $.ajax(settings)
                     .done((response) => {
                         $ajaxContainer
-                            .empty()
-                            .html(response);
+                            .empty();
+
+                        if (response !== '') {
+                            if (typeof description !== 'undefined') {
+                                $ajaxContainer
+                                    .append(`<p>${description}</p>`);
+                            }
+
+                            $ajaxContainer
+                                .append(response);
+                        }
                     })
                     .fail(() => {
                         $ajaxContainer
