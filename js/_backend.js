@@ -42,7 +42,7 @@ const wpdtrtPluginBoilerplateAdminUi = {
                     url: config.ajaxurl,
                     data: {
                         action: `${config.prefix}_refresh_api_data`,
-                        format: value,
+                        format: value
                     },
                     cache: false
                 };
