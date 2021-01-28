@@ -34,7 +34,7 @@ const wpdtrtPluginBoilerplateAdminUi = {
 
         // config.refresh_api_data comes from wp_localize_script in Plugin.php
         if (config.refresh_api_data === 'true') {
-            $.each(['ui', 'data'], (index, value) => {
+            $.each([ 'ui', 'data' ], (index, value) => {
                 let $ajaxContainer = $(`.wpdtrt-plugin-boilerplate-ajax-response[data-format="${value}"]`);
                 let description = $ajaxContainer.data('description');
 
