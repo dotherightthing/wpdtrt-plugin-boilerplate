@@ -1630,30 +1630,33 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$plugin_data           = $this->get_plugin_data();
 			$data_str              = '';
 			$demo_shortcode_params = $this->get_demo_shortcode_params();
-			$max_length            = $demo_shortcode_params['number'];
 
-			if ( empty( $plugin_data ) ) {
-				return $data_str;
-			}
+			if ( count( $demo_shortcode_params ) > 0 ) {
+				$max_length = array_key_exists( 'number', $demo_shortcode_params ) ? $demo_shortcode_params['number'] : 0;
 
-			$data_str .= '<pre><code>';
-			$data_str .= "{\r\n";
-
-			$count = 0;
-
-			foreach ( $plugin_data as $key => $val ) {
-				$data_str .= var_export( $plugin_data[ $key ], true );
-
-				$count++;
-
-				// when we reach the end of the sample, stop looping.
-				if ( $count === $max_length ) {
-					break;
+				if ( empty( $plugin_data ) ) {
+					return $data_str;
 				}
-			}
 
-			$data_str .= "}\r\n";
-			$data_str .= '</code></pre>';
+				$data_str .= '<pre><code>';
+				$data_str .= "{\r\n";
+
+				$count = 0;
+
+				foreach ( $plugin_data as $key => $val ) {
+					$data_str .= var_export( $plugin_data[ $key ], true );
+
+					$count++;
+
+					// when we reach the end of the sample, stop looping.
+					if ( $count === $max_length ) {
+						break;
+					}
+				}
+
+				$data_str .= "}\r\n";
+				$data_str .= '</code></pre>';
+			}
 
 			return $data_str;
 		}
