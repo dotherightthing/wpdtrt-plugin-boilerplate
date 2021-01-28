@@ -1875,7 +1875,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 		public function render_library_link( array $links ) : array {
 
-			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases/tag/' . self::WPDTRT_PLUGIN_VERSION . '">DTRT WP Plugin ' . self::WPDTRT_PLUGIN_VERSION . '</a>';
+			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases/tag/' . self::WPDTRT_PLUGIN_VERSION . '">DTRT WordPress Plugin Boilerplate ' . self::WPDTRT_PLUGIN_VERSION . '</a>';
 
 			array_push( $links, $library_link );
 
