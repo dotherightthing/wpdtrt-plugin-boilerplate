@@ -1877,8 +1877,22 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.3.6 - Added
 		 */
 		public function render_library_link( array $links ) : array {
+			$library_name = 'DTRT WordPress Plugin Boilerplate';
+			$prefix       = $this->get_prefix();
+			$path_prefix  = str_replace( '_', '-', $prefix );
+			$path         = dirname( __FILE__ );
+			$repo_tag_url = 'https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases/tag/';
+			$version      = self::WPDTRT_PLUGIN_VERSION;
 
-			$library_link = '<a href="https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases/tag/' . self::WPDTRT_PLUGIN_VERSION . '">DTRT WordPress Plugin Boilerplate ' . self::WPDTRT_PLUGIN_VERSION . '</a>';
+			if ( str_contains( $path, $path_prefix ) ) {
+				$role      = 'Master';
+				$role_abbr = 'M';
+			} else {
+				$role      = 'Slave';
+				$role_abbr = 'S';
+			}
+
+			$library_link = " <a href='{$repo_tag_url}{$version}'>{$library_name} {$version} (<abbr title='{$role}'>{$role_abbr}</abbr>)</a>";
 
 			array_push( $links, $library_link );
 
