@@ -31,50 +31,39 @@ const wpdtrtPluginBoilerplateAdminUi = {
         // but we can only view one settings page at a time
         // see Plugin.php - render_js_backend()
         const config = wpdtrtPluginBoilerplateConfig;
-        const loadingMessage = config.messages.loading;
-        const prefix = config.prefix;
-        const ajaxurl = config.ajaxurl;
-        const abbr = 'wpdtrt-plugin-boilerplate';
-        let $ajaxContainerData = $();
-        let $ajaxContainerUi = $();
-        let data = {};
 
+        // config.refresh_api_data comes from wp_localize_script in Plugin.php
         if (config.refresh_api_data === 'true') {
-            $ajaxContainerData = $(`.${abbr}-ajax-response[data-format="data"]`);
-            $ajaxContainerUi = $(`.${abbr}-ajax-response[data-format="ui"]`);
+            $.each([ 'ui', 'data' ], (index, value) => {
+                let $ajaxContainer = $(`.wpdtrt-plugin-boilerplate-ajax-response[data-format="${value}"]`);
 
-            $ajaxContainerData
-                .empty()
-                .append(
-                    `<div class="spinner is-active">${loadingMessage}</div>`
-                );
+                let settings = {
+                    type: 'POST',
+                    url: config.ajaxurl,
+                    data: {
+                        action: `${config.prefix}_refresh_api_data`,
+                        format: value,
+                    },
+                    cache: false
+                };
 
-            $ajaxContainerUi
-                .empty()
-                .append(
-                    `<div class="spinner is-active">${loadingMessage}</div>`
-                );
-
-            data = $.post(ajaxurl, {
-                action: `${prefix}_refresh_api_data`,
-                format: 'ui'
-            }, (response) => {
-                $ajaxContainerUi
+                $ajaxContainer
                     .empty()
-                    .html(response);
-            });
+                    .append(
+                        `<div class="spinner is-active">${config.messages.loading}</div>`
+                    );
 
-            data.done(() => {
-                $.post(
-                    ajaxurl, {
-                        action: `${prefix}_refresh_api_data`,
-                        format: 'data'
-                    }, (response) => {
-                        $ajaxContainerData
+                $.ajax(settings)
+                    .done((response) => {
+                        $ajaxContainer
                             .empty()
                             .html(response);
-                    }
-                );
+                    })
+                    .fail(() => {
+                        $ajaxContainer
+                            .empty()
+                            .html('Sorry, the demo couldn\'t be loaded.');
+                    });
             });
         }
     }
