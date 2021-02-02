@@ -1108,7 +1108,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 *   1.3.4 - Use get_api_endpoint() to pass in the endpoint
 		 */
-		public function get_api_data( string $endpoint = '' ) {
+		public function get_api_data( string $endpoint = '' ) : array {
 
 			// Call child plugin method:
 			// A filter is used rather than an action as actions do not return a value.
@@ -1130,13 +1130,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 			 * doesn't actually need any API data.
 			 * So we just return an info message.
 			 */
-			$fallback_for_plugin_that_does_not_need_api_data = '<p>No data was required to render this example</p>';
-
 			if ( '' !== $endpoint ) {
 
 				$args = array(
 					'timeout'  => 30, // seconds to wait for the request to complete.
-					'blocking' => true, // false = nothing loads.
+					'blocking' => true, // if false then $response['body'] === ''.
 				);
 
 				$response = wp_remote_get(
@@ -1144,19 +1142,25 @@ if ( ! class_exists( 'Plugin' ) ) {
 					$args
 				);
 
+				$result = wp_remote_retrieve_body( $response );
+
 				/**
 				 * Return the body, not the header
 				 * Note: There is an optional boolean argument,
 				 * which returns an associative array if TRUE.
 				 */
-				$api_data = json_decode( $response['body'], true );
+				if ( is_array( $result ) && ! is_wp_error( $result ) ) {
+					$api_data = json_decode( $result, true );
+				} else {
+					$api_data = array( 'Data could not be loaded' );
+				}
 			} else {
 				/**
 				 * Return a message.
 				 * This is redundant UI,
 				 * but it works as learning tool.
 				 */
-				$api_data = $fallback_for_plugin_that_does_not_need_api_data;
+				$api_data = array( 'No data to load' );
 			}
 
 			// the data has to be stored,
