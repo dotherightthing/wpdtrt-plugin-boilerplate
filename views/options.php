@@ -130,7 +130,7 @@ if ( $demo_display ) {
 			}
 			?>
 
-		<div class="wpdtrt-plugin-boilerplate-ajax-response wpdtrt-scss-plugin-ajax-response" data-format="ui"></div>
+		<div class="wpdtrt-plugin-boilerplate-ajax-response" data-format="ui"></div>
 
 			<h2>
 				<span>
@@ -138,7 +138,7 @@ if ( $demo_display ) {
 				</span>
 			</h2>
 
-			<div class="wpdtrt-plugin-boilerplate-ajax-response wpdtrt-scss-plugin-ajax-response" data-format="data" data-description="<?php echo $demo_data_description; ?>"></div>
+			<div class="wpdtrt-plugin-boilerplate-ajax-response" data-format="data" data-description="<?php echo $demo_data_description; ?>"></div>
 
 			<p class="wpdtrt-scss-plugin-date">
 				<em>
