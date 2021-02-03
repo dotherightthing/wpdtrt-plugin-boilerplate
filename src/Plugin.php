@@ -71,7 +71,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			// note that these should exclude 'value' keys,
 			// to avoid overwriting existing user settings.
 			$plugin_options      = null;
-			$plugin_data         = null;
+			// $plugin_data         = null; // is this where this is being mistakenly reset?
 			$instance_options    = null;
 			$plugin_dependencies = null;
 
@@ -92,11 +92,26 @@ if ( ! class_exists( 'Plugin' ) ) {
 
 			// store option arrays.
 			$this->set_plugin_options( $plugin_options, true );
+
+			// if we want to be able to set plugin_data in the config, then we have to respect the config
+			// if we want to be able to update plugin_data from the config, then we have to respect the config
+			// if we only want to load it in, we can ignore the config
+			// .
+			// if ( null !== $plugin_data && ! $this->get_plugin_data() ) {
 			$this->set_plugin_data( isset( $plugin_data ) ? $plugin_data : array() );
+			// }
+
+			// global $debug;
+			// $debug->log( 'create plugin - check plugin_data:');
+			// $debug->log( $this->get_plugin_data() );
+
 			$this->set_instance_options( $instance_options );
 			$this->set_wp_composer_dependencies_tgmpa( dirname( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) ) . '/composer.json' );
 
 			// hook in to WordPress.
+			// TODO this apears to run repeatedly,
+			// perhaps it should only be run on init rather than when the plugin file is loaded
+			// although wouldn't a page load and init be the same thing??
 			$this->wp_setup();
 		}
 
@@ -119,6 +134,8 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 * - <Trying to get class to instantiate ONCE:https://wordpress.stackexchange.com/a/209772>
 		 */
 		protected function wp_setup() {
+			// global $debug;
+			// $debug->log( 'parent setup' );
 
 			/**
 			 * $this->render_foobar() - infers that no args are to be passed, fails
@@ -701,6 +718,20 @@ if ( ! class_exists( 'Plugin' ) ) {
 		protected function set_options( array $new_options ) {
 			$old_options = $this->get_options();
 
+			global $debug;
+
+			if ( empty( $new_options['plugin_data'] ) ) {
+				$debug->log( 'set_options - empty plugin_data - old vs new' );
+				$debug->log( $old_options['plugin_data'] );
+				$debug->log( $new_options['plugin_data'] );
+				$debug->stacktrace();
+			} else {
+				$debug->log( 'set_options - non empty plugin_data - old vs new' );
+				$debug->log( $old_options['plugin_data'] );
+				$debug->log( $new_options['plugin_data'] );
+				$debug->stacktrace();
+			}
+
 			/**
 			 * Merge old options with new options
 			 * This overwrites the old values with any new values
@@ -746,7 +777,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			 */
 			$fallback_options_array = array(
 				'plugin_options'      => array(),
-				'plugin_data'         => array(),
+				'plugin_data'         => array( 'i am the fallback' ),
 				'plugin_data_options' => array(),
 				'instance_options'    => array(),
 				'plugin_dependencies' => array(),
@@ -924,12 +955,19 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 */
 		public function set_plugin_data( array $new_plugin_data ) {
 
+			// global $debug;
+			// $debug->log( 'start new_plugin_data' );
+			// $debug->log( $new_plugin_data );
+			// $debug->log( isset( $new_plugin_data ) );
+			// $debug->log( 'end new_plugin_data' );
+
 			if ( ! isset( $new_plugin_data ) ) {
 				return;
 			}
 
-			$options                = $this->get_options();
+			$options = $this->get_options();
 			$options['plugin_data'] = $new_plugin_data;
+
 			$this->set_options( $options );
 		}
 
@@ -945,8 +983,24 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 */
 		public function get_plugin_data() : array {
-			$options     = $this->get_options();
+			$options = $this->get_options();
+
+			// global $debug;
+
+			// $debug->log( 'get_plugin_data' );
+			// $debug->log( $options );
+
 			$plugin_data = $options['plugin_data'];
+			// $debug->log( $plugin_data );
+
+			if ( empty( $plugin_data ) ) {
+				$plugin_data = array( '0' => 'This is empty but should not be because we loaded data already' );
+			}
+
+			if ( 0 === count( $plugin_data ) ) {
+				$plugin_data = array( '0' => 'This is has 0 count but should not have because we loaded data already' );
+			}
+
 			return $plugin_data;
 		}
 
@@ -1109,12 +1163,14 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.3.4 - Use get_api_endpoint() to pass in the endpoint
 		 */
 		public function get_api_data( string $endpoint = '' ) : array {
-
 			// Call child plugin method:
 			// A filter is used rather than an action as actions do not return a value.
 			// A prefix prevents the filter from affecting other active instances of wpplugin.
 			$child_plugin_filter = $this->get_prefix() . '_set_api_endpoint';
 			$endpoint            = apply_filters( $child_plugin_filter, $endpoint );
+
+			// global $debug;
+			// $debug->log( '_______get_api_data' );
 
 			/**
 			 * About: Demo shortcode Ajax
@@ -1130,29 +1186,61 @@ if ( ! class_exists( 'Plugin' ) ) {
 			 * doesn't actually need any API data.
 			 * So we just return an info message.
 			 */
+
+			// noscript fallback.
+			$api_data = array();
+
 			if ( '' !== $endpoint ) {
 
 				$args = array(
-					'timeout'  => 30, // seconds to wait for the request to complete.
+					'timeout'  => 5, // seconds to wait for the request to complete.
 					'blocking' => true, // if false then $response['body'] === ''.
 				);
 
-				$response = wp_remote_get(
+				// global $debug;
+				// $debug->log( 'get_api_data' );
+
+				$response = wp_safe_remote_get(
 					$endpoint,
 					$args
 				);
 
-				$result = wp_remote_retrieve_body( $response );
-
-				/**
-				 * Return the body, not the header
-				 * Note: There is an optional boolean argument,
-				 * which returns an associative array if TRUE.
-				 */
-				if ( is_array( $result ) && ! is_wp_error( $result ) ) {
-					$api_data = json_decode( $result, true );
+				if ( is_wp_error( $response ) ) {
+					// $debug->log('is_wp_error = true');
+					// $debug->log( gettype( $response ) ); // object
+					$api_data = array( 'Wordpress error' ); // convert object to array.
 				} else {
-					$api_data = array( 'Data could not be loaded' );
+					// $debug->log('is_wp_error = false');
+
+					$result = wp_remote_retrieve_body( $response );
+					$status = wp_remote_retrieve_response_code( $response );
+
+					// $debug->log( $status );
+					// $debug->log( $response );
+					// $debug->log( $result );
+
+					/**
+					 * Return the body, not the header
+					 * Note: There is an optional boolean argument,
+					 * which returns an associative array if TRUE.
+					 */
+
+					if ( is_wp_error( $result ) ) {
+						// $debug->log( '1' );
+						$api_data = array( '0' => $response );
+					} elseif ( is_string( $result ) && '' === $result ) {
+						// $debug->log( '2' ); // OK.
+						$api_data = array( '0' => 'Data load error' );
+					} elseif ( is_array( $result ) && empty( $result ) ) {
+						// $debug->log( '3' );
+						$api_data = array( '0' => 'Data load error' );
+					} elseif ( null === $result ) {
+						// $debug->log( '4' );
+						$api_data = array( '0' => 'Data load error' );
+					} else {
+						// $debug->log( '5' );
+						$api_data = json_decode( $result, true ); // note: $result is a string.
+					}
 				}
 			} else {
 				/**
@@ -1160,8 +1248,11 @@ if ( ! class_exists( 'Plugin' ) ) {
 				 * This is redundant UI,
 				 * but it works as learning tool.
 				 */
-				$api_data = array( 'No data to load' );
+				$api_data = array( '0' => 'No data to load' );
 			}
+
+			// $debug->log( 'api data -> set_plugin_data' ); // OK, I am generating one.
+			// $debug->log( $api_data ); // OK. Data load error
 
 			// the data has to be stored,
 			// because the return below does not send
@@ -1201,6 +1292,9 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.0.0 - Added
 		 */
 		public function refresh_api_data( string $format ) {
+			// global $debug;
+			// $debug->log( 'refresh_api_data' );
+
 			$format              = sanitize_text_field( $_POST['format'] );
 			$plugin_data_options = $this->get_plugin_data_options();
 			$existing_data       = $this->get_plugin_data();
@@ -1285,6 +1379,14 @@ if ( ! class_exists( 'Plugin' ) ) {
 		 *   1.4.16 - Added
 		 */
 		public function helper_flush_rewrite_rules( bool $force ) : bool {
+
+			// if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			// 	global $debug;
+			// 	$debug->log('helper_flush_rewrite_rules - doing ajax');
+			// } else {
+			// 	global $debug;
+			// 	$debug->log('helper_flush_rewrite_rules - not doing ajax');
+			// }
 
 			$flushed        = false;
 			$plugin_options = $this->get_plugin_options();
