@@ -18,7 +18,7 @@
  * - <https://stackoverflow.com/a/37952183/6850747>
  * - <https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/issues/51>
  *
- * @version 1.7.15
+ * @version 1.7.16
  */
 
 if ( defined( 'WPDTRT_PLUGIN_CHILD' ) ) {

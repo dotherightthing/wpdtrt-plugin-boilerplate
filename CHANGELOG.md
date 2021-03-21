@@ -1,1 +1,2 @@
-* [e8764a6] In the plugins list, identify which plugin controls the source of a particular version of wpdtrt-plugin-boilerplate (#186)
+* [0d1c99f] If checkbox was not checked when the taxonomy options were saved, delete the associated term_meta to prevent the checkbox from staying checked (fixes #190)
+* [965cdcd] Remove redundant wpdtrt-scss classes
