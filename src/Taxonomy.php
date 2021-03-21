@@ -372,6 +372,8 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 				if ( isset( $_POST[ $name ] ) && '' !== $_POST[ $name ] ) {
 					$group = sanitize_title( $_POST[ $name ] );
 					update_term_meta( $term_id, $name, $group );
+				} else {
+					delete_term_meta( $term_id, $name ); // https://wordpress.stackexchange.com/a/33832.
 				}
 			}
 		}
