@@ -1,2 +1,3 @@
-* [0d1c99f] If checkbox was not checked when the taxonomy options were saved, delete the associated term_meta to prevent the checkbox from staying checked (fixes #190)
-* [965cdcd] Remove redundant wpdtrt-scss classes
+* [4d004ed] Make number argument optional in demo_shortcode_params (fixes #192)
+* [550fce2] str_contains requires PHP 8.0
+* [b6184ce] set_plugin_data expects an array
