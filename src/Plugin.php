@@ -1130,7 +1130,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			 * doesn't actually need any API data.
 			 * So we just return an info message.
 			 */
-			$fallback_for_plugin_that_does_not_need_api_data = '<p>No data was required to render this example</p>';
+			$fallback_for_plugin_that_does_not_need_api_data = array( '<p>No data was required to render this example</p>' );
 
 			if ( '' !== $endpoint ) {
 
