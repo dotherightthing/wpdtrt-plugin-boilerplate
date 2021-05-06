@@ -1884,7 +1884,7 @@ if ( ! class_exists( 'Plugin' ) ) {
 			$repo_tag_url = 'https://github.com/dotherightthing/wpdtrt-plugin-boilerplate/releases/tag/';
 			$version      = self::WPDTRT_PLUGIN_VERSION;
 
-			if ( str_contains( $path, $path_prefix ) ) {
+			if ( stristr( $path, $path_prefix ) === true ) {
 				$role      = 'Master';
 				$role_abbr = 'M';
 			} else {
