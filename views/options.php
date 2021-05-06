@@ -22,10 +22,11 @@ $options_form_submit         = $messages['options_form_submit'];
 $demo_shortcode_params       = $this->get_demo_shortcode_params();
 $demo_display                = isset( $demo_shortcode_params ) && ( $form_submitted || ( '' !== $demo_date_last_updated_date ) );
 $demo_shortcode              = $demo_display ? $this->helper_build_demo_shortcode() : '';
-$demo_data_maxlength         = $demo_shortcode_params ? $demo_shortcode_params['number'] : 0;
+$demo_data_maxlength         = 0;
 $noscript_warning            = $messages['noscript_warning'];
 
 if ( $demo_display ) {
+	$demo_data_maxlength        = array_key_exists( 'number', $demo_shortcode_params ) ? $demo_shortcode_params['number'] : 0;
 	$demo_sample_title          = $messages['demo_sample_title'];
 	$demo_data_title            = $messages['demo_data_title'];
 	$demo_shortcode_title       = $messages['demo_shortcode_title'];
