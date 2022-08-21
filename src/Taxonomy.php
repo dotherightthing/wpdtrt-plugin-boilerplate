@@ -1031,17 +1031,23 @@ if ( ! class_exists( 'Taxonomy' ) ) {
 
 								// level 2.
 								if ( array_key_exists( 'children', $term_level_1 ) ) {
-									$children         = array_keys( $term_level_1->children );
-									$term_level_2_key = $children[0];
-									$term_level_2     = $term_level_1->children[ $term_level_2_key ];
-									$replacements[]   = $term_level_2->slug;
+									$children = array_keys( $term_level_1->children );
 
-									// level 3.
-									if ( array_key_exists( 'children', $term_level_2 ) ) {
-										$children         = array_keys( $term_level_2->children );
-										$term_level_3_key = $children[0];
-										$term_level_3     = $term_level_2->children[ $term_level_3_key ];
-										$replacements[]   = $term_level_3->slug;
+									if ( count( $children ) > 0 ) {
+										$term_level_2_key = $children[0];
+										$term_level_2     = $term_level_1->children[ $term_level_2_key ];
+										$replacements[]   = $term_level_2->slug;
+
+										// level 3.
+										if ( array_key_exists( 'children', $term_level_2 ) ) {
+											$children = array_keys( $term_level_2->children );
+
+											if ( count( $children ) > 0 ) {
+												$term_level_3_key = $children[0];
+												$term_level_3     = $term_level_2->children[ $term_level_3_key ];
+												$replacements[]   = $term_level_3->slug;
+											}
+										}
 									}
 								}
 							}
