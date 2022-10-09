@@ -13,20 +13,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node: [ '13.x' ]
-
     steps:
     # check out the repository, so the workflow can access it
     - name: Checkout repo
       uses: actions/checkout@v2
 
-    - name: Setup PHP
+    - name: Install Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.7.0'
+    
+    # MAMP Pro uses 7.2.20
+    - name: Install PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: '7.2.15'
-        node-version: ${{ matrix.node }}
 
     # Downgrade from Composer 2 in ubuntu-latest, to Composer 1, as v2 causes issues
     # https://github.com/actions/virtual-environments/issues/1816
@@ -75,15 +76,15 @@ jobs:
         WPUNIT_DB_PASS: root
         WPUNIT_DB_HOST: 127.0.0.1
 
-    # - name: Copy built files to release folder
-    #   run: npm run release --if-present
+    - name: Copy built files to release folder
+      run: npm run release --if-present
 
     # https://help.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts
-    # - name: Archive release folder
-    #   uses: actions/upload-artifact@v1
-    #   with:
-    #     name: release
-    #     path: release
+    - name: Archive release folder
+      uses: actions/upload-artifact@v1
+      with:
+        name: release
+        path: release
 
     - name: Archive changelog
       uses: actions/upload-artifact@v1
@@ -114,12 +115,12 @@ jobs:
     # otherwise the contents will be added
     # to the (empty) root
     # (as of download-artifact@v2)
-    # - name: Download release folder from Build
-    #   if: steps.check-tag.outputs.match == 'true'
-    #   uses: actions/download-artifact@v2
-    #   with:
-    #     name: release
-    #     path: release
+    - name: Download release folder from Build
+      if: steps.check-tag.outputs.match == 'true'
+      uses: actions/download-artifact@v2
+      with:
+        name: release
+        path: release
 
     - name: Download changelog from Build
       if: steps.check-tag.outputs.match == 'true'
@@ -131,17 +132,17 @@ jobs:
     - name: Check that artifacts were downloaded as expected
       run: ls -R
 
-    # - name: Zip release folder
-    #   if: steps.check-tag.outputs.match == 'true'
-    #   uses: montudor/action-zip@v0.1.0
-    #   with:
-    #     args: zip -qq -r ./release.zip ./release
+    - name: Zip release folder
+      if: steps.check-tag.outputs.match == 'true'
+      uses: montudor/action-zip@v0.1.0
+      with:
+        args: zip -qq -r ./release.zip ./release
 
     - name: Upload release to the repository's Releases page
       if: steps.check-tag.outputs.match == 'true'
       uses: yakuhzi/action-release@v1
       with:
-        # file: release.zip
+        file: release.zip
         changelog: changelog/CHANGELOG.md
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
