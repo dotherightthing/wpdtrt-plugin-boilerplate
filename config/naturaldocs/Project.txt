@@ -11,7 +11,7 @@ Format: 2.0.2
 Title: Documentation
 Subtitle: wpdtrt-plugin-boilerplate (1.7.6)
 
-Copyright: Copyright © 2020 Dan Smith
+Copyright: Copyright © 2022 Dan Smith
 
 Timestamp: Last updated day month, year
 #    m     - Single digit month, when possible.  January is "1".
