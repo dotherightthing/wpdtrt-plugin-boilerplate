@@ -24,10 +24,6 @@
     "plugin",
     "WordPress"
   ],
-  "dependencies": {},
-  "devDependencies": {
-    "wpdtrt-npm-scripts": "github:dotherightthing/wpdtrt-npm-scripts#semver:0.3.*"
-  },
   "config": {
     "wpdtrt_base_url_local": "http://dontbelievethehype.dan",
     "wpdtrt_npm_scripts": "./node_modules/wpdtrt-npm-scripts"
@@ -50,5 +46,8 @@
   "license": "ISC",
   "homepage": "https://github.com/dotherightthing/wpdtrt-plugin-boilerplate",
   "srcDir": "/Volumes/DanBackup/Websites/wpdtrt-plugin-boilerplate",
-  "author": "Dan Smith <dev@dotherightthing.co.nz>"
+  "author": "Dan Smith <dev@dotherightthing.co.nz>",
+  "devDependencies": {
+    "wpdtrt-npm-scripts": "github:dotherightthing/wpdtrt-npm-scripts#semver:0.4.*"
+  }
 }
