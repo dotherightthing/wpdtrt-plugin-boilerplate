@@ -39,9 +39,10 @@ jobs:
 
     # Fix Cypress cannot write to the cache directory due to file permissions
     # https://github.com/cypress-io/cypress/issues/1281
-    - name: Grant Cypress permission to download to cache directory
-      run: |
-        sudo chown $USER $HOME/.cache
+    # TODO chown: cannot access '/home/runner/.cache': No such file or directory
+    # - name: Grant Cypress permission to download to cache directory
+    #   run: |
+    #     sudo chown $USER $HOME/.cache
     
     # https://github.com/cypress-io/github-action#install-cypress-only
     - name: Cache dependencies
