@@ -1,3 +1,5 @@
+* [50fbd18] Update wpdtrt-npm-scripts
+* [571c79b] Bump version
 * [a20a575] Update actions to use Node.js 16 [ci skip]
 * [f745ece] Update wpdtrt-npm-scripts
 * [0cfe573] Disable Cypress cache fix due to error "chown: cannot access '/home/runner/.cache': No such file or directory"
