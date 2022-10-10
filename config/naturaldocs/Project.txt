@@ -9,7 +9,7 @@ Format: 2.0.2
 # ------------------------------------------------------------------------
 
 Title: Documentation
-Subtitle: wpdtrt-plugin-boilerplate (1.7.6)
+Subtitle: DTRT WordPress Plugin Boilerplate (1.7.17)
 
 Copyright: Copyright © 2022 Dan Smith
 
