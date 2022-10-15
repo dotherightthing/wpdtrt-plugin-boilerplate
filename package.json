@@ -49,6 +49,6 @@
   "srcDir": "/Volumes/DanBackup/Websites/wpdtrt-plugin-boilerplate",
   "author": "Dan Smith <dev@dotherightthing.co.nz>",
   "devDependencies": {
-    "wpdtrt-npm-scripts": "github:dotherightthing/wpdtrt-npm-scripts#semver:0.4.*"
+    "wpdtrt-npm-scripts": "github:dotherightthing/wpdtrt-npm-scripts#semver:*"
   }
 }

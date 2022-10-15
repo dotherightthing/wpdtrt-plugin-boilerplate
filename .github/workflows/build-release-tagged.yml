@@ -37,9 +37,9 @@ jobs:
         sudo composer self-update --1
         sudo chown $USER $HOME/.composer
 
+    # TODO https://github.com/dotherightthing/wpdtrt-npm-scripts/issues/70
     # Fix Cypress cannot write to the cache directory due to file permissions
     # https://github.com/cypress-io/cypress/issues/1281
-    # TODO chown: cannot access '/home/runner/.cache': No such file or directory
     # - name: Grant Cypress permission to download to cache directory
     #   run: |
     #     sudo chown $USER $HOME/.cache
@@ -107,8 +107,8 @@ jobs:
     - name: Check Tag
       id: check-tag
       run: |
-        if [[ ${{ github.event.ref }} =~ ^refs\/tags\/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-          echo ::set-output name=match::true
+        if [[ ${{ github.ref }} =~ ^refs\/tags\/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          echo "tagged_commit=true" >> $GITHUB_ENV
         fi
 
     # Download 'release' folder artifact
@@ -117,14 +117,14 @@ jobs:
     # to the (empty) root
     # (as of download-artifact@v2)
     - name: Download release folder from Build
-      if: steps.check-tag.outputs.match == 'true'
+      if: env.tagged_commit == 'true'
       uses: actions/download-artifact@v2
       with:
         name: release
         path: release
 
     - name: Download changelog from Build
-      if: steps.check-tag.outputs.match == 'true'
+      if: env.tagged_commit == 'true'
       uses: actions/download-artifact@v2
       with:
         name: changelog
@@ -134,13 +134,13 @@ jobs:
       run: ls -R
 
     - name: Zip release folder
-      if: steps.check-tag.outputs.match == 'true'
+      if: env.tagged_commit == 'true'
       uses: montudor/action-zip@v0.1.0
       with:
         args: zip -qq -r ./release.zip ./release
 
     - name: Upload release to the repository's Releases page
-      if: steps.check-tag.outputs.match == 'true'
+      if: env.tagged_commit == 'true'
       uses: yakuhzi/action-release@v1
       with:
         file: release.zip
