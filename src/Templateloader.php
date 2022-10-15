@@ -5,7 +5,7 @@
  * Plugin template loader class.
  */
 
-namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_18;
+namespace DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_19;
 
 if ( ! class_exists( 'Templateloader' ) ) {
 
@@ -40,7 +40,7 @@ if ( ! class_exists( 'Templateloader' ) ) {
 		 *
 		 * Example:
 		 * --- php
-		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_18\Templateloader {}
+		 * $wpdtrt_test_templateloader = new DoTheRightThing\WPDTRT_Plugin_Boilerplate\r_1_7_19\Templateloader {}
 		 * ---
 		 *
 		 * Parameters:
