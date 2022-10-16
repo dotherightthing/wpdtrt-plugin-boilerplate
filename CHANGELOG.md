@@ -1,1 +1,2 @@
-* [d39bcad] Update wpdtrt-npm-scripts
+* [c5c0db4] Lint JS
+* [1706289] Update wpdtrt-npm-scripts
