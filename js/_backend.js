@@ -23,7 +23,6 @@ const wpdtrtPluginBoilerplateAdminUi = {
      * @function ajax_init
      * @summary Load front-end content via Ajax
      * @memberof wpdtrtPluginBoilerplateAdminUi
-     *
      * @param {external: jQuery} $ - jQuery
      */
     ajax_init: ($) => {
