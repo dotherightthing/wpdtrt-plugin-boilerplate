@@ -5,11 +5,14 @@
 
 name: Build and release if tagged
 
-on: push
+on:
+  push:
+    tags:
+    - '*'
 
 jobs:
   build:
-    if: github.event_name == 'push' && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch' && inputs.debug_enabled) && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
 
     runs-on: ubuntu-latest
 
@@ -98,8 +101,9 @@ jobs:
   # instead we download and work with
   # the artifacts from the previous 'build' job
   release:
-    runs-on: ubuntu-latest
     needs: build
+    if: needs.build.result == 'success'
+    runs-on: ubuntu-latest
 
     # https://stackoverflow.com/a/58869470/6850747
     # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
